@@ -13,7 +13,7 @@ for (i in 1:length(bearings$RA_Dec)){
   #bearings[i] =
 
 }
-colnames(bearings) <- c("X","RA", "Dec")
+#colnames(bearings) <- c("RA", "Dec")
 
 RA_Dec = cbind(RA, Dec)
 
