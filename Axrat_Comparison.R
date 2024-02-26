@@ -6,7 +6,6 @@ library(magicaxis)
 library(data.table)
 require(foreign)
 require(MASS)
-library(ggplot2)
 #
 
 Axrat_Comparison <- function(loc){
@@ -21,12 +20,13 @@ cat(length(possible_asteroids$axrat_gt), "potential asteroids\n")
 
 
 cat("Beginning axial filtering")
-filtered_asteroids <- cbind(possible_asteroids[possible_asteroids$axrat_gt <= 0.35 | possible_asteroids$axrat_rxt <= 0.35 | possible_asteroids$axrat_i1xt <= 0.35])
+filtered_asteroids <- rbind(possible_asteroids[possible_asteroids$axrat_gt <= 0.35 | possible_asteroids$axrat_rxt <= 0.35 | possible_asteroids$axrat_i1xt <= 0.35,])
 
-
-g_axrat <- filtered_asteroids$axrat_gt
-r_axrat <- filtered_asteroids$axrat_rxt
-i_axrat <- filtered_asteroids$axrat_i1xt
+filtered_asteroids = filtered_asteroids[rowSums(is.na(filtered_asteroids)) != ncol(filtered_asteroids),]
+# 
+# g_axrat <- filtered_asteroids$axrat_gt
+# r_axrat <- filtered_asteroids$axrat_rxt
+# i_axrat <- filtered_asteroids$axrat_i1xt
 
 
 # axg = ggplot(data = filtered_asteroids) + geom_bar(mapping = aes(x=axrat_gt), stat = "bin", fill = "lightgreen") + geom_vline(xintercept = 0.35, colour = "red", linewidth = 1) + ggtitle("g Band Axial Ratio")
