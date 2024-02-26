@@ -1,3 +1,6 @@
+library(pracma)
+library(data.table)
+
 #Uncomment to create ordered heading csv
 bearings = as.data.frame(list.files(path = paste0(pwd()), pattern = "_"))
 colnames(bearings) <- c("RA_Dec")
