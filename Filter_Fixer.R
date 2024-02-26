@@ -32,12 +32,21 @@ library(peakRAM)
 
   bruh = commandArgs()
   num_args = length(bruh)
-  print(bruh[[num_args]])
   i = as.numeric(bruh[[num_args]])
   dir = getwd()
-  kids = as.data.frame(read.csv("./bearings.csv"))
-  
-  
+  kids = as.data.frame(read.csv("./done.csv"))
+  RA = c()
+  Dec = c()
+  for (i in 1:length(bearings$RA_Dec)){
+      cat(bearings$RA_Dec[[i]],"\n")
+      RA = append(RA,strsplit(bearings$RA_Dec[[i]], split = "_")[[1]][2])
+      Dec = append(Dec, strsplit(bearings$RA_Dec[[i]], split = "_")[[1]][3])
+      #bearings[i] =
+
+    }
+  kids = cbind(RA,Dec)
+  RA_Dec = as.data.frame(RA_Dec)
+  colnames(RA_Dec) = c("RA", "Dec")
     
   if(grepl(".", kids$RA[i], fixed = TRUE)){
     RA_DEC = paste0(kids$RA[i],"_",kids$Dec[i])
