@@ -7,9 +7,9 @@ colnames(bearings) <- c("RA_Dec")
 RA = c()
 Dec = c()
 for (i in 1:length(bearings$RA_Dec)){
-  cat(RA_Dec)
-  RA = append(RA,strsplit(bearings$RA_Dec[i], split = "_")[[1]][2])
-  Dec = append(Dec, strsplit(bearings$RA_Dec[i], split = "_")[[1]][3])
+  cat(bearings$RA_Dec[[i]])
+  RA = append(RA,strsplit(bearings$RA_Dec[[i]], split = "_")[[1]][2])
+  Dec = append(Dec, strsplit(bearings$RA_Dec[[i]], split = "_")[[1]][3])
   #bearings[i] =
 
 }
