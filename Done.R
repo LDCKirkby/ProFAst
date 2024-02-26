@@ -8,8 +8,8 @@ RA = c()
 Dec = c()
 for (i in 1:length(bearings$RA_Dec)){
   cat(bearings$RA_Dec[[i]],"\n")
-  RA = append(RA,strsplit(bearings$RA_Dec[[i]], split = "_")[[1]][2])
-  Dec = append(Dec, strsplit(bearings$RA_Dec[[i]], split = "_")[[1]][3])
+  RA = append(RA,strsplit(bearings$RA_Dec[[i]], split = "_")[[1]][1])
+  Dec = append(Dec, strsplit(bearings$RA_Dec[[i]], split = "_")[[1]][2])
   #bearings[i] =
 
 }
