@@ -1,5 +1,5 @@
 #!/bin/bash -i
-NROW=1
+NROW=460
 FILE="done.csv"
 
 for i in $(seq 1 $NROW)
