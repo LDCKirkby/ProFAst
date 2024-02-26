@@ -9,37 +9,40 @@ require(MASS)
 #
 
 Axrat_Comparison <- function(loc){
-# cat("Enter location to save to: ")
-# loc = readLines(file("stdin"),1)
-wd = pwd()
 
-possible_asteroids = read.csv(paste0(wd,"/",loc,"/Possible_Asteroids.csv"), header = TRUE, fill = TRUE)
+possible_asteroids = read.csv(paste0("./",loc,"/Possible_Asteroids.csv"), header = TRUE, fill = TRUE)
 possible_asteroids = as.data.table(possible_asteroids)
-cat("Opened ", wd,"/",loc,"Possible_Asteroids.csv\n")
 cat(length(possible_asteroids$axrat_gt), "potential asteroids\n")
 
 
 cat("Beginning axial filtering")
-filtered_asteroids <- rbind(possible_asteroids[possible_asteroids$axrat_gt <= 0.35 | possible_asteroids$axrat_rxt <= 0.35 | possible_asteroids$axrat_i1xt <= 0.35,])
+filtered_asteroids = subset(possible_asteroids, axrat_gt <= 0.35 | axrat_rxt <= 0.35 | axrat_i1xt <= 0.35)
 
-filtered_asteroids = filtered_asteroids[rowSums(is.na(filtered_asteroids)) != ncol(filtered_asteroids),]
-# 
+top_tail = subset(filtered_asteroids, select = c(Colour, X.1))
+
+filtered_asteroids = distinct(subset(filtered_asteroids, select = -c(X.1, Colour)))
+
+filtered_asteroids = cbind(filtered_asteroids[251:252],"Colour" = top_tail[top_tail$X.1 %in% filtered_asteroids$X ==TRUE,]$Colour, filtered_asteroids[-251:-252])
+
+cat("Filtered to ", length(filtered_asteroids$axrat_gt), "potential asteroids\n")
+
+write.csv(filtered_asteroids, file = paste0("./",loc,"/Filtered_Asteroids.csv"))
+ 
+
+#Uncomment to produce axial ratio graphs 
+#
 # g_axrat <- filtered_asteroids$axrat_gt
 # r_axrat <- filtered_asteroids$axrat_rxt
 # i_axrat <- filtered_asteroids$axrat_i1xt
-
-
+#
 # axg = ggplot(data = filtered_asteroids) + geom_bar(mapping = aes(x=axrat_gt), stat = "bin", fill = "lightgreen") + geom_vline(xintercept = 0.35, colour = "red", linewidth = 1) + ggtitle("g Band Axial Ratio")
 # axi = ggplot(data = filtered_asteroids) + geom_bar(mapping = aes(x=axrat_i1xt), stat = "bin", fill = "steelblue") + geom_vline(xintercept = 0.35, colour = "red", linewidth = 1) + ggtitle("i Band Axial Ratio")
 # axr = ggplot(data = filtered_asteroids) + geom_bar(mapping = aes(x=axrat_rxt), stat = "bin", fill = "firebrick") + geom_vline(xintercept = 0.35, colour = "red", linewidth = 1) + ggtitle("r Band Axial Ratio")
 # 
 # 
-# ggsave(paste0(wd,"/",loc,"/ast_g_axrat.png"), axg)
-# ggsave(paste0(wd,"/",loc,"/ast_r_axrat.png"), axr)
-# ggsave(paste0(wd,"/",loc,"/ast_i_axrat.png"), axi)
+# ggsave(paste0("./",loc,"/ast_g_axrat.png"), axg)
+# ggsave(paste0("./",loc,"/ast_r_axrat.png"), axr)
+# ggsave(paste0("./",loc,"/ast_i_axrat.png"), axi)
 
-cat("Filtered to ", length(filtered_asteroids$axrat_gt), "potential asteroids\n")
-
-write.csv(filtered_asteroids, file = paste0(wd,"/",loc,"/Filtered_Asteroids.csv"))
 
 }
