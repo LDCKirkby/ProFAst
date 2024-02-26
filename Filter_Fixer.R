@@ -37,10 +37,11 @@ library(peakRAM)
   kids = as.data.frame(read.csv("./done.csv"))
   RA = c()
   Dec = c()
-  for (i in 1:length(bearings$RA_Dec)){
-      cat(bearings$RA_Dec[[i]],"\n")
-      RA = append(RA,strsplit(bearings$RA_Dec[[i]], split = "_")[[1]][2])
-      Dec = append(Dec, strsplit(bearings$RA_Dec[[i]], split = "_")[[1]][3])
+  
+  for (i in 1:length(kids$RA_Dec)){
+      cat(kids$RA_Dec[[i]],"\n")
+      RA = append(RA,strsplit(kids$RA_Dec[[i]], split = "_")[[1]][2])
+      Dec = append(Dec, strsplit(kids$RA_Dec[[i]], split = "_")[[1]][3])
       #bearings[i] =
 
     }
