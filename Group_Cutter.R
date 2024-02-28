@@ -21,10 +21,14 @@ wid = 200.0
   
   
 #Read in asteroid data
+cat("Reading in asteroid data\n")
 asteroids <- as.data.frame(read.csv(paste0("./",loc,"/Filtered_Asteroids.csv")))
+
+cat("Reading in segmentation map data\n")
 segim_orig <- as.matrix(read.csv(paste0("./",loc,"/segim_orig.csv")))
 segim <- as.matrix(read.csv(paste0("./",loc,"/segim.csv")))
 segimlist <- as.matrix(read.csv(paste0("./",loc,"/segimlist.csv")))
+cat("Generating groupim\n")
 groupim <- profoundSegimGroup(segim = segim)
 #header = Rfits_read_header("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits")
 
@@ -77,12 +81,15 @@ for(i in 1:length(asteroids$groupID)){
   #
   
   if(asteroids[asteroids$groupID == ID, "Colour"] == "g"){
+    cat("Printing G",groupID," postage stamp\n")
     png(filename=paste0("./",attempt,"Group_Cutouts/G",groupID,".png"))
   }
   else if(asteroids[asteroids$groupID == ID, "Colour"] == "r"){
+    cat("Printing R",groupID," postage stamp\n")
     png(filename=paste0("./",attempt,"Group_Cutouts/R",groupID,".png"))
   }
   else if(asteroids[asteroids$groupID == ID, "Colour"] == "i"){
+    cat("Printing I",groupID," postage stamp\n")
   png(filename=paste0("./",attempt,"Group_Cutouts/I",groupID,".png"))
   }
   par(mfrow=c(1,1),mar=c(3,3,2,2))

@@ -10,13 +10,12 @@
 # library(Rwcs)
 # library(ProPane)
 # library(Rfits)
-# cat("Enter RA_DEC to process:")
-# loc = readLines(file("stdin"),1)
+
+
+
 Pre_Proc <- function(loc){
   start_time <- Sys.time()
-  # home = pwd()
-  # location = paste0(home,"/")
-  #
+
   cat("Loading images\n")
   g=Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"))
   r=Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"))
@@ -31,7 +30,7 @@ Pre_Proc <- function(loc){
   remove(i1)
   #i2x=propaneWarp(i2,keyvalues_out=g$keyvalues)
   # 
-  # cat("Printing images\n")
+  
   #Removing this line as it creates storage issues when running on large image numbers
   # dir.create(paste0(location,"Fits_files/",loc))
   # Rfits_write_image(g, filename = paste0(location,"Fits_files/",loc,"/g.fits"))
