@@ -14,8 +14,10 @@ possible_asteroids = read.csv(paste0("./",loc,"/Possible_Asteroids.csv"), header
 possible_asteroids = as.data.table(possible_asteroids)
 cat(length(possible_asteroids$axrat_gt), "potential asteroids\n")
 
+cat("*********\n")
+cat("Beginning axial filtering\n")
+cat("*********\n")
 
-cat("Beginning axial filtering")
 filtered_asteroids = subset(possible_asteroids, axrat_gt <= 0.35 | axrat_rxt <= 0.35 | axrat_i1xt <= 0.35)
 
 top_tail = subset(filtered_asteroids, select = c(Colour, X.1))
@@ -24,11 +26,20 @@ filtered_asteroids = distinct(subset(filtered_asteroids, select = -c(X.1, Colour
 
 filtered_asteroids = cbind(subset(filtered_asteroids, select = c(groupID)), "Colour" = top_tail[top_tail$X.1 %in% filtered_asteroids$X ==TRUE,]$Colour, subset(filtered_asteroids, select = c(Ngroup)), subset(filtered_asteroids, select = -c(groupID, Ngroup)))
 
+cat("*********\n")
 cat("Filtered to ", length(filtered_asteroids$axrat_gt), "potential asteroids\n")
+cat("*********\n")
 
+cat("*********\n")
 cat("Writing to ", paste0("./", loc,"/Possible_Asteroids.csv"),"\n")
+cat("*********\n")
+
 write.csv(filtered_asteroids, file = paste0("./",loc,"/Filtered_Asteroids.csv"))
- 
+
+
+rm(possible_asteroids, top_tail, filtered_asteroids) 
+gc()
+
 
 #Uncomment to produce axial ratio graphs 
 #
