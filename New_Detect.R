@@ -99,9 +99,13 @@ rm(segimlist)
 # Extract segment info, colour, total, deblend, aperture, and groups measurements
 
 cat_objects <- as.data.table(cbind(trim$pro_detect$segstats,trim$cat_tot))
+
 cat_groupinfo=cbind(segID=unlist(trim$pro_detect$group$groupsegID$segID),groupID=rep(trim$pro_detect$group$groupsegID$groupID,times=trim$pro_detect$group$groupsegID$Ngroup), Ngroup=rep(trim$pro_detect$group$groupsegID$Ngroup, times=trim$pro_detect$group$groupsegID$Ngroup))
+
 cat_objects=cbind(cat_objects,cat_groupinfo[match(cat_objects$segID, cat_groupinfo[,"segID"]),2:3])
+
 cat_groups <- as.data.table(cbind(trim$pro_detect$group$groupsegID$Ngroup,trim$pro_detect$groupstats$groupID,trim$cat_grp))
+
 names(cat_groups)[1] <- "Ngroup"
 names(cat_groups)[2] <- "groupID"
 
