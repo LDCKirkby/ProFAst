@@ -38,6 +38,7 @@ green_objects = rbind(green_objects[green_objects$RAcen >= (RA-0.5 + 0.1) & gree
 possible_asteroids <- rbind(blue_objects,green_objects,red_objects)
 print(length(possible_asteroids$groupID))
 
+cat("Writing to ", paste0("./", loc,"/Possible_Asteroids.csv"))
 write.csv(possible_asteroids, file = paste0("./",loc,"/Possible_Asteroids.csv"))
 
 
