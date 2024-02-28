@@ -18,32 +18,32 @@ library(Rfits)
 #######################
 # Run ProFound Script #
 #######################
-# cat("Enter RA_DEC to search:")
-# loc = readLines(file("stdin"),1)
+#Important variables for detection
+# skycut = 0.6
+# pixcut = 15
+# smooth = TRUE
+# sigma = 2
+# reltol=-10
+# tolerance =1
+# ext=7
+#######################
+
 
 New_Detect <- function(loc, frames, Pre_Proc_time){
 
 start_time <- Sys.time()
 
-#Set working directory and detection parameters
-home = pwd()
-location = paste0(home,"/")
-savelocation = paste0(home,"/",loc,"/")
-skycut = 0.6
-pixcut = 15
-smooth = TRUE
-sigma = 2
-reltol=-10
-tolerance =1
-ext=7
 
- 
-cat("***********")
-cat("Beginning detection")
+#Set working directory and detection parameters
+savelocation = paste0("./",loc,"/")
+
+
 cat("***********\n")
+cat("Beginning detection\n")
+cat("***********\n")
+
 trim=profoundMultiBand( #I prefer this layout for complex calls since then you can write notes to remind ourselves why we have certain settings.
   inputlist = frames,
-  #dir=paste0("Fits_files/",loc,"/"),
   skycut=0.6,
   pixcut=15, #Avoids too many detections in very noisy regions etc
   ext=7,
@@ -69,21 +69,19 @@ trim=profoundMultiBand( #I prefer this layout for complex calls since then you c
   fluxtype='Jansky',
 )
 
-cat("***********")
-cat("Detection finished")
+cat("***********\n")
+cat("Detection finished\n")
 cat("***********\n")
 
-#
+
 # Save data structure and produce diagnostic plot
-#
+
 dir.create(savelocation)
 saveRDS(trim,file=paste0(savelocation,"stacked.rds"))
 
 segimlist = trim$segimlist
 segim = trim$pro_detect$segim
 segim_orig = trim$pro_detect$segim_orig
-# cat("Saving slimmed rds\n")
-# saveRDS(cbind(segimlist,segim,segim_orig), file = paste0("/Volumes/WAVES/lkirkby/",frames[[i]],"/slimmed.rds"))
 
 cat("Saving slimmed segimlist\n")
 write.csv(segimlist, paste0(savelocation,"segimlist.csv"))
@@ -98,11 +96,8 @@ rm(segim)
 rm(segim_orig)
 rm(segimlist)
 
-
-
-
 # Extract segment info, colour, total, deblend, aperture, and groups measurements
-#
+
 cat_objects <- as.data.table(cbind(trim$pro_detect$segstats,trim$cat_tot))
 cat_groupinfo=cbind(segID=unlist(trim$pro_detect$group$groupsegID$segID),groupID=rep(trim$pro_detect$group$groupsegID$groupID,times=trim$pro_detect$group$groupsegID$Ngroup), Ngroup=rep(trim$pro_detect$group$groupsegID$Ngroup, times=trim$pro_detect$group$groupsegID$Ngroup))
 cat_objects=cbind(cat_objects,cat_groupinfo[match(cat_objects$segID, cat_groupinfo[,"segID"]),2:3])
@@ -117,9 +112,10 @@ datafile0=as.data.table(cbind(cat_objects,cat_groups[group_matches,]))
 write.csv(cat_objects,file=paste0(savelocation,"objectcati.csv"))
 write.csv(cat_groups,file=paste0(savelocation,"groupcati.csv"))
 write.csv(datafile0,file=paste0(savelocation,"allcati.csv"))
-#
+
+
 #par(mfrow=c(1,1),mar=c(3,3,2,2))
-#
+
 #CairoPDF(file=paste0(savelocation,"test.pdf"),width=24.0,height=24.0)
 #plot(trim$pro_detect)
 #dev.off()
@@ -130,7 +126,6 @@ run_time <- end_time - start_time
 #Print out input args for verification
 input_args = c(paste0("Pixcut:",pixcut),paste0("Skycut:",skycut),paste0("Smooth:",smooth),paste0("Sigma:",sigma),paste0("Tolerance:",tolerance), paste0("Relative Tolerance:", reltol),paste0("ext:",ext), paste0("Pre_Proc Time:", Pre_Proc_time), paste0("Runtime: ", run_time))
 write.csv(input_args, file = paste0(savelocation,"/Input_Args.csv"))
-#
-#
+
 
 }
