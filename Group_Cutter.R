@@ -21,10 +21,10 @@ dir.create(paste0("./",loc,"/Group_Cutouts"))
   
   
 #Read in asteroid data
-asteroids <- read.csv(paste0("./",loc,"/Filtered_Asteroids.csv"))
-segim_orig <- read.csv(paste0("./",loc,"/segim_orig.csv"))
-segim <- read.csv(paste0("./",loc,"/segim.csv"))
-segimlist <- read.csv(paste0("./",loc,"/segimlist.csv"))
+asteroids <- as.data.frame(read.csv(paste0("./",loc,"/Filtered_Asteroids.csv")))
+segim_orig <- as.matrix(read.csv(paste0("./",loc,"/segim_orig.csv")))
+segim <- as.matrix(read.csv(paste0("./",loc,"/segim.csv")))
+segimlist <- as.matrix(read.csv(paste0("./",loc,"/segimlist.csv")))
 groupim <- profoundSegimGroup(segim = segim)
 #header = Rfits_read_header("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits")
 
@@ -58,11 +58,12 @@ for(i in 1:length(asteroids$groupID)){
   cutim_r=r_image[galpos,box=box]
   cutim_Z=Z_image[galpos,box=box]
   #
-  cutseg_orig=magcutoutWCS(segim_orig, g_image$header , loc=as.numeric(galpos), box=box, loc.type="image")
+  cutseg_orig=magcutoutWCS(image = segim_orig, g_image$header , loc=as.numeric(galpos), box=box, loc.type="image")
 
-  cutseg_dilate=magcutoutWCS(segim, g_image$header,loc=as.numeric(galpos),box=box,loc.type="image")
+  cutseg_dilate=magcutoutWCS(image = segim, g_image$header,loc=as.numeric(galpos),box=box,loc.type="image")
   
-  cutgroup_dilate=magcutoutWCS(groupim, g_image$header, loc=as.numeric(galpos),box=box,loc.type="image")
+  cutgroup_dilate=magcutoutWCS(image = groupim, g_image$header, loc=as.numeric(galpos),box=box,loc.type="image")
+  #cutgroup_dilate=magcutoutWCS(trim$pro_detect$group$groupim,trim$pro_detect$header,loc=as.numeric(galpos),box=box,loc.type="image")
   
   #
   decoff=2*(wid*0.339/3600.0)
