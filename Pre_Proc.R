@@ -14,8 +14,8 @@ library(Rfits)
 # loc = readLines(file("stdin"),1)
 Pre_Proc <- function(loc){
   start_time <- Sys.time()
-  home = pwd()
-  location = paste0(home,"/")
+  # home = pwd()
+  # location = paste0(home,"/")
   #
   cat("Loading images\n")
   g=Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"))
