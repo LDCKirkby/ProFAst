@@ -1,14 +1,14 @@
-library(celestial)
-library(devtools)
-library(Cairo)
-library(ProFound)
-library(magicaxis)
-library(data.table)
-require(foreign)
-library(ggplot2)
-require(MASS)
-library(dplyr)
-#
+# library(celestial)
+# library(devtools)
+# library(Cairo)
+# library(ProFound)
+# library(magicaxis)
+# library(data.table)
+# require(foreign)
+# library(ggplot2)
+# require(MASS)
+# library(dplyr)
+# #
 
 Flux_Comparison <- function(loc){
 

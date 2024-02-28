@@ -1,11 +1,11 @@
-library(celestial)
-library(devtools)
-library(Cairo)
-library(ProFound)
-library(magicaxis)
-library(data.table)
-require(foreign)
-require(MASS)
+# library(celestial)
+# library(devtools)
+# library(Cairo)
+# library(ProFound)
+# library(magicaxis)
+# library(data.table)
+# require(foreign)
+# require(MASS)
 #
 
 Axrat_Comparison <- function(loc){

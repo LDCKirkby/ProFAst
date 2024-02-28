@@ -1,23 +1,23 @@
-library(celestial)
-library(devtools)
-library(Cairo)
-library(Rfits)
-library(Rwcs)
-library(ProFound)
-library('magicaxis')
-library('data.table')
-library('plotrix')
-require(foreign)
-require(MASS)
-library(ProPane)
-source("./R_files/fastcutout.r")
-wid = 200.0
+# library(celestial)
+# library(devtools)
+# library(Cairo)
+# library(Rfits)
+# library(Rwcs)
+# library(ProFound)
+# library('magicaxis')
+# library('data.table')
+# library('plotrix')
+# require(foreign)
+# require(MASS)
+# library(ProPane)
+# source("./R_files/fastcutout.r")
 
 #
 Group_Cutter <- function(loc, images){
   
 #Make a directory to save the cutouts
 dir.create(paste0("./",loc,"/Group_Cutouts"))
+wid = 200.0
   
   
 #Read in asteroid data

@@ -4,7 +4,25 @@ source("./R_Files/Flux_Comparison.R")
 source("./R_Files/Axrat_Comparison.R")
 source("./R_Files/Group_Cutter.R")
 source("./R_Files/memobj.R")
-library(peakRAM)
+source("./R_files/fastcutout.r")
+
+library(peakRAM,quietly = TRUE)
+library(dst,quietly=TRUE)
+library(celestial,quietly = TRUE)
+library(devtools,quietly = TRUE)
+library(Cairo,quietly = TRUE)
+library(Rfits,quietly = TRUE)
+library(Rwcs,quietly = TRUE)
+library(ProFound,quietly = TRUE)
+library(magicaxis,quietly = TRUE)
+library(data.table,quietly = TRUE)
+library(plotrix,quietly = TRUE)
+require(foreign,quietly = TRUE)
+require(MASS,quietly = TRUE)
+library(ProPane, quietly = TRUE)
+library(ggplot2, quietly = TRUE)
+library(dplyr, quietly = TRUE)
+
 
 
 #Uncomment to create ordered heading csv
