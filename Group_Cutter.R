@@ -10,22 +10,17 @@ library('plotrix')
 require(foreign)
 require(MASS)
 library(ProPane)
-source(paste0(getwd(),"/R_files/fastcutout.r"))
+source("./R_files/fastcutout.r")
 
 #
 Group_Cutter <- function(loc, images){
-stub=paste0(getwd(),"/")
 
-
-# cat("Enter location to save to: ")
-# loc = readLines(file("stdin"),1)
 swarpstub=loc
-asteroids = "Filtered_Asteroids"
 attempt=paste0(loc,"/")
-asteroids <- read.csv(paste0(stub,attempt,asteroids,".csv"))
+asteroids <- read.csv(paste0("./",attempt,"Filtered_Asteroids.csv\n"))
 
 #Make a directory to save the cutouts
-dir.create(paste0(stub,attempt,"Group_Cutouts"))
+dir.create(paste0("./",attempt,"Group_Cutouts"))
 
 rdafile=paste0(attempt,"stacked.rds")
 
@@ -34,7 +29,7 @@ rdafile=paste0(attempt,"stacked.rds")
 # g_image= Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
 # r_image= Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
 # Z_image= Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_u_DMAG.fits"),header=TRUE,ext=1)
-trim=readRDS(paste0(stub,rdafile))
+trim=readRDS(paste0("./",rdafile))
 
 # 
 # r_image=propaneWarp(r_image,keyvalues_out=g_image$keyvalues)
@@ -51,9 +46,9 @@ for(i in 1:length(asteroids$groupID)){
   #segid=1
   #wid=200
   #
-  #swarpstub=unlist(strsplit(unlist(strsplit(rdafile,"g_"))[2],".rds"))[1]
+  #swarp"./"=unlist(strsplit(unlist(strsplit(rdafile,"g_"))[2],".rds"))[1]
   
-  cat(stub,segid,paste0(stub,rdafile),"\n")
+  cat("./",segid,paste0("./",rdafile),"\n")
   ## delete the line below once you've renamed the rds file
   
   #
@@ -84,7 +79,7 @@ for(i in 1:length(asteroids$groupID)){
   #
   
   
-  png(filename=paste0(stub,attempt,"Group_Cutouts/G",segid,".png"))
+  png(filename=paste0("./",attempt,"Group_Cutouts/G",segid,".png"))
   par(mfrow=c(1,1),mar=c(3,3,2,2))
   #
   

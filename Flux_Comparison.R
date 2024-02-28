@@ -13,7 +13,7 @@ library(dplyr)
 Flux_Comparison <- function(loc){
 
 cat_groups = read.csv(paste0("./",loc,"/objectcati.csv"))
-cat(length(cat_groups$X), " Objects Detected")
+cat(length(cat_groups$X), " Objects Detected\n")
 
 #Remove whole rows of NA's
 cat_groups = cat_groups[rowSums(is.na(cat_groups)) != ncol(cat_groups),]

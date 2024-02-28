@@ -22,10 +22,11 @@ top_tail = subset(filtered_asteroids, select = c(Colour, X.1))
 
 filtered_asteroids = distinct(subset(filtered_asteroids, select = -c(X.1, Colour)))
 
-filtered_asteroids = cbind(filtered_asteroids[251:252],"Colour" = top_tail[top_tail$X.1 %in% filtered_asteroids$X ==TRUE,]$Colour, filtered_asteroids[-251:-252])
+filtered_asteroids = cbind("Colour" = top_tail[top_tail$X.1 %in% filtered_asteroids$X ==TRUE,]$Colour, filtered_asteroids)
 
 cat("Filtered to ", length(filtered_asteroids$axrat_gt), "potential asteroids\n")
 
+cat("Writing to ", paste0("./", loc,"/Possible_Asteroids.csv"),"\n")
 write.csv(filtered_asteroids, file = paste0("./",loc,"/Filtered_Asteroids.csv"))
  
 
