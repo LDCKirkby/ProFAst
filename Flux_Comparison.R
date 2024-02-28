@@ -13,13 +13,17 @@ library(dplyr)
 Flux_Comparison <- function(loc){
 
 cat_groups = read.csv(paste0("./",loc,"/objectcati.csv"))
+cat("*********\n")
 cat(length(cat_groups$X), " Objects Detected\n")
+cat("*********\n")
 
 #Remove whole rows of NA's
 cat_groups = cat_groups[rowSums(is.na(cat_groups)) != ncol(cat_groups),]
 
 #Extracting potential asteroids, based on their flux ratios
+cat("*********\n")
 cat("Beginning asteroid search\n")
+cat("*********\n")
 green_objects = cbind(subset(cat_groups, subset = cat_groups$flux_gt/cat_groups$flux_rxt>=15 | cat_groups$flux_gt/cat_groups$flux_i1xt>=15), "Colour" = "g")
 red_objects = cbind(subset(cat_groups, subset = cat_groups$flux_rxt/cat_groups$flux_gt>=15 | cat_groups$flux_rxt/cat_groups$flux_i1xt>=15), "Colour" = "r")
 blue_objects = cbind(subset(cat_groups, subset = cat_groups$flux_i1xt/cat_groups$flux_gt>=15 | cat_groups$flux_i1xt/cat_groups$flux_gt>=15), "Colour" = "i")
@@ -29,7 +33,10 @@ blue_objects = cbind(subset(cat_groups, subset = cat_groups$flux_i1xt/cat_groups
 RA = as.numeric(strsplit(loc, "_")[[1]][[1]])
 Dec = as.numeric(strsplit(loc, "_")[[1]][[2]])
 
-print("*********")
+cat("*********\n")
+cat("Applying edge buffer")
+cat("*********\n")
+
 red_objects = rbind(red_objects[red_objects$RAcen >= (RA-0.5 + 0.1) & red_objects$RAcen <= (RA + 0.5 - 0.1) & red_objects$Deccen >= (Dec-0.5 + 0.1) & red_objects$Deccen <= (Dec+0.5 - 0.1),])
 blue_objects = rbind(blue_objects[blue_objects$RAcen >= (RA-0.5 + 0.1) & blue_objects$RAcen <= (RA+0.5 - 0.1) & blue_objects$Deccen >= (Dec-0.5 + 0.1) & blue_objects$Deccen <= (Dec+0.5 - 0.1),])
 green_objects = rbind(green_objects[green_objects$RAcen >= (RA-0.5 + 0.1) & green_objects$RAcen <= (RA+0.5 - 0.1) & green_objects$Deccen >= (Dec-0.5 + 0.1) & green_objects$Deccen <= (Dec+0.5 - 0.1),])
@@ -38,9 +45,14 @@ green_objects = rbind(green_objects[green_objects$RAcen >= (RA-0.5 + 0.1) & gree
 possible_asteroids <- rbind(blue_objects,green_objects,red_objects)
 print(length(possible_asteroids$groupID))
 
+cat("*********\n")
 cat("Writing to ", paste0("./", loc,"/Possible_Asteroids.csv"))
+cat("*********\n")
+
 write.csv(possible_asteroids, file = paste0("./",loc,"/Possible_Asteroids.csv"))
 
+rm(blue_objects, green_objects, red_objects, possible_asteroids, cat_groups)
+gc()
 
 #Uncomment to make plots of asteroid colour distribution before and after filtering
 
