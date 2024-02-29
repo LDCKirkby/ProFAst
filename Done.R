@@ -3,7 +3,7 @@ library(data.table)
 
 #Uncomment to create ordered heading csv
 done = as.data.frame(list.files(path = paste0(pwd()), pattern = "_"))
-bearings = as.data.frame(list.files(path = "/Volumes/WAVES/waves/wavesdata/kids/dr5/preprocessed/", pattern = ".5_g_"))
+bearings = as.data.frame(list.files(path = "/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/", pattern = ".5_g_"))
 colnames(bearings) <- c("RA_Dec")
 colnames(done) <- c("RA_Dec")
 RA_done = c()
