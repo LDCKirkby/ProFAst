@@ -13,8 +13,8 @@ Dec = c()
 bruh = c()
 for (i in 1:length(bearings$RA_Dec)){
   cat(bearings$RA_Dec[[i]],"\n")
-  ra = strsplit(bearings$RA_Dec[[i]], split = "_")[[1]][2]
-  dec = strsplit(bearings$RA_Dec[[i]], split = "_")[[1]][3]
+  ra = strsplit(bearings$RA_Dec[i], split = "_")[[1]][2]
+  dec = strsplit(bearings$RA_Dec[i], split = "_")[[1]][3]
   if(paste0(ra,"_",dec) %in% done$RA_Dec){
     next
   }
