@@ -22,11 +22,14 @@ wid = 200.0
   
 #Read in asteroid data
 cat("Reading in asteroid data\n")
-asteroids <- as.data.frame(read.csv(paste0("./",loc,"/Filtered_Asteroids.csv")))
+asteroids <- as.data.frame(read.csv(paste0("./",loc,"/N100_Filtered_Asteroids.csv.csv")))
+
 
 cat("Reading in segmentation map data\n")
 segim_orig <- as.matrix(read.csv(paste0("./",loc,"/segim_orig.csv")))
+
 segim <- as.matrix(read.csv(paste0("./",loc,"/segim.csv")))
+
 cat("Generating groupim\n")
 groupim <- profoundSegimGroup(segim = segim)
 
@@ -42,7 +45,9 @@ groupim <- profoundSegimGroup(segim = segim)
 g_image = images[[1]]
 r_image = images[[2]]
 Z_image = images[[3]]
-#
+
+
+
 for(i in 1:length(asteroids$groupID)){
 
   ID=asteroids$groupID[i]

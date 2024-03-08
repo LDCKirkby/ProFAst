@@ -18,7 +18,9 @@ cat("*********\n")
 cat("Beginning axial filtering\n")
 cat("*********\n")
 
+#Axrat filter
 filtered_asteroids = subset(possible_asteroids, axrat_gt <= 0.35 | axrat_rxt <= 0.35 | axrat_i1xt <= 0.35)
+
 
 top_tail = subset(filtered_asteroids, select = c(Colour, X.1))
 
@@ -31,10 +33,15 @@ cat("Filtered to ", length(filtered_asteroids$axrat_gt), "potential asteroids\n"
 cat("*********\n")
 
 cat("*********\n")
-cat("Writing to ", paste0("./", loc,"/Possible_Asteroids.csv"),"\n")
+cat("Writing to ", paste0("./", loc,"/Filtered_Asteroids.csv"),"\n")
 cat("*********\n")
 
 write.csv(filtered_asteroids, file = paste0("./",loc,"/Filtered_Asteroids.csv"))
+
+#N100 filter
+filtered_asteroids = subset(filtered_asteroids, N100 <= 100 | N100 <= 100 | N100 <= 100)
+
+write.csv(filtered_asteroids, file = paste0("./",loc,"/N100_Filtered_Asteroids.csv"))
 
 
 rm(possible_asteroids, top_tail, filtered_asteroids) 
