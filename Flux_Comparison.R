@@ -12,6 +12,38 @@
 
 Flux_Comparison <- function(loc){
 
+if("objectcati.csv" %in% list.files(path = paste0("./",loc,"/")) == FALSE){
+  cat("Objectcati.csv not found\n")
+  trim = readRDS(paste0("./",loc,"/stacked.rds"))
+  cat_objects <- as.data.table(cbind(trim$pro_detect$segstats,trim$cat_tot))
+  
+  cat_groupinfo=cbind(segID=unlist(trim$pro_detect$group$groupsegID$segID),groupID=rep(trim$pro_detect$group$groupsegID$groupID,times=trim$pro_detect$group$groupsegID$Ngroup), Ngroup=rep(trim$pro_detect$group$groupsegID$Ngroup, times=trim$pro_detect$group$groupsegID$Ngroup))
+  
+  cat_objects=cbind(cat_objects,cat_groupinfo[match(cat_objects$segID, cat_groupinfo[,"segID"]),2:3])
+  
+  cat_groups <- as.data.table(cbind(trim$pro_detect$group$groupsegID$Ngroup,trim$pro_detect$groupstats$groupID,trim$cat_grp))
+  
+  names(cat_groups)[1] <- "Ngroup"
+  names(cat_groups)[2] <- "groupID"
+  
+  group_matches=match(cat_objects$segID,cat_groups$groupID,nomatch=NA)
+  
+  datafile0=as.data.table(cbind(cat_objects,cat_groups[group_matches,]))
+  
+  cat("Creating objectcati.csv\n")
+  write.csv(cat_objects,file=paste0("./",loc,"/objectcati.csv"))
+  
+  cat("Creating groupcati.csv\n")
+  write.csv(cat_groups,file=paste0("./",loc,"/groupcati.csv"))
+  
+  cat("Creating allcati.csv\n")
+  write.csv(datafile0,file=paste0("./",loc,"/allcati.csv"))
+  
+  rm(trim, cat_objects, cat_groupinfo, cat_groups, group_matches, datafile0)
+  gc()
+}
+  
+  
 cat_groups = read.csv(paste0("./",loc,"/objectcati.csv"))
 cat("*********\n")
 cat(length(cat_groups$X), " Objects Detected\n")
