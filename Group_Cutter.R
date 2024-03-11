@@ -35,7 +35,7 @@ groupim <- profoundSegimGroup(segim = segim)
 
 header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"))
 
-#trim=readRDS(paste0("./",loc,"/stacked.rds"))
+trim=readRDS(paste0("./",loc,"/stacked.rds"))
 # g_image= Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
 # r_image= Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
 # Z_image= Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_u_DMAG.fits"),header=TRUE,ext=1)
@@ -68,9 +68,9 @@ for(i in 1:length(asteroids$groupID)){
   #cutseg_orig=magcutoutWCS(image = segim_orig, g_image$header , loc=as.numeric(galpos), box=box, loc.type="image")
 
   #cutseg_dilate=magcutoutWCS(image = segim, g_image$header,loc=as.numeric(galpos),box=box,loc.type="image")
-  cat("Here's hoping it doesn't break here );")
-  cutgroup_dilate=magcutoutWCS(image = groupim, header, loc=as.numeric(galpos),box=box,loc.type="image")
-  #cutgroup_dilate=magcutoutWCS(trim$pro_detect$group$groupim,trim$pro_detect$header,loc=as.numeric(galpos),box=box,loc.type="image")
+  cat("Here's hoping it doesn't break here );\n")
+  #cutgroup_dilate=magcutoutWCS(image = groupim, header, loc=as.numeric(galpos),box=box,loc.type="image")
+  cutgroup_dilate=magcutoutWCS(trim$pro_detect$group$groupim,trim$pro_detect$header,loc=as.numeric(galpos),box=box,loc.type="image")
   
   
   decoff=2*(wid*0.339/3600.0)
