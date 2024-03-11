@@ -46,8 +46,6 @@ g_image = images[[1]]
 r_image = images[[2]]
 Z_image = images[[3]]
 
-six = groupim$groupsegID$groupID
-
 for(i in 1:length(asteroids$groupID)){
 
   ID=asteroids$groupID[i]
