@@ -19,9 +19,13 @@ contplot=function(segsegIDs, segim, segcol, segwid, linewd){
   
   groupimage = which(segim == segsegIDs, arr.ind=TRUE)
   max_x = max(groupimage[1])
+  cat("Max x at: ", max_x)
   min_x = min(groupimage[1])
+  cat("Min x at: ", min_x)
   max_y = max(groupimage[2])
+  cat("Max y at: ", max_y)
   min_y = min(groupimage[2])
+  cat("Min y at: ", min_y)
   
   
   
