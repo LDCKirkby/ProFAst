@@ -85,15 +85,15 @@ for(i in 1:length(asteroids$groupID)){
   
   if(asteroids[asteroids$groupID == ID, "Colour"] == "g"){
     cat("Printing G",ID," postage stamp\n")
-    png(filename=paste0("./",attempt,"Group_Cutouts/G",groupID,".png"))
+    png(filename=paste0("./",loc,"Group_Cutouts/G",ID,".png"))
   }
   else if(asteroids[asteroids$groupID == ID, "Colour"] == "r"){
     cat("Printing R",ID," postage stamp\n")
-    png(filename=paste0("./",attempt,"Group_Cutouts/R",groupID,".png"))
+    png(filename=paste0("./",loc,"Group_Cutouts/R",ID,".png"))
   }
   else if(asteroids[asteroids$groupID == ID, "Colour"] == "i"){
     cat("Printing I",ID," postage stamp\n")
-  png(filename=paste0("./",attempt,"Group_Cutouts/I",groupID,".png"))
+  png(filename=paste0("./",loc,"Group_Cutouts/I",ID,".png"))
   }
   par(mfrow=c(1,1),mar=c(3,3,2,2))
   
