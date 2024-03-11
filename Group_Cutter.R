@@ -33,7 +33,7 @@ segim <- as.matrix(read.csv(paste0("./",loc,"/segim.csv")))
 cat("Generating groupim\n")
 groupim <- profoundSegimGroup(segim = segim)
 
-#header = Rfits_read_header("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits")
+header = Rfits_read_header("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits")
 
 #trim=readRDS(paste0("./",loc,"/stacked.rds"))
 # g_image= Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
@@ -69,7 +69,7 @@ for(i in 1:length(asteroids$groupID)){
 
   #cutseg_dilate=magcutoutWCS(image = segim, g_image$header,loc=as.numeric(galpos),box=box,loc.type="image")
   
-  cutgroup_dilate=magcutoutWCS(image = groupim, g_image$header, loc=as.numeric(galpos),box=box,loc.type="image")
+  cutgroup_dilate=magcutoutWCS(image = groupim, header, loc=as.numeric(galpos),box=box,loc.type="image")
   #cutgroup_dilate=magcutoutWCS(trim$pro_detect$group$groupim,trim$pro_detect$header,loc=as.numeric(galpos),box=box,loc.type="image")
   
   
