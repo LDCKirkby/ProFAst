@@ -13,7 +13,7 @@ library('plotrix')
 require(foreign)
 require(MASS)
 #
-contplot=function(segsegIDs, segim, segcol, segwid, linewd){
+contplot=function(segsegIDs, segim, segcol, segwid, linewd, header = Na){
   `%notin%`<-Negate(`%in%`)
   segim[segim%notin%segsegIDs]=0
   
@@ -27,7 +27,8 @@ contplot=function(segsegIDs, segim, segcol, segwid, linewd){
   min_y = min(groupimage[2])
   cat("Min y at: ", min_y)
   
-  
+  max_point = xy2radec(max_x, max_y, header)
+  min_point = xy2radec(min_x, min_y, header)
   
   
   
@@ -52,7 +53,7 @@ contplot=function(segsegIDs, segim, segcol, segwid, linewd){
   
   
   magimage(segim,col=c(NA,rep(segcol,max(segim))),magmap=FALSE,add=TRUE,sparse=1)
-  magimage(x=max_x, y=max_y, add = TRUE, col = "white")
-  magimage(x=min_x, y=min_y, add = TRUE, col = "hotpink")
+  magimage(max_point, add = TRUE, col = "white")
+  magimage(min_point, add = TRUE, col = "hotpink")
   }
 #

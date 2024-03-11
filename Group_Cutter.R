@@ -84,15 +84,15 @@ for(i in 1:length(asteroids$groupID)){
   
   
   if(asteroids[asteroids$groupID == ID, "Colour"] == "g"){
-    cat("Printing G",groupID," postage stamp\n")
+    cat("Printing G",ID," postage stamp\n")
     png(filename=paste0("./",attempt,"Group_Cutouts/G",groupID,".png"))
   }
   else if(asteroids[asteroids$groupID == ID, "Colour"] == "r"){
-    cat("Printing R",groupID," postage stamp\n")
+    cat("Printing R",ID," postage stamp\n")
     png(filename=paste0("./",attempt,"Group_Cutouts/R",groupID,".png"))
   }
   else if(asteroids[asteroids$groupID == ID, "Colour"] == "i"){
-    cat("Printing I",groupID," postage stamp\n")
+    cat("Printing I",ID," postage stamp\n")
   png(filename=paste0("./",attempt,"Group_Cutouts/I",groupID,".png"))
   }
   par(mfrow=c(1,1),mar=c(3,3,2,2))
@@ -117,7 +117,7 @@ for(i in 1:length(asteroids$groupID)){
   #contplot(segID,cutseg_dilate$image,"deeppink",wid,3)?
   
   if(asteroids[asteroids$groupID == ID, "Colour"] == "g"){
-    cat("Printing green asteroid. GroupID: ", groupID, "\n")
+    cat("Printing green asteroid. GroupID: ", ID, "\n")
     contplot(groupID, cutgroup_dilate$image, "green", wid, 4)
     text(1,100,label=paste0("ID=",groupID),col="green",cex=2.0)#,pos=4)
   }
