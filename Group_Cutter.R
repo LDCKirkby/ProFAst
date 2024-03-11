@@ -110,6 +110,8 @@ for(i in 1:length(asteroids$groupID)){
   if(locut[[3]] > kids){
     locut[[3]] = kids
   }
+  
+  cat("Time to start printing images!\n")
   magimageWCSRGB(R=cutim_Z$imDat,G=cutim_r$imDat,B=cutim_g$imDat,Rheader=cutim_g$header,Gheader=cutim_g$header,Bheader=cutim_g$header, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num",dowarp=FALSE, hersh = FALSE, grid = TRUE)
   #contplot(galgroupIDs,cutseg_dilate$image,"purple",wid,2)
   
