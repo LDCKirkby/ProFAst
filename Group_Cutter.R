@@ -117,16 +117,19 @@ for(i in 1:length(asteroids$groupID)){
   #contplot(segID,cutseg_dilate$image,"deeppink",wid,3)?
   
   if(asteroids[asteroids$groupID == ID, "Colour"] == "g"){
+    cat("Printing green asteroid. GroupID: ", groupID, "\n")
     contplot(groupID, cutgroup_dilate$image, "green", wid, 4)
     text(1,100,label=paste0("ID=",groupID),col="green",cex=2.0)#,pos=4)
   }
   
   else if(asteroids[asteroids$groupID == ID, "Colour"] == "r"){
+    cat("Printing red asteroid. GroupID: ", groupID, "\n")
     contplot(groupID, cutgroup_dilate$image, "red", wid, 4)
     text(1,100,label=paste0("ID=",groupID),col="red",cex=2.0)#,pos=4)
   }
   
   else if(asteroids[asteroids$groupID == ID, "Colour"] == "i"){
+    cat("Printing blue asteroid. GroupID: ", groupID, "\n")
     contplot(groupID, cutgroup_dilate$image, "blue", wid, 4)
     text(1,100,label=paste0("ID=",groupID),col="blue",cex=2.0)#,pos=4)
   }
