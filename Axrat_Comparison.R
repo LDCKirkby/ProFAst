@@ -27,6 +27,7 @@ top_tail = subset(filtered_asteroids, select = c(Colour, X.1))
 filtered_asteroids = distinct(subset(filtered_asteroids, select = -c(X.1, Colour)))
 
 filtered_asteroids = cbind(subset(filtered_asteroids, select = c(groupID)), "Colour" = top_tail[top_tail$X.1 %in% filtered_asteroids$X ==TRUE,]$Colour, subset(filtered_asteroids, select = c(Ngroup)), subset(filtered_asteroids, select = -c(groupID, Ngroup)))
+filtered_asteroids = setorder(filtered_asteroids, "groupID")
 
 cat("*********\n")
 cat("Filtered to ", length(filtered_asteroids$axrat_gt), "potential asteroids\n")
@@ -39,12 +40,12 @@ cat("*********\n")
 write.csv(filtered_asteroids, file = paste0("./",loc,"/Filtered_Asteroids.csv"))
 
 #N100 filter
-filtered_asteroids = subset(filtered_asteroids, N100 <= 100 | N100 <= 100 | N100 <= 100)
+N100_filtered_asteroids = subset(filtered_asteroids, N100 >= 100 | N100 >= 100 | N100 >= 100)
 
-write.csv(filtered_asteroids, file = paste0("./",loc,"/N100_Filtered_Asteroids.csv"))
+write.csv(N100_filtered_asteroids, file = paste0("./",loc,"/N100_Filtered_Asteroids.csv"))
 
 
-rm(possible_asteroids, top_tail, filtered_asteroids) 
+rm(possible_asteroids, top_tail, filtered_asteroids, N100_filtered_asteroids) 
 gc()
 
 

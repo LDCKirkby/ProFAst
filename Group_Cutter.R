@@ -22,7 +22,7 @@ wid = 200.0
   
 #Read in asteroid data
 cat("Reading in asteroid data\n")
-asteroids <- as.data.frame(read.csv(paste0("./",loc,"/N100_Filtered_Asteroids.csv.csv")))
+asteroids <- as.data.frame(read.csv(paste0("./",loc,"/N100_Filtered_Asteroids.csv")))
 
 
 cat("Reading in segmentation map data\n")
@@ -46,11 +46,13 @@ g_image = images[[1]]
 r_image = images[[2]]
 Z_image = images[[3]]
 
-
+six = groupim$groupsegID$groupID
 
 for(i in 1:length(asteroids$groupID)){
 
   ID=asteroids$groupID[i]
+  
+  
   #
   galpos=asteroids[asteroids$groupID == ID, c("xmax","ymax")]
   #galpos=trim$pro_detect$groupstats[trim$pro_detect$groupstats$groupID==groupID, c("xmax","ymax")] 
@@ -113,21 +115,22 @@ for(i in 1:length(asteroids$groupID)){
   magimageWCSRGB(R=cutim_Z$imDat,G=cutim_r$imDat,B=cutim_g$imDat,Rheader=cutim_g$header,Gheader=cutim_g$header,Bheader=cutim_g$header, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num",dowarp=FALSE, hersh = FALSE, grid = TRUE)
   #contplot(galgroupIDs,cutseg_dilate$image,"purple",wid,2)
   
-  #contplot(galgroupIDs,cutgroup_dilate$image, "skyblue", wid,4)
+  contplot(galgroupIDs,cutgroup_dilate$image, "skyblue", wid,4)
   #contplot(segID,cutseg_dilate$image,"deeppink",wid,3)?
+  
   if(asteroids[asteroids$groupID == ID, "Colour"] == "g"){
     contplot(groupID, cutgroup_dilate$image, "green", wid, 4)
-    text(1,wid*2*0.9,label=paste0("ID=",groupID),col="green",cex=2.0,pos=4)
+    text(1,100,label=paste0("ID=",groupID),col="green",cex=2.0)#,pos=4)
   }
   
   else if(asteroids[asteroids$groupID == ID, "Colour"] == "r"){
     contplot(groupID, cutgroup_dilate$image, "red", wid, 4)
-    text(1,wid*2*0.9,label=paste0("ID=",groupID),col="red",cex=2.0,pos=4)
+    text(1,100,label=paste0("ID=",groupID),col="red",cex=2.0)#,pos=4)
   }
   
   else if(asteroids[asteroids$groupID == ID, "Colour"] == "i"){
     contplot(groupID, cutgroup_dilate$image, "blue", wid, 4)
-    text(1,wid*2*0.9,label=paste0("ID=",groupID),col="blue",cex=2.0,pos=4)
+    text(1,100,label=paste0("ID=",groupID),col="blue",cex=2.0)#,pos=4)
   }
   #
   #
