@@ -33,7 +33,7 @@ segim <- as.matrix(read.csv(paste0("./",loc,"/segim.csv")))
 cat("Generating groupim\n")
 groupim <- profoundSegimGroup(segim = segim)
 
-header = Rfits_read_header("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits")
+#header = Rfits_read_header("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits")
 
 #trim=readRDS(paste0("./",loc,"/stacked.rds"))
 # g_image= Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
