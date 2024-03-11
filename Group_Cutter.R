@@ -55,7 +55,7 @@ for(i in 1:length(asteroids$groupID)){
   galpos=asteroids[asteroids$groupID == ID, c("xmax","ymax")]
   #galpos=trim$pro_detect$groupstats[trim$pro_detect$groupstats$groupID==groupID, c("xmax","ymax")] 
   
-  galradec=asteroisd[asteroids$groupID == ID, c("RAcen", "Deccen")]
+  galradec=asteroids[asteroids$groupID == ID, c("RAcen", "Deccen")]
   #galradec=trim$pro_detect$groupstats[trim$pro_detect$groupstats$groupID==groupID, c("RAcen","Deccen")]
   
   
