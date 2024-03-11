@@ -52,7 +52,7 @@ contplot=function(segsegIDs, segim, segcol, segwid, linewd){
   
   
   magimage(segim,col=c(NA,rep(segcol,max(segim))),magmap=FALSE,add=TRUE,sparse=1)
-  #magimage(x=max_x, y=max_y, add = TRUE, col = "white")
-  #magimage(x=min_x, y=min_y, add = TRUE, col = "hotpink")
+  magimage(x=max_x, y=max_y, add = TRUE, col = "white")
+  magimage(x=min_x, y=min_y, add = TRUE, col = "hotpink")
   }
 #
