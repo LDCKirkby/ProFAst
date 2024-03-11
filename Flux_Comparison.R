@@ -66,7 +66,7 @@ RA = as.numeric(strsplit(loc, "_")[[1]][[1]])
 Dec = as.numeric(strsplit(loc, "_")[[1]][[2]])
 
 cat("*********\n")
-cat("Applying edge buffer")
+cat("Applying edge buffer\n")
 cat("*********\n")
 
 red_objects = rbind(red_objects[red_objects$RAcen >= (RA-0.5 + 0.1) & red_objects$RAcen <= (RA + 0.5 - 0.1) & red_objects$Deccen >= (Dec-0.5 + 0.1) & red_objects$Deccen <= (Dec+0.5 - 0.1),])
@@ -78,7 +78,7 @@ possible_asteroids <- rbind(blue_objects,green_objects,red_objects)
 print(length(possible_asteroids$groupID))
 
 cat("*********\n")
-cat("Writing to ", paste0("./", loc,"/Possible_Asteroids.csv"))
+cat("Writing to ", paste0("./", loc,"/Possible_Asteroids.csv"),"\n")
 cat("*********\n")
 
 write.csv(possible_asteroids, file = paste0("./",loc,"/Possible_Asteroids.csv"))
