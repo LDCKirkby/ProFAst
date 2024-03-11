@@ -46,21 +46,19 @@ g_image = images[[1]]
 r_image = images[[2]]
 Z_image = images[[3]]
 
+cat("Begin iterating through asteroids\n")
 for(i in 1:length(asteroids$groupID)){
 
   ID=asteroids$groupID[i]
+  cat("Imaging ", ID,"\n")
   
-  
-  #
   galpos=asteroids[asteroids$groupID == ID, c("xmax","ymax")]
   #galpos=trim$pro_detect$groupstats[trim$pro_detect$groupstats$groupID==groupID, c("xmax","ymax")] 
   
   galradec=asteroids[asteroids$groupID == ID, c("RAcen", "Deccen")]
   #galradec=trim$pro_detect$groupstats[trim$pro_detect$groupstats$groupID==groupID, c("RAcen","Deccen")]
   
-  
   galpos=Rwcs_s2p(RA=galradec$RAcen,Dec=galradec$Deccen,keyvalues=g_image$keyvalues)
-  #
   
   box=c(2*wid,2*wid)
   cutim_g=g_image[galpos,box=box]
@@ -74,16 +72,16 @@ for(i in 1:length(asteroids$groupID)){
   cutgroup_dilate=magcutoutWCS(image = groupim, g_image$header, loc=as.numeric(galpos),box=box,loc.type="image")
   #cutgroup_dilate=magcutoutWCS(trim$pro_detect$group$groupim,trim$pro_detect$header,loc=as.numeric(galpos),box=box,loc.type="image")
   
-  #
+  
   decoff=2*(wid*0.339/3600.0)
   raoff=2*(wid*0.339/3600.0)/cos(galradec$Deccen*0.01745329)
   #galgroupIDs=trim$pro_detect$groupstats[trim$pro_detect$groupstats$RAcen > galradec$RAcen - raoff & trim$pro_detect$groupstats$RAcen < galradec$RAcen + raoff & trim$pro_detect$groupstats$Deccen > galradec$Deccen - decoff & trim$pro_detect$groupstats$Deccen < galradec$Deccen + decoff,"groupID"]
   
-  #
+  
   mulim=22.0
   kids=(0.339^2)*(10^(0.4*(0-mulim)))
   viking=(0.339^2)*(10^(0.4*(30-mulim)))
-  #
+  
   
   if(asteroids[asteroids$groupID == ID, "Colour"] == "g"){
     cat("Printing G",groupID," postage stamp\n")
@@ -98,7 +96,7 @@ for(i in 1:length(asteroids$groupID)){
   png(filename=paste0("./",attempt,"Group_Cutouts/I",groupID,".png"))
   }
   par(mfrow=c(1,1),mar=c(3,3,2,2))
-  #
+  
   
   locut = c(median(cutim_Z$imDat,na.rm=TRUE),median(cutim_r$imDat,na.rm=TRUE),median(cutim_g$imDat,na.rm=TRUE))
   if(locut[[1]] > kids){
