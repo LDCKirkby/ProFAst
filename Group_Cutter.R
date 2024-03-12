@@ -69,8 +69,8 @@ for(i in 1:length(asteroids$groupID)){
 
   #cutseg_dilate=magcutoutWCS(image = segim, g_image$header,loc=as.numeric(galpos),box=box,loc.type="image")
   cat("Here's hoping it doesn't break here );\n")
-  #cutgroup_dilate=magcutoutWCS(image = groupim, header, loc=as.numeric(galpos),box=box,loc.type="image")
-  cutgroup_dilate=magcutoutWCS(trim$pro_detect$group$groupim,trim$pro_detect$header,loc=as.numeric(galpos),box=box,loc.type="image")
+  cutgroup_dilate=magcutoutWCS(image = groupim, header, loc=as.numeric(galpos),box=box,loc.type="image")
+  #cutgroup_dilate=magcutoutWCS(trim$pro_detect$group$groupim,trim$pro_detect$header,loc=as.numeric(galpos),box=box,loc.type="image")
   
   
   decoff=2*(wid*0.339/3600.0)
