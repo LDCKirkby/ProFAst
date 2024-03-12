@@ -66,4 +66,4 @@ for( i in 1:length(asteroids$groupID)){
   print(nchar(line))
 }
 
-write.table(output, paste0("./",loc,"/",loc,"_MPC_Format.txt", sep = "X11", row.names = FALSE, col.names = FALSE))
+write.table(output, paste0("./",loc,"/",loc,"_MPC_Format.txt"), sep = "X11", row.names = FALSE, col.names = FALSE)
