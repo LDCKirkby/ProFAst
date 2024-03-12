@@ -48,11 +48,12 @@ done = as.data.frame(list.files(path = paste0(pwd()), pattern = "_"))
 colnames(done) = "RA_Dec"
 widengrps = data.frame()
 for(RA_Dec in done$RA_Dec){
-  cat(RA_Dec)
+  cat(RA_Dec,"\n")
   if(paste0(RA_Dec,"_Filtered_Asteroids.csv") %in% list.files(path = paste0("./",RA_Dec,"/")) == FALSE){
     next
   }
-  widengrps = rbind(widengrps, as.data.frame(read.csv(paste0("./",RA_Dec,"/",RA_Dec,"_Filtered_Asteroids.csv"))))
+  data = as.data.frame(read.csv(paste0("./",RA_Dec,"/",RA_Dec,"_Filtered_Asteroids.csv")))
+  widengrps = rbind(widengrps, data)
 }
 #widengrps=fread("/Users/sdriver/Drpbx/waves/mocks/waves-north_grps.csv")
 widesgrps=fread("/Users/sdriver/Drpbx/waves/mocks/waves-south_grps.csv")
