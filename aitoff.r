@@ -48,6 +48,7 @@ done = as.data.frame(list.files(path = paste0(pwd()), pattern = "_"))
 colnames(done) = "RA_Dec"
 widengrps = data.frame()
 for(RA_Dec in done$RA_Dec){
+  cat(RA_Dec)
   if(paste0(RA_Dec,"_Filtered_Asteroids.csv") %in% list.files(path = paste0("./",RA_Dec,"/")) == FALSE){
     next
   }
