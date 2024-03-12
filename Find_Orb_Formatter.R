@@ -32,9 +32,9 @@ for( i in 1:length(asteroids$groupID)){
   obs = subset(obs_times, subset = grepl(loc, obs_times$frame) == TRUE & grepl(asteroids$Colour[i], obs_times$frame) == TRUE & grepl("i2", obs_times$frame) ==FALSE)
   obs_start = as.POSIXct(obs$obs1)
   obs_end = as.POSIXct(obs$obs5) + (4*60)
-  time_start = ymd_hms(obs_start)
-  ymd_start = format(obs_start, format = "%Y %M %d")
-  ymd_end = format(obs_end, format = "%Y %M %d")
+  #time_start = ymd_hms(obs_start)
+  ymd_start = format(obs_start, format = "%Y %m %d")
+  ymd_end = format(obs_end, format = "%Y %m %d")
   time_start = as.numeric(format(obs_start, format = "%H"))/24 +as.numeric(format(obs_start, format = "%M"))/(24*60) + as.numeric(format(obs_start, format = "%S"))/(24*60*60)
   time_end = as.numeric(format(obs_end, format = "%H"))/24 +as.numeric(format(obs_end, format = "%M"))/(24*60) + as.numeric(format(obs_end, format = "%S"))/(24*60*60)
   time_start = as.character(trunc(time_start*10^4)/10^4)
@@ -66,4 +66,4 @@ for( i in 1:length(asteroids$groupID)){
   print(nchar(line))
 }
 
-write.table(output, paste0("./",loc,"/",loc,"_MPC_Format.txt"), sep = "X11", row.names = FALSE, col.names = FALSE)
+write.table(output, paste0("./",loc,"/",loc,"_MPC_Format.txt"), sep = "X11", row.names = FALSE, col.names = FALSE, quote = FALSE)
