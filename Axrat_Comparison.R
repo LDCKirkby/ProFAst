@@ -42,7 +42,7 @@ write.csv(filtered_asteroids, file = paste0("./",loc,"/Filtered_Asteroids.csv"))
 #N100 filter
 N100_filtered_asteroids = subset(filtered_asteroids, N100 >= 100 | N100 >= 100 | N100 >= 100)
 
-write.csv(N100_filtered_asteroids, file = paste0("./",loc,"/N100_Filtered_Asteroids.csv"))
+write.csv(N100_filtered_asteroids, file = paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv"))
 
 
 rm(possible_asteroids, top_tail, filtered_asteroids, N100_filtered_asteroids) 
