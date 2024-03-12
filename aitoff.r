@@ -57,7 +57,7 @@ for(RA_Dec in done$RA_Dec){
   widengrps = try(rbind(widengrps, data))
 }
 #widengrps=fread("/Users/sdriver/Drpbx/waves/mocks/waves-north_grps.csv")
-widesgrps=fread("/Users/sdriver/Drpbx/waves/mocks/waves-south_grps.csv")
+#widesgrps=fread("/Users/sdriver/Drpbx/waves/mocks/waves-south_grps.csv")
 
 # widedgrps=fread("/Users/sdriver/Drpbx/waves/mocks/waves-deep_grps.csv")
 # wideddf1grps=fread("/Users/sdriver/Drpbx/waves/mocks/waves-ddf1_grps.csv")
