@@ -50,6 +50,7 @@ widengrps = data.frame()
 for(RA_Dec in done$RA_Dec){
   cat(RA_Dec,"\n")
   if(paste0(RA_Dec,"_Filtered_Asteroids.csv") %in% list.files(path = paste0("./",RA_Dec,"/")) == FALSE){
+    cat("FALSE")
     next
   }
   data = as.data.frame(read.csv(paste0("./",RA_Dec,"/",RA_Dec,"_Filtered_Asteroids.csv")))
