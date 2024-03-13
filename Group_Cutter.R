@@ -99,16 +99,17 @@ for(i in 1:length(asteroids$groupID)){
   par(mfrow=c(1,1),mar=c(3,3,2,2))
   
   
-  locut = c(median(cutim_Z$imDat,na.rm=TRUE),median(cutim_r$imDat,na.rm=TRUE),median(cutim_g$imDat,na.rm=TRUE))
-  if(locut[[1]] > kids){
-    locut[[1]] = kids
-  }
-  if(locut[[2]] > kids){
-    locut[[2]] = kids
-  }
-  if(locut[[3]] > kids){
-    locut[[3]] = kids
-  }
+  # locut = c(median($imDat,na.rm=TRUE),median(cutim_r$imDat,na.rm=TRUE),median(cutim_g$imDat,na.rm=TRUE))
+  # if(locut[[1]] > kids){
+  #   locut[[1]] = kids
+  # }
+  # if(locut[[2]] > kids){
+  #   locut[[2]] = kids
+  # }
+  # if(locut[[3]] > kids){
+  #   locut[[3]] = kids
+  # }
+  locut = c(kids, kids, kids)
   
   cat("Time to start printing images!\n")
   Rwcs_imageRGB(R=cutim_r,G=cutim_g,B=cutim_Z, Rheader=r_image$header,Gheader=r_image$header,Bheader=Z_image$header, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num",dowarp=FALSE, hersh = FALSE, grid = TRUE)
