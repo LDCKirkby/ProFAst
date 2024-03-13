@@ -23,10 +23,10 @@ Pre_Proc <- function(loc){
   #i2=Rfits_read_image(paste0("/Volumes/WAVES/waves/wavesdata/kids/dr5/preprocessed/KIDS_",loc,"_i2_DMAG.fits"))
   #
   cat("Resizing images\n")
-  rx=propaneWarp(r,keyvalues_out=r$keyvalues)
+  rx=propaneWarp(r,keyvalues_out=g$keyvalues)
   remove(r)
 
-  i1x=propaneWarp(i1,keyvalues_out=i1$keyvalues)
+  i1x=propaneWarp(i1,keyvalues_out=g$keyvalues)
   remove(i1)
   #i2x=propaneWarp(i2,keyvalues_out=g$keyvalues)
   # 
