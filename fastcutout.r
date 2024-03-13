@@ -53,11 +53,14 @@ contplot=function(ID, groupimage, groupcol, target = FALSE){
   big[bottom_right[[1]],bottom_right[[2]]] = 3
   big[bottom_left[[1]],bottom_left[[2]]] = 4
   
-  
-  # par(bg = "black", col = "white", col.axis = "white", col.lab = "white")
-  plot(NA, xlim = c(1, ncol(groupimage)), ylim = c(1, nrow(groupimage)), xlab = "x", ylab = "y", xaxt = "n", yaxt = "n")
+  x = c(top_right[[1]],bottom_right[[1]],top_left[[1]],bottom_left[[1]])
+  y = c(top_right[[2]],bottom_right[[2]],top_left[[2]],bottom_left[[2]])
+  locations = cbind(x,y)
+
+  #plot(NA, xlim = c(1, ncol(groupimage)), ylim = c(1, nrow(groupimage)), xlab = "x", ylab = "y", xaxt = "n", yaxt = "n")
   magimage(groupimage,col=c(NA,rep(groupcol,max(groupimage))),magmap=FALSE,add=TRUE,sparse=1)
-  magimage(big, col=c("hotpink","violet","wheat","yellow"), magmap=FALSE,add=TRUE, sparse=1, pch = 4)
+  points(locations, col=c("hotpink","pink","orange","orangered"), add=TRUE, pch = 4, lwd = 3)
+  #magimage(big, col=c("hotpink","violet","wheat","yellow"), magmap=FALSE,add=TRUE, sparse=1, pch = 4)
 
 }
 #

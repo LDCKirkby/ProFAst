@@ -17,7 +17,6 @@ Group_Cutter <- function(loc){#, images){
   
 #Make a directory to save the cutouts
 dir.create(paste0("./",loc,"/Group_Cutouts"))
-wid = 200.0
   
   
 #Read in asteroid data
@@ -37,7 +36,7 @@ groupim <- profoundSegimGroup(segim = segim)
 
 #trim=readRDS(paste0("./",loc,"/stacked.rds"))
 cat("Loading images as pointers\n")
-g_image = Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
+g_image = Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
 r_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
 i_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_u_DMAG.fits"),header=TRUE,ext=1)
 
@@ -48,6 +47,8 @@ i_image=propaneWarp(i_image_input,keyvalues_out=g_image$keyvalues)
 # g_image = images[[1]]
 # r_image = images[[2]]
 # i_image = images[[3]]
+
+wid = 200.0
 
 cat("Begin iterating through asteroids\n")
 for(i in 1:length(asteroids$groupID)){
@@ -61,20 +62,14 @@ for(i in 1:length(asteroids$groupID)){
   galradec=asteroids[asteroids$groupID == ID, c("RAcen", "Deccen")]
   #galradec=trim$pro_detect$groupstats[trim$pro_detect$groupstats$groupID==groupID, c("RAcen","Deccen")]
   
-  galpos=as.integer(Rwcs_s2p(RA=galradec$RAcen,Dec=galradec$Deccen,keyvalues=g_image$keyvalues))
+  galpos=as.integer(Rwcs_s2p(RA=galradec$RAcen,Dec=galradec$Deccen,keyvalues=g_image$keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
   
   box=c(2*wid,2*wid)
   cutim_g=g_image[galpos,box=box]
   cutim_r=r_image[galpos,box=box]
   cutim_i=i_image[galpos,box=box]
   
-  print(cutim_g)
-  print(cutim_r)
-  print(cutim_i)
-  
-  #
   #cutseg_orig=magcutoutWCS(image = segim_orig, g_image$header , loc=as.numeric(galpos), box=box, loc.type="image")
-
   #cutseg_dilate=magcutoutWCS(image = segim, g_image$header,loc=as.numeric(galpos),box=box,loc.type="image")
   #cutgroup_dilate=groupim$groupim[galpos,box=box]
   cutgroup_dilate=magcutout(image = groupim$groupim, header=g_image$header, loc=as.numeric(galpos),box=box,loc.type="image")
@@ -116,40 +111,34 @@ for(i in 1:length(asteroids$groupID)){
   if(locut[[3]] > kids){
     locut[[3]] = kids
   }
-  # locut = c(kids, kids, kids)
+  #locut = c(kids, kids, kids)
   
   cat("Time to start printing images!\n")
   Rwcs_imageRGB(R=cutim_r,G=cutim_g,B=cutim_i, Rkeyvalues = r_image$keyvalues, Gkeyvalues = g_image$keyvalues,Bkeyvalues = i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
   
   #contplot(galgroupIDs,cutseg_dilate$image,"purple",wid,2)
-  
-  contplot(galgroupIDs,cutgroup_dilate$image, "skyblue", target = FALSE)
+  #contplot(galgroupIDs,cutgroup_dilate$image, "skyblue", target = FALSE)
   #contplot(segID,cutseg_dilate$image,"deeppink",wid,3)?
   
   if(asteroids[asteroids$groupID == ID, "Colour"] == "g"){
     cat("Printing green asteroid. GroupID: ", ID, "\n")
     contplot(ID, cutgroup_dilate$image, "green", target = TRUE)
-    text(1,100,label=paste0("ID=",ID),col="green",cex=2.0)#,pos=4)
+    text(1,2*wid-50,label=paste0("ID=",ID),col="green",cex=2.0,pos=4)
   }
   
   if(asteroids[asteroids$groupID == ID, "Colour"] == "r"){
     cat("Printing red asteroid. GroupID: ", ID, "\n")
     contplot(ID, cutgroup_dilate$image, "red", target = TRUE)
-    text(1,100,label=paste0("ID=",ID),col="red",cex=2.0)#,pos=4)
+    text(1,2*wid-50,label=paste0("ID=",ID),col="red",cex=2.0,pos=4)
   }
   
   if(asteroids[asteroids$groupID == ID, "Colour"] == "i"){
     cat("Printing blue asteroid. GroupID: ", ID, "\n")
     contplot(ID, cutgroup_dilate$image, "blue", target =TRUE)
-    text(1,100,label=paste0("ID=",ID),col="blue",cex=2.0)#,pos=4)
+    text(1,2*wid-50,label=paste0("ID=",ID),col="blue",cex=1.5,pos=4)
   }
-  #
-  #
+
   dev.off()
-  # 
-  # 
-  
- 
 
 
 }
