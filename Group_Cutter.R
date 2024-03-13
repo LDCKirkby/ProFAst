@@ -36,16 +36,18 @@ groupim <- profoundSegimGroup(segim = segim)
 #header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"))
 
 #trim=readRDS(paste0("./",loc,"/stacked.rds"))
-
+cat("Loading images as pointers\n")
 g_image= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
 r_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
-Z_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_u_DMAG.fits"),header=TRUE,ext=1)
+i_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_u_DMAG.fits"),header=TRUE,ext=1)
+
+cat("Warping r&i frames")
 r_image=propaneWarp(r_image_input,keyvalues_out=g_image$keyvalues)
-Z_image=propaneWarp(Z_image_input,keyvalues_out=g_image$keyvalues)
+i_image=propaneWarp(i_image_input,keyvalues_out=g_image$keyvalues)
 
 # g_image = images[[1]]
 # r_image = images[[2]]
-# Z_image = images[[3]]
+# i_image = images[[3]]
 
 cat("Begin iterating through asteroids\n")
 for(i in 1:length(asteroids$groupID)){
@@ -64,7 +66,7 @@ for(i in 1:length(asteroids$groupID)){
   box=c(2*wid,2*wid)
   cutim_g=g_image[galpos,box=box]
   cutim_r=r_image[galpos,box=box]
-  cutim_Z=Z_image[galpos,box=box]
+  cutim_i=i_image[galpos,box=box]
   #
   #cutseg_orig=magcutoutWCS(image = segim_orig, g_image$header , loc=as.numeric(galpos), box=box, loc.type="image")
 
@@ -112,8 +114,8 @@ for(i in 1:length(asteroids$groupID)){
   locut = c(kids, kids, kids)
   
   cat("Time to start printing images!\n")
-  Rwcs_imageRGB(R=cutim_r,G=cutim_g,B=cutim_Z,Rkeyvalues = r_image$keyvalues, Gkeyvalues = g_image$keyvalues,
-                Bkeyvalues = Z_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
+  Rwcs_imageRGB(R=cutim_r,G=cutim_g,B=cutim_i,Rkeyvalues = r_image$keyvalues, Gkeyvalues = g_image$keyvalues,
+                Bkeyvalues = i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
   
   #contplot(galgroupIDs,cutseg_dilate$image,"purple",wid,2)
   
