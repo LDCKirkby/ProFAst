@@ -84,7 +84,10 @@ for(i in 1:length(asteroids$groupID)){
   mulim=22.0
   kids=(0.339^2)*(10^(0.4*(0-mulim)))
   viking=(0.339^2)*(10^(0.4*(30-mulim)))
-  
+  if(length(asteroids$groupID == ID) > 1){
+    cat("Printing U",ID," postage stamp\n")
+    png(filename=paste0("./",loc,"/Group_Cutouts/U",ID,".png"))
+  }
   
   if(asteroids[asteroids$groupID == ID, "Colour"] == "g"){
     cat("Printing G",ID," postage stamp\n")
@@ -120,22 +123,27 @@ for(i in 1:length(asteroids$groupID)){
   #contplot(galgroupIDs,cutgroup_dilate$image, "skyblue", target = FALSE)
   #contplot(segID,cutseg_dilate$image,"deeppink",wid,3)?
   
+  if(length(asteroids$groupID == ID) > 1){
+    cat("Printing asteroid of unknown colour. GroupID: ", ID, "\n")
+    contplot(ID, cutgroup_dilate$image, col = rainbow(5), target = TRUE)
+    text(1,2*wid-50,label=paste0("ID=U",ID),col = rainbow(5),cex=2.0,pos=4)
+  }
   if(asteroids[asteroids$groupID == ID, "Colour"] == "g"){
     cat("Printing green asteroid. GroupID: ", ID, "\n")
     contplot(ID, cutgroup_dilate$image, "green", target = TRUE)
-    text(1,2*wid-50,label=paste0("ID=",ID),col="green",cex=2.0,pos=4)
+    text(1,2*wid-50,label=paste0("ID=G",ID),col="green",cex=2.0,pos=4)
   }
   
   if(asteroids[asteroids$groupID == ID, "Colour"] == "r"){
     cat("Printing red asteroid. GroupID: ", ID, "\n")
     contplot(ID, cutgroup_dilate$image, "red", target = TRUE)
-    text(1,2*wid-50,label=paste0("ID=",ID),col="red",cex=2.0,pos=4)
+    text(1,2*wid-50,label=paste0("ID=R",ID),col="red",cex=2.0,pos=4)
   }
   
   if(asteroids[asteroids$groupID == ID, "Colour"] == "i"){
     cat("Printing blue asteroid. GroupID: ", ID, "\n")
     contplot(ID, cutgroup_dilate$image, "blue", target =TRUE)
-    text(1,2*wid-50,label=paste0("ID=",ID),col="blue",cex=1.5,pos=4)
+    text(1,2*wid-50,label=paste0("ID=B",ID),col="blue",cex=1.5,pos=4)
   }
 
   dev.off()
