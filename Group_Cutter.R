@@ -38,10 +38,10 @@ groupim <- profoundSegimGroup(segim = segim)
 #trim=readRDS(paste0("./",loc,"/stacked.rds"))
 
 g_image= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
-r_image= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
-Z_image= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_u_DMAG.fits"),header=TRUE,ext=1)
-r_image=propaneWarp(r_image,keyvalues_out=g_image$keyvalues, header_out = r_image$header)
-Z_image=propaneWarp(Z_image,keyvalues_out=g_image$keyvalues, header_out = Z_image$header)
+r_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
+Z_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_u_DMAG.fits"),header=TRUE,ext=1)
+r_image=propaneWarp(r_image_input,keyvalues_out=g_image$keyvalues)
+Z_image=propaneWarp(Z_image_input,keyvalues_out=g_image$keyvalues)
 
 # g_image = images[[1]]
 # r_image = images[[2]]
@@ -111,7 +111,7 @@ for(i in 1:length(asteroids$groupID)){
   }
   
   cat("Time to start printing images!\n")
-  Rwcs_imageRGB(R=cutim_r,G=cutim_g,B=cutim_Z, Rheader=cutim_r$header,Gheader=cutim_g$header,Bheader=cutim_Z$header, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num",dowarp=FALSE, hersh = FALSE, grid = TRUE)
+  Rwcs_imageRGB(R=cutim_r,G=cutim_g,B=cutim_Z, Rheader=r_image$header,Gheader=r_image$header,Bheader=Z_image$header, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num",dowarp=FALSE, hersh = FALSE, grid = TRUE)
   #contplot(galgroupIDs,cutseg_dilate$image,"purple",wid,2)
   
   contplot(galgroupIDs,cutgroup_dilate$image, "skyblue", wid,4)
