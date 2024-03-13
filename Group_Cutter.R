@@ -33,13 +33,12 @@ segim <- as.matrix(read.csv(paste0("./",loc,"/segim.csv")))
 cat("Generating groupim\n")
 groupim <- profoundSegimGroup(segim = segim)
 
-header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"))
-
+#header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"))
 #trim=readRDS(paste0("./",loc,"/stacked.rds"))
 
-g_image= Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
-r_image= Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
-Z_image= Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_u_DMAG.fits"),header=TRUE,ext=1)
+g_image= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
+r_image= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
+Z_image= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_u_DMAG.fits"),header=TRUE,ext=1)
 r_image=propaneWarp(r_image,keyvalues_out=g_image$keyvalues, header_out = r_image$header)
 Z_image=propaneWarp(Z_image,keyvalues_out=g_image$keyvalues, header_out = Z_image$header)
 
@@ -69,8 +68,7 @@ for(i in 1:length(asteroids$groupID)){
   #cutseg_orig=magcutoutWCS(image = segim_orig, g_image$header , loc=as.numeric(galpos), box=box, loc.type="image")
 
   #cutseg_dilate=magcutoutWCS(image = segim, g_image$header,loc=as.numeric(galpos),box=box,loc.type="image")
-  cat("Here's hoping it doesn't break here );\n")
-  cutgroup_dilate=magcutoutWCS(image = groupim$groupim, header, loc=as.numeric(galpos),box=box,loc.type="image")
+  cutgroup_dilate=Rwcs_imageRGB(R=cutim_r,G=cutim_g, B=cutim_Z, loc=as.numeric(galpos),box=box,loc.type="image")
   #cutgroup_dilate=magcutoutWCS(trim$pro_detect$group$groupim,trim$pro_detect$header,loc=as.numeric(galpos),box=box,loc.type="image")
   
   
@@ -111,7 +109,7 @@ for(i in 1:length(asteroids$groupID)){
   }
   
   cat("Time to start printing images!\n")
-  magimageWCSRGB(R=cutim_r$imDat,G=cutim_g$imDat,B=cutim_Z$imDat, Rheader=cutim_r$header,Gheader=cutim_g$header,Bheader=cutim_Z$header, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num",dowarp=FALSE, hersh = FALSE, grid = TRUE)
+  Rwcs_imageRGB(R=cutim_r$imDat,G=cutim_g$imDat,B=cutim_Z$imDat, Rheader=cutim_r$header,Gheader=cutim_g$header,Bheader=cutim_Z$header, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num",dowarp=FALSE, hersh = FALSE, grid = TRUE)
   #contplot(galgroupIDs,cutseg_dilate$image,"purple",wid,2)
   
   contplot(galgroupIDs,cutgroup_dilate$image, "skyblue", wid,4)
