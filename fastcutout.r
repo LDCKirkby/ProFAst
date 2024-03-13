@@ -13,9 +13,11 @@ library('plotrix')
 require(foreign)
 require(MASS)
 #
-contplot=function(ID, groupimage, groupcol){
+contplot=function(ID, groupimage, groupcol, target = FALSE){
   `%notin%`<-Negate(`%in%`)
-  groupimage[groupimage%notin%ID]=0
+  if(target == FALSE){
+    groupimage[groupimage%in%ID]=0
+  } else{groupimage[groupimage%notin%ID]=0}
   
   
   xrun=1:(dim(groupimage)[1]-1)

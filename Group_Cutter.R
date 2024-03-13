@@ -123,24 +123,24 @@ for(i in 1:length(asteroids$groupID)){
   
   #contplot(galgroupIDs,cutseg_dilate$image,"purple",wid,2)
   
-  #contplot(galgroupIDs,cutgroup_dilate$image, "skyblue", wid,4)
+  contplot(galgroupIDs,cutgroup_dilate$image, "skyblue", target = FALSE)
   #contplot(segID,cutseg_dilate$image,"deeppink",wid,3)?
   
   if(asteroids[asteroids$groupID == ID, "Colour"] == "g"){
     cat("Printing green asteroid. GroupID: ", ID, "\n")
-    contplot(ID, cutgroup_dilate$image, "green")
+    contplot(ID, cutgroup_dilate$image, "green", target = TRUE)
     text(1,100,label=paste0("ID=",ID),col="green",cex=2.0)#,pos=4)
   }
   
   if(asteroids[asteroids$groupID == ID, "Colour"] == "r"){
     cat("Printing red asteroid. GroupID: ", ID, "\n")
-    contplot(ID, cutgroup_dilate$image, "red")
+    contplot(ID, cutgroup_dilate$image, "red", target = TRUE)
     text(1,100,label=paste0("ID=",ID),col="red",cex=2.0)#,pos=4)
   }
   
   if(asteroids[asteroids$groupID == ID, "Colour"] == "i"){
     cat("Printing blue asteroid. GroupID: ", ID, "\n")
-    contplot(ID, cutgroup_dilate$image, "blue")
+    contplot(ID, cutgroup_dilate$image, "blue", target =TRUE)
     text(1,100,label=paste0("ID=",ID),col="blue",cex=2.0)#,pos=4)
   }
   #
