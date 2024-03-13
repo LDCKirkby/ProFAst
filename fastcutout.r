@@ -13,7 +13,7 @@ library('plotrix')
 require(foreign)
 require(MASS)
 #
-contplot=function(ID, groupimage, groupcol, header = Na){
+contplot=function(ID, groupimage, groupcol){
   `%notin%`<-Negate(`%in%`)
   groupimage[groupimage%notin%ID]=0
   
