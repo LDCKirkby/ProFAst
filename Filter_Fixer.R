@@ -61,12 +61,12 @@ library(dplyr, quietly = TRUE)
     RA_DEC = paste0(kids$RA[i],".0_",kids$Dec[i])
   }
   cat("*************\n","Beginning Detection on:",RA_DEC,"\n","*************\n")
-  Pre_Proc_RAM = peakRAM(data <- Pre_Proc(RA_DEC))
-  post_text_to_ntfy(paste0("Time elapsed for ",RA_DEC," :", Pre_Proc_RAM$Elapsed_Time_sec,
-                           "\nTotal RAM used during Pre_Proc for ", RA_DEC," :", Pre_Proc_RAM$Total_RAM_Used_MiB,
-                           "\nMax RAM used during Pre_Proc for ", RA_DEC," :", Pre_Proc_RAM$Peak_RAM_Used_MiB))
-  frames = data[[1]]
-  run_time = data[[2]]
+  # Pre_Proc_RAM = peakRAM(data <- Pre_Proc(RA_DEC))
+  # post_text_to_ntfy(paste0("Time elapsed for ",RA_DEC," :", Pre_Proc_RAM$Elapsed_Time_sec,
+  #                          "\nTotal RAM used during Pre_Proc for ", RA_DEC," :", Pre_Proc_RAM$Total_RAM_Used_MiB,
+  #                          "\nMax RAM used during Pre_Proc for ", RA_DEC," :", Pre_Proc_RAM$Peak_RAM_Used_MiB))
+  # frames = data[[1]]
+  # run_time = data[[2]]
   #New_Detect_RAM = peakRAM(all_data = New_Detect(RA_DEC, frames, run_time))
   #post_text_to_ntfy(paste0("Time elapsed for ",RA_DEC," :", New_Detect_RAM$Elapsed_Time_sec, 
   #                         "\nTotal RAM used during New_Detect for ", RA_DEC," :", New_Detect_RAM$Total_RAM_Used_MiB,
@@ -82,7 +82,7 @@ library(dplyr, quietly = TRUE)
                            "\nTotal RAM used during Axrat_Comparison for ", RA_DEC," :", Axrat_Comparison_RAM$Total_RAM_Used_MiB,
                            "\nMax RAM used during Axrat_Comparison for ", RA_DEC," :", Axrat_Comparison_RAM$Peak_RAM_Used_MiB))
 
-  Group_Cutter_RAM = peakRAM(Group_Cutter(RA_DEC, frames))
+  Group_Cutter_RAM = peakRAM(Group_Cutter(RA_DEC))#, frames))
   post_text_to_ntfy(paste0("Time elapsed for ",RA_DEC," :", Group_Cutter_RAM$Elapsed_Time_sec,
                            "\nTotal RAM used during Group_Cutter for ", RA_DEC," :", Group_Cutter_RAM$Total_RAM_Used_MiB,
                            "\nMax RAM used during Group_Cutter for ", RA_DEC," :", Group_Cutter_RAM$Peak_RAM_Used_MiB))

@@ -13,7 +13,7 @@
 # source("./R_files/fastcutout.r")
 
 #
-Group_Cutter <- function(loc, images){
+Group_Cutter <- function(loc){#, images){
   
 #Make a directory to save the cutouts
 dir.create(paste0("./",loc,"/Group_Cutouts"))
@@ -36,15 +36,16 @@ groupim <- profoundSegimGroup(segim = segim)
 header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"))
 
 #trim=readRDS(paste0("./",loc,"/stacked.rds"))
-# g_image= Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
-# r_image= Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
-# Z_image= Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_u_DMAG.fits"),header=TRUE,ext=1)
-# r_image=propaneWarp(r_image,keyvalues_out=g_image$keyvalues)
-# Z_image=propaneWarp(Z_image,keyvalues_out=g_image$keyvalues)
 
-g_image = images[[1]]
-r_image = images[[2]]
-Z_image = images[[3]]
+g_image= Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
+r_image= Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
+Z_image= Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_u_DMAG.fits"),header=TRUE,ext=1)
+r_image=propaneWarp(r_image,keyvalues_out=g_image$keyvalues)
+Z_image=propaneWarp(Z_image,keyvalues_out=g_image$keyvalues)
+
+# g_image = images[[1]]
+# r_image = images[[2]]
+# Z_image = images[[3]]
 
 cat("Begin iterating through asteroids\n")
 for(i in 1:length(asteroids$groupID)){
