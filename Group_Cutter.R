@@ -40,8 +40,8 @@ header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/d
 g_image= Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
 r_image= Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
 Z_image= Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_u_DMAG.fits"),header=TRUE,ext=1)
-r_image=propaneWarp(r_image,keyvalues_out=g_image$keyvalues)
-Z_image=propaneWarp(Z_image,keyvalues_out=g_image$keyvalues)
+r_image=propaneWarp(r_image,keyvalues_out=g_image$keyvalues, header_out = r_image$header)
+Z_image=propaneWarp(Z_image,keyvalues_out=g_image$keyvalues, header_out = Z_image$header)
 
 # g_image = images[[1]]
 # r_image = images[[2]]
