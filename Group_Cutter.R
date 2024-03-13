@@ -26,7 +26,7 @@ asteroids <- as.data.frame(read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Aste
 
 
 cat("Reading in segmentation map data\n")
-segim_orig <- as.matrix(read.csv(paste0("./",loc,"/segim_orig.csv")))
+#segim_orig <- as.matrix(read.csv(paste0("./",loc,"/segim_orig.csv")))
 
 segim <- as.matrix(read.csv(paste0("./",loc,"/segim.csv")))
 
@@ -40,8 +40,8 @@ groupim <- profoundSegimGroup(segim = segim)
 g_image= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
 r_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
 Z_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_u_DMAG.fits"),header=TRUE,ext=1)
-r_image=propaneWarp(r_image_input,keyvalues_out=g_image$keyvalues)
-Z_image=propaneWarp(Z_image_input,keyvalues_out=g_image$keyvalues)
+r_image=propaneWarp(r_image_input,keyvalues_out=r_image$keyvalues)
+Z_image=propaneWarp(Z_image_input,keyvalues_out=Z_image$keyvalues)
 
 # g_image = images[[1]]
 # r_image = images[[2]]
@@ -53,7 +53,7 @@ for(i in 1:length(asteroids$groupID)){
   ID=asteroids$groupID[i]
   cat("Imaging ", ID,"\n")
   
-  galpos=asteroids[asteroids$groupID == ID, c("xmax","ymax")]
+  #galpos=asteroids[asteroids$groupID == ID, c("xmax","ymax")]
   #galpos=trim$pro_detect$groupstats[trim$pro_detect$groupstats$groupID==groupID, c("xmax","ymax")] 
   
   galradec=asteroids[asteroids$groupID == ID, c("RAcen", "Deccen")]
@@ -69,8 +69,8 @@ for(i in 1:length(asteroids$groupID)){
   #cutseg_orig=magcutoutWCS(image = segim_orig, g_image$header , loc=as.numeric(galpos), box=box, loc.type="image")
 
   #cutseg_dilate=magcutoutWCS(image = segim, g_image$header,loc=as.numeric(galpos),box=box,loc.type="image")
-  cutseg_dilate=groupim$groupim[galpos,box=box]
-  #cutgroup_dilate=magcutoutWCS(image = groupim$groupim, header=g_image$header, loc=as.numeric(galpos),box=box,loc.type="image")
+  #cutgroup_dilate=groupim$groupim[galpos,box=box]
+  cutgroup_dilate=magcutout(image = groupim$groupim, header=g_image$header, loc=as.numeric(galpos),box=box,loc.type="image")
   #cutgroup_dilate=magcutoutWCS(trim$pro_detect$group$groupim,trim$pro_detect$header,loc=as.numeric(galpos),box=box,loc.type="image")
   
   
@@ -86,15 +86,15 @@ for(i in 1:length(asteroids$groupID)){
   
   if(asteroids[asteroids$groupID == ID, "Colour"] == "g"){
     cat("Printing G",ID," postage stamp\n")
-    png(filename=paste0("./",loc,"Group_Cutouts/G",ID,".png"))
+    png(filename=paste0("./",loc,"/Group_Cutouts/G",ID,".png"))
   }
-  else if(asteroids[asteroids$groupID == ID, "Colour"] == "r"){
+  if(asteroids[asteroids$groupID == ID, "Colour"] == "r"){
     cat("Printing R",ID," postage stamp\n")
-    png(filename=paste0("./",loc,"Group_Cutouts/R",ID,".png"))
+    png(filename=paste0("./",loc,"/Group_Cutouts/R",ID,".png"))
   }
-  else if(asteroids[asteroids$groupID == ID, "Colour"] == "i"){
+  if(asteroids[asteroids$groupID == ID, "Colour"] == "i"){
     cat("Printing I",ID," postage stamp\n")
-  png(filename=paste0("./",loc,"Group_Cutouts/I",ID,".png"))
+  png(filename=paste0("./",loc,"/Group_Cutouts/I",ID,".png"))
   }
   par(mfrow=c(1,1),mar=c(3,3,2,2))
   
@@ -112,27 +112,28 @@ for(i in 1:length(asteroids$groupID)){
   locut = c(kids, kids, kids)
   
   cat("Time to start printing images!\n")
-  Rwcs_imageRGB(R=cutim_r,G=cutim_g,B=cutim_Z, Rkeyvalues=r_image$header,Gkeyvalyes=g_image$header,Bkeyvalues=Z_image$header, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg", dowarp=FALSE)#,locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE)#, hersh = FALSE, grid = TRUE)
+  Rwcs_imageRGB(R=cutim_r,G=cutim_g,B=cutim_Z, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
+  
   #contplot(galgroupIDs,cutseg_dilate$image,"purple",wid,2)
   
-  contplot(galgroupIDs,cutgroup_dilate$image, "skyblue", wid,4)
+  #contplot(galgroupIDs,cutgroup_dilate$image, "skyblue", wid,4)
   #contplot(segID,cutseg_dilate$image,"deeppink",wid,3)?
   
   if(asteroids[asteroids$groupID == ID, "Colour"] == "g"){
     cat("Printing green asteroid. GroupID: ", ID, "\n")
-    contplot(groupID, cutgroup_dilate$image, "green", wid, 4)
+    contplot(ID, cutgroup_dilate$image, "green", wid, 4)
     text(1,100,label=paste0("ID=",groupID),col="green",cex=2.0)#,pos=4)
   }
   
-  else if(asteroids[asteroids$groupID == ID, "Colour"] == "r"){
-    cat("Printing red asteroid. GroupID: ", groupID, "\n")
-    contplot(groupID, cutgroup_dilate$image, "red", wid, 4)
+  if(asteroids[asteroids$groupID == ID, "Colour"] == "r"){
+    cat("Printing red asteroid. GroupID: ", ID, "\n")
+    contplot(ID, cutgroup_dilate$image, "red", wid, 4)
     text(1,100,label=paste0("ID=",groupID),col="red",cex=2.0)#,pos=4)
   }
   
-  else if(asteroids[asteroids$groupID == ID, "Colour"] == "i"){
-    cat("Printing blue asteroid. GroupID: ", groupID, "\n")
-    contplot(groupID, cutgroup_dilate$image, "blue", wid, 4)
+  if(asteroids[asteroids$groupID == ID, "Colour"] == "i"){
+    cat("Printing blue asteroid. GroupID: ", ID, "\n")
+    contplot(ID, cutgroup_dilate$image, "blue", wid, 4)
     text(1,100,label=paste0("ID=",groupID),col="blue",cex=2.0)#,pos=4)
   }
   #
