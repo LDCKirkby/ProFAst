@@ -67,6 +67,11 @@ for(i in 1:length(asteroids$groupID)){
   cutim_g=g_image[galpos,box=box]
   cutim_r=r_image[galpos,box=box]
   cutim_i=i_image[galpos,box=box]
+  
+  print(cutim_g)
+  print(cutim_r)
+  print(cutim_i)
+  
   #
   #cutseg_orig=magcutoutWCS(image = segim_orig, g_image$header , loc=as.numeric(galpos), box=box, loc.type="image")
 
