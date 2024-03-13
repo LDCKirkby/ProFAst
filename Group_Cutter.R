@@ -40,8 +40,8 @@ groupim <- profoundSegimGroup(segim = segim)
 g_image= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
 r_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
 Z_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_u_DMAG.fits"),header=TRUE,ext=1)
-r_image=propaneWarp(r_image_input,keyvalues_out=r_image$keyvalues)
-Z_image=propaneWarp(Z_image_input,keyvalues_out=Z_image$keyvalues)
+r_image=propaneWarp(r_image_input,keyvalues_out=r_image_input$keyvalues)
+Z_image=propaneWarp(Z_image_input,keyvalues_out=Z_image_input$keyvalues)
 
 # g_image = images[[1]]
 # r_image = images[[2]]
