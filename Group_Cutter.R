@@ -112,7 +112,8 @@ for(i in 1:length(asteroids$groupID)){
   locut = c(kids, kids, kids)
   
   cat("Time to start printing images!\n")
-  Rwcs_imageRGB(R=cutim_r,G=cutim_g,B=cutim_Z, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
+  Rwcs_imageRGB(R=cutim_r,G=cutim_g,B=cutim_Z,Rkeyvalues = r_image$keyvalues, Gkeyvalues = g_image$keyvalues,
+                Bkeyvalues = Z_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
   
   #contplot(galgroupIDs,cutseg_dilate$image,"purple",wid,2)
   
