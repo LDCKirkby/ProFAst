@@ -22,7 +22,7 @@ wid = 200.0
   
 #Read in asteroid data
 cat("Reading in asteroid data\n")
-asteroids <- as.data.frame(read.csv(paste0("./",loc,"/N100_Filtered_Asteroids.csv")))
+asteroids <- as.data.frame(read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv")))
 
 
 cat("Reading in segmentation map data\n")
