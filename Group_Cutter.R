@@ -37,7 +37,7 @@ groupim <- profoundSegimGroup(segim = segim)
 
 #trim=readRDS(paste0("./",loc,"/stacked.rds"))
 cat("Loading images as pointers\n")
-g_image = Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
+g_image = Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
 r_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
 i_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_u_DMAG.fits"),header=TRUE,ext=1)
 
@@ -119,8 +119,7 @@ for(i in 1:length(asteroids$groupID)){
   locut = c(kids, kids, kids)
   
   cat("Time to start printing images!\n")
-  Rwcs_imageRGB(R=cutim_r,G=cutim_g,B=cutim_i,Rkeyvalues = r_image$keyvalues, Gkeyvalues = g_image$keyvalues,
-                Bkeyvalues = i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
+  Rwcs_imageRGB(R=cutim_r,G=cutim_g,B=cutim_i, Rkeyvalues = r_image$keyvalues, Gkeyvalues = g_image$keyvalues,Bkeyvalues = i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
   
   #contplot(galgroupIDs,cutseg_dilate$image,"purple",wid,2)
   
