@@ -59,8 +59,9 @@ contplot=function(ID, groupimage, groupcol, target = FALSE){
 
   #plot(NA, xlim = c(1, ncol(groupimage)), ylim = c(1, nrow(groupimage)), xlab = "x", ylab = "y", xaxt = "n", yaxt = "n")
   magimage(groupimage,col=c(NA,rep(groupcol,max(groupimage))),magmap=FALSE,add=TRUE,sparse=1)
-  points(locations, col=c("hotpink","pink","orange","orangered"), add=TRUE, pch = 4, lwd = 3, labels = )
-  legend("topright", legend = c("Top Right", "Bottom Right", "Top Left", "Bottom Left"), pch = c(3,3,3,3), col = c("hotpink","pink","orange","orangered"))
+  points(locations, col=c("hotpink","pink","orange","orangered"), add=TRUE, pch = 4, lwd = 3)
+  legend(x ="topright", legend = c("Top Right", "Bottom Right", "Top Left", "Bottom Left"), pch = c(3,3,3,3), col = c("hotpink","pink","orange","orangered"))
+  
   #magimage(big, col=c("hotpink","violet","wheat","yellow"), magmap=FALSE,add=TRUE, sparse=1, pch = 4)
 
 }
