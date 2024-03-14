@@ -137,22 +137,22 @@ for(i in 1:length(asteroids$groupID)){
   #contplot(segID,cutseg_dilate$image,"deeppink",wid,3)?
   
   if(length(which(asteroids$groupID == ID)) > 1){
-    col = rainbow(5)
+    colour = rainbow(5)
     
     
       if(asteroids$Colour[i+subID] == "g"){
-        col = "green"
+        colour = "green"
       }
       if(asteroids$Colour[i+subID] == "r"){
-        col = "red"
+        colour = "red"
       }
       if(asteroids$Colour[i+subID] == "i"){
-        col = "blue"
+        colour = "blue"
       }
 
       cat("Printing Double Up Asteroid. GroupID: ", ID,"_",subID, "\n\n")
-      contplot(ID, cutgroup_dilate$image, col = col, target = TRUE)
-      text(1,2*wid-50, label=paste0("ID=U",ID),col = col, cex=2.0, pos=4)
+      contplot(ID, cutgroup_dilate$image, colour, target = TRUE)
+      text(1,2*wid-50, label=paste0("ID=",asteroids$Colour[i+subID],ID), colour, cex=2.0, pos=4)
 
   }else{
   if(asteroids[asteroids$groupID == ID, "Colour"] == "g"){
