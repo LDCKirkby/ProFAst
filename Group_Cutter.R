@@ -92,7 +92,7 @@ for(i in 1:length(asteroids$groupID)){
   subID = 0
   if(n > 1){
     cat("Multiple asteroids with groupID: ",ID,"\n")
-    for(j in 0:n){
+    for(j in 0:n-1){
       if(paste0("./",loc,"/Group_Cutouts/",asteroids$Colour[i+j],ID,"_",j,".png") %notin% list.files(paste0("./",loc,"/Group_Cutouts/"))){
         png(filename=paste0("./",loc,"/Group_Cutouts/",asteroids$Colour[i+j],ID,"_",j,".png"))
         subID = j
