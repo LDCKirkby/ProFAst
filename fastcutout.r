@@ -1,17 +1,17 @@
 #
 # Plot groupimage for individual object
 #
-library(celestial)
-library(devtools)
-library(Cairo)
-library(Rfits)
-library(Rwcs)
-library(ProFound)
-library('magicaxis')
-library('data.table')
-library('plotrix')
-require(foreign)
-require(MASS)
+# library(celestial)
+# library(devtools)
+# library(Cairo)
+# library(Rfits)
+# library(Rwcs)
+# library(ProFound)
+# library('magicaxis')
+# library('data.table')
+# library('plotrix')
+# require(foreign)
+# require(MASS)
 #
 contplot=function(ID, groupimage, groupcol, target = FALSE){
   print(ID)

@@ -56,7 +56,7 @@ library(dplyr, quietly = TRUE)
   
     
   if(grepl(".", kids$RA[i], fixed = TRUE)){
-    RA_DEC = paste0(kids$RA[i],"_",kids$Dec[i])
+    RA_DEC = paste0(kids$RA[i],"_",kids$Dec[i]) 
   }else{
     RA_DEC = paste0(kids$RA[i],".0_",kids$Dec[i])
   }
