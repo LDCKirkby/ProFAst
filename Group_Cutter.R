@@ -150,25 +150,25 @@ for(i in 1:length(asteroids$groupID)){
         col = "blue"
       }
 
-      cat("Printing Double Up Asteroid. GroupID: ", ID,"_",subID, "\n")
+      cat("Printing Double Up Asteroid. GroupID: ", ID,"_",subID, "\n\n")
       contplot(ID, cutgroup_dilate$image, col = col, target = TRUE)
       text(1,2*wid-50, label=paste0("ID=U",ID),col = col, cex=2.0, pos=4)
 
   }else{
   if(asteroids[asteroids$groupID == ID, "Colour"] == "g"){
-    cat("Printing green asteroid. GroupID: ", ID, "\n")
+    cat("Printing green asteroid. GroupID: ", ID, "\n\n")
     contplot(ID, cutgroup_dilate$image, "green", target = TRUE)
     text(1,2*wid-50,label=paste0("ID=G",ID),col="green",cex=2.0,pos=4)
   }
   
   if(asteroids[asteroids$groupID == ID, "Colour"] == "r"){
-    cat("Printing red asteroid. GroupID: ", ID, "\n")
+    cat("Printing red asteroid. GroupID: ", ID, "\n\n")
     contplot(ID, cutgroup_dilate$image, "red", target = TRUE)
     text(1,2*wid-50,label=paste0("ID=R",ID),col="red",cex=2.0,pos=4)
   }
   
   if(asteroids[asteroids$groupID == ID, "Colour"] == "i"){
-    cat("Printing blue asteroid. GroupID: ", ID, "\n")
+    cat("Printing blue asteroid. GroupID: ", ID, "\n\n")
     contplot(ID, cutgroup_dilate$image, "blue", target =TRUE)
     text(1,2*wid-50,label=paste0("ID=B",ID),col="blue",cex=1.5,pos=4)
   }}
