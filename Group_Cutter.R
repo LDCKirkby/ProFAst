@@ -16,7 +16,9 @@
 Group_Cutter <- function(loc){#, images){
   
 #Make a directory to save the cutouts
-dir.create(paste0("./",loc,"/Group_Cutouts"))
+unlink(paste0("./",loc,"/Group_Cutouts/"), recursive = TRUE)
+dir.create(paste0("./",loc,"/Group_Cutouts/"))
+
   
   
 #Read in asteroid data
