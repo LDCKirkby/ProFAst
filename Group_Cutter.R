@@ -91,8 +91,8 @@ for(i in 1:length(asteroids$groupID)){
   if(n > 1){
     cat("Multiple asteroids with groupID: ",ID,"\n")
     for(j in 0:n){
-    if(paste0("./",loc,"/Group_Cutouts/",asteroids[asteroids$groupID == ID, "Colour"][[1]],ID,"_",j,".png") %notin% list.files(paste0("./",loc,"/Group_Cutouts/"))){
-      png(filename=paste0("./",loc,"/Group_Cutouts/",asteroids[asteroids$groupID == ID, "Colour"][[1]],ID,"_",j,".png"))
+    if(paste0("./",loc,"/Group_Cutouts/",asteroids$Colour[i+j],ID,"_",j,".png") %notin% list.files(paste0("./",loc,"/Group_Cutouts/"))){
+      png(filename=paste0("./",loc,"/Group_Cutouts/",asteroids$Colour[i+j],ID,"_",j,".png"))
       subID = j
       }
     }
@@ -140,13 +140,13 @@ for(i in 1:length(asteroids$groupID)){
     col = rainbow(5)
     
     
-      if(asteroids[i+subID, "Colour"] == "g"){
+      if(asteroids$Colour[i+subID] == "g"){
         col = "green"
       }
-      if(asteroids[i+subID, "Colour"] == "r"){
+      if(asteroids$Colour[i+subID] == "r"){
         col = "red"
       }
-      if(asteroids[i+subID, "Colour"] == "i"){
+      if(asteroids$Colour[i+subID] == "i"){
         col = "blue"
       }
 
