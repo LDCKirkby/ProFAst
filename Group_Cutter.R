@@ -14,6 +14,8 @@
 
 #
 Group_Cutter <- function(loc){#, images){
+`%notin%`<-Negate(`%in%`)
+  
   
 #Make a directory to save the cutouts
 unlink(paste0("./",loc,"/Group_Cutouts/"), recursive = TRUE)
@@ -91,9 +93,9 @@ for(i in 1:length(asteroids$groupID)){
   if(n > 1){
     cat("Multiple asteroids with groupID: ",ID,"\n")
     for(j in 0:n){
-    if(paste0("./",loc,"/Group_Cutouts/",asteroids$Colour[i+j],ID,"_",j,".png") %notin% list.files(paste0("./",loc,"/Group_Cutouts/"))){
-      png(filename=paste0("./",loc,"/Group_Cutouts/",asteroids$Colour[i+j],ID,"_",j,".png"))
-      subID = j
+      if(paste0("./",loc,"/Group_Cutouts/",asteroids$Colour[i+j],ID,"_",j,".png") %notin% list.files(paste0("./",loc,"/Group_Cutouts/"))){
+        png(filename=paste0("./",loc,"/Group_Cutouts/",asteroids$Colour[i+j],ID,"_",j,".png"))
+        subID = j
       }
     }
     
