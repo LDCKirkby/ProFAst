@@ -14,7 +14,7 @@ require(foreign)
 require(MASS)
 #
 contplot=function(ID, groupimage, groupcol, target = FALSE){
-  `%notin%`<-Negate(`%in%`)
+  print(ID)
   if(target == FALSE){
     groupimage[groupimage%in%ID]=0
   } else{groupimage[groupimage%notin%ID]=0}
