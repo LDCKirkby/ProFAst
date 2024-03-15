@@ -47,6 +47,11 @@ contplot=function(ID, groupimage, groupcol, target = FALSE){
   bottom_right <- obj_points[which.max(obj_points[, 1] - obj_points[, 2]), ]
   bottom_left <- obj_points[which.min(obj_points[, 1] - obj_points[, 2]), ]
   
+  cat(top_left)
+  cat(top_right)
+  cat(bottom_left)
+  cat(bottom_right)
+  
   big = matrix(ncol = ncol(groupimage), nrow = nrow(groupimage))
   big[top_right[[1]],top_right[[2]]] = 10
   big[top_left[[1]],top_left[[2]]] = 2
