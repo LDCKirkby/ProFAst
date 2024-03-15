@@ -19,6 +19,7 @@ contplot=function(ID, groupimage, groupcol, target = FALSE){
     groupimage[groupimage%in%ID]=0
   } else{groupimage[groupimage%notin%ID]=0}
   
+  cat("Are there points with ID in groupimage?: ", ID%in%groupimage)
   
   xrun=1:(dim(groupimage)[1]-1)
   yrun=1:(dim(groupimage)[2]-1)
