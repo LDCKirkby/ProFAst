@@ -53,7 +53,7 @@ for(RA_Dec in done$RA_Dec){
     cat("FALSE")
     next
   }
-  data = as.data.frame(read.csv(paste0("./",RA_Dec,"/",RA_Dec,"_N100_Filtered_Asteroids.csv.csv")))
+  data = as.data.frame(read.csv(paste0("./",RA_Dec,"/",RA_Dec,"_N100_Filtered_Asteroids.csv")))
   widengrps = try(rbind(widengrps, data))
 }
 #widengrps=fread("/Users/sdriver/Drpbx/waves/mocks/waves-north_grps.csv")
