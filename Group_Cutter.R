@@ -69,7 +69,7 @@ viking=(0.339^2)*(10^(0.4*(30-mulim)))
 
 for(num in 1:length(data)){
   filt = data[[num]]
-  if(num = 1){
+  if(num == 1){
     location = "Full_Group_Cutouts"
   }else{
     location = "N100_Group_Cutouts"
