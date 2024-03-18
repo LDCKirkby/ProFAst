@@ -89,29 +89,29 @@ for(i in 1:length(asteroids$groupID)){
   viking=(0.339^2)*(10^(0.4*(30-mulim)))
   
   n = length(which(asteroids$groupID == ID))
-  subID = 0
   if(n > 1){
-    cat("Multiple asteroids with groupID: ",ID,"\n")
-    for(j in 0:n-1){
-      if(paste0("./",loc,"/Group_Cutouts/",asteroids$Colour[i+j],ID,"_",j,".png") %notin% list.files(paste0("./",loc,"/Group_Cutouts/"))){
-        png(filename=paste0("./",loc,"/Group_Cutouts/",asteroids$Colour[i+j],ID,"_",j,".png"))
-        subID = j
+    cat(paste0("Multiple asteroids with ID ", ID, " detected.\n"))
+      if(paste0(asteroids$Colour[i],ID,".png") %in% list.files(paste0("./",loc,"/Group_Cutouts/")) == FALSE){
+        cat(paste0("Printing ", asteroids$Colour[i], ID, ".png\n"))
+        png(filename=paste0("./",loc,"/Group_Cutouts/",asteroids$Colour[i],ID,".png"))
+      }else{
+        cat(paste0("Already imaged asteroid ", asteroids$Colour[i], ID, "\n"))
+        next
       }
-    }
-    
+      
   }else{
   if(asteroids[asteroids$groupID == ID, "Colour"] == "g"){
-    cat("Printing G",ID," postage stamp\n")
+    cat("Printing g",ID," postage stamp\n")
     png(filename=paste0("./",loc,"/Group_Cutouts/g",ID,".png"))
     
   }
   if(asteroids[asteroids$groupID == ID, "Colour"] == "r"){
-    cat("Printing R",ID," postage stamp\n")
+    cat("Printing r",ID," postage stamp\n")
     png(filename=paste0("./",loc,"/Group_Cutouts/r",ID,".png"))
     
   }
   if(asteroids[asteroids$groupID == ID, "Colour"] == "i"){
-    cat("Printing I",ID," postage stamp\n")
+    cat("Printing i",ID," postage stamp\n")
   png(filename=paste0("./",loc,"/Group_Cutouts/i",ID,".png"))
   
   }
@@ -142,36 +142,36 @@ for(i in 1:length(asteroids$groupID)){
     colour = rainbow(5)
     
     
-      if(asteroids$Colour[i+subID] == "g"){
+      if(asteroids$Colour[i] == "g"){
         colour = "green"
       }
-      if(asteroids$Colour[i+subID] == "r"){
+      if(asteroids$Colour[i] == "r"){
         colour = "red"
       }
-      if(asteroids$Colour[i+subID] == "i"){
+      if(asteroids$Colour[i] == "i"){
         colour = "blue"
       }
 
-      cat("Printing Double Up Asteroid. GroupID: ", ID,"_",subID, "\n\n")
-      contplot(ID, cutgroup_dilate$image, colour, target = TRUE)
-      text(1,2*wid-50, label=paste0("ID=",asteroids$Colour[i+subID],ID), colour, cex=2.0, pos=4)
+      cat("Printing Double Up Asteroid. GroupID: ", ID,"\n\n")
+      contplot(asteroids, i, cutgroup_dilate$image, colour, target = TRUE)
+      text(1,2*wid-50, label=paste0("ID=",asteroids$Colour[i],ID), colour, cex=2.0, pos=4)
 
   }else{
   if(asteroids[asteroids$groupID == ID, "Colour"] == "g"){
     cat("Printing green asteroid. GroupID: ", ID, "\n\n")
-    contplot(ID, cutgroup_dilate$image, "green", target = TRUE)
+    contplot(asteroids, i, cutgroup_dilate$image, "green", target = TRUE)
     text(1,2*wid-50,label=paste0("ID=G",ID),col="green",cex=2.0,pos=4)
   }
   
   if(asteroids[asteroids$groupID == ID, "Colour"] == "r"){
     cat("Printing red asteroid. GroupID: ", ID, "\n\n")
-    contplot(ID, cutgroup_dilate$image, "red", target = TRUE)
+    contplot(asteroids, i, cutgroup_dilate$image, "red", target = TRUE)
     text(1,2*wid-50,label=paste0("ID=R",ID),col="red",cex=2.0,pos=4)
   }
   
   if(asteroids[asteroids$groupID == ID, "Colour"] == "i"){
     cat("Printing blue asteroid. GroupID: ", ID, "\n\n")
-    contplot(ID, cutgroup_dilate$image, "blue", target =TRUE)
+    contplot(asteroids, i, cutgroup_dilate$image, "blue", target =TRUE)
     text(1,2*wid-50,label=paste0("ID=B",ID),col="blue",cex=1.5,pos=4)
   }}
 
