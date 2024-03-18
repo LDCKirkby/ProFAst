@@ -180,25 +180,25 @@ for(i in 1:length(asteroids$groupID)){
 
       cat("Printing Double Up Asteroid. GroupID: ", ID,"\n\n")
       try(contplot(asteroids, i, cutgroup_dilate$image, colour, target = TRUE))
-      text(1,2*wid-50, label=paste0("ID=",asteroids$Colour[i],ID), colour, cex=2.0, pos=4)
+      try(text(1,2*wid-50, label=paste0("ID=",asteroids$Colour[i],ID), colour, cex=2.0, pos=4))
 
   }else{
   if(asteroids[asteroids$groupID == ID, "Colour"] == "g"){
     cat("Printing green asteroid. GroupID: ", ID, "\n\n")
     try(contplot(asteroids, i, cutgroup_dilate$image, "green", target = TRUE))
-    text(1,2*wid-50,label=paste0("ID=G",ID),col="green",cex=2.0,pos=4)
+    try(text(1,2*wid-50,label=paste0("ID=G",ID),col="green",cex=2.0,pos=4))
   }
   
   if(asteroids[asteroids$groupID == ID, "Colour"] == "r"){
     cat("Printing red asteroid. GroupID: ", ID, "\n\n")
     try(contplot(asteroids, i, cutgroup_dilate$image, "red", target = TRUE))
-    text(1,2*wid-50,label=paste0("ID=R",ID),col="red",cex=2.0,pos=4)
+    try(text(1,2*wid-50,label=paste0("ID=R",ID),col="red",cex=2.0,pos=4))
   }
   
   if(asteroids[asteroids$groupID == ID, "Colour"] == "i"){
     cat("Printing blue asteroid. GroupID: ", ID, "\n\n")
     try(contplot(asteroids, i, cutgroup_dilate$image, "blue", target =TRUE))
-    text(1,2*wid-50,label=paste0("ID=B",ID),col="blue",cex=1.5,pos=4)
+    try(text(1,2*wid-50,label=paste0("ID=B",ID),col="blue",cex=1.5,pos=4))
   }}
 
   dev.off()
