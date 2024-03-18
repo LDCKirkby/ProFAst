@@ -12,6 +12,8 @@
 
 Flux_Comparison <- function(loc){
 
+  
+  
 if("objectcati.csv" %in% list.files(path = paste0("./",loc,"/")) == FALSE){
   cat("*********\n")
   cat("Objectcati.csv not found\n")

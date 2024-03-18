@@ -51,6 +51,7 @@ contplot=function(ast_data, i, groupimage, groupcol, header, target = FALSE){
   bottom_left <- obj_points[which.min(obj_points[, 1] - obj_points[, 2]), ]
   
   
+  
   ast_data$top_left[i] = xy2radec(top_left[[1]], top_left[[2]], header)
   ast_data$top_right[i] = xy2radec(top_right[[1]], top_right[[2]], header)
   ast_data$bottom_left[i] = xy2radec(bottom_left[[1]], bottom_left[[2]], header)
