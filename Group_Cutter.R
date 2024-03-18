@@ -208,4 +208,3 @@ for(i in 1:length(asteroids$groupID)){
 
 }
 }
-}
