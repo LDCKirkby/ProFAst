@@ -44,6 +44,7 @@ cat("Performing N100 Filter\n")
 N100_filtered_asteroids = subset(filtered_asteroids, N100 >= 100 | N100 >= 100 | N100 >= 100)
 
 cat("Removed ", length(filtered_asteroids$groupID) - length(N100_filtered_asteroids$groupID), " small errors\n")
+cat("Final number of ", length(N100_filtered_asteroids$groupID), " possible asteroids\n")
 
 write.csv(N100_filtered_asteroids, file = paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv"))
 cat("Writing to " ,loc, "_N100_Filtered_Asteroids.csv\n")
