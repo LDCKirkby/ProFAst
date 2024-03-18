@@ -55,14 +55,49 @@ i_image=propaneWarp(i_image_input,keyvalues_out=g_image$keyvalues)
 # i_image = images[[3]]
 
 wid = 200.0
+mulim=22.0
+kids=(0.339^2)*(10^(0.4*(0-mulim)))
+viking=(0.339^2)*(10^(0.4*(30-mulim)))
 
+
+######################################################################
 cat("Begin iterating through asteroids\n")
 for(i in 1:length(asteroids$groupID)){
 
   ID=asteroids$groupID[i]
   cat("Imaging ", ID,"\n")
   
-  #galpos=asteroids[asteroids$groupID == ID, c("xmax","ymax")]
+  n = length(which(asteroids$groupID == ID))
+  
+  if(n > 1){
+    cat(paste0("Multiple asteroids with ID ", ID, " detected.\n"))
+    if(paste0(asteroids$Colour[i],ID,".png") %in% list.files(paste0("./",loc,"/Group_Cutouts/")) == TRUE){
+      cat(paste0("Already imaged asteroid ", asteroids$Colour[i], ID, "\n"))
+      next
+    }else{
+      
+    galpos=asteroids[asteroids$groupID == ID, c("xmax","ymax")]
+    
+    galradec=asteroids[asteroids$groupID == ID, c("RAcen", "Deccen")]
+    
+    galpos=as.integer(Rwcs_s2p(RA=galradec$RAcen,Dec=galradec$Deccen,keyvalues=g_image$keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
+    
+    box=c(2*wid,2*wid)
+    cutim_g=g_image[galpos,box=box]
+    cutim_r=r_image[galpos,box=box]
+    cutim_i=i_image[galpos,box=box]
+    
+    cutgroup_dilate=magcutout(image = groupim$groupim, header=g_image$header, loc=as.numeric(galpos),box=box,loc.type="image")
+    
+    decoff=2*(wid*0.339/3600.0)
+    raoff=2*(wid*0.339/3600.0)/cos(galradec$Deccen*0.01745329)
+    
+    cat(paste0("Printing ", asteroids$Colour[i], ID, ".png\n"))
+    png(filename=paste0("./",loc,"/Group_Cutouts/",asteroids$Colour[i],ID,".png"))
+    
+      
+  }else{
+  galpos=asteroids[asteroids$groupID == ID, c("xmax","ymax")]
   #galpos=trim$pro_detect$groupstats[trim$pro_detect$groupstats$groupID==groupID, c("xmax","ymax")] 
   
   galradec=asteroids[asteroids$groupID == ID, c("RAcen", "Deccen")]
@@ -75,33 +110,18 @@ for(i in 1:length(asteroids$groupID)){
   cutim_r=r_image[galpos,box=box]
   cutim_i=i_image[galpos,box=box]
   
+  cutgroup_dilate=magcutout(image = groupim$groupim, header=g_image$header, loc=as.numeric(galpos),box=box,loc.type="image")
+  
   #cutseg_orig=magcutoutWCS(image = segim_orig, g_image$header , loc=as.numeric(galpos), box=box, loc.type="image")
   #cutseg_dilate=magcutoutWCS(image = segim, g_image$header,loc=as.numeric(galpos),box=box,loc.type="image")
   #cutgroup_dilate=groupim$groupim[galpos,box=box]
-  cutgroup_dilate=magcutout(image = groupim$groupim, header=g_image$header, loc=as.numeric(galpos),box=box,loc.type="image")
   #cutgroup_dilate=magcutoutWCS(trim$pro_detect$group$groupim,trim$pro_detect$header,loc=as.numeric(galpos),box=box,loc.type="image")
-  
   
   decoff=2*(wid*0.339/3600.0)
   raoff=2*(wid*0.339/3600.0)/cos(galradec$Deccen*0.01745329)
+  
   #galgroupIDs=trim$pro_detect$groupstats[trim$pro_detect$groupstats$RAcen > galradec$RAcen - raoff & trim$pro_detect$groupstats$RAcen < galradec$RAcen + raoff & trim$pro_detect$groupstats$Deccen > galradec$Deccen - decoff & trim$pro_detect$groupstats$Deccen < galradec$Deccen + decoff,"groupID"]
   
-  mulim=22.0
-  kids=(0.339^2)*(10^(0.4*(0-mulim)))
-  viking=(0.339^2)*(10^(0.4*(30-mulim)))
-  
-  n = length(which(asteroids$groupID == ID))
-  if(n > 1){
-    cat(paste0("Multiple asteroids with ID ", ID, " detected.\n"))
-      if(paste0(asteroids$Colour[i],ID,".png") %in% list.files(paste0("./",loc,"/Group_Cutouts/")) == FALSE){
-        cat(paste0("Printing ", asteroids$Colour[i], ID, ".png\n"))
-        png(filename=paste0("./",loc,"/Group_Cutouts/",asteroids$Colour[i],ID,".png"))
-      }else{
-        cat(paste0("Already imaged asteroid ", asteroids$Colour[i], ID, "\n"))
-        next
-      }
-      
-  }else{
   if(asteroids[asteroids$groupID == ID, "Colour"] == "g"){
     cat("Printing g",ID," postage stamp\n")
     png(filename=paste0("./",loc,"/Group_Cutouts/g",ID,".png"))
@@ -114,9 +134,10 @@ for(i in 1:length(asteroids$groupID)){
   }
   if(asteroids[asteroids$groupID == ID, "Colour"] == "i"){
     cat("Printing i",ID," postage stamp\n")
-  png(filename=paste0("./",loc,"/Group_Cutouts/i",ID,".png"))
+    png(filename=paste0("./",loc,"/Group_Cutouts/i",ID,".png"))
   
   }
+  
   }
   par(mfrow=c(1,1),mar=c(3,3,2,2))
   
