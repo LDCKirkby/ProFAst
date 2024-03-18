@@ -92,7 +92,7 @@ for(i in 1:length(filt$groupID)){
       next
     }else{
       
-    galpos=filt[filt$groupID == ID, c("xmax","ymax")]
+    #galpos=filt[filt$groupID == ID, c("xmax","ymax")]
     
     galradec=filt[filt$groupID == ID, c("RAcen", "Deccen")]
     
@@ -114,7 +114,7 @@ for(i in 1:length(filt$groupID)){
     }
     
   }else{
-  galpos=filt[filt$groupID == ID, c("xmax","ymax")]
+  #galpos=filt[filt$groupID == ID, c("xmax","ymax")]
   #galpos=trim$pro_detect$groupstats[trim$pro_detect$groupstats$groupID==groupID, c("xmax","ymax")] 
   
   galradec=filt[filt$groupID == ID, c("RAcen", "Deccen")]
