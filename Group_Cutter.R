@@ -33,7 +33,6 @@ cat("Reading in asteroid data\n")
 asteroids <- as.data.frame(read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv")))
 asteroids <- cbind(asteroids, data.frame(top_left = 0, top_right = 0, bottom_left = 0, bottom_right = 0))
 
-data = list(asteroids,asteroids_N100)
 
 cat("Reading in segmentation map data\n")
 #segim_orig <- as.matrix(read.csv(paste0("./",loc,"/segim_orig.csv")))
