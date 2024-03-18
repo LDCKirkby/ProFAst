@@ -16,7 +16,7 @@ cat(length(possible_asteroids$axrat_gt), "potential asteroids\n")
 
 cat("*********\n")
 cat("Beginning axial filtering\n")
-cat("*********\n")
+cat("*********\n\n")
 
 #Axrat filter
 filtered_asteroids = subset(possible_asteroids, axrat_gt <= 0.35 | axrat_rxt <= 0.35 | axrat_i1xt <= 0.35)
@@ -31,18 +31,24 @@ filtered_asteroids = setorder(filtered_asteroids, "groupID")
 
 cat("*********\n")
 cat("Filtered to ", length(filtered_asteroids$axrat_gt), "potential asteroids\n")
-cat("*********\n")
+cat("*********\n\n")
 
 cat("*********\n")
 cat("Writing to ", paste0("./", loc,"/Filtered_Asteroids.csv"),"\n")
-cat("*********\n")
+cat("*********\n\n")
 
 write.csv(filtered_asteroids, file = paste0("./",loc,"/Filtered_Asteroids.csv"))
 
 #N100 filter
+cat("*********\n")
+cat("Performing N100 Filter\n")
 N100_filtered_asteroids = subset(filtered_asteroids, N100 >= 100 | N100 >= 100 | N100 >= 100)
 
+cat("Removed ", length(filtered_asteroids$groupID) - length(N100_filtered_asteroids$groupID), " small errors\n")
+
 write.csv(N100_filtered_asteroids, file = paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv"))
+cat("Writing to " ,loc, "_N100_Filtered_Asteroids.csv\n")
+cat("*********\n\n")
 
 
 rm(possible_asteroids, top_tail, filtered_asteroids, N100_filtered_asteroids) 
