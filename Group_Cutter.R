@@ -95,7 +95,8 @@ for(i in 1:length(asteroids$groupID)){
     cat(paste0("Printing ", asteroids$Colour[i], ID, ".png\n"))
     png(filename=paste0("./",loc,"/Group_Cutouts/",asteroids$Colour[i],ID,".png"))
     
-      
+    }
+    
   }else{
   galpos=asteroids[asteroids$groupID == ID, c("xmax","ymax")]
   #galpos=trim$pro_detect$groupstats[trim$pro_detect$groupstats$groupID==groupID, c("xmax","ymax")] 
