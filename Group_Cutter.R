@@ -18,7 +18,7 @@ Group_Cutter <- function(loc){#, images){
   
   
 #Make a directory to save the cutouts
-unlink(paste0("./",loc,"/Group_Cutouts/"), recursive = TRUE)
+dir_delete(paste0("./",loc,"/Group_Cutouts/"))
 dir.create(paste0("./",loc,"/Group_Cutouts/"))
 
   
