@@ -14,7 +14,8 @@
 # require(MASS)
 #
 contplot=function(asteroids, i, groupimage, groupcol, target = FALSE){
-  ID = asteroids[asteroids$groupID == ID, ]
+  
+  ID = asteroids$groupID[i]
     if(target == FALSE){
     groupimage[groupimage%in%ID]=0
   } else{groupimage[groupimage%notin%ID]=0}
