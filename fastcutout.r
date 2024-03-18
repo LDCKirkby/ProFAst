@@ -20,8 +20,7 @@ contplot=function(asteroids, i, groupimage, groupcol, target = FALSE){
     groupimage[groupimage%in%ID]=0
   } else{groupimage[groupimage%notin%ID]=0}
   
-  cat("Are there points with ID in groupimage?: ", ID%in%groupimage)
-  
+
   xrun=1:(dim(groupimage)[1]-1)
   yrun=1:(dim(groupimage)[2]-1)
   
@@ -48,11 +47,7 @@ contplot=function(asteroids, i, groupimage, groupcol, target = FALSE){
   top_left <- obj_points[which.min(obj_points[, 1] + obj_points[, 2]), ]
   bottom_right <- obj_points[which.max(obj_points[, 1] - obj_points[, 2]), ]
   bottom_left <- obj_points[which.min(obj_points[, 1] - obj_points[, 2]), ]
-  
-  cat(top_left)
-  cat(top_right)
-  cat(bottom_left)
-  cat(bottom_right)
+
   
   big = matrix(ncol = ncol(groupimage), nrow = nrow(groupimage))
   big[top_right[[1]],top_right[[2]]] = 10
