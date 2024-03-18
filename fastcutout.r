@@ -13,14 +13,16 @@
 # require(foreign)
 # require(MASS)
 #
-contplot=function(asteroids, i, groupimage, groupcol, target = FALSE){
+contplot=function(ast_data, i, groupimage, groupcol, header, target = FALSE){
   
-  ID = asteroids$groupID[i]
+  ID = ast_data$groupID[i]
     if(target == FALSE){
     groupimage[groupimage%in%ID]=0
   } else{groupimage[groupimage%notin%ID]=0}
   
-
+  cat("Are there points with ID in groupimage?: ", ID%in%groupimage, "\n")
+  
+  
   xrun=1:(dim(groupimage)[1]-1)
   yrun=1:(dim(groupimage)[2]-1)
   
@@ -47,14 +49,20 @@ contplot=function(asteroids, i, groupimage, groupcol, target = FALSE){
   top_left <- obj_points[which.min(obj_points[, 1] + obj_points[, 2]), ]
   bottom_right <- obj_points[which.max(obj_points[, 1] - obj_points[, 2]), ]
   bottom_left <- obj_points[which.min(obj_points[, 1] - obj_points[, 2]), ]
+  
+  
+  ast_data$top_left[i] = xy2radec(top_left[[1]], top_left[[2]], header)
+  ast_data$top_right[i] = xy2radec(top_right[[1]], top_right[[2]], header)
+  ast_data$bottom_left[i] = xy2radec(bottom_left[[1]], bottom_left[[2]], header)
+  ast_data$bottom_right[i] = xy2radec(bottom_right[[1]], bottom_right[[2]], header)
 
   
-  big = matrix(ncol = ncol(groupimage), nrow = nrow(groupimage))
-  big[top_right[[1]],top_right[[2]]] = 10
-  big[top_left[[1]],top_left[[2]]] = 2
-  big[bottom_right[[1]],bottom_right[[2]]] = 3
-  big[bottom_left[[1]],bottom_left[[2]]] = 4
-  
+  # big = matrix(ncol = ncol(groupimage), nrow = nrow(groupimage))
+  # big[top_right[[1]],top_right[[2]]] = 1
+  # big[top_left[[1]],top_left[[2]]] = 2
+  # big[bottom_right[[1]],bottom_right[[2]]] = 3
+  # big[bottom_left[[1]],bottom_left[[2]]] = 4
+  # 
   x = c(top_right[[1]],bottom_right[[1]],top_left[[1]],bottom_left[[1]])
   y = c(top_right[[2]],bottom_right[[2]],top_left[[2]],bottom_left[[2]])
   locations = cbind(x,y)
@@ -64,7 +72,4 @@ contplot=function(asteroids, i, groupimage, groupcol, target = FALSE){
   points(locations, col=c("hotpink","pink","orange","orangered"), add=TRUE, pch = 4, lwd = 3)
   legend(x ="topright", legend = c("Top Right", "Bottom Right", "Top Left", "Bottom Left"), pch = c(3,3,3,3), col = c("hotpink","pink","orange","orangered"))
   
-  #magimage(big, col=c("hotpink","violet","wheat","yellow"), magmap=FALSE,add=TRUE, sparse=1, pch = 4)
-
 }
-#
