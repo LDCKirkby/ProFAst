@@ -49,7 +49,7 @@ colnames(done) = "RA_Dec"
 widengrps = data.frame()
 for(RA_Dec in done$RA_Dec){
   cat(RA_Dec,"\n")
-  if(paste0(RA_Dec,"_Filtered_Asteroids.csv") %in% list.files(path = paste0("./",RA_Dec,"/")) == FALSE){
+  if(paste0(RA_Dec,"_N100_Filtered_Asteroids.csv") %in% list.files(path = paste0("./",RA_Dec,"/")) == FALSE){
     cat("FALSE")
     next
   }
