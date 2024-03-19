@@ -69,10 +69,9 @@ for(RA_Dec in done$RA_Dec){
 # AITOFF Figure
 #
 colours = c("g","r","i")
-cols = c("green", "red", "blue")
-for(i in 1:3){
+for(colr in colours){
   
-png(filename=paste0("/Volumes/WAVESSPD/lkirkby/projectionmap_",colours[i],".png"),width=30.0,height=20.0,units="cm",res=240)
+png(filename=paste0("./projectionmap_",colr,".png"),width=30.0,height=20.0,units="cm",res=240)
 par(mar=c(0,0,0,0),oma=c(0,0,0,0))
 magproj(-100,-100,type="p",pch=".",centre=c(60,0),latlim=c(-90,declimit),labloc=c(300,15),fliplong=FALSE)
 magecliptic(width=10,col=rgb(0.5,0.5,0.5,0.1),border="NA")
@@ -97,7 +96,16 @@ magproj(WD_wide_south,add=T,col='NA')
 #
 cat("magproj time.\n")
 cat(length(widengrps$RAcen), " ", length(widengrps$Deccen),"\n")
-magproj(widengrps[widengrps$Colour == colours[i], "RAcen"], widengrps[widengrps$Colour == colours[i], "Deccen"], pch=1, col=cols[i],cex=0.1,add=T,type="p")
+if(colr == "g"){
+  cols = "green"
+}
+if(colr == "r"){
+  cols = "red"
+}
+if(colr == "i"){
+  cols = "blue"
+}
+magproj(widengrps[widengrps$Colour == colr, "RAcen"], widengrps[widengrps$Colour == colr, "Deccen"], pch=1, col=cols,cex=0.1,add=T,type="p")
 #magproj(widengrps[widengrps$Colour == "r", "RAcen"], widengrps[widengrps$Colour == "r", "Deccen"], pch=1, col="red",cex=0.1,add=T,type="p")
 #magproj(widengrps[widengrps$Colour == "i", "RAcen"], widengrps[widengrps$Colour == "i", "Deccen"], pch=1, col="blue",cex=0.1,add=T,type="p")
 
@@ -135,5 +143,6 @@ y=c(-y,y)
 # b2=as.numeric(unlist(gaiadr3[gaiadr3$phot_g_mean_mag < 8 & gaiadr3$dec<declimit,"b"]))
 # magproj(ra2,dec2,type="p",pch=".",cex=0.1,col=rgb(0.0,0.5,0.5,0.1*cosd(b2)),add=T)
 #
+i = i +1
 dev.off()
 }
