@@ -15,7 +15,7 @@ library(extrafont)
 require(MASS)
 library(grDevices)
 font_import()
-loadfonts("all", quiet = TRUE)
+loadfonts("all")
 fonts()
 #par(family = "Arial Unicode")
 
