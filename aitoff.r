@@ -13,6 +13,7 @@ library('plotrix')
 require(foreign)
 library(extrafont)
 require(MASS)
+library(grDevices)
 loadfonts("all", quiet = TRUE)
 windowsFonts(A = windowsFont("Arial"))
 #
