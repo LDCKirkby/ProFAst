@@ -93,9 +93,9 @@ magproj(WD_wide_south,add=T,col='NA')
 #
 cat("magproj time.\n")
 cat(length(widengrps$RAcen), " ", length(widengrps$Deccen),"\n")
-magproj(widengrps[widengrps$Colour == "g", "RAcen"], widengrps[widengrps$Colour == "g", "Deccen"], pch=1,col="green",cex=0.25,add=T,type="p")
-magproj(widengrps[widengrps$Colour == "r", "RAcen"], widengrps[widengrps$Colour == "r", "Deccen"],pch=1,col="red",cex=0.25,add=T,type="p")
-magproj(widengrps[widengrps$Colour == "i", "RAcen"], widengrps[widengrps$Colour == "i", "Deccen"],pch=1,col="blue",cex=0.25,add=T,type="p")
+magproj(widengrps[widengrps$Colour == "g", "RAcen"], widengrps[widengrps$Colour == "g", "Deccen"], pch=1,col="green",cex=0.1,add=T,type="p")
+magproj(widengrps[widengrps$Colour == "r", "RAcen"], widengrps[widengrps$Colour == "r", "Deccen"], pch=1,col="red",cex=0.1,add=T,type="p")
+magproj(widengrps[widengrps$Colour == "i", "RAcen"], widengrps[widengrps$Colour == "i", "Deccen"], pch=1,col="blue",cex=0.1,add=T,type="p")
 
 #magproj(widesgrps$ra[widesgrps$Nfof > 10],widesgrps$dec[widesgrps$Nfof > 10],pch=16,col=rgb(0,0,0.0,0.25),cex=0.25,add=T,type="p")
 #magproj(widedgrps$ra[widedgrps$Nfof > 10],widedgrps$dec[widedgrps$Nfof > 10],pch=16,col=rgb(0.39,0.58,0.93,0.5),cex=0.25,add=T,type="p")
