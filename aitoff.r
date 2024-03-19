@@ -14,7 +14,7 @@ require(foreign)
 library(extrafont)
 require(MASS)
 loadfonts("all", quiet = TRUE)
-
+windowsFonts(A = windowsFont("Arial"))
 #
 omegam=0.3158221
 omegal=1-omegam
