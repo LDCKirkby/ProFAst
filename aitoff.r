@@ -16,7 +16,7 @@ require(MASS)
 library(grDevices)
 font_import()
 loadfonts("all", quiet = TRUE)
-fonts()
+par(family = "Arial")
 
 #
 omegam=0.3158221
