@@ -41,10 +41,10 @@ for( i in 1:length(asteroids$groupID)){
   time_end = as.character(trunc(time_end*10^4)/10^4)
   
   #Uncomment once the max & min RA_Dec finder works properly 
-  RA_top = paste0(deg2hms(asteroids$tr_RA[[i]])[[1]], " ",deg2hms(asteroids$tr_RA[[i]])[[2]], " ", deg2hms(asteroids$tr_RA[[i]])[[3]])
-  Dec_top = paste0(deg2dms(asteroids$tr_Dec[[i]])[[1]], " ",deg2dms(asteroids$tr_Dec[[i]])[[2]], " ",substr(deg2dms(asteroids$tr_Dec[[i]])[[3]][], 1,4))
-  RA_bottom = paste0(deg2hms(asteroids$tl_RA[[i]])[[1]], " ",deg2hms(asteroids$tl_RA[[i]])[[2]], " ", deg2hms(asteroids$tl_RA[[i]])[[3]])
-  Dec_bottom = paste0(deg2dms(asteroids$tl_Dec[[i]])[[1]], " ",deg2dms(asteroids$tl_Dec[[i]])[[2]], " ",substr(deg2dms(asteroids$tl_Dec[[i]])[[3]][], 1,4))
+  RA_top = paste0(deg2hms(asteroids$tr_RA[i])[[1]], " ",deg2hms(asteroids$tr_RA[i])[[2]], " ", deg2hms(asteroids$tr_RA[i])[[3]])
+  Dec_top = paste0(deg2dms(asteroids$tr_Dec[i])[[1]], " ",deg2dms(asteroids$tr_Dec[i])[[2]], " ",substr(deg2dms(asteroids$tr_Dec[i])[[3]][], 1,4))
+  RA_bottom = paste0(deg2hms(asteroids$tl_RA[i])[[1]], " ",deg2hms(asteroids$tl_RA[i])[[2]], " ", deg2hms(asteroids$tl_RA[i])[[3]])
+  Dec_bottom = paste0(deg2dms(asteroids$tl_Dec[i])[[1]], " ",deg2dms(asteroids$tl_Dec[i])[[2]], " ",substr(deg2dms(asteroids$tl_Dec[i])[[3]][], 1,4))
 
   
   # RA_top = paste0(deg2hms(asteroids$RAmax[[i]])[[1]], " ",deg2hms(asteroids$RAmax[[i]])[[2]], " ", deg2hms(asteroids$RAmax[[i]])[[3]])
