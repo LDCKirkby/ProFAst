@@ -23,6 +23,9 @@ library(ProPane, quietly = TRUE)
 library(ggplot2, quietly = TRUE)
 library(dplyr, quietly = TRUE)
 library(fs, quietly = TRUE)
+library(showtext)
+font_add("Arial", "/Library/Fonts/Arial.ttf")
+showtext_auto()
 
 
 
