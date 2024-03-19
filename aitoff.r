@@ -134,3 +134,4 @@ y=c(-y,y)
 #
 dev.off()
 
+warnings()
