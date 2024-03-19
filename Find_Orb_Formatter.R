@@ -41,17 +41,17 @@ for( i in 1:length(asteroids$groupID)){
   time_end = as.character(trunc(time_end*10^4)/10^4)
   
   #Uncomment once the max & min RA_Dec finder works properly 
-  # RA_top = paste0(deg2hms(asteroids$RA_top[[i]])[[1]], " ",deg2hms(asteroids$RA_top[[i]])[[2]], " ", deg2hms(asteroids$RA_top[[i]])[[3]])
-  # Dec_top = paste0(deg2dms(asteroids$Dec_top[[i]])[[1]], " ",deg2dms(asteroids$Dec_top[[i]])[[2]], " ",substr(deg2dms(asteroids$Dec_top[[i]])[[3]][], 1,4))
-  # RA_bottom = paste0(deg2hms(asteroids$RA_bottom[[i]])[[1]], " ",deg2hms(asteroids$RA_bottom[[i]])[[2]], " ", deg2hms(asteroids$RA_bottom[[i]])[[3]])
-  # Dec_bottom = paste0(deg2dms(asteroids$Dec_bottom[[i]])[[1]], " ",deg2dms(asteroids$Dec_bottom[[i]])[[2]], " ",substr(deg2dms(asteroids$Dec_bottom[[i]])[[3]][], 1,4))
+  RA_top = paste0(deg2hms(asteroids$tr_RA[[i]])[[1]], " ",deg2hms(asteroids$tr_RA[[i]])[[2]], " ", deg2hms(asteroids$tr_RA[[i]])[[3]])
+  Dec_top = paste0(deg2dms(asteroids$tr_Dec[[i]])[[1]], " ",deg2dms(asteroids$tr_Dec[[i]])[[2]], " ",substr(deg2dms(asteroids$tr_Dec[[i]])[[3]][], 1,4))
+  RA_bottom = paste0(deg2hms(asteroids$tl_RA[[i]])[[1]], " ",deg2hms(asteroids$tl_RA[[i]])[[2]], " ", deg2hms(asteroids$tl_RA[[i]])[[3]])
+  Dec_bottom = paste0(deg2dms(asteroids$tl_Dec[[i]])[[1]], " ",deg2dms(asteroids$tl_Dec[[i]])[[2]], " ",substr(deg2dms(asteroids$tl_Dec[[i]])[[3]][], 1,4))
+
+  
+  # RA_top = paste0(deg2hms(asteroids$RAmax[[i]])[[1]], " ",deg2hms(asteroids$RAmax[[i]])[[2]], " ", deg2hms(asteroids$RAmax[[i]])[[3]])
+  # Dec_top = paste0(deg2dms(asteroids$Decmax[[i]])[[1]], " ",deg2dms(asteroids$Decmax[[i]])[[2]], " ",substr(deg2dms(asteroids$Decmax[[i]])[[3]][], 1,4))
+  # RA_bottom = paste0(deg2hms(asteroids$RAcen[[i]])[[1]], " ",deg2hms(asteroids$RAcen[[i]])[[2]], " ", deg2hms(asteroids$RAcen[[i]])[[3]])
+  # Dec_bottom = paste0(deg2dms(asteroids$Deccen[[i]])[[1]], " ",deg2dms(asteroids$Deccen[[i]])[[2]], " ",substr(deg2dms(asteroids$Deccen[[i]])[[3]][], 1,4))
   # 
-  
-  RA_top = paste0(deg2hms(asteroids$RAmax[[i]])[[1]], " ",deg2hms(asteroids$RAmax[[i]])[[2]], " ", deg2hms(asteroids$RAmax[[i]])[[3]])
-  Dec_top = paste0(deg2dms(asteroids$Decmax[[i]])[[1]], " ",deg2dms(asteroids$Decmax[[i]])[[2]], " ",substr(deg2dms(asteroids$Decmax[[i]])[[3]][], 1,4))
-  RA_bottom = paste0(deg2hms(asteroids$RAcen[[i]])[[1]], " ",deg2hms(asteroids$RAcen[[i]])[[2]], " ", deg2hms(asteroids$RAcen[[i]])[[3]])
-  Dec_bottom = paste0(deg2dms(asteroids$Deccen[[i]])[[1]], " ",deg2dms(asteroids$Deccen[[i]])[[2]], " ",substr(deg2dms(asteroids$Deccen[[i]])[[3]][], 1,4))
-  
   if(nchar(asteroids$groupID[[i]]) <= 8){
     diff = 8-nchar(asteroids$groupID[[i]])
     spacer1 = ""
