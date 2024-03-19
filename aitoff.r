@@ -77,7 +77,7 @@ for(RA_Dec in done$RA_Dec){
 
 png(filename=paste0("./projectionmap.png"),width=30.0,height=20.0,units="cm",res=240, family = "sans")
 par(mar=c(0,0,0,0),oma=c(0,0,0,0))
-magproj(-100,-100,type="p",pch=".",centre=c(60,0),latlim=c(-90,declimit),labloc=c(300,15),fliplong=FALSE, family = "Arial", font = 1)
+magproj(-100,-100,type="p",pch=".",centre=c(60,0),latlim=c(-90,declimit),labloc=c(300,15),fliplong=FALSE, family = "Arial Unicode MS", font = 1)
 magecliptic(width=10,col=rgb(0.5,0.5,0.5,0.1),border="NA")
 magecliptic(width=1,col=rgb(0.5,0.5,0.5,0.25),border="NA")
 for (i in 1:30){
@@ -111,8 +111,8 @@ magproj(widengrps$RAcen, widengrps$Deccen, pch=19,col=rgb(1,0,0,0.025),cex=0.1,a
 #magproj(wideddf3grps$ra[wideddf3grps$Nfof > 10],wideddf3grps$dec[wideddf3grps$Nfof > 10],pch=16,col=rgb(0.0,0.0,0.0,0.25),cex=0.25,add=T,type="p")
 #magproj(wideddf4grps$ra[wideddf4grps$Nfof > 10],wideddf4grps$dec[wideddf4grps$Nfof > 10],pch=16,col=rgb(0.0,0.0,0.0,0.25),cex=0.25,add=T,type="p")
 #
-magproj(12.5,-23,type="t",plottext="WAVES-South",col="maroon",add=T)
-magproj(190,7,type="t",plottext="WAVES-North",col="maroon",add=T)
+magproj(12.5,-23,type="t",plottext="WAVES-South",col="maroon",add=T, family = "Arial Unicode MS", font = 1)
+magproj(190,7,type="t",plottext="WAVES-North",col="maroon",add=T, family = "Arial Unicode MS", font = 1)
 #magproj(-20,-40,type="t",plottext="WAVES-Deep",col="maroon",add=T)
 #magproj(-10.0,-49,type="t",plottext="WAVES-DDF1 (WD01)",col="maroon",add=T,pos=4)
 #magproj(10.0,0,type="t",plottext="WAVES-DDF2 (WD02)",col="maroon",add=T,pos=4)
