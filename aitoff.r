@@ -13,6 +13,7 @@ library('plotrix')
 require(foreign)
 library(extrafont)
 require(MASS)
+loadfonts("all", quiet = TRUE)
 
 #
 omegam=0.3158221
