@@ -92,8 +92,8 @@ magproj(WD_wide_south,add=T,col='NA')
 #}
 #
 cat("magproj time.")
-cat(length(widengrps$Racen), length(widengrps$Deccen))
-magproj(widengrps$Racen,widengrps$Deccen,pch=16,col=rgb(0,0,0.0,0.25),cex=0.25,add=T,type="p")
+cat(length(widengrps$RAcen), length(widengrps$Deccen))
+magproj(widengrps$RAcen,widengrps$Deccen,pch=16,col=rgb(0,0,0.0,0.25),cex=0.25,add=T,type="p")
 #magproj(widesgrps$ra[widesgrps$Nfof > 10],widesgrps$dec[widesgrps$Nfof > 10],pch=16,col=rgb(0,0,0.0,0.25),cex=0.25,add=T,type="p")
 #magproj(widedgrps$ra[widedgrps$Nfof > 10],widedgrps$dec[widedgrps$Nfof > 10],pch=16,col=rgb(0.39,0.58,0.93,0.5),cex=0.25,add=T,type="p")
 #magproj(wideddf1grps$ra[wideddf1grps$Nfof > 10],wideddf1grps$dec[wideddf1grps$Nfof > 10],pch=16,col=rgb(0.0,0.0,0.0,0.25),cex=0.25,add=T,type="p")
