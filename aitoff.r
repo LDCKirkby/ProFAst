@@ -14,8 +14,10 @@ require(foreign)
 library(extrafont)
 require(MASS)
 library(grDevices)
+font_import()
 loadfonts("all", quiet = TRUE)
-windowsFonts(A = windowsFont("Arial"))
+fonts()
+
 #
 omegam=0.3158221
 omegal=1-omegam
