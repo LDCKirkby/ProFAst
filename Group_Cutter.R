@@ -205,4 +205,7 @@ for(i in 1:length(asteroids$groupID)){
 
 
 }
+cat("Writing out data with top & bottom locations\n")
+write.csv(asteroids, file=paste0("./", loc,"/",loc,"_Asteroids.csv"))
+
 }
