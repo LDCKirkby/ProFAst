@@ -14,9 +14,10 @@ require(foreign)
 library(extrafont)
 require(MASS)
 library(grDevices)
-font_import()
-loadfonts("all")
-fonts()
+library(showtext)
+font_add("Arial", "/Library/Fonts/Arial.ttf")
+showtext_auto()
+
 #par(family = "Arial Unicode")
 
 #
