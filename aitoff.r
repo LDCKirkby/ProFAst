@@ -11,7 +11,9 @@ library('magicaxis')
 library('data.table')
 library('plotrix')
 require(foreign)
+library(extrafont)
 require(MASS)
+
 #
 omegam=0.3158221
 omegal=1-omegam
