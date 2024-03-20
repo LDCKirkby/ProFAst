@@ -49,9 +49,10 @@ contplot=function(ast_data, i, groupimage, groupcol, header, target = FALSE){
 
   # Find top-right, top-left, bottom-right, and bottom-left points
   top_right <- obj_points[which.max(obj_points[, 1] + obj_points[, 2]), ]
-  top_left <- obj_points[which.min(obj_points[, 1] + obj_points[, 2]), ]
+  top_left <- obj_points[which.min(obj_points[, 1] - obj_points[, 2]), ]
   bottom_right <- obj_points[which.max(obj_points[, 1] - obj_points[, 2]), ]
-  bottom_left <- obj_points[which.min(obj_points[, 1] - obj_points[, 2]), ]
+  bottom_left <- obj_points[which.min(obj_points[, 1] + obj_points[, 2]), ]
+  
 
   ast_data$tl_RA[i] = xy2radec(top_left[[1]], top_left[[2]], header)[1]
   ast_data$tl_Dec[i] = xy2radec(top_left[[1]], top_left[[2]], header)[2]
