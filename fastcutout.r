@@ -74,7 +74,7 @@ contplot=function(ast_data, i=NULL, groupimage, groupcol, header){
     return(ast_data)
   }else{
     
-    for(groupID %in% ast_data){
+    for(groupID%in%ast_data){
     
       xrun=1:(dim(groupimage)[1]-1)
       yrun=1:(dim(groupimage)[2]-1)
