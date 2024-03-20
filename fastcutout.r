@@ -22,6 +22,7 @@ contplot=function(ast_data, i=NULL, groupimage, groupcol, header){
     cat(length(which(groupimage%in%ID)), "\n")
     cat("Are there points with ID in groupimage?: ", ID%in%groupimage, "\n\n")
     if(ID%in%groupimage == FALSE){
+      ast_data = contplot(ast_data, i = NULL, groupimage, "skyblue", header) 
       return(ast_data)
     }
     
@@ -94,7 +95,7 @@ contplot=function(ast_data, i=NULL, groupimage, groupcol, header){
       
       groupimage[groupimage_edge==4]=0
     
-      magimage(groupimage,col=c(NA,rep(groupcol,max(groupimage))),magmap=FALSE,add=TRUE,sparse=1)
+      magimage(groupimage,col=c(NA,rep(groupcol,max(groupimage))),magmap=FALSE,add=TRUE,sparse=1, lwd = 0.5)
     
     }
   }
