@@ -168,7 +168,7 @@ for(i in 1:length(asteroids$groupID)){
   Rwcs_imageRGB(R=cutim_r,G=cutim_g,B=cutim_i, Rkeyvalues = r_image$keyvalues, Gkeyvalues = g_image$keyvalues,Bkeyvalues = i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
   
   #contplot(nontargetID,cutseg_dilate$image,"purple",wid,2)
-  contplot(nontargetID, i=NULL, cutgroup_dilate$image, "skyblue", header = g_image$header, target = FALSE)
+  contplot(nontargetID, i=NULL, cutgroup_dilate$image, "skyblue", header = g_image$header)
   #contplot(segID,cutseg_dilate$image,"deeppink",wid,3)?
   
   if(length(which(asteroids$groupID == ID)) > 1){
@@ -186,25 +186,25 @@ for(i in 1:length(asteroids$groupID)){
       }
 
       cat("Printing Double Up Asteroid. GroupID: ", ID,"\n\n")
-      asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, colour, target = TRUE))
+      asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, colour))
       try(text(1,2*wid-50, label=paste0("ID=",asteroids$Colour[i],ID), colour, cex=2.0, pos=4))
 
   }else{
   if(asteroids[asteroids$groupID == ID, "Colour"] == "g"){
     cat("Printing green asteroid. GroupID: ", ID, "\n\n")
-    asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, "green", target = TRUE))
+    asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, "green"))
     try(text(1,2*wid-50,label=paste0("ID=G",ID),col="green",cex=2.0,pos=4))
   }
   
   if(asteroids[asteroids$groupID == ID, "Colour"] == "r"){
     cat("Printing red asteroid. GroupID: ", ID, "\n\n")
-    asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, "red", target = TRUE))
+    asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, "red"))
     try(text(1,2*wid-50,label=paste0("ID=R",ID),col="red",cex=2.0,pos=4))
   }
   
   if(asteroids[asteroids$groupID == ID, "Colour"] == "i"){
     cat("Printing blue asteroid. GroupID: ", ID, "\n\n")
-    asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, "blue", target =TRUE))
+    asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, "blue"))
     try(text(1,2*wid-50,label=paste0("ID=B",ID),col="blue",cex=1.5,pos=4))
   }}
 
