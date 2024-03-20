@@ -20,7 +20,7 @@ contplot=function(ast_data, i=NULL, groupimage, groupcol, header){
     groupimage[groupimage%notin%ID]=0
     
     cat(length(which(groupimage%in%ID)), "\n")
-    cat("Are there points with ID in groupimage?: ", ID%in%groupimage, "\n")
+    cat("Are there points with ID in groupimage?: ", ID%in%groupimage, "\n\n")
     if(ID%in%groupimage == FALSE){
       return(ast_data)
     }
