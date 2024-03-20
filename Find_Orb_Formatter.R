@@ -8,7 +8,7 @@ args = commandArgs(trailingOnly=TRUE)
 loc = args[[1]]
 
 obs_times = read.delim("./obs_times_full.txt", header =FALSE, col.names = c("frame","obs1","obs2","obs3","obs4","obs5","obs6","obs7","obs8","obs9"),  sep = ",")
-asteroids = read.csv(paste0("./",loc,"/N100_Filtered_Asteroids.csv"))
+asteroids = read.csv(paste0("./",loc,"/",loc,"_Asteroids.csv"))
 
 exposure = 0 
 
