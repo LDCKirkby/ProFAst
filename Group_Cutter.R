@@ -141,7 +141,7 @@ for(i in 1:length(asteroids$groupID)){
   decoff=2*(wid*0.339/3600.0)
   raoff=2*(wid*0.339/3600.0)/cos(galradec$Deccen*0.01745329)
   
-  #galgroupIDs=trim$pro_detect$groupstats[trim$pro_detect$groupstats$RAcen > galradec$RAcen - raoff & trim$pro_detect$groupstats$RAcen < galradec$RAcen + raoff & trim$pro_detect$groupstats$Deccen > galradec$Deccen - decoff & trim$pro_detect$groupstats$Deccen < galradec$Deccen + decoff,"groupID"]
+  nontargetID=asteroids[asteroids$RAcen > galradec$RAcen - raoff & asteroids$RAcen < galradec$RAcen + raoff & asteroids$Deccen > galradec$Deccen - decoff & asteroids$Deccen < galradec$Deccen + decoff,"groupID"]
   
   cat("Printing ",asteroids[i,"Colour"],ID," postage stamp\n")
   png(filename=paste0("./",loc,"/Group_Cutouts/",asteroids[i,"Colour"],ID,".png"))
@@ -167,8 +167,8 @@ for(i in 1:length(asteroids$groupID)){
   cat("Time to start printing images!\n")
   Rwcs_imageRGB(R=cutim_r,G=cutim_g,B=cutim_i, Rkeyvalues = r_image$keyvalues, Gkeyvalues = g_image$keyvalues,Bkeyvalues = i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
   
-  #contplot(galgroupIDs,cutseg_dilate$image,"purple",wid,2)
-  #contplot(galgroupIDs,cutgroup_dilate$image, "skyblue", target = FALSE)
+  #contplot(nontargetID,cutseg_dilate$image,"purple",wid,2)
+  contplot(nontargetID, i=NULL, cutgroup_dilate$image, "skyblue", header = g_image$header, target = FALSE)
   #contplot(segID,cutseg_dilate$image,"deeppink",wid,3)?
   
   if(length(which(asteroids$groupID == ID)) > 1){
