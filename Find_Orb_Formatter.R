@@ -12,7 +12,8 @@ asteroids = read.csv(paste0("./",loc,"/",loc,"_Asteroids.csv"))
 
 exposure = 0 
 
-output = c()
+find_orb = c()
+astcheck = c()
 
 for( i in 1:length(asteroids$groupID)){
   colour = asteroids$Colour[i]
@@ -28,16 +29,14 @@ for( i in 1:length(asteroids$groupID)){
   }
   
   
-  obs = subset(obs_times, subset = grepl(loc, obs_times$frame) == TRUE & grepl(asteroids$Colour[i], obs_times$frame) == TRUE & grepl("i2", obs_times$frame) ==FALSE)
+  obs = subset(obs_times, subset = grepl(paste0(loc,"_",asteroids$Colour[i]), obs_times$frame) == TRUE & grepl("i2", obs_times$frame) ==FALSE)
   obs_start = as.POSIXct(obs$obs1)
-  obs_end = as.POSIXct(obs$obs5) + (4*60)
-  #time_start = ymd_hms(obs_start)
-  ymd_start = format(obs_start, format = "%Y %m %d")
-  ymd_end = format(obs_end, format = "%Y %m %d")
-  time_start = as.numeric(format(obs_start, format = "%H"))/24 +as.numeric(format(obs_start, format = "%M"))/(24*60) + as.numeric(format(obs_start, format = "%S"))/(24*60*60)
-  time_end = as.numeric(format(obs_end, format = "%H"))/24 +as.numeric(format(obs_end, format = "%M"))/(24*60) + as.numeric(format(obs_end, format = "%S"))/(24*60*60)
-  time_start = as.character(trunc(time_start*10^4)/10^4)
-  time_end = as.character(trunc(time_end*10^4)/10^4)
+  obs_end = as.POSIXct(obs$obs5) + (exposure/5)
+  paste0(year(obs_start), " ", month(obs_start), " ", day(obs_start) + trunc((hour(obs_start)/24 + minute(obs_start)/(24*60) + second(obs_start)/(24*60*60))*10^4)/10^4)
+  paste0(year(obs_end), " ", month(obs_end), " ", day(obs_end) + trunc((hour(obs_end)/24 + minute(obs_end)/(24*60) + second(obs_end)/(24*60*60))*10^4)/10^4)
+  
+  
+  
   
   #Uncomment once the max & min RA_Dec finder works properly 
   RA_top = paste0(deg2hms(asteroids[i, "tr_RA"])[[1]], " ",deg2hms(asteroids[i, "tr_RA"])[[2]], " ", deg2hms(asteroids[i, "tr_RA"])[[3]])
@@ -60,9 +59,49 @@ for( i in 1:length(asteroids$groupID)){
   }
   line = paste0("     ",asteroids$groupID[[i]],spacer1, "  ", "C",ymd_start, substr(time_start, 2, 6), " ", RA_top, " ", Dec_top,"                      X11")
   line2 = paste0("     ",asteroids$groupID[[i]],spacer1, "  ", "C",ymd_end, substr(time_end, 2, 6), " ", RA_bottom, " ", Dec_bottom,"                      X11")
-  output <- append(output, line)
-  output <- append(output, line2)
+  find_orb <- append(find_orb, line)
+  find_orb <- append(find_orb, line2)
   print(nchar(line))
 }
 
-write.table(output, paste0("./",loc,"/",loc,"_MPC_Format.txt"), sep = "X11", row.names = FALSE, col.names = FALSE, quote = FALSE)
+
+
+
+for( i in 1:length(asteroids$groupID)){
+  colour = asteroids$Colour[i]
+  
+  if("g" %in% colour == TRUE){
+    exposure = 900 #seconds
+  }
+  if("i" %in% colour == TRUE){
+    exposure = 1080 #seconds
+  }
+  if("r" %in% colour == TRUE){
+    exposure = 1800 #seconds
+  }
+  
+  
+  obs = subset(obs_times, subset = grepl(paste0(loc,"_",asteroids$Colour[i]), obs_times$frame) == TRUE & grepl("i2", obs_times$frame) ==FALSE)
+  obs_start = as.POSIXct(obs$obs1)
+  obs_end = as.POSIXct(obs$obs5) + (exposure/5)
+  paste0(year(obs_start), " ", month(obs_start), " ", day(obs_start) + trunc((hour(obs_start)/24 + minute(obs_start)/(24*60) + second(obs_start)/(24*60*60))*10^4)/10^4)
+  paste0(year(obs_end), " ", month(obs_end), " ", day(obs_end) + trunc((hour(obs_end)/24 + minute(obs_end)/(24*60) + second(obs_end)/(24*60*60))*10^4)/10^4)
+  
+  
+  
+  line = paste0("     ","K24",asteroids$groupID[[i]], "  ", "C",ymd_start, substr(time_start, 2, 6), " ", RA_top, " ", Dec_top,"                      X11")
+  # line2 = paste0("     ",asteroids$groupID[[i]], "  ", "C",ymd_end, substr(time_end, 2, 6), " ", RA_bottom, " ", Dec_bottom,"                      X11")
+  astcheck <- append(astcheck, line)
+  # astcheck <- append(astcheck, line2)
+  
+}  
+
+
+write.table(find_orb, paste0("./",loc,"/",loc,"_findorb.txt"), sep = " ", row.names = FALSE, col.names = FALSE, quote = FALSE)
+write.table(astcheck, paste0("./",loc,"/",loc,"_astcheck.txt"), sep = " ", row.names = FALSE, col.names = FALSE, quote = FALSE)
+
+
+
+
+
+
