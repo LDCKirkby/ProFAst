@@ -111,7 +111,7 @@ for(i in 1:length(asteroids$groupID)){
       image_header = i_image_header
     }
     
-    galpos=as.integer(Rwcs_s2p(RA=galradec$RAcen,Dec=galradec$Deccen,keyvalues=image_header$hdr, EQUINOX = 2000L, RADESYS = "ICRS"))
+    galpos=as.integer(Rwcs_s2p(RA=galradec$RAcen,Dec=galradec$Deccen,keyvalues=image_header$keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
     
     box=c(2*wid,2*wid)
     cutim_g=g_image[galpos,box=box]
@@ -145,7 +145,7 @@ for(i in 1:length(asteroids$groupID)){
     image_header = i_image_header
   }
   
-  galpos=as.integer(Rwcs_s2p(RA=galradec$RAcen,Dec=galradec$Deccen,keyvalues=image_header$hdr, EQUINOX = 2000L, RADESYS = "ICRS"))
+  galpos=as.integer(Rwcs_s2p(RA=galradec$RAcen,Dec=galradec$Deccen,keyvalues=image_header$keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
   
   box=c(2*wid,2*wid)
   cutim_g=g_image[galpos,box=box]
@@ -196,7 +196,7 @@ for(i in 1:length(asteroids$groupID)){
   if(length(MPC_Asteroids$RA) != 0){
   MPC_xy = data.table()
   for(k in 1:length(MPC_Asteroids$RA)){
-    xy = radec2xy(MPC_Asteroids$RA[k], MPC_Asteroids$Dec[k], header = image_header$hdr)
+    xy = radec2xy(MPC_Asteroids$RA[k], MPC_Asteroids$Dec[k], header = image_header$keyvalues)
     MPC_xy = rbind(MPC_xy, data.table(x= xy[[1]], y=xy[[2]]))
   }
   MPC_Asteroids = cbind(MPC_Asteroids, MPC_xy)
