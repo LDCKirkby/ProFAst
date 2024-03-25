@@ -17,17 +17,14 @@ bruh = commandArgs()
 num_args = length(bruh)
 i = as.numeric(bruh[[num_args]])
 
-Group_Cutter(i)
 
 
 Group_Cutter <- function(loc){
   `%notin%`<-Negate(`%in%`)
   
-  
   #Make a directory to save the cutouts
   if("Group_Cutouts" %in% list.dirs(paste0("./",loc))){
     dir_delete(paste0("./",loc,"/MPC_Images/"))
-    
   }
   dir.create(paste0("./",loc,"/MPC_Images/"))
   
@@ -37,7 +34,6 @@ Group_Cutter <- function(loc){
   
   cat("Generating groupim\n")
   groupim <- profoundSegimGroup(segim = segim)
-  
   
   cat("Loading images as pointers\n")
   g_image = Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
@@ -138,4 +134,6 @@ Group_Cutter <- function(loc){
   }
   }
 }
-  
+
+Group_Cutter(i)
+
