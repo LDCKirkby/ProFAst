@@ -13,6 +13,13 @@ library(ProPane)
 source("./R_files/fastcutout.r")
 
 #
+bruh = commandArgs()
+num_args = length(bruh)
+i = as.numeric(bruh[[num_args]])
+
+Group_Cutter(i)
+
+
 Group_Cutter <- function(loc){
   `%notin%`<-Negate(`%in%`)
   
