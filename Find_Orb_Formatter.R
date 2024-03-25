@@ -11,6 +11,7 @@ obs_times = read.delim("./obs_times_full.txt", header =FALSE, col.names = c("fra
 asteroids = read.csv(paste0("./",loc,"/",loc,"_Asteroids.csv"))
 
 exposure = 0 
+half_year = c("A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y")
 
 find_orb = c()
 astcheck = c()
@@ -84,16 +85,20 @@ for( i in 1:length(asteroids$groupID)){
   obs = subset(obs_times, subset = grepl(paste0(loc,"_",asteroids$Colour[i]), obs_times$frame) == TRUE & grepl("i2", obs_times$frame) ==FALSE)
   obs_start = as.POSIXct(obs$obs1)
   obs_end = as.POSIXct(obs$obs5) + (exposure/5)
-  paste0(year(obs_start), " ", month(obs_start), " ", day(obs_start) + trunc((hour(obs_start)/24 + minute(obs_start)/(24*60) + second(obs_start)/(24*60*60))*10^4)/10^4)
-  paste0(year(obs_end), " ", month(obs_end), " ", day(obs_end) + trunc((hour(obs_end)/24 + minute(obs_end)/(24*60) + second(obs_end)/(24*60*60))*10^4)/10^4)
+  obs_start = paste0(year(obs_start), " ", month(obs_start), " ", day(obs_start) + trunc((hour(obs_start)/24 + minute(obs_start)/(24*60) + second(obs_start)/(24*60*60))*10^4)/10^4)
+  obs_end = paste0(year(obs_end), " ", month(obs_end), " ", day(obs_end) + trunc((hour(obs_end)/24 + minute(obs_end)/(24*60) + second(obs_end)/(24*60*60))*10^4)/10^4)
+  
+  if()
+  
+  
+  RA_cen = paste0(deg2hms(asteroids[i, "RAcen"])[[1]], " ",deg2hms(asteroids[i, "RAcen"])[[2]], " ", deg2hms(asteroids[i, "RAcen"])[[3]])
+  Dec_cen = paste0(deg2dms(asteroids[i, "Deccen"])[[1]], " ",deg2dms(asteroids[i, "Deccen"])[[2]], " ",substr(deg2dms(asteroids[i, "Deccen"])[[3]][], 1,4))
   
   
   
-  line = paste0("     ","K24",asteroids$groupID[[i]], "  ", "C",ymd_start, substr(time_start, 2, 6), " ", RA_top, " ", Dec_top,"                      X11")
-  # line2 = paste0("     ",asteroids$groupID[[i]], "  ", "C",ymd_end, substr(time_end, 2, 6), " ", RA_bottom, " ", Dec_bottom,"                      X11")
+  line = paste0("     ","K24",, "  ", "C",obs_start, " ", RA_cen, " ", Dec_cen,"                      X11")
   astcheck <- append(astcheck, line)
-  # astcheck <- append(astcheck, line2)
-  
+
 }  
 
 
