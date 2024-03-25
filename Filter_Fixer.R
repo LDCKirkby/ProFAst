@@ -76,12 +76,12 @@ showtext_auto()
   #                         "\nTotal RAM used during New_Detect for ", RA_DEC," :", New_Detect_RAM$Total_RAM_Used_MiB,
   #                         "\nMax RAM used during New_Detect for ", RA_DEC," :", New_Detect_RAM$Peak_RAM_Used_MiB))
   
-  Flux_Comparison_RAM = peakRAM(Flux_Comparison(RA_DEC))
+  #Flux_Comparison_RAM = peakRAM(Flux_Comparison(RA_DEC))
   #post_text_to_ntfy(paste0("Time elapsed for ",RA_DEC," :", Flux_Comparison_RAM$Elapsed_Time_sec, 
   #                         "\nTotal RAM used during Flux_Comparison for ", RA_DEC," :", Flux_Comparison_RAM$Total_RAM_Used_MiB,
   #                         "\nMax RAM used during Flux_Comparison for ", RA_DEC," :", Flux_Comparison_RAM$Peak_RAM_Used_MiB))
   
-  Axrat_Comparison_RAM = peakRAM(Axrat_Comparison(RA_DEC))
+  #Axrat_Comparison_RAM = peakRAM(Axrat_Comparison(RA_DEC))
   #post_text_to_ntfy(paste0("Time elapsed for ",RA_DEC," :", Axrat_Comparison_RAM$Elapsed_Time_sec, 
   #                         "\nTotal RAM used during Axrat_Comparison for ", RA_DEC," :", Axrat_Comparison_RAM$Total_RAM_Used_MiB,
   #                         "\nMax RAM used during Axrat_Comparison for ", RA_DEC," :", Axrat_Comparison_RAM$Peak_RAM_Used_MiB))
