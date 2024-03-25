@@ -51,8 +51,8 @@ r_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/d
 i_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"),header=TRUE,ext=1)
 
 cat("Warping r&i frames\n")
-r_image=propaneWarp(r_image_input,keyvalues_out= r_input_image$keyvalues)
-i_image=propaneWarp(i_image_input,keyvalues_out= i_input_image$keyvalues)
+r_image=propaneWarp(r_image_input,keyvalues_out= r_image_input$keyvalues)
+i_image=propaneWarp(i_image_input,keyvalues_out= i_image_input$keyvalues)
 
 # g_image = images[[1]]
 # r_image = images[[2]]
