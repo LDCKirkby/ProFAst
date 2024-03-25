@@ -71,7 +71,7 @@ Group_Cutter <- function(loc){
       
     galradec = astcheck[i, c("RA", "Dec")]
 
-    galpos=as.integer(Rwcs_s2p(RA=galradec$RA,Dec=galradec$Dec, keyvalues=keyvalues))#, EQUINOX = 2000L, RADESYS = "ICRS"))
+    galpos=as.integer(Rwcs_s2p(RA=galradec$RA,Dec=galradec$Dec, keyvalues=keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
 
     box=c(2*wid,2*wid)
     cutim_g=g_image[galpos,box=box]
