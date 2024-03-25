@@ -59,7 +59,7 @@ Group_Cutter <- function(loc){
   keyvalues = keyvaluess[i]
   #Read in asteroid data
   cat("Reading in asteroid data\n")
-  astcheck = read.table(paste0("./",loc,"/",loc,"_MPC_",co,".txt"), skip = 4, na.strings = " ", col.names = c("ID", "RA", "Dec", "mag", "dRA/dt", "dDec/dt"))
+  astcheck = read.table(paste0("./",loc,"/",loc,"_MPC_",co,".txt"), col.names = c("ID", "RA", "Dec", "mag", "dRA/dt", "dDec/dt"))
   
 
   ######################################################################
