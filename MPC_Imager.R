@@ -40,9 +40,13 @@ Group_Cutter <- function(loc){
   r_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
   i_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"),header=TRUE,ext=1)
   
+  g_image_header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"))
+  r_image_header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"))
+  i_image_header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"))
+  
   cat("Warping r&i frames\n")
-  r_image=propaneWarp(r_image_input,keyvalues_out= r_image_input$keyvalues)
-  i_image=propaneWarp(i_image_input,keyvalues_out= i_image_input$keyvalues)
+  r_image=propaneWarp(r_image_input,keyvalues_out= g_image_header$keyvalues)
+  i_image=propaneWarp(i_image_input,keyvalues_out= g_image_header$keyvalues)
   
   wid = 200.0
   mulim=22.0
@@ -51,15 +55,15 @@ Group_Cutter <- function(loc){
   
   
   colours = c("green", "red", "blue")
-  headers = c(g_image$header, r_image$header, i_image$header)
-  keyvaluess = c(g_image$keyvalues, r_image$keyvalues, i_image$keyvalues)
+  headers = c(g_image_header$header, r_image_header$header, i_image_header$header)
+  keyvaluess = c(g_image_header$hdr, r_image_header$hdr, i_image_header$hdr)
   for(i in 1:3){
-  co = colours[i]
-  header = headers[i]
-  keyvalues = keyvaluess[i]
-  #Read in asteroid data
-  cat("Reading in asteroid data\n")
-  astcheck = read.table(paste0("./",loc,"/",loc,"_MPC_",co,".txt"), col.names = c("ID", "RA", "Dec", "mag", "dRA/dt", "dDec/dt"))
+    co = colours[i]
+    header = headers[i]
+    keyvalues = keyvaluess[i]
+    #Read in asteroid data
+    cat("Reading in asteroid data\n")
+    astcheck = read.table(paste0("./",loc,"/",loc,"_MPC_",co,".txt"), col.names = c("ID", "RA", "Dec", "mag", "dRA/dt", "dDec/dt"))
   
 
   ######################################################################
@@ -71,7 +75,7 @@ Group_Cutter <- function(loc){
       
     galradec = astcheck[i, c("RA", "Dec")]
 
-    galpos=as.integer(Rwcs_s2p(RA=galradec$RA,Dec=galradec$Dec, keyvalues=g_image$keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
+    galpos=as.integer(Rwcs_s2p(RA=galradec$RA,Dec=galradec$Dec, keyvalues=keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
 
     box=c(2*wid,2*wid)
     cutim_g=g_image[galpos,box=box]
@@ -84,20 +88,30 @@ Group_Cutter <- function(loc){
     raoff=2*(wid*0.339/3600.0)/cos(galradec$Deccen*0.01745329)
     
     groupimage = cutgroup_dilate$image
-    groupID = which(groupimage != 0)
-    groupID=astcheck[astcheck$RAcen > galradec$RAcen - raoff & astcheck$RAcen < galradec$RAcen + raoff & astcheck$Deccen > galradec$Deccen - decoff & astcheck$Deccen < galradec$Deccen + decoff,"groupID"]
+    groupIDs = which(cutgroup_dilate$image != 0)
+    #groupID=astcheck[astcheck$RA > galradec$RAcen - raoff & astcheck$RA < galradec$RAcen + raoff & astcheck$Dec > galradec$Deccen - decoff & astcheck$Deccen < galradec$Deccen + decoff,"groupID"]
     
     cat("Printing ",ID," postage stamp\n")
     png(filename=paste0("./",loc,"/MPC_Images/",ID,".png"))
       
 
     par(mfrow=c(1,1),mar=c(3,3,2,2))
-    locut = c(kids, kids, kids)
+    
+    locut = c(median(cutim_r$imDat,na.rm=TRUE),median(cutim_g$imDat,na.rm=TRUE),median(cutim_i$imDat,na.rm=TRUE))
+    if(locut[[1]] > kids){
+      locut[[1]] = kids
+    }
+    if(locut[[2]] > kids){
+      locut[[2]] = kids
+    }
+    if(locut[[3]] > kids){
+      locut[[3]] = kids
+    }
+    #locut = c(kids, kids, kids)
     
     cat("Time to start printing images!\n")
-    Rwcs_imageRGB(R=cutim_r, G=cutim_g, B=cutim_i, Rkeyvalues = r_image$keyvalues, Gkeyvalues = g_image$keyvalues, Bkeyvalues = i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
+    Rwcs_imageRGB(R=cutim_r, G=cutim_g, B=cutim_i, Rkeyvalues = r_image_header$hdr, Gkeyvalues = g_image_header$hdr, Bkeyvalues = i_image_header$hdr, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
     
-    #contplot(groupID,cutseg_dilate$image,"purple",wid,2)
     #contplot(groupID, i=NULL, cutgroup_dilate$image, "skyblue", header = image_header)
     
     for(groupID in groupimage){
@@ -126,7 +140,7 @@ Group_Cutter <- function(loc){
     }
     
 
-    pix_loc = radec2xy(astcheck$RA, astcheck$Dec, header = header)
+    pix_loc = radec2xy(astcheck$RA, astcheck$Dec, header = keyvalues)
     points(pix_loc, add = TRUE, col = co, pch = 11)
     text(1,2*wid-50, label=paste0("MPC ID=",ID), col = co, cex=2.0, pos=4, add = TRUE)
       
