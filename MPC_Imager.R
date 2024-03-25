@@ -15,7 +15,7 @@ source("./R_files/fastcutout.r")
 #
 bruh = commandArgs()
 num_args = length(bruh)
-i = as.numeric(bruh[[num_args]])
+i = bruh[[num_args]]
 
 
 
