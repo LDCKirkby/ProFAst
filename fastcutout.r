@@ -13,7 +13,7 @@
 # require(foreign)
 # require(MASS)
 #
-contplot=function(ast_data, i=NULL, groupimage, groupcol, header){
+contplot=function(ast_data, i=NULL, groupimage, groupcol, header=NULL){
   
   if(is.null(i) == FALSE){
     ID = ast_data$groupID[i]
@@ -22,7 +22,7 @@ contplot=function(ast_data, i=NULL, groupimage, groupcol, header){
     cat(length(which(groupimage%in%ID)), "\n")
     cat("Are there points with ID in groupimage?: ", ID%in%groupimage, "\n\n")
     if(ID%in%groupimage == FALSE){
-      ast_data = contplot(ast_data, i = NULL, groupimage, "skyblue", header) 
+      ast_data = contplot(ast_data, i = NULL, groupimage, "skyblue", header=NULL) 
       return(ast_data)
     }
     

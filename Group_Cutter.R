@@ -57,8 +57,8 @@ i_image_header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wid
 
 
 cat("Warping r&i frames\n")
-r_image=propaneWarp(r_image_input,keyvalues_out= g_image_header$keyvalues)
-i_image=propaneWarp(i_image_input,keyvalues_out= g_image_header$keyvalues)
+r_image=propaneWarp(r_image_input,keyvalues_out= g_image_header)
+i_image=propaneWarp(i_image_input,keyvalues_out= g_image_header)
 
 # g_image = images[[1]]
 # r_image = images[[2]]
@@ -223,9 +223,9 @@ for(i in 1:length(asteroids$groupID)){
       cat("Printing Double Up Asteroid. GroupID: ", ID,"\n\n")
       asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, colour))
       
-      cen_xy = radec2xy(asteroids[asteroids$groupID == ID, "RAcen"], asteroids[asteroids$groupID == ID, "Deccen"], header = image_header$header)
-      radius = 60/getpixscale(image_header$hdr)
-      draw.circle(cen_xy[1], cen_xy[2], radius ,col=c(0,0,0,0.33))
+      # cen_xy = radec2xy(asteroids[asteroids$groupID == ID, "RAcen"], asteroids[asteroids$groupID == ID, "Deccen"], header = image_header$header)
+      # radius = 60/getpixscale(image_header$hdr)
+      # draw.circle(cen_xy[1], cen_xy[2], radius ,col=c(0,0,0,0.33))
       
       try(text(1,2*wid-50, label=paste0("ID=",asteroids$Colour[i],ID), colour, cex=2.0, pos=4))
 
@@ -234,10 +234,10 @@ for(i in 1:length(asteroids$groupID)){
     cat("Printing green asteroid. GroupID: ", ID, "\n")
     asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, "green"))
     
-    cen_xy = radec2xy(asteroids[asteroids$groupID == ID, "RAcen"], asteroids[asteroids$groupID == ID, "Deccen"], header = image_header$header)
-    radius = 60/getpixscale(image_header$hdr)
-    draw.circle(cen_xy[1], cen_xy[2], radius ,col=c(255,0,0,0.33))    
-    
+    # cen_xy = radec2xy(asteroids[asteroids$groupID == ID, "RAcen"], asteroids[asteroids$groupID == ID, "Deccen"], header = image_header$header)
+    # radius = 60/getpixscale(image_header$hdr)
+    # draw.circle(cen_xy[1], cen_xy[2], radius ,col=c(255,0,0,0.33))    
+    # 
     try(text(1,2*wid-50,label=paste0("ID=G",ID),col="green",cex=2.0,pos=4))
   }
   
@@ -245,9 +245,9 @@ for(i in 1:length(asteroids$groupID)){
     cat("Printing red asteroid. GroupID: ", ID, "\n")
     asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, "red"))
     
-    cen_xy = radec2xy(asteroids[asteroids$groupID == ID, "RAcen"], asteroids[asteroids$groupID == ID, "Deccen"], header = image_header$header)
-    radius = 60/getpixscale(image_header$hdr)
-    draw.circle(cen_xy[1], cen_xy[2], radius ,col=c(255,0,0,0.33))
+    # cen_xy = radec2xy(asteroids[asteroids$groupID == ID, "RAcen"], asteroids[asteroids$groupID == ID, "Deccen"], header = image_header$header)
+    # radius = 60/getpixscale(image_header$hdr)
+    # draw.circle(cen_xy[1], cen_xy[2], radius ,col=c(255,0,0,0.33))
     
     try(text(1,2*wid-50,label=paste0("ID=R",ID),col="red",cex=2.0,pos=4))
   }
@@ -256,9 +256,9 @@ for(i in 1:length(asteroids$groupID)){
     cat("Printing blue asteroid. GroupID: ", ID, "\n")
     asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, "blue"))
     
-    cen_xy = radec2xy(asteroids[asteroids$groupID == ID, "RAcen"], asteroids[asteroids$groupID == ID, "Deccen"], header = image_header$header)
-    radius = 60/getpixscale(image_header$hdr)
-    draw.circle(cen_xy[1], cen_xy[2], radius ,col=c(0,0,255,0.33))
+    # cen_xy = radec2xy(asteroids[asteroids$groupID == ID, "RAcen"], asteroids[asteroids$groupID == ID, "Deccen"], header = image_header$header)
+    # radius = 60/getpixscale(image_header$hdr)
+    # draw.circle(cen_xy[1], cen_xy[2], radius ,col=c(0,0,255,0.33))
     
     try(text(1,2*wid-50,label=paste0("ID=B",ID),col="blue",cex=1.5,pos=4))
   }}
