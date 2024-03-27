@@ -80,10 +80,8 @@ for( i in 1:length(asteroids$groupID)){
     day_start = paste0(day_start, "0")
   }
   
-  cat(day_end, nchar(day_end))
   if(nchar(day_end) < 7){
     day_end = paste0(day_end, "0")
-    cat(day_end)
   }
   ymd_start = paste0(ymd_start, day_start)
   ymd_end = paste0(ymd_end, day_end)
@@ -95,10 +93,10 @@ for( i in 1:length(asteroids$groupID)){
   
   line  = paste0(spacer1,asteroids$groupID[[i]], "  C",ymd_start, " ", RA_top, " ", Dec_top,"                      X11")
   line2 = paste0(spacer1,asteroids$groupID[[i]], "  C", ymd_end , " ", RA_top, " ", Dec_top,"                      X11")
-  
+  cat(line)
+  cat(lin2)
   find_orb <- append(find_orb, line)
   find_orb <- append(find_orb, line2)
-  cat(i, nchar(line), nchar(line2), "\n")
 }
 
 # 
