@@ -223,7 +223,7 @@ for(i in 1:length(asteroids$groupID)){
       }
 
       cat("Printing Double Up Asteroid. GroupID: ", ID,"\n\n")
-      asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, colour, g_image$header))
+      asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, colour, g_image$keyvalues))
       
       # cen_xy = radec2xy(asteroids[asteroids$groupID == ID, "RAcen"], asteroids[asteroids$groupID == ID, "Deccen"], header = image_header$header)
       # radius = 60/getpixscale(image_header$hdr)
@@ -234,7 +234,7 @@ for(i in 1:length(asteroids$groupID)){
   }else{
   if(asteroids[asteroids$groupID == ID, "Colour"] == "g"){
     cat("Printing green asteroid. GroupID: ", ID, "\n")
-    asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, "green", image_header))
+    asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, "green", image_header$keyvalues))
     
     # cen_xy = radec2xy(asteroids[asteroids$groupID == ID, "RAcen"], asteroids[asteroids$groupID == ID, "Deccen"], header = image_header$header)
     # radius = 60/getpixscale(image_header$hdr)
@@ -245,7 +245,7 @@ for(i in 1:length(asteroids$groupID)){
   
   if(asteroids[asteroids$groupID == ID, "Colour"] == "r"){
     cat("Printing red asteroid. GroupID: ", ID, "\n")
-    asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, "red", image_header))
+    asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, "red", image_header$keyvalues))
     
     # cen_xy = radec2xy(asteroids[asteroids$groupID == ID, "RAcen"], asteroids[asteroids$groupID == ID, "Deccen"], header = image_header$header)
     # radius = 60/getpixscale(image_header$hdr)
@@ -256,7 +256,7 @@ for(i in 1:length(asteroids$groupID)){
   
   if(asteroids[asteroids$groupID == ID, "Colour"] == "i"){
     cat("Printing blue asteroid. GroupID: ", ID, "\n")
-    asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, "blue", image_header))
+    asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, "blue", image_header$keyvalues))
     
     # cen_xy = radec2xy(asteroids[asteroids$groupID == ID, "RAcen"], asteroids[asteroids$groupID == ID, "Deccen"], header = image_header$header)
     # radius = 60/getpixscale(image_header$hdr)
