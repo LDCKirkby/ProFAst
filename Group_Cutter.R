@@ -57,8 +57,8 @@ i_image_header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wid
 
 
 cat("Warping r&i frames\n")
-r_image=propaneWarp(r_image_input,keyvalues_out= g_image$header)
-i_image=propaneWarp(i_image_input,keyvalues_out= g_image$header)
+r_image=propaneWarp(r_image_input,keyvalues_out= g_image_header$header)
+i_image=propaneWarp(i_image_input,keyvalues_out= g_image_header$header)
 
 # g_image = images[[1]]
 # r_image = images[[2]]
