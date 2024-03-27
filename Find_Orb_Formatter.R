@@ -50,10 +50,11 @@ for( i in 1:length(asteroids$groupID)){
   # 
   if(nchar(asteroids$groupID[[i]]) <= 8){
     diff = 8-nchar(asteroids$groupID[[i]])
-    spacer1 = "     "
+    spacer1 = "0"
     for(j in 1:diff){
-      spacer1 = paste0(spacer1,"0")
+      spacer1 = paste0(spacer1, "0")
     }
+    
   }
   ymd_start = paste0(year(obs_start)," ")
   ymd_end = paste0(year(obs_end), " ")
@@ -91,8 +92,8 @@ for( i in 1:length(asteroids$groupID)){
 
  
   
-  line  = paste0(spacer1,asteroids$groupID[[i]], "  C",ymd_start, " ", RA_top, " ", Dec_top,"                      X11")
-  line2 = paste0(spacer1,asteroids$groupID[[i]], "  C", ymd_end , " ", RA_top, " ", Dec_top,"                      X11")
+  line  = paste0(spacer1,asteroids$groupID[[i]],"       C",ymd_start, " ", RA_top, " ", Dec_top,"                      X11")
+  line2 = paste0(spacer1,asteroids$groupID[[i]],"       C", ymd_end , " ", RA_top, " ", Dec_top,"                      X11")
   cat(line,"\n")
   cat(line2,"\n")
   find_orb <- append(find_orb, line)
