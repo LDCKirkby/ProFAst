@@ -1,6 +1,8 @@
 library(magicaxis)
 library(celestial)
 library(lubridate)
+library(biogram)
+library(common)
 
 
 #formatter <- function(loc){
@@ -18,6 +20,7 @@ astcheck = c()
 
 for( i in 1:length(asteroids$groupID)){
   colour = asteroids$Colour[i]
+  ID = asteroids$groupID[i]
   
   if("g" %in% colour == TRUE){
     exposure = 900 #seconds
@@ -29,33 +32,41 @@ for( i in 1:length(asteroids$groupID)){
     exposure = 1800 #seconds
   }
   
-  
   obs = subset(obs_times, subset = grepl(paste0(loc,"_",asteroids$Colour[i]), obs_times$frame) == TRUE & grepl("i2", obs_times$frame) ==FALSE)
   obs_start = as.POSIXct(obs$obs1, tz = "UTC")
   obs_end = as.POSIXct(obs$obs5, tz = "UTC") + (exposure/5)
-  #ymd_start = paste0(year(obs_start), " ", month(obs_start), " ", day(obs_start) + trunc((hour(obs_start)/24 + minute(obs_start)/(24*60) + second(obs_start)/(24*60*60))*10^4)/10^4)
-  #ymd_end = paste0(year(obs_end), " ", month(obs_start), " ", day(obs_end) + trunc((hour(obs_end)/24 + minute(obs_end)/(24*60) + second(obs_end)/(24*60*60))*10^4)/10^4)
-  
-  #Uncomment once the max & min RA_Dec finder works properly 
-  RA_top = paste0(deg2hms(asteroids[i, "tr_RA"])[[1]], " ",deg2hms(asteroids[i, "tr_RA"])[[2]], " ", deg2hms(asteroids[i, "tr_RA"])[[3]])
-  Dec_top = paste0(deg2dms(asteroids[i, "tr_Dec"])[[1]], " ",deg2dms(asteroids[i, "tr_Dec"])[[2]], " ",substr(deg2dms(asteroids[i, "tr_Dec"])[[3]][], 1,4))
-  RA_bottom = paste0(deg2hms(asteroids[i, "bl_RA"])[[1]], " ",deg2hms(asteroids[i, "bl_RA"])[[2]], " ", deg2hms(asteroids[i, "bl_RA"])[[3]])
-  Dec_bottom = paste0(deg2dms(asteroids[i, "bl_Dec"])[[1]], " ",deg2dms(asteroids[i, "bl_Dec"])[[2]], " ",substr(deg2dms(asteroids[i, "bl_Dec"])[[3]][], 1,4))
+
+  RA_top = paste0(deg2hms(asteroids[i, "tr_RA"])[[1]], " ",deg2hms(asteroids[i, "tr_RA"])[[2]], " ",deg2hms(asteroids[i, "tr_RA"], digits = 3)[[3]])
+  Dec_top = paste0(deg2dms(asteroids[i, "tr_Dec"])[[1]], " ",deg2dms(asteroids[i, "tr_Dec"])[[2]], " ",deg2dms(asteroids[i, "tr_Dec"], digits = 2)[[3]])
+  RA_bottom = paste0(deg2hms(asteroids[i, "bl_RA"])[[1]], " ",deg2hms(asteroids[i, "bl_RA"])[[2]], " ",deg2hms(asteroids[i, "bl_RA"], digits = 3)[[3]])
+  Dec_bottom = paste0(deg2dms(asteroids[i, "bl_Dec"])[[1]], " ",deg2dms(asteroids[i, "bl_Dec"])[[2]], " ",deg2dms(asteroids[i, "bl_Dec"], digits = 2)[[3]])
   
   
-  # RA_top = paste0(deg2hms(asteroids$RAmax[[i]])[[1]], " ",deg2hms(asteroids$RAmax[[i]])[[2]], " ", deg2hms(asteroids$RAmax[[i]])[[3]])
-  # Dec_top = paste0(deg2dms(asteroids$Decmax[[i]])[[1]], " ",deg2dms(asteroids$Decmax[[i]])[[2]], " ",substr(deg2dms(asteroids$Decmax[[i]])[[3]][], 1,4))
-  # RA_bottom = paste0(deg2hms(asteroids$RAcen[[i]])[[1]], " ",deg2hms(asteroids$RAcen[[i]])[[2]], " ", deg2hms(asteroids$RAcen[[i]])[[3]])
-  # Dec_bottom = paste0(deg2dms(asteroids$Deccen[[i]])[[1]], " ",deg2dms(asteroids$Deccen[[i]])[[2]], " ",substr(deg2dms(asteroids$Deccen[[i]])[[3]][], 1,4))
-  # 
-  if(nchar(asteroids$groupID[[i]]) <= 8){
-    diff = 8-nchar(asteroids$groupID[[i]])
-    spacer1 = "0"
-    for(j in 1:diff){
-      spacer1 = paste0(spacer1, "0")
+  spacer1 = "00001"
+  spacer2 = "00002"
+  
+  if(nchar(ID) > 7){
+    long = substr(ID, 1, (nchar(ID) - 7))
+    capitol = FALSE
+    if(strtoi(long) > 26){
+      capitol = TRUE
+      long = strtoi(long) - 26
+      if(long > 26){
+        next
+      }
     }
     
+    ID = paste0(n2l(strtoi(long), "dna"), substr(ID, nchar(ID) - 7, nchar(ID)))
+    print(long_alpha)
+  }else if(nchar(ID) < 7){
+    add = ""
+    for(j in 1: (7 - nchar(ID))){
+      add = paste0(add,"0")
+    }
+    ID = paste0(add,ID)
   }
+  
+    
   ymd_start = paste0(year(obs_start)," ")
   ymd_end = paste0(year(obs_end), " ")
   day_start = ""
@@ -70,32 +81,35 @@ for( i in 1:length(asteroids$groupID)){
   }
   
   if(day(obs_start) < 10){
-    day_start = paste0("0",day(obs_start) + trunc((hour(obs_start)/24 + minute(obs_start)/(24*60) + second(obs_start)/(24*60*60))*10^4)/10^4)
-    day_end = paste0("0",day(obs_end) + trunc((hour(obs_end)/24 + minute(obs_end)/(24*60) + second(obs_end)/(24*60*60))*10^4)/10^4)
+    day_start = paste0("0",day(obs_start) + trunc((hour(obs_start)/24 + minute(obs_start)/(24*60) + second(obs_start)/(24*60*60))*10^6)/10^6)
+    day_end = paste0("0",day(obs_end) + trunc((hour(obs_end)/24 + minute(obs_end)/(24*60) + second(obs_end)/(24*60*60))*10^6)/10^6)
   }else{
-    day_start = paste0(day(obs_start) + trunc((hour(obs_start)/24 + minute(obs_start)/(24*60) + second(obs_start)/(24*60*60))*10^4)/10^4)
-    day_end = paste0(day(obs_end) + trunc((hour(obs_end)/24 + minute(obs_end)/(24*60) + second(obs_end)/(24*60*60))*10^4)/10^4)
+    day_start = paste0(day(obs_start) + trunc((hour(obs_start)/24 + minute(obs_start)/(24*60) + second(obs_start)/(24*60*60))*10^6)/10^6)
+    day_end = paste0(day(obs_end) + trunc((hour(obs_end)/24 + minute(obs_end)/(24*60) + second(obs_end)/(24*60*60))*10^6)/10^6)
   }
   
-  if(nchar(day_start) < 7){
+  if(nchar(day_start) < 9){
     day_start = paste0(day_start, "0")
   }
   
-  if(nchar(day_end) < 7){
+  if(nchar(day_end) < 9){
     day_end = paste0(day_end, "0")
   }
   ymd_start = paste0(ymd_start, day_start)
   ymd_end = paste0(ymd_end, day_end)
 
-#   ymd_start = paste0(year(obs_start), " ", month(obs_start), " ", day(obs_start) + trunc((hour(obs_start)/24 + minute(obs_start)/(24*60) + second(obs_start)/(24*60*60))*10^4)/10^4)
-#   ymd_end = paste0(year(obs_end), " ", month(obs_end), " ", day(obs_end) + trunc((hour(obs_end)/24 + minute(obs_end)/(24*60) + second(obs_end)/(24*60*60))*10^4)/10^4)
-
- 
+  mag = trunc(asteroids$mag[i]*10^2)/10^2
+  if((nchar(toString(mag)) - unlist(gregexpr('[.]', mag))) < 2){
+    for(l in 1:(nchar(toString(mag)) - unlist(gregexpr('[.]', mag)))){
+      mag = paste0(mag,"0")
+    }
+  }
+  colour = asteroids$Colour[i]
   
-  line  = paste0(spacer1,asteroids$groupID[[i]],"       C",ymd_start, " ", RA_top, " ", Dec_top,"                      X11")
-  line2 = paste0(spacer1,asteroids$groupID[[i]],"       C", ymd_end , " ", RA_top, " ", Dec_top,"                      X11")
-  cat(line,"\n")
-  cat(line2,"\n")
+  line  = paste0(spacer1,ID," ","P",ymd_start, "  ", RA_top, " ", Dec_top,spaces(9),spaces(8-nchar(mag)),mag,colour," X11")
+  line2 = paste0(spacer2,ID," ","P", ymd_end , "  ", RA_top, " ", Dec_top,spaces(9),spaces(8-nchar(mag)),mag,colour," X11")
+  cat(line, "\n")
+  cat(line2, "\n")
   find_orb <- append(find_orb, line)
   find_orb <- append(find_orb, line2)
 }
