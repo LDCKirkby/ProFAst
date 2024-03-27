@@ -75,7 +75,7 @@ Group_Cutter <- function(loc){
       
     galradec = astcheck[i, c("RA", "Dec")]
 
-    galpos=as.integer(Rwcs_s2p(RA=galradec$RA,Dec=galradec$Dec, keyvalues=keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
+    galpos=as.integer(Rwcs_s2p(RA=galradec$RA,Dec=galradec$Dec, keyvalues=header, EQUINOX = 2000L, RADESYS = "ICRS"))
 
     box=c(2*wid,2*wid)
     cutim_g=g_image[galpos,box=box]
@@ -110,7 +110,7 @@ Group_Cutter <- function(loc){
     #locut = c(kids, kids, kids)
     
     cat("Time to start printing images!\n")
-    Rwcs_imageRGB(R=cutim_r, G=cutim_g, B=cutim_i, Rkeyvalues = r_image_header$keyvalues, Gkeyvalues = g_image_header$keyvalues, Bkeyvalues = i_image_header$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
+    Rwcs_imageRGB(R=cutim_r, G=cutim_g, B=cutim_i, Rkeyvalues = r_image$keyvalues, Gkeyvalues = g_image$keyvalues, Bkeyvalues = i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
     
     #contplot(groupID, i=NULL, cutgroup_dilate$image, "skyblue", header = image_header)
     
@@ -140,7 +140,7 @@ Group_Cutter <- function(loc){
     # }
     
 
-    pix_loc = radec2xy(astcheck$RA, astcheck$Dec, header = keyvalues)
+    pix_loc = radec2xy(astcheck$RA, astcheck$Dec, header = header)
     points(pix_loc, add = TRUE, col = co, pch = 11)
     text(1,2*wid-50, label=paste0("MPC ID=",ID), col = co, cex=2.0, pos=4, add = TRUE)
       
