@@ -123,6 +123,7 @@ for(i in 1:length(asteroids$groupID)){
       
     }
     
+    cat("Finding galpos")
     galpos=as.integer(Rwcs_s2p(RA=galradec$RAcen,Dec=galradec$Deccen,keyvalues=keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
     
     box=c(2*wid,2*wid)
@@ -130,6 +131,7 @@ for(i in 1:length(asteroids$groupID)){
     cutim_r=r_image[galpos,box=box]
     cutim_i=i_image[galpos,box=box]
     
+    cat("Making cutgroup_dilate")
     cutgroup_dilate=magcutout(image = groupim$groupim, header=image_header, loc=as.numeric(galpos),box=box,loc.type="image")
     
     decoff=2*(wid*0.339/3600.0)
@@ -160,6 +162,7 @@ for(i in 1:length(asteroids$groupID)){
     keyvalues = i_image$keyvalues
   }
   
+  cat("Finding galpos")
   galpos=as.integer(Rwcs_s2p(RA=galradec$RAcen,Dec=galradec$Deccen,keyvalues=keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
   
   box=c(2*wid,2*wid)
@@ -167,6 +170,7 @@ for(i in 1:length(asteroids$groupID)){
   cutim_r=r_image[galpos,box=box]
   cutim_i=i_image[galpos,box=box]
   
+  cat("Making cutgroup_dilate")
   cutgroup_dilate=magcutout(image = groupim$groupim, header=image_header, loc=as.numeric(galpos),box=box,loc.type="image")
   
   #cutseg_orig=magcutoutWCS(image = segim_orig, g_image_header , loc=as.numeric(galpos), box=box, loc.type="image")
@@ -204,6 +208,7 @@ for(i in 1:length(asteroids$groupID)){
   Rwcs_imageRGB(R=cutim_r, G=cutim_g, B=cutim_i, Rkeyvalues = r_image$keyvalues, Gkeyvalues = g_image$keyvalues, Bkeyvalues = i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
   
   #contplot(nontargetID,cutseg_dilate$image,"purple",wid,2)
+  cat("Adding contours for all non target objects")
   contplot(nontargetID, i=NULL, cutgroup_dilate$image, "skyblue", header = image_header$header)
   
   MPC_Asteroids = astcheck[astcheck$RA >galradec$RAcen - raoff & astcheck$RA < galradec$RAcen + raoff & astcheck$Dec > galradec$Deccen - decoff  & astcheck$Dec < galradec$Deccen + decoff, c("RA","Dec")]
@@ -212,7 +217,7 @@ for(i in 1:length(asteroids$groupID)){
   if(length(MPC_Asteroids$RA) != 0){
   MPC_xy = data.table()
   for(k in 1:length(MPC_Asteroids$RA)){
-  
+    cat("Adding MPC ", k, " asteroid points\n")
     xy = radec2xy(MPC_Asteroids$RA[k], MPC_Asteroids$Dec[k], header = image_header)
     MPC_xy = rbind(MPC_xy, data.table(x= xy[[1]], y=xy[[2]]))
   }
