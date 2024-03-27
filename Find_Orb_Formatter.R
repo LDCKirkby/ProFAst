@@ -100,7 +100,9 @@ for( i in 1:length(asteroids$groupID)){
   ymd_end = paste0(ymd_end, day_end)
 
   mag = trunc(asteroids$mag[i]*10^2)/10^2
-  if((nchar(toString(mag)) - unlist(gregexpr('[.]', mag))) < 2){
+  if(unlist(gregexpr('[.]', mag)) == -1){
+    mag = paste0(mag,".00")
+  }else if((nchar(toString(mag)) - unlist(gregexpr('[.]', mag))) < 3){
     for(l in 1:(nchar(toString(mag)) - unlist(gregexpr('[.]', mag)))){
       mag = paste0(mag,"0")
     }
