@@ -52,6 +52,8 @@ contplot=function(ast_data, i=NULL, groupimage, groupcol, header=NULL){
     top_left <- obj_points[which.min(obj_points[, 1] - obj_points[, 2]), ]
     bottom_right <- obj_points[which.max(obj_points[, 1] - obj_points[, 2]), ]
     bottom_left <- obj_points[which.min(obj_points[, 1] + obj_points[, 2]), ]
+    ave_top <- c((top_right[[1]] + bottom_right[[1]])/2 , (top_right[[2]] + bottom_right[[2]])/2)
+    ave_bottom <- c((top_left[[1]] + bottom_left[[1]])/2 , (top_left[[2]] + bottom_left[[2]])/2)
     
   
     ast_data$tl_RA[i] = xy2radec(top_left[[1]], top_left[[2]], header)[1]
@@ -62,15 +64,19 @@ contplot=function(ast_data, i=NULL, groupimage, groupcol, header=NULL){
     ast_data$bl_Dec[i] = xy2radec(bottom_left[[1]], bottom_left[[2]], header)[2]
     ast_data$br_RA[i] = xy2radec(bottom_right[[1]], bottom_right[[2]], header)[1]
     ast_data$br_Dec[i] = xy2radec(bottom_right[[1]], bottom_right[[2]], header)[2]
+    ast_data$top_RA[i] = xy2radec(ave_top[[1]], ave_top[[2]], header)[1]
+    ast_data$top_Dec[i] = xy2radec(ave_top[[1]], ave_top[[2]], header)[2]
+    ast_data$bot_RA[i] = xy2radec(ave_bottom[[1]], ave_bottom[[2]], header)[1]
+    ast_data$bot_Dec[i] = xy2radec(ave_bottom[[1]], ave_bottom[[2]], header)[2]
   
-    x = c(top_right[[1]],bottom_right[[1]],top_left[[1]],bottom_left[[1]])
-    y = c(top_right[[2]],bottom_right[[2]],top_left[[2]],bottom_left[[2]])
+    x = c(top_right[[1]],bottom_right[[1]],top_left[[1]],bottom_left[[1]],ave_top[[1]],ave_bottom[[1]])
+    y = c(top_right[[2]],bottom_right[[2]],top_left[[2]],bottom_left[[2]],ave_top[[2]],ave_bottom[[2]])
     locations = cbind(x,y)
   
     #plot(NA, xlim = c(1, ncol(groupimage)), ylim = c(1, nrow(groupimage)), xlab = "x", ylab = "y", xaxt = "n", yaxt = "n")
     magimage(groupimage,col=c(NA,rep(groupcol,max(groupimage))),magmap=FALSE,add=TRUE,sparse=1)
-    points(locations, col=c("#800080","#FFFF00","#00FFFF","hotpink"), add=TRUE, pch = 4, lwd = 3)
-    legend(x ="topright", legend = c("Top Right", "Bottom Right", "Top Left", "Bottom Left"), pch = c(3,3,3,3), col = c("#800080","#FFFF00","#00FFFF","hotpink"))
+    points(locations, col=c("#b967ff","#fffb96","#00FFFF","#FF00FF", "#FFA500", "#05ffa1"), add=TRUE, pch = 4, lwd = 3)
+    legend(x ="topright", legend = c("Top Right", "Bottom Right", "Top Left", "Bottom Left", "Right Midpoint", "Left Midpoint"), pch = c(3,3,3,3), col = c("#b967ff","#fffb96","#00FFFF","#FF00FF", "#FFA500", "#05ffa1"))
   
     return(ast_data)
   }else{
