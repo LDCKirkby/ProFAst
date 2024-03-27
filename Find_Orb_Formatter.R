@@ -47,16 +47,18 @@ for( i in 1:length(asteroids$groupID)){
   
   if(nchar(ID) > 7){
     long = substr(ID, 1, (nchar(ID) - 7))
-    capitol = FALSE
+    capital = FALSE
     if(strtoi(long) > 26){
-      capitol = TRUE
+      capital = TRUE
       long = strtoi(long) - 26
       if(long > 26){
         next
       }
+      long = paste0(chartr("0-9JA-I","JA-I0-9",long))
+    }else{
+      long = chartr("0-9ja-i","ja-i0-9",long)
     }
-    
-    ID = paste0(n2l(strtoi(long), "dna"), substr(ID, nchar(ID) - 7, nchar(ID)))
+    ID = paste0(long, substr(ID, nchar(ID) - 7, nchar(ID)))
     print(long_alpha)
   }else if(nchar(ID) < 7){
     add = ""
