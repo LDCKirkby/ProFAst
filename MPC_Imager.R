@@ -55,7 +55,8 @@ Group_Cutter <- function(loc){
   
   
   colours = c("green", "red", "blue")
-  headers = c(g_image_header$header, r_image_header$header, i_image_header$header)
+  headers = c(g_image_header, r_image_header, i_image_header)
+  image = c(g_image, r_image, i_image)
   keyvaluess = c(g_image$keyvalues, r_image$keyvalues, i_image$keyvalues)
   for(k in 1:3){
     co = colours[k]
@@ -75,14 +76,14 @@ Group_Cutter <- function(loc){
       
     galradec = astcheck[i, c("RA", "Dec")]
 
-    galpos=as.integer(Rwcs_s2p(RA=galradec$RA,Dec=galradec$Dec, keyvalues=header, EQUINOX = 2000L, RADESYS = "ICRS"))
+    galpos=as.integer(Rwcs_s2p(RA=galradec$RA,Dec=galradec$Dec, keyvalues=header$keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
 
     box=c(2*wid,2*wid)
     cutim_g=g_image[galpos,box=box]
     cutim_r=r_image[galpos,box=box]
     cutim_i=i_image[galpos,box=box]
     
-    cutgroup_dilate=magcutout(image = groupim$groupim, header=header, loc=as.numeric(galpos),box=box,loc.type="image")
+    cutgroup_dilate=magcutout(image = groupim$groupim, header=header$header, loc=as.numeric(galpos),box=box,loc.type="image")
     
     decoff=2*(wid*0.339/3600.0)
     raoff=2*(wid*0.339/3600.0)/cos(galradec$Deccen*0.01745329)
@@ -140,7 +141,7 @@ Group_Cutter <- function(loc){
     # }
     
 
-    pix_loc = radec2xy(astcheck$RA, astcheck$Dec, header = header)
+    pix_loc = radec2xy(astcheck$RA, astcheck$Dec, header = header$header)
     points(pix_loc, add = TRUE, col = co, pch = 11)
     text(1,2*wid-50, label=paste0("MPC ID=",ID), col = co, cex=2.0, pos=4, add = TRUE)
       
