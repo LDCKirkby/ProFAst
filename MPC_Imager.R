@@ -45,8 +45,8 @@ Group_Cutter <- function(loc){
   i_image_header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"))
   
   cat("Warping r&i frames\n")
-  r_image=propaneWarp(r_image_input,keyvalues_out= g_image_header$keyvalues)
-  i_image=propaneWarp(i_image_input,keyvalues_out= g_image_header$keyvalues)
+  r_image=propaneWarp(r_image_input,keyvalues_out= g_image$keyvalues)
+  i_image=propaneWarp(i_image_input,keyvalues_out= g_image$keyvalues)
   
   wid = 200.0
   mulim=22.0
@@ -56,11 +56,11 @@ Group_Cutter <- function(loc){
   
   colours = c("green", "red", "blue")
   headers = c(g_image_header$header, r_image_header$header, i_image_header$header)
-  keyvaluess = c(g_image_header$hdr, r_image_header$hdr, i_image_header$hdr)
-  for(i in 1:3){
-    co = colours[i]
-    header = headers[i]
-    keyvalues = keyvaluess[i]
+  keyvaluess = c(g_image_header$keyvalues, r_image_header$keyvalues, i_image_header$keyvalues)
+  for(k in 1:3){
+    co = colours[k]
+    header = headers[k]
+    keyvalues = keyvaluess[k]
     #Read in asteroid data
     cat("Reading in asteroid data\n")
     astcheck = read.table(paste0("./",loc,"/",loc,"_MPC_",co,".txt"), col.names = c("ID", "RA", "Dec", "mag", "dRA/dt", "dDec/dt"))
@@ -110,34 +110,34 @@ Group_Cutter <- function(loc){
     #locut = c(kids, kids, kids)
     
     cat("Time to start printing images!\n")
-    Rwcs_imageRGB(R=cutim_r, G=cutim_g, B=cutim_i, Rkeyvalues = r_image_header$hdr, Gkeyvalues = g_image_header$hdr, Bkeyvalues = i_image_header$hdr, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
+    Rwcs_imageRGB(R=cutim_r, G=cutim_g, B=cutim_i, Rkeyvalues = r_image_header$keyvalues, Gkeyvalues = g_image_header$keyvalues, Bkeyvalues = i_image_header$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
     
     #contplot(groupID, i=NULL, cutgroup_dilate$image, "skyblue", header = image_header)
     
-    for(groupID in groupimage){
-      
-      xrun=1:(dim(groupimage)[1]-1)
-      yrun=1:(dim(groupimage)[2]-1)
-      
-      groupimage_lb=groupimage[xrun,yrun]
-      groupimage_lt=groupimage[xrun+1,yrun]
-      groupimage_rt=groupimage[xrun+1,yrun+1]
-      groupimage_rb=groupimage[xrun,yrun+1]
-      
-      groupimage_temp = (groupimage_lb == groupimage_lt) & (groupimage_rt == groupimage_rb) & (groupimage_lb == groupimage_rb) & (groupimage_lt == groupimage_rt)
-      
-      groupimage_edge=matrix(0,dim(groupimage)[1],dim(groupimage)[2])
-      
-      groupimage_edge[xrun,yrun]=groupimage_edge[xrun,yrun]+groupimage_temp
-      groupimage_edge[xrun+1,yrun]=groupimage_edge[xrun+1,yrun]+groupimage_temp
-      groupimage_edge[xrun+1,yrun+1]=groupimage_edge[xrun+1,yrun+1]+groupimage_temp
-      groupimage_edge[xrun,yrun+1]=groupimage_edge[xrun,yrun+1]+groupimage_temp
-      
-      groupimage[groupimage_edge==4]=0
-      
-      magimage(groupimage,col=c(NA,rep("skyblue",max(groupimage))),magmap=FALSE,add=TRUE,sparse=1, lwd = 0.5)
-      
-    }
+    # for(groupID in groupimage){
+    #   
+    #   xrun=1:(dim(groupimage)[1]-1)
+    #   yrun=1:(dim(groupimage)[2]-1)
+    #   
+    #   groupimage_lb=groupimage[xrun,yrun]
+    #   groupimage_lt=groupimage[xrun+1,yrun]
+    #   groupimage_rt=groupimage[xrun+1,yrun+1]
+    #   groupimage_rb=groupimage[xrun,yrun+1]
+    #   
+    #   groupimage_temp = (groupimage_lb == groupimage_lt) & (groupimage_rt == groupimage_rb) & (groupimage_lb == groupimage_rb) & (groupimage_lt == groupimage_rt)
+    #   
+    #   groupimage_edge=matrix(0,dim(groupimage)[1],dim(groupimage)[2])
+    #   
+    #   groupimage_edge[xrun,yrun]=groupimage_edge[xrun,yrun]+groupimage_temp
+    #   groupimage_edge[xrun+1,yrun]=groupimage_edge[xrun+1,yrun]+groupimage_temp
+    #   groupimage_edge[xrun+1,yrun+1]=groupimage_edge[xrun+1,yrun+1]+groupimage_temp
+    #   groupimage_edge[xrun,yrun+1]=groupimage_edge[xrun,yrun+1]+groupimage_temp
+    #   
+    #   groupimage[groupimage_edge==4]=0
+    #   
+    #   magimage(groupimage,col=c(NA,rep("skyblue",max(groupimage))),magmap=FALSE,add=TRUE,sparse=1, lwd = 0.5)
+    #   
+    # }
     
 
     pix_loc = radec2xy(astcheck$RA, astcheck$Dec, header = keyvalues)
