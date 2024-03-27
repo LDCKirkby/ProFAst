@@ -102,23 +102,28 @@ for(i in 1:length(asteroids$groupID)){
     galradec = asteroids[i, c("RAcen", "Deccen")]
     
     if(asteroids[i, "Colour"] == "g"){
-      image_header = g_image_header
+      image_header = g_image$header
+      keyvalues = g_image$keyvalues
     }
     if(asteroids[i, "Colour"] == "r"){
-      image_header = r_image_header
+      image_header = r_image$header
+      keyvalues = r_image$keyvalues
+      
     }
     if(asteroids[i, "Colour"] == "i"){
-      image_header = i_image_header
+      image_header = i_image$header
+      keyvalues = i_image$keyvalues
+      
     }
     
-    galpos=as.integer(Rwcs_s2p(RA=galradec$RAcen,Dec=galradec$Deccen,keyvalues=image_header$keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
+    galpos=as.integer(Rwcs_s2p(RA=galradec$RAcen,Dec=galradec$Deccen,keyvalues=keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
     
     box=c(2*wid,2*wid)
     cutim_g=g_image[galpos,box=box]
     cutim_r=r_image[galpos,box=box]
     cutim_i=i_image[galpos,box=box]
     
-    cutgroup_dilate=magcutout(image = groupim$groupim, header=image_header$header, loc=as.numeric(galpos),box=box,loc.type="image")
+    cutgroup_dilate=magcutout(image = groupim$groupim, header=image_header, loc=as.numeric(galpos),box=box,loc.type="image")
     
     decoff=2*(wid*0.339/3600.0)
     raoff=2*(wid*0.339/3600.0)/cos(galradec$Deccen*0.01745329)
@@ -136,23 +141,26 @@ for(i in 1:length(asteroids$groupID)){
   #galradec=trim$pro_detect$groupstats[trim$pro_detect$groupstats$groupID==groupID, c("RAcen","Deccen")]
   
   if(asteroids[i, "Colour"] == "g"){
-    image_header = g_image_header
+    image_header = g_image$header
+    keyvalues = g_image$keyvalues
   }
   if(asteroids[i, "Colour"] == "r"){
-    image_header = r_image_header
+    image_header = r_image$header
+    keyvalues = r_image$keyvalues
   }
   if(asteroids[i, "Colour"] == "i"){
-    image_header = i_image_header
+    image_header = i_image$header
+    keyvalues = i_image$keyvalues
   }
   
-  galpos=as.integer(Rwcs_s2p(RA=galradec$RAcen,Dec=galradec$Deccen,keyvalues=image_header$keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
+  galpos=as.integer(Rwcs_s2p(RA=galradec$RAcen,Dec=galradec$Deccen,keyvalues=keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
   
   box=c(2*wid,2*wid)
   cutim_g=g_image[galpos,box=box]
   cutim_r=r_image[galpos,box=box]
   cutim_i=i_image[galpos,box=box]
   
-  cutgroup_dilate=magcutout(image = groupim$groupim, header=image_header$header, loc=as.numeric(galpos),box=box,loc.type="image")
+  cutgroup_dilate=magcutout(image = groupim$groupim, header=image_header, loc=as.numeric(galpos),box=box,loc.type="image")
   
   #cutseg_orig=magcutoutWCS(image = segim_orig, g_image_header , loc=as.numeric(galpos), box=box, loc.type="image")
   #cutseg_dilate=magcutoutWCS(image = segim, g_image_header,loc=as.numeric(galpos),box=box,loc.type="image")
@@ -186,7 +194,7 @@ for(i in 1:length(asteroids$groupID)){
   # locut = c(kids, kids, kids)
   
   cat("Time to start printing images!\n")
-  Rwcs_imageRGB(R=cutim_r, G=cutim_g, B=cutim_i, Rkeyvalues = r_image_header$keyvalues, Gkeyvalues = g_image_header$keyvalues, Bkeyvalues = i_image_header$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
+  Rwcs_imageRGB(R=cutim_r, G=cutim_g, B=cutim_i, Rkeyvalues = r_image$keyvalues, Gkeyvalues = g_image$keyvalues, Bkeyvalues = i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
   
   #contplot(nontargetID,cutseg_dilate$image,"purple",wid,2)
   contplot(nontargetID, i=NULL, cutgroup_dilate$image, "skyblue", header = image_header$header)
@@ -198,7 +206,7 @@ for(i in 1:length(asteroids$groupID)){
   MPC_xy = data.table()
   for(k in 1:length(MPC_Asteroids$RA)){
   
-    xy = radec2xy(MPC_Asteroids$RA[k], MPC_Asteroids$Dec[k], header = image_header$keyvalues)
+    xy = radec2xy(MPC_Asteroids$RA[k], MPC_Asteroids$Dec[k], header = image_header)
     MPC_xy = rbind(MPC_xy, data.table(x= xy[[1]], y=xy[[2]]))
   }
   MPC_Asteroids = cbind(MPC_Asteroids, MPC_xy)
@@ -223,7 +231,7 @@ for(i in 1:length(asteroids$groupID)){
       }
 
       cat("Printing Double Up Asteroid. GroupID: ", ID,"\n\n")
-      asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, colour, g_image$keyvalues))
+      asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, colour, image_header))
       
       # cen_xy = radec2xy(asteroids[asteroids$groupID == ID, "RAcen"], asteroids[asteroids$groupID == ID, "Deccen"], header = image_header$header)
       # radius = 60/getpixscale(image_header$hdr)
@@ -234,7 +242,7 @@ for(i in 1:length(asteroids$groupID)){
   }else{
   if(asteroids[asteroids$groupID == ID, "Colour"] == "g"){
     cat("Printing green asteroid. GroupID: ", ID, "\n")
-    asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, "green", image_header$keyvalues))
+    asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, "green", image_header))
     
     # cen_xy = radec2xy(asteroids[asteroids$groupID == ID, "RAcen"], asteroids[asteroids$groupID == ID, "Deccen"], header = image_header$header)
     # radius = 60/getpixscale(image_header$hdr)
@@ -245,7 +253,7 @@ for(i in 1:length(asteroids$groupID)){
   
   if(asteroids[asteroids$groupID == ID, "Colour"] == "r"){
     cat("Printing red asteroid. GroupID: ", ID, "\n")
-    asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, "red", image_header$keyvalues))
+    asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, "red", image_header))
     
     # cen_xy = radec2xy(asteroids[asteroids$groupID == ID, "RAcen"], asteroids[asteroids$groupID == ID, "Deccen"], header = image_header$header)
     # radius = 60/getpixscale(image_header$hdr)
@@ -256,7 +264,7 @@ for(i in 1:length(asteroids$groupID)){
   
   if(asteroids[asteroids$groupID == ID, "Colour"] == "i"){
     cat("Printing blue asteroid. GroupID: ", ID, "\n")
-    asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, "blue", image_header$keyvalues))
+    asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, "blue", image_header))
     
     # cen_xy = radec2xy(asteroids[asteroids$groupID == ID, "RAcen"], asteroids[asteroids$groupID == ID, "Deccen"], header = image_header$header)
     # radius = 60/getpixscale(image_header$hdr)

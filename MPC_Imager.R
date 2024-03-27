@@ -40,13 +40,13 @@ Group_Cutter <- function(loc){
   r_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
   i_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"),header=TRUE,ext=1)
   
-  g_image_header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"))
-  r_image_header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"))
-  i_image_header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"))
-  
+  # g_image_header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"))
+  # r_image_header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"))
+  # i_image_header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"))
+  # 
   cat("Warping r&i frames\n")
-  r_image=propaneWarp(r_image_input,keyvalues_out= g_image$keyvalues)
-  i_image=propaneWarp(i_image_input,keyvalues_out= g_image$keyvalues)
+  # r_image=propaneWarp(r_image_input,keyvalues_out= g_image$keyvalues)
+  # i_image=propaneWarp(i_image_input,keyvalues_out= g_image$keyvalues)
   
   wid = 200.0
   mulim=22.0
@@ -55,7 +55,7 @@ Group_Cutter <- function(loc){
   
   
   colours = c("green", "red", "blue")
-  headers = c(g_image_header, r_image_header, i_image_header)
+  headers = c(g_image$header, r_image$header, i_image$header)
   image = c(g_image, r_image, i_image)
   keyvaluess = c(g_image$keyvalues, r_image$keyvalues, i_image$keyvalues)
   for(k in 1:3){
