@@ -101,10 +101,8 @@ for( i in 1:length(asteroids$groupID)){
 
   mag = trunc(asteroids$mag[i]*10^2)/10^2
   if(unlist(gregexpr('[.]', mag)) == -1){
-    print(mag)
     mag = paste0(mag,".00")
   }else if((nchar(toString(mag)) - unlist(gregexpr('[.]', mag))) < 2){
-    print(mag)
     for(l in 1:(nchar(toString(mag)) - unlist(gregexpr('[.]', mag)))){
       mag = paste0(mag,"0")
     }
