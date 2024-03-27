@@ -1,7 +1,6 @@
 library(magicaxis)
 library(celestial)
 library(lubridate)
-library(biogram)
 library(common)
 
 
