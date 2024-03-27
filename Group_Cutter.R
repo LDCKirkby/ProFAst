@@ -27,7 +27,6 @@ dir.create(paste0("./",loc,"/Group_Cutouts/"))
 
   
   
-#Read in asteroid data
 cat("Reading in asteroid data\n")
 asteroids <- as.data.frame(read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv")))
 #asteroids = as.data.frame(read.csv(paste0("./", loc, "/", loc,"_Filtered_Asteroids.csv")))
@@ -35,26 +34,19 @@ asteroids <- cbind(asteroids, data.frame(tl_RA = 0, tl_Dec = 0, tr_RA = 0, tr_De
 
 
 cat("Reading in segmentation map data\n")
-#segim_orig <- as.matrix(read.csv(paste0("./",loc,"/segim_orig.csv")))
 
-segim <- as.matrix(read.csv(paste0("./",loc,"/segim.csv")))
-
-cat("Generating groupim\n")
-groupim <- profoundSegimGroup(segim = segim)
+# segim <- as.matrix(read.csv(paste0("./",loc,"/segim.csv")))
+# 
+# cat("Generating groupim\n")
+# groupim <- profoundSegimGroup(segim = segim)
 write.csv(groupim, file = "./180.0_-0.5/groupim.csv", quote = FALSE)
 
-#header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"))
 
-#trim=readRDS(paste0("./",loc,"/stacked.rds"))
 cat("Loading images as pointers\n")
 g_image = Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
 # r_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
 # i_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"),header=TRUE,ext=1)
 # 
-# # 
-# # g_image_header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"))
-# # r_image_header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"))
-# # i_image_header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"))
 # 
 # 
 # cat("Warping r&i frames\n")
@@ -67,9 +59,6 @@ g_image = Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/pr
 r_image = Rfits_point(paste0("./",loc,"/r_image_propane.fits"), header = TRUE, ext=1)
 i_image = Rfits_point(paste0("./",loc,"/i_image_propane.fits"), header = TRUE, ext=1)
 
-# g_image = images[[1]]
-# r_image = images[[2]]
-# i_image = images[[3]]
 
 wid = 200.0
 mulim=22.0
