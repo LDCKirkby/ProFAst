@@ -41,27 +41,31 @@ segim <- as.matrix(read.csv(paste0("./",loc,"/segim.csv")))
 
 cat("Generating groupim\n")
 groupim <- profoundSegimGroup(segim = segim)
+write.csv(groupim, file = "./180.0_-0.5/groupim.csv", quote = FALSE)
 
 #header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"))
 
 #trim=readRDS(paste0("./",loc,"/stacked.rds"))
 cat("Loading images as pointers\n")
 g_image = Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
-r_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
-i_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"),header=TRUE,ext=1)
-
+# r_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
+# i_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"),header=TRUE,ext=1)
 # 
-# g_image_header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"))
-# r_image_header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"))
-# i_image_header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"))
+# # 
+# # g_image_header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"))
+# # r_image_header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"))
+# # i_image_header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"))
+# 
+# 
+# cat("Warping r&i frames\n")
+# r_image=propaneWarp(r_image_input,keyvalues_out= g_image$keyvalues)
+# i_image=propaneWarp(i_image_input,keyvalues_out= g_image$keyvalues)
+# 
+# Rfits_write_image(r_image, filename = "./180.0_-0.5/r_image_propane.fits", ext = 1, keyvalues = r_image$keyvalues)
+# Rfits_write_image(i_image, filename = "./180.0_-0.5/r_image_propane.fits", ext = 1, keyvalues = i_image$keyvalues)
 
-
-cat("Warping r&i frames\n")
-r_image=propaneWarp(r_image_input,keyvalues_out= g_image$keyvalues)
-i_image=propaneWarp(i_image_input,keyvalues_out= g_image$keyvalues)
-
-Rfits_write_image(r_image, filename = "./180.0_-0.5/r_image_propane.fits", ext = 1, keyvalues = r_image$keyvalues)
-Rfits_write_image(i_image, filename = "./180.0_-0.5/r_image_propane.fits", ext = 1, keyvalues = i_image$keyvalues)
+r_image = Rfits_point(paste0("./",loc,"/r_image_propane.fits"), header = TRUE, ext=1)
+i_image = Rfits_point(paste0("./",loc,"/i_image_propane.fits"), header = TRUE, ext=1)
 
 # g_image = images[[1]]
 # r_image = images[[2]]
