@@ -56,7 +56,7 @@ Group_Cutter <- function(loc){
   
   colours = c("green", "red", "blue")
   headers = c(g_image_header$header, r_image_header$header, i_image_header$header)
-  keyvaluess = c(g_image_header$keyvalues, r_image_header$keyvalues, i_image_header$keyvalues)
+  keyvaluess = c(g_image$keyvalues, r_image$keyvalues, i_image$keyvalues)
   for(k in 1:3){
     co = colours[k]
     header = headers[k]
