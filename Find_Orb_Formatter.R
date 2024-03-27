@@ -65,7 +65,7 @@ for( i in 1:length(asteroids$groupID)){
   line2 = paste0("     ",asteroids$groupID[[i]],spacer1, "  ", "C",ymd_end, " ", RA_bottom, " ", Dec_bottom,"                      X11")
   find_orb <- append(find_orb, line)
   find_orb <- append(find_orb, line2)
-  cat((line), "\n", (line2))
+  cat(nchar(line), nchar(line2), "\n")
 }
 
 # 
