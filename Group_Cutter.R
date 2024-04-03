@@ -1,18 +1,21 @@
-# library(celestial)
-# library(devtools)
-# library(Cairo)
-# library(Rfits)
-# library(Rwcs)
-# library(ProFound)
-# library('magicaxis')
-# library('data.table')
-# library('plotrix')
-# require(foreign)
-# require(MASS)
-# library(ProPane)
-# source("./R_files/fastcutout.r")
+library(celestial)
+library(devtools)
+library(Cairo)
+library(Rfits)
+library(Rwcs)
+library(ProFound)
+library('magicaxis')
+library('data.table')
+library('plotrix')
+require(foreign)
+require(MASS)
+library(ProPane)
+source("./R_files/fastcutout.r")
 
 #
+args = commandArgs(trailingOnly=TRUE)
+loc = args[[1]]
+
 Group_Cutter <- function(loc){#, images){
 `%notin%`<-Negate(`%in%`)
   
@@ -47,7 +50,9 @@ g_image = Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/pr
 r_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
 i_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"),header=TRUE,ext=1)
 
- 
+g_image_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
+r_image_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
+i_image_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"),header=TRUE,ext=1)
 
 cat("Warping r&i frames\n")
 r_image=propaneWarp(r_image_input,keyvalues_out= g_image$keyvalues)
@@ -72,7 +77,9 @@ for(i in 1:3){
   co = colours[i]
   #Read in asteroid data
   cat("Reading in MPC Asteroid data\n")
-  astcheck = rbind(astcheck, read.table(paste0("./",loc,"/",loc,"_MPC_",co,".txt"), col.names = c("ID", "RA", "Dec", "mag", "dRA/dt", "dDec/dt")))
+  ast = cbind(read.table(paste0("./",loc,"/",loc,"_MPC_",co,".txt"), col.names = c("ID", "RA", "Dec", "mag", "dRA/dt", "dDec/dt")), co)
+  colnames(ast) = c("ID", "RA", "Dec", "mag", "dRA/dt", "dDec/dt", "Colour")
+  astcheck = rbind(astcheck, ast)
 }
 
 
@@ -100,15 +107,18 @@ for(i in 1:length(asteroids$groupID)){
     if(asteroids[i, "Colour"] == "g"){
       image_header = g_image$header
       keyvalues = g_image$keyvalues
+      hdr = g_image_hdr
     }
     if(asteroids[i, "Colour"] == "r"){
       image_header = r_image$header
       keyvalues = r_image$keyvalues
+      hdr = r_image_hdr
       
     }
     if(asteroids[i, "Colour"] == "i"){
       image_header = i_image$header
       keyvalues = i_image$keyvalues
+      hdr = i_image_hdr
       
     }
     
@@ -141,18 +151,21 @@ for(i in 1:length(asteroids$groupID)){
   if(asteroids[i, "Colour"] == "g"){
     image_header = g_image$header
     keyvalues = g_image$keyvalues
+    hdr = g_image_hdr
   }
   if(asteroids[i, "Colour"] == "r"){
     image_header = r_image$header
     keyvalues = r_image$keyvalues
+    hdr = r_image_hdr
   }
   if(asteroids[i, "Colour"] == "i"){
     image_header = i_image$header
     keyvalues = i_image$keyvalues
+    hdr = i_image_hdr
   }
   
   cat("Finding galpos")
-  galpos=as.integer(Rwcs_s2p(RA=galradec$RAcen,Dec=galradec$Deccen,keyvalues=keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
+  galpos=as.integer(Rwcs_s2p(RA=galradec$RAcen,Dec=galradec$Deccen, keyvalues=keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
   
   box=c(2*wid,2*wid)
   cutim_g=g_image[galpos,box=box]
@@ -160,7 +173,7 @@ for(i in 1:length(asteroids$groupID)){
   cutim_i=i_image[galpos,box=box]
   
   cat("Making cutgroup_dilate")
-  cutgroup_dilate=magcutout(image = groupim$groupim, header=image_header, loc=as.numeric(galpos),box=box,loc.type="image")
+  cutgroup_dilate=magcutout(image = groupim$groupim, loc=as.numeric(galpos),box=box,loc.type="image")
   
   #cutseg_orig=magcutoutWCS(image = segim_orig, g_image_header , loc=as.numeric(galpos), box=box, loc.type="image")
   #cutseg_dilate=magcutoutWCS(image = segim, g_image_header,loc=as.numeric(galpos),box=box,loc.type="image")
@@ -243,7 +256,7 @@ for(i in 1:length(asteroids$groupID)){
   }else{
   if(asteroids[asteroids$groupID == ID, "Colour"] == "g"){
     cat("Printing green asteroid. GroupID: ", ID, "\n")
-    asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, "green", image_header))
+    asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, "green", hdr))
     
     # cen_xy = radec2xy(asteroids[asteroids$groupID == ID, "RAcen"], asteroids[asteroids$groupID == ID, "Deccen"], header = image_header$header)
     # radius = 60/getpixscale(image_header$hdr)
@@ -254,7 +267,7 @@ for(i in 1:length(asteroids$groupID)){
   
   if(asteroids[asteroids$groupID == ID, "Colour"] == "r"){
     cat("Printing red asteroid. GroupID: ", ID, "\n")
-    asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, "red", image_header))
+    asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, "red", hdr))
     
     # cen_xy = radec2xy(asteroids[asteroids$groupID == ID, "RAcen"], asteroids[asteroids$groupID == ID, "Deccen"], header = image_header$header)
     # radius = 60/getpixscale(image_header$hdr)
@@ -265,7 +278,7 @@ for(i in 1:length(asteroids$groupID)){
   
   if(asteroids[asteroids$groupID == ID, "Colour"] == "i"){
     cat("Printing blue asteroid. GroupID: ", ID, "\n")
-    asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, "blue", image_header))
+    asteroids = try(contplot(asteroids, i, cutgroup_dilate$image, "blue", hdr))
     
     # cen_xy = radec2xy(asteroids[asteroids$groupID == ID, "RAcen"], asteroids[asteroids$groupID == ID, "Deccen"], header = image_header$header)
     # radius = 60/getpixscale(image_header$hdr)

@@ -57,17 +57,17 @@ contplot=function(ast_data, i=NULL, groupimage, groupcol, header=NULL){
     
   
     ast_data$tl_RA[i] = xy2radec(top_left[[1]], top_left[[2]], header)[1]
-    ast_data$tl_Dec[i] = xy2radec(top_left[[1]], top_left[[2]], header)[2]
-    ast_data$tr_RA[i] = xy2radec(top_right[[1]], top_right[[2]], header)[1]
-    ast_data$tr_Dec[i] = xy2radec(top_right[[1]], top_right[[2]], header)[2]
+    ast_data$tl_Dec[i] = xy2radec(top_left[[1]],top_left[[2]], header)[2]
+    ast_data$tr_RA[i] = xy2radec(top_right[[1]],top_right[[2]], header)[1]
+    ast_data$tr_Dec[i] = xy2radec(top_right[[1]],top_right[[2]], header)[2]
     ast_data$bl_RA[i] = xy2radec(bottom_left[[1]], bottom_left[[2]], header)[1]
     ast_data$bl_Dec[i] = xy2radec(bottom_left[[1]], bottom_left[[2]], header)[2]
     ast_data$br_RA[i] = xy2radec(bottom_right[[1]], bottom_right[[2]], header)[1]
-    ast_data$br_Dec[i] = xy2radec(bottom_right[[1]], bottom_right[[2]], header)[2]
+    ast_data$br_Dec[i] = xy2radec(bottom_right[[1]],bottom_right[[2]], header)[2]
     ast_data$top_RA[i] = xy2radec(ave_top[[1]], ave_top[[2]], header)[1]
-    ast_data$top_Dec[i] = xy2radec(ave_top[[1]], ave_top[[2]], header)[2]
-    ast_data$bot_RA[i] = xy2radec(ave_bottom[[1]], ave_bottom[[2]], header)[1]
-    ast_data$bot_Dec[i] = xy2radec(ave_bottom[[1]], ave_bottom[[2]], header)[2]
+    ast_data$top_Dec[i] = xy2radec(ave_top[[1]],ave_top[[2]], header)[2]
+    ast_data$bot_RA[i] = xy2radec(ave_bottom[[1]],ave_bottom[[2]], header)[1]
+    ast_data$bot_Dec[i] = xy2radec(ave_bottom[[1]],ave_bottom[[2]], header)[2]
   
     x = c(top_right[[1]],bottom_right[[1]],top_left[[1]],bottom_left[[1]],ave_top[[1]],ave_bottom[[1]])
     y = c(top_right[[2]],bottom_right[[2]],top_left[[2]],bottom_left[[2]],ave_top[[2]],ave_bottom[[2]])
