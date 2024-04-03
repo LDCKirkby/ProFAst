@@ -23,7 +23,7 @@ planet.coordinates = function(jd, planets=1:9, elements=1) {
                      c(1.00000261,0.01671123,-0.00001531,100.46457166,102.93768193,0.0,0.00000562,-0.00004392,-0.01294668,35999.37244981,0.32327364,0.0,0,0,0,0),
                      c(1.52371034,0.09339410,1.84969142,-4.55343205,-23.94362959,49.55953891,0.00001847,0.00007882,-0.00813131,19140.30268499,0.44441088,-0.29257343,0,0,0,0),
                      #Need to determine asteroids features
-                     c(3.52371034,0.09339410, 1.84969142, -4.55343205,-23.94362959,49.55953891,0.00001847,0.00007882,-0.00813131,19140.30268499,0.44441088,-0.29257343,0,0,0,0),
+                     c(2.2,0,17.96209,0.30204388,359.947,17.07893,0.00001847,0.00007882,-0.00813131,19140.30268499,0.44441088,-0.29257343,0,0,0,0),
                      
                      c(5.20288700,0.04838624,1.30439695,34.39644051,14.72847983,100.47390909,-0.00011607,-0.00013253,-0.00183714,3034.74612775,0.21252668,0.20469106,0,0,0,0),
                      c(9.53667594,0.05386179,2.48599187,49.95424423,92.59887831,113.66242448,-0.00125060,-0.00050991,0.00193609,1222.49362201,-0.41897216,-0.28867794,0,0,0,0),
@@ -39,7 +39,7 @@ planet.coordinates = function(jd, planets=1:9, elements=1) {
                      c(1.00000018,0.01673163,-0.00054346,100.46691572,102.93005885,-5.11260389,-0.00000003,-0.00003661,-0.01337178,35999.37306329,0.31795260,-0.24123856,0,0,0,0),
                      c(1.52371243,0.09336511,1.85181869,-4.56813164,-23.91744784,49.71320984,0.00000097,0.00009149,-0.00724757,19140.29934243,0.45223625,-0.26852431,0,0,0,0),
                      #Need to determine asteroids features
-                     c(3.52371243,0.09336511,1.85181869,-4.56813164,-23.91744784,49.71320984,0.00000097,0.00009149,-0.00724757,19140.29934243,0.45223625,-0.26852431,0,0,0,0),
+                     c(2.2,0,17.96209,0.30204388,359.947,17.07893,0.00001847,0.00007882,-0.00813131,19140.30268499,0.44441088,-0.29257343,0,0,0,0),
                      
                      c(5.20248019,0.04853590,1.29861416,34.33479152,14.27495244,100.29282654,-0.00002864,0.00018026,-0.00322699,3034.90371757,0.18199196,0.13024619,-0.00012452,0.06064060,-0.35635438,38.35125000),
                      c(9.54149883,0.05550825,2.49424102,50.07571329,92.86136063,113.63998702,-0.00003065,-0.00032044,0.00451969,1222.11494724,0.54179478,-0.25015002,0.00025899,-0.13434469,0.87320147,38.35125000),
@@ -111,41 +111,41 @@ planet.coordinates = function(jd, planets=1:9, elements=1) {
 }
 
 
-# Function to convert RA and Dec to ecliptic coordinates
+#Function to convert RA and Dec to ecliptic coordinates
 ra_dec_to_ecliptic <- function(ra, dec) {
   # Constants
   rad_per_deg <- pi / 180.0
-  
+
   # Convert to radians
   ra_rad <- ra * rad_per_deg
   dec_rad <- dec * rad_per_deg
-  
+
   # Ecliptic obliquity (mean value for J2000 epoch)
   obliquity_epsilon <- (23.439291 - 0.000130042 * (2000 - 2000)) * rad_per_deg
-  
+
   # Calculate ecliptic coordinates
   sin_ecliptic_lat <- sin(dec_rad) * cos(obliquity_epsilon) +
     cos(dec_rad) * sin(ra_rad) * sin(obliquity_epsilon)
   ecliptic_lat <- asin(sin_ecliptic_lat) / rad_per_deg
-  
+
   cos_ecliptic_lon <- cos(dec_rad) * cos(ra_rad)
   sin_ecliptic_lon <- cos(dec_rad) * sin(ra_rad) * cos(obliquity_epsilon) -
     sin(dec_rad) * sin(obliquity_epsilon)
   ecliptic_lon <- atan2(sin_ecliptic_lon, cos_ecliptic_lon) / rad_per_deg
-  
+
   # Adjust for negative ecliptic longitude values
   ecliptic_lon <- ifelse(ecliptic_lon < 0, ecliptic_lon + 360, ecliptic_lon)
-  
+
   return(c(lon = ecliptic_lon, lat = ecliptic_lat))
 }
 
 ecliptic_to_cartesian <- function(lat, lon) {
   lon_rad <- lon * pi / 180
   lat_rad <- lat * pi / 180
-  
+
   x <- cos(lon_rad) * cos(lat_rad)
   y <- sin(lon_rad) * cos(lat_rad)
-  
+
   return(c(x, y))
 }
 
@@ -154,7 +154,7 @@ SS_Plot <- function(RA,Dec,year,month,day,hour,minute){
 # date.start = ut_to_julian(2016,4,1,3,0) # Spring equinox 2010
 # date.stop = ut_to_julian(2016,4,1,3,0) # Autumn equinox 2010
 date.start = ut_to_julian(year,month,day,hour,minute)
-date.stop = ut_to_julian(year,month,day,hour,minute)
+date.stop = ut_to_julian(year+2,month,day,hour,minute)
 npoints = 1e3
 coordinates = array(NA,c(npoints,9,3))
   for (i in seq(npoints)) {
@@ -162,44 +162,66 @@ coordinates = array(NA,c(npoints,9,3))
     coordinates[i,,] = planet.coordinates(jd)
   }
 
-ecliptic_bearing = ra_dec_to_ecliptic(RA, Dec)
-cartesian_bearing = ecliptic_to_cartesian(ecliptic_bearing[[1]],ecliptic_bearing[[2]])
-print(ecliptic_bearing)
+#par(mfrow=c(2,1),mar=c(5, 4, 4, 2) + 0.1)
+#dev.new(width = 550, height = 550, unit = "px")
 
-slope <- (cartesian_bearing[[2]] - tail(coordinates[,3,c(1,2)],n=1)[[2]]) / (cartesian_bearing[[1]] - tail(coordinates[,3,c(1,2)],n=1)[[1]])
+plot3d(coordinates[,3,c(1,2,3)],type='l',lwd=2,col='skyblue',
+                xlim=c(-5,5),ylim=c(-5,5),zlim=c(-5,5),xlab='x-coordinate [AU]',ylab='y-coordinate [AU]', zlab='z-coordinate [AU]')
+plot3d(coordinates[,5,c(1,2,3)],type='l',lwd=2,col="lightpink",
+                xlim=c(-5,5),ylim=c(-5,5),zlim=c(-5,5),xlab='x-coordinate [AU]',ylab='y-coordinate [AU]', zlab='z-coordinate [AU]')
+plot3d(0,0,0, type="s",size=1,col="#ffcc00",
+                xlim=c(-5,5),ylim=c(-5,5),zlim=c(-5,5),xlab='x-coordinate [AU]',ylab='y-coordinate [AU]', zlab='z-coordinate [AU]')
+x = coordinates[1000,3,1]
+y = coordinates[1000,3,2]
+z = coordinates[1000,3,3]
+plot3d(x,y,z,type="s",size=0.5,col="blue",
+                xlim=c(-5,5),ylim=c(-5,5),zlim=c(-5,5),xlab='x-coordinate [AU]',ylab='y-coordinate [AU]', zlab='z-coordinate [AU]')
+x = coordinates[1000,5,1]
+y = coordinates[1000,5,2]
+z = coordinates[1000,5,3]
+plot3d(x,y,z,type="s",size=0.25,col="salmon",
+       xlim=c(-5,5),ylim=c(-5,5),zlim=c(-5,5),xlab='x-coordinate [AU]',ylab='y-coordinate [AU]', zlab='z-coordinate [AU]')
 
-magplot(coordinates[,3,c(1,2)],type='l',lwd=7,col='blue',
+
+symbols(0,0,circles = 0.4,bg='#ffcc00', fg="#ffcc00",
+        xlim=c(-5,5),ylim=c(-5,5),xlab='x-coordinate [AU]',ylab='y-coordinate [AU]', inches=FALSE)
+
+points(coordinates[,3,c(1,2)],type='l',lwd=7,col='skyblue',
         xlim=c(-5,5),ylim=c(-5,5),xlab='x-coordinate [AU]',ylab='y-coordinate [AU]')
-for(i in c(1,2,4,6,7,8,9)){
-  points(coordinates[,i,c(1,2)],type='l',lwd=5,col='red',
-         xlim=c(-5,5),ylim=c(-5,5),xlab='x-coordinate [AU]',ylab='y-coordinate [AU]')
-}
-points(coordinates[,5,c(1,2)],type='l',lwd=7,col='purple',
+# for(i in c(1,2,4,6,7,8,9)){
+#   points(coordinates[,i,c(1,2)],type='l',lwd=5,col='red',
+#          xlim=c(-5,5),ylim=c(-5,5),xlab='x-coordinate [AU]',ylab='y-coordinate [AU]')
+# }
+points(coordinates[,5,c(1,2)],type='l',lwd=7,col='lightpink',
        xlim=c(-5,5),ylim=c(-5,5),xlab='x-coordinate [AU]',ylab='y-coordinate [AU]')
 
+#points(0,0,pch=15,cex=1,col='#ffcc00')
+symbols(0,0, circles = 0.4, bg='#ffcc00', fg='#ffcc00',
+        xlim=c(-5,5),ylim=c(-5,5),xlab='x-coordinate [AU]',ylab='z-coordinate [AU]', inches = FALSE)
 
-segments(tail(coordinates[,3,c(1,2)],n=1)[[1]], tail(coordinates[,3,c(1,2)],n=1)[[2]], tail(coordinates[,3,c(1,2)],n=1)[[1]] + slope * 100, tail(coordinates[,3,c(1,2)],n=1)[[2]] + slope * 100, col = "forestgreen", lty =5)
-#lines(x = c(tail(coordinates[,3,c(1,2)],n=1)[[1]],cartesian_bearing[[1]]), y = c(tail(coordinates[,3,c(1,2)],n=1)[[2]],cartesian_bearing[[2]]) ,col="forestgreen", lwd = 2)
 
-points(0,0,pch=15,cex=1,col='#ffcc00')
-#print(tail(coordinates[,3,c(1,2)],n=1))
-#abline(v = tail(coordinates[,3,c(1,2)],n=1)[[1]], col="red", lwd=3, lty=2)
+points(coordinates[,3,c(1,3)],type='l',lwd=7,col='skyblue',
+        xlim=c(-5,5),ylim=c(-5,5),xlab='x-coordinate [AU]',ylab='z-coordinate [AU]')
+
+points(coordinates[,5,c(1,3)],type='l',lwd=7,col='lightpink',
+       xlim=c(-5,5),ylim=c(-5,5),xlab='x-coordinate [AU]',ylab='z-coordinate [AU]')
 
 }
 
-
+#asteroid.coordinates(2016,4,1,3,0)
+SS_Plot(180.0, -0.5, 2013, 03, 24, 6, 14)#, 2.2,0,17.96209,89.94699766,359.947,17.07893)
 
 asteroid.coordinates = function(year,month,day,hour,minute, a , e, I, L, q, o){
   date.start = ut_to_julian(year,month,day,hour,minute)
   elements = 1
   jd = date.start
-
-    # Valid for 1800 AD to 2050 AD (Table 1)
-    elements =   rbind(c(a, e, I, L, q, o, 0.00001847,0,-0.00813131,19140.30268499,0.44441088,-0.29257343,0,0,0,0)
-                       ,c(3.52371034,0.09339410, 1.84969142, -4.55343205,-23.94362959,49.55953891,0.00001847,0.00007882,-0.00813131,19140.30268499,0.44441088,-0.29257343,0,0,0,0))
+  
+  # Valid for 1800 AD to 2050 AD (Table 1)
+  elements =   rbind(c(a, e, I, L, q, o, 0.00001847,0,-0.00813131,19140.30268499,0.44441088,-0.29257343,0,0,0,0)
+                     ,c(3.52371034,0.09339410, 1.84969142, -4.55343205,-23.94362959,49.55953891,0.00001847,0.00007882,-0.00813131,19140.30268499,0.44441088,-0.29257343,0,0,0,0))
   
   rownames(elements) = c("Asteroid", "Asteroid")
-    
+  
   # add parameter names
   colnames(elements) = c('a0','e0','I0','L0','q0','O0','adot','edot','Idot','Ldot','qdot','Odot','b','c','s','f')
   # a0/adot: semi-major axis [au, au/cty]
@@ -251,7 +273,7 @@ asteroid.coordinates = function(year,month,day,hour,minute, a , e, I, L, q, o){
   # This is not needed here
   
   # Function to convert ecliptic coordinates to RA and Dec
-    # Convert radians to degrees
+  # Convert radians to degrees
   deg <- function(rad) rad * 180 / pi
   
   # Ecliptic to Equatorial coordinates conversion
@@ -268,14 +290,8 @@ asteroid.coordinates = function(year,month,day,hour,minute, a , e, I, L, q, o){
   rownames(out) = c("Asteroid")
   
   return(out)
-
+  
 }
-
-
-#asteroid.coordinates(2016,4,1,3,0)
-asteroid.coordinates(2016,4,1,3,0, 3.52371034, 0.09339410, 1.84969142, -4.55343205,-23.94362959,49.55953891)
-ut_to_julian(2016,4,1,3,0)
-
 
 
 
