@@ -204,6 +204,7 @@ Image_Maker <- function(ID, colour, groupcut, locations){
   dev.off()
 }
 
+Group_Cutter(loc)
 # astcheck = data.frame()
 # colours = c("green", "red", "blue")
 # for(i in 1:3){
