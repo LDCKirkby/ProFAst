@@ -16,7 +16,7 @@ library(ProPane)
 args = commandArgs(trailingOnly=TRUE)
 loc = args[[1]]
 
-Group_Cutter <- function(loc){#, images){
+Group_Cutter <- function(loc, images = NULL){
 `%notin%`<-Negate(`%in%`)
 
 #Make a directory to save the cutouts
@@ -77,6 +77,7 @@ Data_Reader <- function(loc){
   cat("Generating groupim\n")
   groupim <- profoundSegimGroup(segim = segim)
   
+  if(is.null(images) == TRUE){
   cat("Loading images as pointers\n")
   g_image = Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
   r_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
@@ -84,7 +85,11 @@ Data_Reader <- function(loc){
   cat("Warping r&i frames\n")
   r_image=propaneWarp(r_image_input,keyvalues_out= g_image$keyvalues)
   i_image=propaneWarp(i_image_input,keyvalues_out= g_image$keyvalues)
-  
+  }else{
+    g_image = images[1]
+    r_image = images[2]
+    i_image = images[3]
+  }
   g_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
   r_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
   i_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"),header=TRUE,ext=1)

@@ -1,6 +1,6 @@
 library(magicaxis)
 library(celestial)
-
+library(rgl)
 
 # convert a Gregorian date into Julian day number
 ut_to_julian = Vectorize(function(year=2000,month=1,day=1,hour=0,min=0) {
@@ -149,7 +149,7 @@ ecliptic_to_cartesian <- function(lat, lon) {
   return(c(x, y))
 }
 
-SS_Plot <- function(RA,Dec,year,month,day,hour,minute){
+SS_Plot_3D <- function(RA,Dec,year,month,day,hour,minute){
 # plot positions for a selected period
 # date.start = ut_to_julian(2016,4,1,3,0) # Spring equinox 2010
 # date.stop = ut_to_julian(2016,4,1,3,0) # Autumn equinox 2010
@@ -181,8 +181,22 @@ y = coordinates[1000,5,2]
 z = coordinates[1000,5,3]
 plot3d(x,y,z,type="s",size=0.25,col="salmon",
        xlim=c(-5,5),ylim=c(-5,5),zlim=c(-5,5),xlab='x-coordinate [AU]',ylab='y-coordinate [AU]', zlab='z-coordinate [AU]')
+}
 
+SS_Plot_2D <- function(RA,Dec,year,month,day,hour,minute){
+  # plot positions for a selected period
+  # date.start = ut_to_julian(2016,4,1,3,0) # Spring equinox 2010
+  # date.stop = ut_to_julian(2016,4,1,3,0) # Autumn equinox 2010
+  date.start = ut_to_julian(year,month,day,hour,minute)
+  date.stop = ut_to_julian(year+2,month,day,hour,minute)
+  npoints = 1e3
+  coordinates = array(NA,c(npoints,9,3))
+  for (i in seq(npoints)) {
+    jd = date.start+(date.stop-date.start)*(i-1)/(npoints-1)
+    coordinates[i,,] = planet.coordinates(jd)
+  }
 
+par(mfrow=c(1,1),mar=c(5,5,1.5,1.5))
 symbols(0,0,circles = 0.4,bg='#ffcc00', fg="#ffcc00",
         xlim=c(-5,5),ylim=c(-5,5),xlab='x-coordinate [AU]',ylab='y-coordinate [AU]', inches=FALSE)
 
@@ -209,7 +223,60 @@ points(coordinates[,5,c(1,3)],type='l',lwd=7,col='lightpink',
 }
 
 #asteroid.coordinates(2016,4,1,3,0)
-SS_Plot(180.0, -0.5, 2013, 03, 24, 6, 14)#, 2.2,0,17.96209,89.94699766,359.947,17.07893)
+
+SS_Plot_3D(180.0, -0.5, 2013, 03, 24, 6, 14)#, 2.2,0,17.96209,89.94699766,359.947,17.07893)
+
+SS_Plot_2D(180.0, -0.5, 2013, 03, 24, 6, 14)
+
+
+spheres3d(coordinates[,3,c(1,2,3)],r=0.1,col='skyblue')
+spheres3d(coordinates[,5,c(1,2,3)],r=0.05,col='salmon')
+
+par3d(windowRect = c(20, 30, 800, 800))
+plot3d(0,0,0, type="s", size=1.5,col="#ffcc00",xlim=c(-5,5),ylim=c(-5,5),zlim=c(-5,5),xlab='x [AU]',ylab='y [AU]', zlab='z [AU]')#,
+
+ #      xlim=c(-5,5),ylim=c(-5,5),zlim=c(-5,5),xlab='x-coordinate [AU]',ylab='y-coordinate [AU]', zlab='z-coordinate [AU]')
+
+# astid <- spheres3d(coordinates[1,5,c(1,2,3)], r=0.05, col="salmon",
+#                         xlim=c(-5,5),ylim=c(-5,5),zlim=c(-5,5),xlab='x-coordinate [AU]',ylab='y-coordinate [AU]', zlab='z-coordinate [AU]')
+# earid <- spheres3d(coordinates[1,3,c(1,2,3)], r=0.1,col="skyblue",
+#                      xlim=c(-5,5),ylim=c(-5,5),zlim=c(-5,5),xlab='x-coordinate [AU]',ylab='y-coordinate [AU]', zlab='z-coordinate [AU]')
+
+spin <- spin3d(rpm=4)
+
+myplotfunction<-function(time) {
+  index <- round(20*time)
+  # For a 3x faster display, use index <- round(3*time)
+  # To cycle through the points several times, use 
+  # index <- round(3*time) %% nobs + 1
+  astid <<- spheres3d(coordinates[index,5,], r=0.05, col="salmon")
+  earid <<- spheres3d(coordinates[index,3,], r=0.1, col="skyblue")
+  spin(time)
+  #list()
+}
+
+movie3d(myplotfunction, startTime = 1, duration = 50, movie="D:/Swap/Thesis/Asteroid_rotation", clean = TRUE)
+
+
+
+
+
+f <- function(time) {
+   par3d(skipRedraw = TRUE) # stops intermediate redraws
+   on.exit(par3d(skipRedraw=FALSE)) # redraw at the end
+
+   rgl.pop(id=asteroidid) # delete the old sphere
+   rgl.pop(id=earthid)
+   pt <- time %% 40 + 1 # compute which one to draw
+   pnt <- coordinates[pt, 5, c(1,2,3)] # maybe interpolate instead?
+   ear <- coordinates[pt, 3, c(1,2,3)]
+   sphereid <<- spheres3d(pnt, radius=0.1, col="salmon",
+                          xlim=c(-5,5),ylim=c(-5,5),zlim=c(-5,5),xlab='x-coordinate [AU]',ylab='y-coordinate [AU]', zlab='z-coordinate [AU]')
+   earthid <<- spheres3d(ear, radius=0.1,col="skyblue",
+                         xlim=c(-5,5),ylim=c(-5,5),zlim=c(-5,5),xlab='x-coordinate [AU]',ylab='y-coordinate [AU]', zlab='z-coordinate [AU]')
+   spin3d(time)
+}
+
 
 asteroid.coordinates = function(year,month,day,hour,minute, a , e, I, L, q, o){
   date.start = ut_to_julian(year,month,day,hour,minute)

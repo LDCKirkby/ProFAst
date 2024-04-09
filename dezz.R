@@ -52,9 +52,7 @@ library(dplyr, quietly = TRUE)
   print(bruh[[num_args]])
   i = as.numeric(bruh[[num_args]])
   dir = getwd()
-  kids = as.data.frame(read.csv("./bearings.csv"))
-  
-  
+  kids = as.data.frame(read.csv("./todo.csv"))
     
   if(grepl(".", kids$RA[i], fixed = TRUE)){
     RA_DEC = paste0(kids$RA[i],"_",kids$Dec[i])
