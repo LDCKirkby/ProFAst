@@ -48,6 +48,7 @@ r_hdr = data[7]
 i_hdr =
 
   for(ID in asteroids$groupID){
+    cat(ID,"\n")
     #Makes sure we don't image the same object twice
     done = list.files(path = paste0("./",loc,"/Group_Cutouts/"))
     for(file in done){
@@ -65,7 +66,7 @@ i_hdr =
       paint = "green"
       groupcut = Cutout(asteroids, ID, colour, loc, keyvalues)
       locations = Edge_Finder(ID, colour, groupcut)      
-      cat("Printing image of ", colour, ID)
+      cat("Printing image of ", colour, ID, "\n")
       Image_Maker(ID, colour, groupcut, locations)
     }
     if(grepl(colour,"r") == TRUE){
@@ -75,7 +76,7 @@ i_hdr =
       paint = "red"
       groupcut = Cutout(asteroids, ID, colour, loc, keyvalues)
       locations = Edge_Finder(ID, colour, groupcut)
-      cat("Printing image of ", colour, ID)
+      cat("Printing image of ", colour, ID, "\n")
       Image_Maker(ID, colour, groupcut, locations)
     }
     if(grepl(colour,"i") == TRUE){
@@ -85,7 +86,7 @@ i_hdr =
       paint = "blue"
       groupcut = Cutout(asteroids, ID, colour, loc, keyvalues)
       locations = Edge_Finder(ID, colour, groupcut)
-      cat("Printing image of ", colour, ID)
+      cat("Printing image of ", colour, ID, "\n")
       Image_Maker(ID, colour, groupcut, locations)
     }
   }
