@@ -56,8 +56,8 @@ i_hdr =
       }
     }
     
-    i = which(asteroids$groupID == ID)[1]
-    colour = asteroids[asteroids$groupID == ID, "Colour"][1]
+    i = which(asteroids$groupID == ID)
+    colour = asteroids[asteroids$groupID == ID, "Colour"]
     if(grepl(colour,"g") == TRUE){
       image_header = g_image$header
       keyvalues = g_image$keyvalues
