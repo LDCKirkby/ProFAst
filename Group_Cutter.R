@@ -123,7 +123,7 @@ Cutout <- function(asteroids, ID, colour, loc, keyvalues){
   
 }
 
-Edge_Finder <- function(ID, groupcut){
+Edge_Finder <- function(ID, groupimage){
   xrun=1:(dim(groupimage)[1]-1)
   yrun=1:(dim(groupimage)[2]-1)
   
