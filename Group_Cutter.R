@@ -27,6 +27,7 @@ kids<-(0.339^2)*(10^(0.4*(0-mulim)))
 viking<-(0.339^2)*(10^(0.4*(30-mulim)))
 
 #Make a directory to save the cutouts
+cat(list.dirs(paste0("./",loc)), "\n")
 if("Group_Cutouts" %in% list.dirs(paste0("./",loc))){
   cat("Group_Cutouts already exists\n")
   dir_delete(paste0("./",loc,"/Group_Cutouts/"))
