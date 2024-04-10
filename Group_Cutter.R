@@ -10,6 +10,7 @@ library('plotrix')
 require(foreign)
 require(MASS)
 library(ProPane)
+library(gsubfn)
 # source("./R_files/fastcutout.r")
 
 #
@@ -20,13 +21,19 @@ images = NULL
 Group_Cutter <- function(loc, images = NULL){
 `%notin%`<-Negate(`%in%`)
 
+wid = 200.0
+box=c(2*wid,2*wid)
+mulim=22.0
+kids=(0.339^2)*(10^(0.4*(0-mulim)))
+viking=(0.339^2)*(10^(0.4*(30-mulim)))
+
 #Make a directory to save the cutouts
 if("Group_Cutouts" %in% list.dirs(paste0("./",loc))){
   dir_delete(paste0("./",loc,"/Group_Cutouts/"))
 }
 dir.create(paste0("./",loc,"/Group_Cutouts/"))
 
-Data_Reader(loc)
+list[asteroids, groupim, g_image, r_image, i_image, g_hdr, r_hdr, i_hdr] <- Data_Reader(loc)
 
   for(ID in asteroids$groupID){
     #Makes sure we don't image the same object twice
@@ -94,13 +101,10 @@ Data_Reader <- function(loc){
   g_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"))
   r_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"))
   i_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"))
+
+  return(list(asteroids, groupim, g_image, r_image, i_image, g_hdr, r_hdr, i_hdr))
   
-  wid = 200.0
-  box=c(2*wid,2*wid)
-  mulim=22.0
-  kids=(0.339^2)*(10^(0.4*(0-mulim)))
-  viking=(0.339^2)*(10^(0.4*(30-mulim)))
-}
+  }
 
 Cutout <- function(ID, colour, loc){
   # galpos=asteroids[asteroids$groupID == ID, c("xmax","ymax")]
@@ -173,8 +177,6 @@ Edge_Finder <- function(ID, groupcut){
   
 Image_Maker <- function(ID, colour, groupcut, locations){
   
-  
-  
   cat("Printing ",colour,ID," postage stamp\n")
   png(filename=paste0("./",loc,"/Group_Cutouts/",colour,ID,".png"))
   
@@ -190,7 +192,6 @@ Image_Maker <- function(ID, colour, groupcut, locations){
   if(locut[[3]] > kids){
     locut[[3]] = kids
   }
-  
   
   cat("Time to start printing images!\n")
   Rwcs_imageRGB(R=cutim_r, G=cutim_g, B=cutim_i, Rkeyvalues = r_image$keyvalues, Gkeyvalues = g_image$keyvalues, Bkeyvalues = i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
