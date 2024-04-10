@@ -66,9 +66,9 @@ for(ID in asteroids$groupID){
     hdr = g_hdr
     paint = "green"
     Cutout(asteroids, ID, colour, loc, keyvalues)
-    Edge_Finder(ID, colour, groupcut)      
+    Edge_Finder(ID, colour)      
     cat("Printing image of ", colour, ID, "\n")
-    Image_Maker(ID, colour, groupcut, locations)
+    Image_Maker(ID, colour)
   }else if(grepl(colour,"r") == TRUE){
     image_header = r_image$header
     keyvalues = r_image$keyvalues
