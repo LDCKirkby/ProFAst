@@ -11,6 +11,7 @@ require(foreign)
 require(MASS)
 library(ProPane)
 library(gsubfn)
+library(fs)
 # source("./R_files/fastcutout.r")
 
 #
@@ -27,7 +28,7 @@ kids<-(0.339^2)*(10^(0.4*(0-mulim)))
 viking<-(0.339^2)*(10^(0.4*(30-mulim)))
 
 #Make a directory to save the cutouts
-if(paste0("./",loc,"/Group_Cutouts") %in% list.dirs(paste0("./",loc))){
+if(dir_exists(paste0("./",loc,"Group_Cutouts"))){
   cat("Group_Cutouts already exists\n")
   dir_delete(paste0("./",loc,"/Group_Cutouts/"))
 }
