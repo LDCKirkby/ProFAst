@@ -66,7 +66,7 @@ for(ID in asteroids$groupID){
     hdr = g_hdr
     paint = "green"
     Cutout(asteroids, ID, colour, loc, keyvalues)
-    Edge_Finder(ID)      
+    Edge_Finder(ID, hdr)      
     cat("Printing image of ", colour, ID, "\n")
     Image_Maker(ID, colour)
   }else if(grepl(colour,"r") == TRUE){
@@ -75,7 +75,7 @@ for(ID in asteroids$groupID){
     hdr = r_hdr
     paint = "red"
     Cutout(asteroids, ID, colour, loc, keyvalues)
-    Edge_Finder(ID)      
+    Edge_Finder(ID, hdr)      
     cat("Printing image of ", colour, ID, "\n")
     Image_Maker(ID, colour)
   }else if(grepl(colour,"i") == TRUE){
@@ -84,7 +84,7 @@ for(ID in asteroids$groupID){
     hdr = i_hdr
     paint = "blue"
     Cutout(asteroids, ID, colour, loc, keyvalues)
-    Edge_Finder(ID)      
+    Edge_Finder(ID, hdr)      
     cat("Printing image of ", colour, ID, "\n")
     Image_Maker(ID, colour)
   }
@@ -148,12 +148,15 @@ Cutout <- function(asteroids, ID, colour, loc, keyvalues){
   decoff=2*(wid*0.339/3600.0)
   raoff=2*(wid*0.339/3600.0)/cos(galradec$Deccen*0.01745329)
   
+  assign("cutim_g", cutim_g, envir = .GlobalEnv)
+  assign("cutim_r", cutim_r, envir = .GlobalEnv)
+  assign("cutim_i", cutim_i, envir = .GlobalEnv)
   assign("groupcut", cutgroup_dilate, envir = .GlobalEnv)
   
   #return(cutgroup_dilate)
 }
 
-Edge_Finder <- function(ID){
+Edge_Finder <- function(ID, hdr){
   groupimage = groupcut$image
   xrun=1:(dim(groupimage)[1]-1)
   yrun=1:(dim(groupimage)[2]-1)
@@ -173,6 +176,8 @@ Edge_Finder <- function(ID){
   groupimage_edge[xrun,yrun+1]=groupimage_edge[xrun,yrun+1]+groupimage_temp
   
   groupimage[groupimage_edge==4]=0
+  
+  assign("groupimage", groupimage, envir = .GlobalEnv)
   
   obj_points <- which(groupimage == ID, arr.ind = TRUE)
   
@@ -227,7 +232,7 @@ Image_Maker <- function(ID, colour){
   cat("Time to start printing images!\n")
   Rwcs_imageRGB(R=cutim_r, G=cutim_g, B=cutim_i, Rkeyvalues = r_image$keyvalues, Gkeyvalues = g_image$keyvalues, Bkeyvalues = i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
   
-  magimage(groupimage,col=c(NA,rep(skyblue,max(groupimage))),magmap=FALSE,add=TRUE,sparse=1)
+  magimage(groupimage,col=c(NA,rep("skyblue",max(groupimage))),magmap=FALSE,add=TRUE,sparse=1)
   points(locations, col=c("#FFA500", "#05ffa1"), add=TRUE, pch = 4, lwd = 3)
   legend(x ="topright", legend = c("Right Midpoint", "Left Midpoint"), pch = c(3,3,3,3), col = c("#FFA500", "#05ffa1"))
   
