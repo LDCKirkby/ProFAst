@@ -21,11 +21,11 @@ images = NULL
 Group_Cutter <- function(loc, images = NULL){
 `%notin%`<-Negate(`%in%`)
 
-wid <<- 200.0
-box<<-c(2*wid,2*wid)
-mulim<<-22.0
-kids<<-(0.339^2)*(10^(0.4*(0-mulim)))
-viking<<-(0.339^2)*(10^(0.4*(30-mulim)))
+wid <- 200.0
+box<-c(2*wid,2*wid)
+mulim<-22.0
+kids<-(0.339^2)*(10^(0.4*(0-mulim)))
+viking<-(0.339^2)*(10^(0.4*(30-mulim)))
 
 #Make a directory to save the cutouts
 if("Group_Cutouts" %in% list.dirs(paste0("./",loc))){
