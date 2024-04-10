@@ -65,7 +65,7 @@ list[asteroids, groupim, g_image, r_image, i_image, g_hdr, r_hdr, i_hdr] <- Data
       paint = "blue"
     }
     
-    groupcut = Cutout(asteroids, ID, colour, loc)
+    groupcut = Cutout(asteroids, ID, colour, loc, keyvalues)
     locations = Edge_Finder(ID, colour, groupcut)
     Image_Maker(ID, colour, groupcut, locations)
     
@@ -106,7 +106,7 @@ Data_Reader <- function(loc){
   
   }
 
-Cutout <- function(asteroids, ID, colour, loc){
+Cutout <- function(asteroids, ID, colour, loc, keyvalues){
   # galpos=asteroids[asteroids$groupID == ID, c("xmax","ymax")]
   galradec = asteroids[asteroids$groupID == ID, c("RAcen", "Deccen")]
   galpos=as.integer(Rwcs_s2p(RA=galradec$RAcen, Dec=galradec$Deccen, keyvalues=keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
