@@ -65,7 +65,7 @@ Data_Reader(loc)
       paint <<- "blue"
     }
     
-    groupcut <<- Cutout(asteroids, ID, colour, loc)
+    groupcut <<- Cutout(asteroids, ID, colour, loc, keyvalues)
     locations <<- Edge_Finder(ID, colour, groupcut)
     Image_Maker(ID, colour, groupcut, locations)
     
