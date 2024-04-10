@@ -33,11 +33,20 @@ if("Group_Cutouts" %in% list.dirs(paste0("./",loc))){
 }
 dir.create(paste0("./",loc,"/Group_Cutouts/"))
 
-Data_Reader(loc)
+data = Data_Reader(loc)
+
+asteroids = data[1]
+groupim = data[2]
+g_image = data[3]
+r_image = data[4]
+i_image = data[5]
+g_hdr = data[6]
+r_hdr = data[7]
+i_hdr =
 
   for(ID in asteroids$groupID){
     #Makes sure we don't image the same object twice
-    done <<- list.files(path = paste0("./",loc,"/Group_Cutouts/"))
+    done = list.files(path = paste0("./",loc,"/Group_Cutouts/"))
     for(file in done){
       if(grepl(ID, file) == TRUE){
         next
@@ -47,73 +56,77 @@ Data_Reader(loc)
     i = which(asteroids$groupID == ID)[1]
     colour = asteroids[asteroids$groupID == ID, "Colour"][1]
     if(colour == "g"){
-      image_header <<- g_image$header
-      keyvalues <<- g_image$keyvalues
-      hdr <<- g_hdr
-      paint <<- "green"
+      image_header = g_image$header
+      keyvalues = g_image$keyvalues
+      hdr = g_hdr
+      paint = "green"
+      groupcut = Cutout(asteroids, ID, colour, loc, keyvalues)
+      locations = Edge_Finder(ID, colour, groupcut)
+      Image_Maker(ID, colour, groupcut, locations)
     }
     if(colour == "r"){
-      image_header <<- r_image$header
-      keyvalues <<- r_image$keyvalues
-      hdr <<- r_hdr
-      paint <<- "red"
+      image_header = r_image$header
+      keyvalues = r_image$keyvalues
+      hdr = r_hdr
+      paint = "red"
+      groupcut = Cutout(asteroids, ID, colour, loc, keyvalues)
+      locations = Edge_Finder(ID, colour, groupcut)
+      Image_Maker(ID, colour, groupcut, locations)
     }
     if(colour == "i"){
-      image_header <<- i_image$header
-      keyvalues <<- i_image$keyvalues
-      hdr <<- i_hdr
-      paint <<- "blue"
+      image_header = i_image$header
+      keyvalues = i_image$keyvalues
+      hdr = i_hdr
+      paint = "blue"
+      groupcut = Cutout(asteroids, ID, colour, loc, keyvalues)
+      locations = Edge_Finder(ID, colour, groupcut)
+      Image_Maker(ID, colour, groupcut, locations)
     }
-    
-    groupcut <<- Cutout(asteroids, ID, colour, loc, keyvalues)
-    locations <<- Edge_Finder(ID, colour, groupcut)
-    Image_Maker(ID, colour, groupcut, locations)
-    
+  }
     cat("Writing out data with top & bottom locations\n")
     write.csv(asteroids, file=paste0("./", loc,"/",loc,"_Asteroids.csv"))
-  }
 }
 
 Data_Reader <- function(loc){
   cat("Reading in asteroid data\n")
-  asteroids <<- as.data.frame(read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv")))
+  asteroids = as.data.frame(read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv")))
   #asteroids = as.data.frame(read.csv(paste0("./", loc, "/", loc,"_Filtered_Asteroids.csv")))
   asteroids <- cbind(asteroids, data.frame(tl_RA = 0, tl_Dec = 0, tr_RA = 0, tr_Dec = 0, bl_RA = 0, bl_Dec = 0, br_RA = 0, br_Dec = 0, top_RA = 0, top_Dec = 0, bot_RA = 0, bot_Dec = 0))
   
   cat("Reading in segmentation map data\n")
   segim <- as.matrix(read.csv(paste0("./",loc,"/segim.csv")))
   cat("Generating groupim\n")
-  groupim <<- profoundSegimGroup(segim = segim)
+  groupim = profoundSegimGroup(segim = segim)
   
   if(is.null(images) == TRUE){
   cat("Loading images as pointers\n")
-  g_image <<- Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
+  g_image = Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
   r_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
   i_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"),header=TRUE,ext=1)
   cat("Warping r&i frames\n")
-  r_image<<-propaneWarp(r_image_input,keyvalues_out= g_image$keyvalues)
-  i_image<<-propaneWarp(i_image_input,keyvalues_out= g_image$keyvalues)
+  r_image=propaneWarp(r_image_input,keyvalues_out= g_image$keyvalues)
+  i_image=propaneWarp(i_image_input,keyvalues_out= g_image$keyvalues)
   }else{
-    g_image <<- images[1]
-    r_image <<- images[2]
-    i_image <<- images[3]
+    g_image = images[1]
+    r_image = images[2]
+    i_image = images[3]
   }
-  g_hdr <<- Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"))
-  r_hdr <<- Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"))
-  i_hdr <<- Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"))
+  g_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"))
+  r_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"))
+  i_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"))
 
-  #return(list(asteroids, groupim, g_image, r_image, i_image, g_hdr, r_hdr, i_hdr))
+  return(list(asteroids, groupim, g_image, r_image, i_image, g_hdr, r_hdr, i_hdr))
   
   }
 
 Cutout <- function(asteroids, ID, colour, loc, keyvalues){
   # galpos=asteroids[asteroids$groupID == ID, c("xmax","ymax")]
   galradec = asteroids[asteroids$groupID == ID, c("RAcen", "Deccen")]
-  galpos<<-as.integer(Rwcs_s2p(RA=galradec$RAcen, Dec=galradec$Deccen, keyvalues=keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
+  galpos=as.integer(Rwcs_s2p(RA=galradec$RAcen, Dec=galradec$Deccen, keyvalues=keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
   
-  cutim_g<<-g_image[galpos,box=box]
-  cutim_r<<-r_image[galpos,box=box]
-  cutim_i<<-i_image[galpos,box=box]
+  cutim_g=g_image[galpos,box=box]
+  cutim_r=r_image[galpos,box=box]
+  cutim_i=i_image[galpos,box=box]
   
   cat("Making cutgroup_dilate")
   cutgroup_dilate=magcutout(image = groupim$groupim, loc=as.numeric(galpos),box=box,loc.type="image")
