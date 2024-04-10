@@ -10,6 +10,7 @@ library('plotrix')
 require(foreign)
 require(MASS)
 library(ProPane)
+library(gsubfn)
 # source("./R_files/fastcutout.r")
 
 #
@@ -27,24 +28,20 @@ viking<-(0.339^2)*(10^(0.4*(30-mulim)))
 
 #Make a directory to save the cutouts
 if("Group_Cutouts" %in% list.dirs(paste0("./",loc))){
+  cat("Group_Cutouts already exists\n")
   dir_delete(paste0("./",loc,"/Group_Cutouts/"))
 }
 dir.create(paste0("./",loc,"/Group_Cutouts/"))
 
-if(missing(images)){
-  data = Data_Reader(loc)
-}else{
-  data = Data_Reader(loc,images)
-}
+cat("Reading in asteroid data\n")
+asteroids = read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv"))
+asteroids <- cbind(asteroids, data.frame(tl_RA = 0, tl_Dec = 0, tr_RA = 0, tr_Dec = 0, bl_RA = 0, bl_Dec = 0, br_RA = 0, br_Dec = 0, top_RA = 0, top_Dec = 0, bot_RA = 0, bot_Dec = 0))
 
-asteroids = data[1]
-groupim = data[2]
-g_image = data[3]
-r_image = data[4]
-i_image = data[5]
-g_hdr = data[6]
-r_hdr = data[7]
-i_hdr = data[8]
+if(missing(images)){
+  list[groupim,g_image,r_image,i_image,g_hdr,r_hdr,i_hdr] = Data_Reader(loc)
+}else{
+  list[groupim,g_image,r_image,i_image,g_hdr,r_hdr,i_hdr] = Data_Reader(loc,images)
+}
 
 cat(length(asteroids$groupID), " asteroids to image\n")
 for(ID in asteroids$groupID){
@@ -93,10 +90,10 @@ for(ID in asteroids$groupID){
 }
 
 Data_Reader <- function(loc, images){
-  cat("Reading in asteroid data\n")
-  asteroids = as.data.frame(read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv")))
+  #cat("Reading in asteroid data\n")
+  #asteroids = as.data.frame(read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv")))
   #asteroids = as.data.frame(read.csv(paste0("./", loc, "/", loc,"_Filtered_Asteroids.csv")))
-  asteroids <- cbind(asteroids, data.frame(tl_RA = 0, tl_Dec = 0, tr_RA = 0, tr_Dec = 0, bl_RA = 0, bl_Dec = 0, br_RA = 0, br_Dec = 0, top_RA = 0, top_Dec = 0, bot_RA = 0, bot_Dec = 0))
+  #asteroids <- cbind(asteroids, data.frame(tl_RA = 0, tl_Dec = 0, tr_RA = 0, tr_Dec = 0, bl_RA = 0, bl_Dec = 0, br_RA = 0, br_Dec = 0, top_RA = 0, top_Dec = 0, bot_RA = 0, bot_Dec = 0))
   
   cat("Reading in segmentation map data\n")
   segim <- as.matrix(read.csv(paste0("./",loc,"/segim.csv")))
@@ -120,7 +117,7 @@ Data_Reader <- function(loc, images){
   r_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"))
   i_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"))
 
-  return(list(asteroids, groupim, g_image, r_image, i_image, g_hdr, r_hdr, i_hdr))
+  return(list(groupim, g_image, r_image, i_image, g_hdr, r_hdr, i_hdr))
   
   }
 
