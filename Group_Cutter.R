@@ -10,7 +10,6 @@ library('plotrix')
 require(foreign)
 require(MASS)
 library(ProPane)
-library(gsubfn)
 # source("./R_files/fastcutout.r")
 
 #
@@ -61,7 +60,8 @@ i_hdr =
       hdr = g_hdr
       paint = "green"
       groupcut = Cutout(asteroids, ID, colour, loc, keyvalues)
-      locations = Edge_Finder(ID, colour, groupcut)
+      locations = Edge_Finder(ID, colour, groupcut)      
+      cat("Printing image of ", colour, ID)
       Image_Maker(ID, colour, groupcut, locations)
     }
     if(colour == "r"){
@@ -71,6 +71,7 @@ i_hdr =
       paint = "red"
       groupcut = Cutout(asteroids, ID, colour, loc, keyvalues)
       locations = Edge_Finder(ID, colour, groupcut)
+      cat("Printing image of ", colour, ID)
       Image_Maker(ID, colour, groupcut, locations)
     }
     if(colour == "i"){
@@ -80,6 +81,7 @@ i_hdr =
       paint = "blue"
       groupcut = Cutout(asteroids, ID, colour, loc, keyvalues)
       locations = Edge_Finder(ID, colour, groupcut)
+      cat("Printing image of ", colour, ID)
       Image_Maker(ID, colour, groupcut, locations)
     }
   }
