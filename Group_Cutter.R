@@ -46,7 +46,7 @@ g_hdr = data[6]
 r_hdr = data[7]
 i_hdr = data[8]
 
-cat(length(asteroids$groupID, " asteroids to image\n"))
+cat(length(asteroids$groupID), " asteroids to image\n")
 for(ID in asteroids$groupID){
   #Makes sure we don't image the same object twice
   done = list.files(path = paste0("./",loc,"/Group_Cutouts/"))
