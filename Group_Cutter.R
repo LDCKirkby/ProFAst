@@ -48,7 +48,6 @@ r_hdr = data[7]
 i_hdr =
 
   for(ID in asteroids$groupID){
-    cat(ID,"\n")
     #Makes sure we don't image the same object twice
     done = list.files(path = paste0("./",loc,"/Group_Cutouts/"))
     for(file in done){
@@ -59,6 +58,7 @@ i_hdr =
     
     i = which(asteroids$groupID == ID)
     colour = asteroids[asteroids$groupID == ID, "Colour"]
+    cat(ID,i,colour,"\n")
     if(grepl(colour,"g") == TRUE){
       image_header = g_image$header
       keyvalues = g_image$keyvalues
