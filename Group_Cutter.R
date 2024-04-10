@@ -17,7 +17,7 @@ args = commandArgs(trailingOnly=TRUE)
 loc = args[[1]]
 images = NULL
 
-Group_Cutter <- function(loc, images = NULL){
+Group_Cutter <- function(loc, images){
 `%notin%`<-Negate(`%in%`)
 
 wid <- 200.0
@@ -32,7 +32,11 @@ if("Group_Cutouts" %in% list.dirs(paste0("./",loc))){
 }
 dir.create(paste0("./",loc,"/Group_Cutouts/"))
 
-data = Data_Reader(loc)
+if(missing(images)){
+  data = Data_Reader(loc)
+}else{
+  data = Data_Reader(loc,images)
+}
 
 asteroids = data[1]
 groupim = data[2]
@@ -89,7 +93,7 @@ i_hdr =
     write.csv(asteroids, file=paste0("./", loc,"/",loc,"_Asteroids.csv"))
 }
 
-Data_Reader <- function(loc){
+Data_Reader <- function(loc, images){
   cat("Reading in asteroid data\n")
   asteroids = as.data.frame(read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv")))
   #asteroids = as.data.frame(read.csv(paste0("./", loc, "/", loc,"_Filtered_Asteroids.csv")))
@@ -100,7 +104,7 @@ Data_Reader <- function(loc){
   cat("Generating groupim\n")
   groupim = profoundSegimGroup(segim = segim)
   
-  if(is.null(images) == TRUE){
+  if(missing(images) == TRUE){
   cat("Loading images as pointers\n")
   g_image = Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
   r_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
