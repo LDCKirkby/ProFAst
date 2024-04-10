@@ -37,11 +37,14 @@ cat("Reading in asteroid data\n")
 asteroids = read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv"))
 asteroids <- cbind(asteroids, data.frame(tl_RA = 0, tl_Dec = 0, tr_RA = 0, tr_Dec = 0, bl_RA = 0, bl_Dec = 0, br_RA = 0, br_Dec = 0, top_RA = 0, top_Dec = 0, bot_RA = 0, bot_Dec = 0))
 
-if(missing(images)){
-  list[groupim,g_image,r_image,i_image,g_hdr,r_hdr,i_hdr] = Data_Reader(loc)
-}else{
-  list[groupim,g_image,r_image,i_image,g_hdr,r_hdr,i_hdr] = Data_Reader(loc,images)
-}
+# if(missing(images)){
+#   cat("Images not supplied")
+#   list[groupim, g_image, r_image, i_image, g_hdr, r_hdr, i_hdr] = Data_Reader(loc)
+# }else{
+#   list[groupim,g_image,r_image,i_image,g_hdr,r_hdr,i_hdr] = Data_Reader(loc,images)
+# }
+
+Data_Reader(loc)
 
 cat(length(asteroids$groupID), " asteroids to image\n")
 for(ID in asteroids$groupID){
@@ -61,8 +64,8 @@ for(ID in asteroids$groupID){
     keyvalues = g_image$keyvalues
     hdr = g_hdr
     paint = "green"
-    groupcut = Cutout(asteroids, ID, colour, loc, keyvalues)
-    locations = Edge_Finder(ID, colour, groupcut)      
+    Cutout(asteroids, ID, colour, loc, keyvalues)
+    Edge_Finder(ID, colour, groupcut)      
     cat("Printing image of ", colour, ID, "\n")
     Image_Maker(ID, colour, groupcut, locations)
   }else if(grepl(colour,"r") == TRUE){
@@ -70,8 +73,8 @@ for(ID in asteroids$groupID){
     keyvalues = r_image$keyvalues
     hdr = r_hdr
     paint = "red"
-    groupcut = Cutout(asteroids, ID, colour, loc, keyvalues)
-    locations = Edge_Finder(ID, colour, groupcut)
+    Cutout(asteroids, ID, colour, loc, keyvalues)
+    Edge_Finder(ID, colour, groupcut)
     cat("Printing image of ", colour, ID, "\n")
     Image_Maker(ID, colour, groupcut, locations)
   }else if(grepl(colour,"i") == TRUE){
@@ -79,8 +82,8 @@ for(ID in asteroids$groupID){
     keyvalues = i_image$keyvalues
     hdr = i_hdr
     paint = "blue"
-    groupcut = Cutout(asteroids, ID, colour, loc, keyvalues)
-    locations = Edge_Finder(ID, colour, groupcut)
+    Cutout(asteroids, ID, colour, loc, keyvalues)
+    Edge_Finder(ID, colour, groupcut)
     cat("Printing image of ", colour, ID, "\n")
     Image_Maker(ID, colour, groupcut, locations)
   }
@@ -117,7 +120,15 @@ Data_Reader <- function(loc, images){
   r_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"))
   i_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"))
 
-  return(list(groupim, g_image, r_image, i_image, g_hdr, r_hdr, i_hdr))
+  assign("groupim", groupim, envir = .GlobalEnv)
+  assign("g_image", g_image, envir = .GlobalEnv)
+  assign("r_image", r_image, envir = .GlobalEnv)
+  assign("i_image", i_image, envir = .GlobalEnv)
+  assign("g_hdr", r_hdr, envir = .GlobalEnv)
+  assign("r_hdr", r_hdr, envir = .GlobalEnv)
+  assign("i_hdr", i_hdr, envir = .GlobalEnv)
+  
+  #return(list(groupim, g_image, r_image, i_image, g_hdr, r_hdr, i_hdr))
   
   }
 
@@ -135,7 +146,10 @@ Cutout <- function(asteroids, ID, colour, loc, keyvalues){
   
   decoff=2*(wid*0.339/3600.0)
   raoff=2*(wid*0.339/3600.0)/cos(galradec$Deccen*0.01745329)
-  return(cutgroup_dilate)
+  
+  assign("groupcut", cutgroup_dilate, envir = .GlobalEnv)
+  
+  #return(cutgroup_dilate)
 }
 
 Edge_Finder <- function(ID, groupimage){
@@ -187,7 +201,7 @@ Edge_Finder <- function(ID, groupimage){
   x = c(ave_top[[1]],ave_bottom[[1]])
   y = c(ave_top[[2]],ave_bottom[[2]])
   locations = cbind(x,y)
-  return(locations)
+  assign("locations", locations, envir = .GlobalEnv)
 }
   
 Image_Maker <- function(ID, colour, groupcut, locations){
