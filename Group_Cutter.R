@@ -18,14 +18,14 @@ library(fs)
 args = commandArgs(trailingOnly=TRUE)
 loc = args[[1]]
 
-Group_Cutter <- function(loc, images){
-`%notin%`<-Negate(`%in%`)
-
 wid <- 200.0
 box<-c(2*wid,2*wid)
 mulim<-22.0
 kids<-(0.339^2)*(10^(0.4*(0-mulim)))
 viking<-(0.339^2)*(10^(0.4*(30-mulim)))
+
+Group_Cutter <- function(loc, images){
+`%notin%`<-Negate(`%in%`)
 
 #Make a directory to save the cutouts
 if(dir_exists(paste0("./",loc,"Group_Cutouts"))){
