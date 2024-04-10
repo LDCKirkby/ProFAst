@@ -66,7 +66,7 @@ for(ID in asteroids$groupID){
     hdr = g_hdr
     paint = "green"
     Cutout(asteroids, ID, colour, loc, keyvalues)
-    Edge_Finder(ID, colour)      
+    Edge_Finder(ID)      
     cat("Printing image of ", colour, ID, "\n")
     Image_Maker(ID, colour)
   }else if(grepl(colour,"r") == TRUE){
@@ -75,7 +75,7 @@ for(ID in asteroids$groupID){
     hdr = r_hdr
     paint = "red"
     Cutout(asteroids, ID, colour, loc, keyvalues)
-    Edge_Finder(ID, colour)      
+    Edge_Finder(ID)      
     cat("Printing image of ", colour, ID, "\n")
     Image_Maker(ID, colour)
   }else if(grepl(colour,"i") == TRUE){
@@ -84,7 +84,7 @@ for(ID in asteroids$groupID){
     hdr = i_hdr
     paint = "blue"
     Cutout(asteroids, ID, colour, loc, keyvalues)
-    Edge_Finder(ID, colour)      
+    Edge_Finder(ID)      
     cat("Printing image of ", colour, ID, "\n")
     Image_Maker(ID, colour)
   }
@@ -153,7 +153,8 @@ Cutout <- function(asteroids, ID, colour, loc, keyvalues){
   #return(cutgroup_dilate)
 }
 
-Edge_Finder <- function(ID, groupimage){
+Edge_Finder <- function(ID){
+  groupimage = groupcut$image
   xrun=1:(dim(groupimage)[1]-1)
   yrun=1:(dim(groupimage)[2]-1)
   
@@ -205,7 +206,7 @@ Edge_Finder <- function(ID, groupimage){
   assign("locations", locations, envir = .GlobalEnv)
 }
   
-Image_Maker <- function(ID, colour, groupcut, locations){
+Image_Maker <- function(ID, colour){
   
   cat("Printing ",colour,ID," postage stamp\n")
   png(filename=paste0("./",loc,"/Group_Cutouts/",colour,ID,".png"))
