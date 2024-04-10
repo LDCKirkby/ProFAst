@@ -54,7 +54,7 @@ i_hdr =
     
     i = which(asteroids$groupID == ID)[1]
     colour = asteroids[asteroids$groupID == ID, "Colour"][1]
-    if(colour == "g"){
+    if(grepl(colour,"g") == TRUE){
       image_header = g_image$header
       keyvalues = g_image$keyvalues
       hdr = g_hdr
@@ -64,7 +64,7 @@ i_hdr =
       cat("Printing image of ", colour, ID)
       Image_Maker(ID, colour, groupcut, locations)
     }
-    if(colour == "r"){
+    if(grepl(colour,"r") == TRUE){
       image_header = r_image$header
       keyvalues = r_image$keyvalues
       hdr = r_hdr
@@ -74,7 +74,7 @@ i_hdr =
       cat("Printing image of ", colour, ID)
       Image_Maker(ID, colour, groupcut, locations)
     }
-    if(colour == "i"){
+    if(grepl(colour,"i") == TRUE){
       image_header = i_image$header
       keyvalues = i_image$keyvalues
       hdr = i_hdr
