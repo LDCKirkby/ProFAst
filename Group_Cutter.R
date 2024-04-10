@@ -15,7 +15,6 @@ library(ProPane)
 #
 args = commandArgs(trailingOnly=TRUE)
 loc = args[[1]]
-images = NULL
 
 Group_Cutter <- function(loc, images){
 `%notin%`<-Negate(`%in%`)
