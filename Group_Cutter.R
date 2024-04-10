@@ -45,51 +45,50 @@ r_image = data[4]
 i_image = data[5]
 g_hdr = data[6]
 r_hdr = data[7]
-i_hdr =
+i_hdr = data[8]
 
-  for(ID in asteroids$groupID){
-    #Makes sure we don't image the same object twice
-    done = list.files(path = paste0("./",loc,"/Group_Cutouts/"))
-    for(file in done){
-      if(grepl(ID, file) == TRUE){
-        next
-      }
-    }
-    
-    i = which(asteroids$groupID == ID)
-    colour = asteroids[asteroids$groupID == ID, "Colour"]
-    cat(ID,i,colour,"\n")
-    if(grepl(colour,"g") == TRUE){
-      image_header = g_image$header
-      keyvalues = g_image$keyvalues
-      hdr = g_hdr
-      paint = "green"
-      groupcut = Cutout(asteroids, ID, colour, loc, keyvalues)
-      locations = Edge_Finder(ID, colour, groupcut)      
-      cat("Printing image of ", colour, ID, "\n")
-      Image_Maker(ID, colour, groupcut, locations)
-    }
-    if(grepl(colour,"r") == TRUE){
-      image_header = r_image$header
-      keyvalues = r_image$keyvalues
-      hdr = r_hdr
-      paint = "red"
-      groupcut = Cutout(asteroids, ID, colour, loc, keyvalues)
-      locations = Edge_Finder(ID, colour, groupcut)
-      cat("Printing image of ", colour, ID, "\n")
-      Image_Maker(ID, colour, groupcut, locations)
-    }
-    if(grepl(colour,"i") == TRUE){
-      image_header = i_image$header
-      keyvalues = i_image$keyvalues
-      hdr = i_hdr
-      paint = "blue"
-      groupcut = Cutout(asteroids, ID, colour, loc, keyvalues)
-      locations = Edge_Finder(ID, colour, groupcut)
-      cat("Printing image of ", colour, ID, "\n")
-      Image_Maker(ID, colour, groupcut, locations)
+cat(length(asteroids$groupID, " asteroids to image\n"))
+for(ID in asteroids$groupID){
+  #Makes sure we don't image the same object twice
+  done = list.files(path = paste0("./",loc,"/Group_Cutouts/"))
+  for(file in done){
+    if(grepl(ID, file) == TRUE){
+      next
     }
   }
+  
+  i = which(asteroids$groupID == ID)
+  colour = asteroids[asteroids$groupID == ID, "Colour"]
+  cat(ID,i,colour,"\n")
+  if(grepl(colour,"g") == TRUE){
+    image_header = g_image$header
+    keyvalues = g_image$keyvalues
+    hdr = g_hdr
+    paint = "green"
+    groupcut = Cutout(asteroids, ID, colour, loc, keyvalues)
+    locations = Edge_Finder(ID, colour, groupcut)      
+    cat("Printing image of ", colour, ID, "\n")
+    Image_Maker(ID, colour, groupcut, locations)
+  }else if(grepl(colour,"r") == TRUE){
+    image_header = r_image$header
+    keyvalues = r_image$keyvalues
+    hdr = r_hdr
+    paint = "red"
+    groupcut = Cutout(asteroids, ID, colour, loc, keyvalues)
+    locations = Edge_Finder(ID, colour, groupcut)
+    cat("Printing image of ", colour, ID, "\n")
+    Image_Maker(ID, colour, groupcut, locations)
+  }else if(grepl(colour,"i") == TRUE){
+    image_header = i_image$header
+    keyvalues = i_image$keyvalues
+    hdr = i_hdr
+    paint = "blue"
+    groupcut = Cutout(asteroids, ID, colour, loc, keyvalues)
+    locations = Edge_Finder(ID, colour, groupcut)
+    cat("Printing image of ", colour, ID, "\n")
+    Image_Maker(ID, colour, groupcut, locations)
+  }
+}
     cat("Writing out data with top & bottom locations\n")
     write.csv(asteroids, file=paste0("./", loc,"/",loc,"_Asteroids.csv"))
 }
