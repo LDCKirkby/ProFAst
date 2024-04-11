@@ -70,7 +70,7 @@ for(ID in asteroids$groupID){
     Cutout(asteroids, ID, colour, loc, keyvalues)
     Edge_Finder(ID, hdr)      
     cat("Printing image of ", colour, ID, "\n")
-    Image_Maker(ID, colour, loc)
+    Image_Maker(ID, colour, loc, paint)
   }else if(grepl(colour,"r") == TRUE){
     image_header = r_image$header
     keyvalues = r_image$keyvalues
@@ -79,7 +79,7 @@ for(ID in asteroids$groupID){
     Cutout(asteroids, ID, colour, loc, keyvalues)
     Edge_Finder(ID, hdr)      
     cat("Printing image of ", colour, ID, "\n")
-    Image_Maker(ID, colour, loc)
+    Image_Maker(ID, colour, loc, paint)
   }else if(grepl(colour,"i") == TRUE){
     image_header = i_image$header
     keyvalues = i_image$keyvalues
@@ -88,7 +88,7 @@ for(ID in asteroids$groupID){
     Cutout(asteroids, ID, colour, loc, keyvalues)
     Edge_Finder(ID, hdr)      
     cat("Printing image of ", colour, ID, "\n")
-    Image_Maker(ID, colour, loc)
+    Image_Maker(ID, colour, loc, paint)
   }
 }
     cat("Writing out data with top & bottom locations\n")
@@ -182,8 +182,6 @@ Edge_Finder <- function(ID, hdr){
   asteroid_image = groupimage
   asteroid_image[asteroid_image%notin%ID]=0
 
-  assign("asteroid_image", asteroid_image, envir = .GlobalEnv)
-  
   obj_points <- which(groupimage == ID, arr.ind = TRUE)
   
   top_right <- obj_points[which.max(obj_points[, 1] + obj_points[, 2]), ]
@@ -214,10 +212,11 @@ Edge_Finder <- function(ID, hdr){
   y = c(ave_top[[2]],ave_bottom[[2]])
   locations = cbind(x,y)
   assign("groupimage", groupimage, envir = .GlobalEnv)
+  assign("asteroid_image", asteroid_image, envir = .GlobalEnv)
   assign("locations", locations, envir = .GlobalEnv)
 }
   
-Image_Maker <- function(ID, colour, loc){
+Image_Maker <- function(ID, colour, loc, paint){
   
   cat("Printing ",colour,ID," postage stamp\n")
   png(filename=paste0("./",loc,"/Group_Cutouts/",colour,ID,".png"))
