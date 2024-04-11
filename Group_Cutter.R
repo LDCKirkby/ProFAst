@@ -39,16 +39,16 @@ asteroids = read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv"))
 asteroids <- cbind(asteroids, data.frame(tl_RA = 0, tl_Dec = 0, tr_RA = 0, tr_Dec = 0, bl_RA = 0, bl_Dec = 0, br_RA = 0, br_Dec = 0, top_RA = 0, top_Dec = 0, bot_RA = 0, bot_Dec = 0))
 assign("asteroids", asteroids, envir = .GlobalEnv)
 
-# if(missing(images)){
-#   cat("Images not supplied")
-#   list[groupim, g_image, r_image, i_image, g_hdr, r_hdr, i_hdr] = Data_Reader(loc)
-# }else{
-#   list[groupim,g_image,r_image,i_image,g_hdr,r_hdr,i_hdr] = Data_Reader(loc,images)
-# }
+if(missing(images)){
+  cat("Images not supplied")
+  Data_Reader(loc)
+}else{
+  Data_Reader(loc,images)
+}
 
 Data_Reader(loc)
+Edger()      
 
-cat(length(asteroids$groupID), " asteroids to image\n")
 for(ID in asteroids$groupID){
   #Makes sure we don't image the same object twice
   done = list.files(path = paste0("./",loc,"/Group_Cutouts/"))
@@ -67,8 +67,8 @@ for(ID in asteroids$groupID){
     keyvalues = g_image$keyvalues
     hdr = g_hdr$hdr
     paint = "green"
-    Cutout(asteroids, ID, colour, loc, keyvalues)
-    Edge_Finder(ID, hdr)      
+    Cutout(keyvalues, i)
+    Top_bottom(ID, hdr)
     cat("Printing image of ", colour, ID, "\n")
     Image_Maker(ID, colour, loc, paint)
   }else if(grepl(colour,"r") == TRUE){
@@ -76,8 +76,8 @@ for(ID in asteroids$groupID){
     keyvalues = r_image$keyvalues
     hdr = r_hdr$hdr
     paint = "red"
-    Cutout(asteroids, ID, colour, loc, keyvalues)
-    Edge_Finder(ID, hdr)      
+    Cutout(keyvalues, i)
+    Top_bottom(ID, hdr)
     cat("Printing image of ", colour, ID, "\n")
     Image_Maker(ID, colour, loc, paint)
   }else if(grepl(colour,"i") == TRUE){
@@ -85,8 +85,8 @@ for(ID in asteroids$groupID){
     keyvalues = i_image$keyvalues
     hdr = i_hdr$hdr
     paint = "blue"
-    Cutout(asteroids, ID, colour, loc, keyvalues)
-    Edge_Finder(ID, hdr)      
+    Cutout(keyvalues, i)
+    Top_bottom(ID, hdr)
     cat("Printing image of ", colour, ID, "\n")
     Image_Maker(ID, colour, loc, paint)
   }
@@ -135,31 +135,8 @@ Data_Reader <- function(loc, images){
   
   }
 
-Cutout <- function(asteroids, ID, colour, loc, keyvalues){
-  # galpos=asteroids[asteroids$groupID == ID, c("xmax","ymax")]
-  galradec = asteroids[asteroids$groupID == ID, c("RAcen", "Deccen")]
-  galpos=as.integer(Rwcs_s2p(RA=galradec$RAcen, Dec=galradec$Deccen, keyvalues=keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
-  
-  cutim_g=g_image[galpos,box=box]
-  cutim_r=r_image[galpos,box=box]
-  cutim_i=i_image[galpos,box=box]
-  
-  cat("Making cutgroup_dilate\n")
-  cutgroup_dilate=magcutout(image = groupim$groupim, loc=as.numeric(galpos),box=box,loc.type="image")
-  
-  decoff=2*(wid*0.339/3600.0)
-  raoff=2*(wid*0.339/3600.0)/cos(galradec$Deccen*0.01745329)
-  
-  assign("cutim_g", cutim_g, envir = .GlobalEnv)
-  assign("cutim_r", cutim_r, envir = .GlobalEnv)
-  assign("cutim_i", cutim_i, envir = .GlobalEnv)
-  assign("groupcut", cutgroup_dilate, envir = .GlobalEnv)
-  
-  #return(cutgroup_dilate)
-}
-
-Edge_Finder <- function(ID, hdr){
-  groupimage = groupcut$image
+Edger <- function(){
+  groupimage = groupim$groupim
   xrun=1:(dim(groupimage)[1]-1)
   yrun=1:(dim(groupimage)[2]-1)
   
@@ -179,44 +156,69 @@ Edge_Finder <- function(ID, hdr){
   
   groupimage[groupimage_edge==4]=0
   
+  assign("groupimage", groupimage, envir = .GlobalEnv)
+}
+
+Top_bottom <- function(ID, hdr){
   asteroid_image = groupimage
   asteroid_image[asteroid_image%notin%ID]=0
-
-  obj_points <- which(groupimage == ID, arr.ind = TRUE)
+  
+  obj_points <- which(asteroid_image == ID, arr.ind = TRUE)
   
   top_right <- obj_points[which.max(obj_points[, 1] + obj_points[, 2]), ]
-  asteroids$tr_RA[i] = xy2radec(top_right, hdr)[1]
-  asteroids$tr_Dec[i] = xy2radec(top_right, hdr)[2]
+  asteroids$tr_RA[i] = xy2radec(top_right[[1]],top_right[[2]], hdr)[1]
+  asteroids$tr_Dec[i] = xy2radec(top_right[[1]],top_right[[2]], hdr)[2]
   
   top_left <- obj_points[which.min(obj_points[, 1] - obj_points[, 2]), ]
-  asteroids$tl_RA[i] = xy2radec(top_left, hdr)[1]
-  asteroids$tl_Dec[i] = xy2radec(top_left, hdr)[2]
+  asteroids$tl_RA[i] = xy2radec(top_left[[1]], top_left[[2]], hdr)[1]
+  asteroids$tl_Dec[i] = xy2radec(top_left[[1]],top_left[[2]], hdr)[2]
   
   bottom_right <- obj_points[which.max(obj_points[, 1] - obj_points[, 2]), ]
-  asteroids$br_RA[i] = xy2radec(bottom_right, hdr)[1]
-  asteroids$br_Dec[i] = xy2radec(bottom_right, hdr)[2]
+  asteroids$br_RA[i] = xy2radec(bottom_right[[1]], bottom_right[[2]], hdr)[1]
+  asteroids$br_Dec[i] = xy2radec(bottom_right[[1]],bottom_right[[2]], hdr)[2]
   
   bottom_left <- obj_points[which.min(obj_points[, 1] + obj_points[, 2]), ]
-  asteroids$bl_RA[i] = xy2radec(bottom_left, hdr)[1]
-  asteroids$bl_Dec[i] = xy2radec(bottom_left, hdr)[2]
+  asteroids$bl_RA[i] = xy2radec(bottom_left[[1]], bottom_left[[2]], hdr)[1]
+  asteroids$bl_Dec[i] = xy2radec(bottom_left[[1]], bottom_left[[2]], hdr)[2]
   
   ave_top <- c((top_right[[1]] + bottom_right[[1]])/2 , (top_right[[2]] + bottom_right[[2]])/2)
-  asteroids$top_RA[i] = xy2radec(ave_top, hdr)[1]
-  asteroids$top_Dec[i] = xy2radec(ave_top, hdr)[2]
+  asteroids$top_RA[i] = xy2radec(ave_top[[1]], ave_top[[2]], hdr)[1]
+  asteroids$top_Dec[i] = xy2radec(ave_top[[1]],ave_top[[2]], hdr)[2]
   
   ave_bottom <- c((top_left[[1]] + bottom_left[[1]])/2 , (top_left[[2]] + bottom_left[[2]])/2)
-  asteroids$bot_RA[i] = xy2radec(ave_bottom, hdr)[1]
-  asteroids$bot_Dec[i] = xy2radec(ave_bottom, hdr)[2]
+  asteroids$bot_RA[i] = xy2radec(ave_bottom[[1]],ave_bottom[[2]], hdr)[1]
+  asteroids$bot_Dec[i] = xy2radec(ave_bottom[[1]],ave_bottom[[2]], hdr)[2]
   
   x = c(ave_top[[1]],ave_bottom[[1]])
   y = c(ave_top[[2]],ave_bottom[[2]])
   locations = cbind(x,y)
-  assign("groupimage", groupimage, envir = .GlobalEnv)
   assign("asteroid_image", asteroid_image, envir = .GlobalEnv)
   assign("locations", locations, envir = .GlobalEnv)
 }
+
+Cutout <- function(keyvalues, i){
+  # galpos=asteroids[asteroids$groupID == ID, c("xmax","ymax")]
+  galradec = asteroids[i , c("RAcen", "Deccen")]
+  galpos=as.integer(Rwcs_s2p(RA=galradec$RAcen, Dec=galradec$Deccen, keyvalues=keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
   
-Image_Maker <- function(ID, colour, loc, paint){
+  cutim_g=g_image[galpos,box=box]
+  cutim_r=r_image[galpos,box=box]
+  cutim_i=i_image[galpos,box=box]
+  
+  cat("Making groupcut\n")
+  groupcut=magcutout(image = groupimage, loc=as.numeric(galpos),box=box,loc.type="image")
+  astercut=magcutout(image = asteroid_image, loc=as.numeric(galpos),box=box,loc.type="image")
+  
+  assign("cutim_g", cutim_g, envir = .GlobalEnv)
+  assign("cutim_r", cutim_r, envir = .GlobalEnv)
+  assign("cutim_i", cutim_i, envir = .GlobalEnv)
+  assign("groupcut", groupcut, envir = .GlobalEnv)
+  assign("astercut", astercut, envir = .GlobalEnv)
+  
+}
+
+  
+Image_Maker <- function(ID, colour, paint){
   
   cat("Printing ",colour,ID," postage stamp\n")
   png(filename=paste0("./",loc,"/Group_Cutouts/",colour,ID,".png"))
@@ -238,12 +240,12 @@ Image_Maker <- function(ID, colour, loc, paint){
   Rwcs_imageRGB(R=cutim_r, G=cutim_g, B=cutim_i, Rkeyvalues = r_image$keyvalues, Gkeyvalues = g_image$keyvalues, Bkeyvalues = i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
   
   cat("Adding group outlines\n")
-  magimage(groupimage,col=c(NA,rep("skyblue",max(groupimage))),magmap=FALSE,add=TRUE,sparse=1)
-  magimage(asteroid_image, col=c(NA,rep(paint,max(groupimage))),magmap=FALSE,add=TRUE,sparse=1)
+  magimage(groupcut,col=c(NA,rep("skyblue",max(groupcut))),magmap=FALSE,add=TRUE,sparse=1)
+  magimage(astercut,col=c(NA,rep(paint,    max(astercut))),magmap=FALSE,add=TRUE,sparse=1)
+  
   cat("Adding max & min points\n")
   points(locations, col=c("#FFA500", "#05ffa1"), add=TRUE, pch = 4, lwd = 3)
   legend(x ="topright", legend = c("Right Midpoint", "Left Midpoint"), pch = c(3,3,3,3), col = c("#FFA500", "#05ffa1"))
-  
   text(1,2*wid-50, label=paste0("ID=",paint,ID), cex=2.0, pos=4)
   
   dev.off()
@@ -265,7 +267,8 @@ Group_Cutter(loc)
 
 ######################################################################
 
-  
+  # decoff=2*(wid*0.339/3600.0)
+  # raoff=2*(wid*0.339/3600.0)/cos(galradec$Deccen*0.01745329)
   # MPC_Asteroids = astcheck[astcheck$RA >galradec$RAcen - raoff & astcheck$RA < galradec$RAcen + raoff & astcheck$Dec > galradec$Deccen - decoff  & astcheck$Dec < galradec$Deccen + decoff, c("RA","Dec")]
   # 
   # cat("Adding MPC asteroid points\n")
