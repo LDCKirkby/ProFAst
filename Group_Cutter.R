@@ -244,7 +244,7 @@ Image_Maker <- function(ID, colour, loc, paint){
   points(locations, col=c("#FFA500", "#05ffa1"), add=TRUE, pch = 4, lwd = 3)
   legend(x ="topright", legend = c("Right Midpoint", "Left Midpoint"), pch = c(3,3,3,3), col = c("#FFA500", "#05ffa1"))
   
-  text(1,2*wid-50, label=paste0("ID=",colour,ID), paint, cex=2.0, pos=4)
+  text(1,2*wid-50, label=paste0("ID=",paint,ID), cex=2.0, pos=4)
   
   dev.off()
 }
