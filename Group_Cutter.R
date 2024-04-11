@@ -179,7 +179,10 @@ Edge_Finder <- function(ID, hdr){
   
   groupimage[groupimage_edge==4]=0
   
-  assign("groupimage", groupimage, envir = .GlobalEnv)
+  asteroid_image = groupimage
+  asteroid_image[asteroid_image%notin%ID]=0
+
+  assign("asteroid_image", asteroid_image, envir = .GlobalEnv)
   
   obj_points <- which(groupimage == ID, arr.ind = TRUE)
   
@@ -210,6 +213,7 @@ Edge_Finder <- function(ID, hdr){
   x = c(ave_top[[1]],ave_bottom[[1]])
   y = c(ave_top[[2]],ave_bottom[[2]])
   locations = cbind(x,y)
+  assign("groupimage", groupimage, envir = .GlobalEnv)
   assign("locations", locations, envir = .GlobalEnv)
 }
   
@@ -236,10 +240,11 @@ Image_Maker <- function(ID, colour, loc){
   
   cat("Adding group outlines\n")
   magimage(groupimage,col=c(NA,rep("skyblue",max(groupimage))),magmap=FALSE,add=TRUE,sparse=1)
+  magimage(asteroid_image, col=c(NA,rep(paint,max(groupimage))),magmap=FALSE,add=TRUE,sparse=1)
+  cat("Adding max & min points\n")
   points(locations, col=c("#FFA500", "#05ffa1"), add=TRUE, pch = 4, lwd = 3)
   legend(x ="topright", legend = c("Right Midpoint", "Left Midpoint"), pch = c(3,3,3,3), col = c("#FFA500", "#05ffa1"))
   
-  magimage(groupimage[groupimage == ID], col=c(NA,rep(paint,max(groupimage))),magmap=FALSE,add=TRUE,sparse=1)
   text(1,2*wid-50, label=paste0("ID=",colour,ID), paint, cex=2.0, pos=4)
   
   dev.off()
