@@ -37,6 +37,7 @@ dir.create(paste0("./",loc,"/Group_Cutouts/"))
 cat("Reading in asteroid data\n")
 asteroids = read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv"))
 asteroids <- cbind(asteroids, data.frame(tl_RA = 0, tl_Dec = 0, tr_RA = 0, tr_Dec = 0, bl_RA = 0, bl_Dec = 0, br_RA = 0, br_Dec = 0, top_RA = 0, top_Dec = 0, bot_RA = 0, bot_Dec = 0))
+assign("asteroids", asteroids, envir = .GlobalEnv)
 
 # if(missing(images)){
 #   cat("Images not supplied")
@@ -63,7 +64,7 @@ for(ID in asteroids$groupID){
   if(grepl(colour,"g") == TRUE){
     image_header = g_image$header
     keyvalues = g_image$keyvalues
-    hdr = g_hdr
+    hdr = g_hdr$hdr
     paint = "green"
     Cutout(asteroids, ID, colour, loc, keyvalues)
     Edge_Finder(ID, hdr)      
@@ -72,7 +73,7 @@ for(ID in asteroids$groupID){
   }else if(grepl(colour,"r") == TRUE){
     image_header = r_image$header
     keyvalues = r_image$keyvalues
-    hdr = r_hdr
+    hdr = r_hdr$hdr
     paint = "red"
     Cutout(asteroids, ID, colour, loc, keyvalues)
     Edge_Finder(ID, hdr)      
@@ -81,7 +82,7 @@ for(ID in asteroids$groupID){
   }else if(grepl(colour,"i") == TRUE){
     image_header = i_image$header
     keyvalues = i_image$keyvalues
-    hdr = i_hdr
+    hdr = i_hdr$hdr
     paint = "blue"
     Cutout(asteroids, ID, colour, loc, keyvalues)
     Edge_Finder(ID, hdr)      
