@@ -58,9 +58,9 @@ for(ID in asteroids$groupID){
     }
   }
   
-  i = which(asteroids$groupID == ID)
+  i = which(asteroids$groupID == ID)[1]
   assign("i", i, envir = .GlobalEnv)
-  colour = asteroids[asteroids$groupID == ID, "Colour"]
+  colour = asteroids[asteroids$groupID == ID, "Colour"][1]
   cat(ID,i,colour,"\n")
   if(grepl(colour,"g") == TRUE){
     image_header = g_image$header
