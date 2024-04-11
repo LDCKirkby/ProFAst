@@ -234,6 +234,7 @@ Image_Maker <- function(ID, colour, loc){
   cat("Time to start printing images!\n")
   Rwcs_imageRGB(R=cutim_r, G=cutim_g, B=cutim_i, Rkeyvalues = r_image$keyvalues, Gkeyvalues = g_image$keyvalues, Bkeyvalues = i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
   
+  cat("Adding group outlines\n")
   magimage(groupimage,col=c(NA,rep("skyblue",max(groupimage))),magmap=FALSE,add=TRUE,sparse=1)
   points(locations, col=c("#FFA500", "#05ffa1"), add=TRUE, pch = 4, lwd = 3)
   legend(x ="topright", legend = c("Right Midpoint", "Left Midpoint"), pch = c(3,3,3,3), col = c("#FFA500", "#05ffa1"))
