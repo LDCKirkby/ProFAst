@@ -144,7 +144,7 @@ Cutout <- function(asteroids, ID, colour, loc, keyvalues){
   cutim_r=r_image[galpos,box=box]
   cutim_i=i_image[galpos,box=box]
   
-  cat("Making cutgroup_dilate")
+  cat("Making cutgroup_dilate\n")
   cutgroup_dilate=magcutout(image = groupim$groupim, loc=as.numeric(galpos),box=box,loc.type="image")
   
   decoff=2*(wid*0.339/3600.0)
