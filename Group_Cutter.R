@@ -40,7 +40,7 @@ asteroids <- cbind(asteroids, data.frame(tl_RA = 0, tl_Dec = 0, tr_RA = 0, tr_De
 assign("asteroids", asteroids, envir = .GlobalEnv)
 
 if(missing(images)){
-  cat("Images not supplied")
+  cat("Images not supplied\n")
   Data_Reader(loc)
 }else{
   Data_Reader(loc,images)
