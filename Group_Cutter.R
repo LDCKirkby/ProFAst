@@ -68,27 +68,27 @@ for(ID in asteroids$groupID){
     hdr = g_hdr$hdr
     paint = "green"
     Top_bottom(ID, hdr)
-    Cutout(keyvalues, i)
+    try(Cutout(keyvalues, i))
     cat("Printing image of ", colour, ID, "\n")
-    Image_Maker(ID, colour, loc, paint)
+    try(Image_Maker(ID, colour, loc, paint))
   }else if(grepl(colour,"r") == TRUE){
     image_header = r_image$header
     keyvalues = r_image$keyvalues
     hdr = r_hdr$hdr
     paint = "red"
     Top_bottom(ID, hdr)
-    Cutout(keyvalues, i)
+    try(Cutout(keyvalues, i))
     cat("Printing image of ", colour, ID, "\n")
-    Image_Maker(ID, colour, loc, paint)
+    try(Image_Maker(ID, colour, loc, paint))
   }else if(grepl(colour,"i") == TRUE){
     image_header = i_image$header
     keyvalues = i_image$keyvalues
     hdr = i_hdr$hdr
     paint = "blue"
     Top_bottom(ID, hdr)
-    Cutout(keyvalues, i)
+    try(Cutout(keyvalues, i))
     cat("Printing image of ", colour, ID, "\n")
-    Image_Maker(ID, colour, loc, paint)
+    try(Image_Maker(ID, colour, loc, paint))
   }
 }
     cat("Writing out data with top & bottom locations\n")
