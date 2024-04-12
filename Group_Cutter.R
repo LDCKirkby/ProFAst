@@ -218,7 +218,7 @@ Cutout <- function(keyvalues, i){
 }
 
   
-Image_Maker <- function(ID, colour, paint){
+Image_Maker <- function(ID, colour, loc, paint){
   
   cat("Printing ",colour,ID," postage stamp\n")
   png(filename=paste0("./",loc,"/Group_Cutouts/",colour,ID,".png"))
@@ -241,7 +241,7 @@ Image_Maker <- function(ID, colour, paint){
   
   cat("Adding group outlines\n")
   magimage(groupcut,col=c(NA,rep("skyblue",max(groupcut))),magmap=FALSE,add=TRUE,sparse=1)
-  magimage(astercut,col=c(NA,rep(paint,    max(astercut))),magmap=FALSE,add=TRUE,sparse=1)
+  magimage(astercut,col=c(NA,rep(paint, max(astercut))),magmap=FALSE,add=TRUE,sparse=1)
   
   cat("Adding max & min points\n")
   points(locations, col=c("#FFA500", "#05ffa1"), add=TRUE, pch = 4, lwd = 3)
