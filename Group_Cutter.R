@@ -240,8 +240,8 @@ Image_Maker <- function(ID, colour, loc, paint){
   Rwcs_imageRGB(R=cutim_r, G=cutim_g, B=cutim_i, Rkeyvalues = r_image$keyvalues, Gkeyvalues = g_image$keyvalues, Bkeyvalues = i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
   
   cat("Adding group outlines\n")
-  magimage(groupcut$image,col=c(NA,rep("skyblue",max(groupcut))),magmap=FALSE,add=TRUE,sparse=1)
-  magimage(astercut$image,col=c(NA,rep(paint, max(astercut))),magmap=FALSE,add=TRUE,sparse=1)
+  magimage(groupcut$image,col=c(NA,rep("skyblue",max(groupcut$image))),magmap=FALSE,add=TRUE,sparse=1)
+  magimage(astercut$image,col=c(NA,rep(paint, max(astercut$image))),magmap=FALSE,add=TRUE,sparse=1)
   
   cat("Adding max & min points\n")
   points(locations, col=c("#FFA500", "#05ffa1"), add=TRUE, pch = 4, lwd = 3)
