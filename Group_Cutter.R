@@ -180,6 +180,13 @@ Top_bottom <- function(ID, hdr){
   
   obj_points <- which(asteroid_image == ID, arr.ind = TRUE)
   
+  if(length(obj_points) < 2){
+    assign("asteroid_image", asteroid_image, envir = .GlobalEnv)
+    assign("locations", c(0,0), envir = .GlobalEnv)
+    cat("No group outline found for ", ID,",\n")
+    return()
+  }
+  
   top_right <- obj_points[which.max(obj_points[, 1] + obj_points[, 2]), ]
   asteroids$tr_RA[i] = xy2radec(top_right[[1]],top_right[[2]], hdr)[1]
   asteroids$tr_Dec[i] = xy2radec(top_right[[1]],top_right[[2]], hdr)[2]
