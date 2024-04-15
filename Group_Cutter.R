@@ -70,7 +70,7 @@ for(ID in asteroids$groupID){
     hdr = g_hdr$hdr
     paint = "green"
     
-    Top_bottom(ID, hdr)
+    asteroids <<- Top_bottom(asteroids, ID, hdr)
     Cutout(keyvalues, i)
     cat("Printing image of ", colour, ID, "\n")
     Image_Maker(ID, colour, loc, paint)
@@ -81,7 +81,7 @@ for(ID in asteroids$groupID){
     hdr = r_hdr$hdr
     paint = "red"
     
-    Top_bottom(ID, hdr)
+    asteroids <<- Top_bottom(asteroids, ID, hdr)
     Cutout(keyvalues, i)
     cat("Printing image of ", colour, ID, "\n")
     Image_Maker(ID, colour, loc, paint)
@@ -92,7 +92,7 @@ for(ID in asteroids$groupID){
     hdr = i_hdr$hdr
     paint = "blue"
     
-    Top_bottom(ID, hdr)
+    asteroids <<- Top_bottom(asteroids, ID, hdr)
     Cutout(keyvalues, i)
     cat("Printing image of ", colour, ID, "\n")
     Image_Maker(ID, colour, loc, paint)
@@ -170,7 +170,7 @@ Edger <- function(){
   assign("groupimage", groupimage, envir = .GlobalEnv)
 }
 
-Top_bottom <- function(ID, hdr){
+Top_bottom <- function(ast, ID, hdr){
   cat("Finding top and bottom of object\n")
   
   `%notin%`<-Negate(`%in%`)
@@ -187,34 +187,36 @@ Top_bottom <- function(ID, hdr){
   }
   
   top_right <- obj_points[which.max(obj_points[, 1] + obj_points[, 2]), ]
-  asteroids$tr_RA[i] = xy2radec(top_right[[1]],top_right[[2]], hdr)[1]
-  asteroids$tr_Dec[i] = xy2radec(top_right[[1]],top_right[[2]], hdr)[2]
+  ast$tr_RA[i] = xy2radec(top_right[[1]],top_right[[2]], hdr)[1]
+  ast$tr_Dec[i] = xy2radec(top_right[[1]],top_right[[2]], hdr)[2]
   
   top_left <- obj_points[which.min(obj_points[, 1] - obj_points[, 2]), ]
-  asteroids$tl_RA[i] = xy2radec(top_left[[1]], top_left[[2]], hdr)[1]
-  asteroids$tl_Dec[i] = xy2radec(top_left[[1]],top_left[[2]], hdr)[2]
+  ast$tl_RA[i] = xy2radec(top_left[[1]], top_left[[2]], hdr)[1]
+  ast$tl_Dec[i] = xy2radec(top_left[[1]],top_left[[2]], hdr)[2]
   
   bottom_right <- obj_points[which.max(obj_points[, 1] - obj_points[, 2]), ]
-  asteroids$br_RA[i] = xy2radec(bottom_right[[1]], bottom_right[[2]], hdr)[1]
-  asteroids$br_Dec[i] = xy2radec(bottom_right[[1]],bottom_right[[2]], hdr)[2]
+  ast$br_RA[i] = xy2radec(bottom_right[[1]], bottom_right[[2]], hdr)[1]
+  ast$br_Dec[i] = xy2radec(bottom_right[[1]],bottom_right[[2]], hdr)[2]
   
   bottom_left <- obj_points[which.min(obj_points[, 1] + obj_points[, 2]), ]
-  asteroids$bl_RA[i] = xy2radec(bottom_left[[1]], bottom_left[[2]], hdr)[1]
-  asteroids$bl_Dec[i] = xy2radec(bottom_left[[1]], bottom_left[[2]], hdr)[2]
+  ast$bl_RA[i] = xy2radec(bottom_left[[1]], bottom_left[[2]], hdr)[1]
+  ast$bl_Dec[i] = xy2radec(bottom_left[[1]], bottom_left[[2]], hdr)[2]
   
   ave_top <- c((top_right[[1]] + bottom_right[[1]])/2 , (top_right[[2]] + bottom_right[[2]])/2)
-  asteroids$top_RA[i] = xy2radec(ave_top[[1]], ave_top[[2]], hdr)[1]
-  asteroids$top_Dec[i] = xy2radec(ave_top[[1]],ave_top[[2]], hdr)[2]
+  ast$top_RA[i] = xy2radec(ave_top[[1]], ave_top[[2]], hdr)[1]
+  ast$top_Dec[i] = xy2radec(ave_top[[1]],ave_top[[2]], hdr)[2]
   
   ave_bottom <- c((top_left[[1]] + bottom_left[[1]])/2 , (top_left[[2]] + bottom_left[[2]])/2)
-  asteroids$bot_RA[i] = xy2radec(ave_bottom[[1]],ave_bottom[[2]], hdr)[1]
-  asteroids$bot_Dec[i] = xy2radec(ave_bottom[[1]],ave_bottom[[2]], hdr)[2]
+  ast$bot_RA[i] = xy2radec(ave_bottom[[1]],ave_bottom[[2]], hdr)[1]
+  ast$bot_Dec[i] = xy2radec(ave_bottom[[1]],ave_bottom[[2]], hdr)[2]
   
   x = c(ave_top[[1]],ave_bottom[[1]])
   y = c(ave_top[[2]],ave_bottom[[2]])
   locations = cbind(x,y)
   assign("asteroid_image", asteroid_image, envir = .GlobalEnv)
   assign("locations", locations, envir = .GlobalEnv)
+  
+  return(ast)
 }
 
 Cutout <- function(keyvalues, i){
