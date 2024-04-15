@@ -72,9 +72,9 @@ for(ID in asteroids$groupID){
     paint = "green"
     
     Top_bottom(ID, hdr)
-    tryCatch({Cutout(keyvalues, i)}, error = function(e) {print(paste("Error:", e))})
+    Cutout(keyvalues, i)
     cat("Printing image of ", colour, ID, "\n")
-    tryCatch({Image_Maker(ID, colour, loc, paint)}, error = function(e) {print(paste("Error:", e))})
+    Image_Maker(ID, colour, loc, paint)
     
   }else if(grepl(colour,"r") == TRUE){
     image_header = r_image$header
@@ -83,9 +83,9 @@ for(ID in asteroids$groupID){
     paint = "red"
     
     Top_bottom(ID, hdr)
-    tryCatch({Cutout(keyvalues, i)}, error = function(e) {print(paste("Error:", e))})
+    Cutout(keyvalues, i)
     cat("Printing image of ", colour, ID, "\n")
-    tryCatch({Image_Maker(ID, colour, loc, paint)}, error = function(e) {print(paste("Error:", e))})
+    Image_Maker(ID, colour, loc, paint)
     
   }else if(grepl(colour,"i") == TRUE){
     image_header = i_image$header
@@ -94,9 +94,9 @@ for(ID in asteroids$groupID){
     paint = "blue"
     
     Top_bottom(ID, hdr)
-    tryCatch({Cutout(keyvalues, i)}, error = function(e) {print(paste("Error:", e))})
+    Cutout(keyvalues, i)
     cat("Printing image of ", colour, ID, "\n")
-    tryCatch({Image_Maker(ID, colour, loc, paint)}, error = function(e) {print(paste("Error:", e))})
+    Image_Maker(ID, colour, loc, paint)
     
   }
 }
@@ -273,7 +273,7 @@ Image_Maker <- function(ID, colour, loc, paint){
   dev.off()
 }
 
-Group_Cutter(loc)
+tryCatch({Group_Cutter(loc)}, error = function(e) {print(paste("Error:", e))})
 # astcheck = data.frame()
 # colours = c("green", "red", "blue")
 # for(i in 1:3){
