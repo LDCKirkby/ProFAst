@@ -68,7 +68,9 @@ for(ID in asteroids$groupID){
   assign("i", i, envir = .GlobalEnv)
   colour = asteroids[asteroids$groupID == ID, "Colour"][1]
   cat(ID,i,colour,"\n")
+  
 
+  
   if(grepl(colour,"g") == TRUE){
     image_header = g_image$header
     keyvalues = g_image$keyvalues
@@ -76,9 +78,9 @@ for(ID in asteroids$groupID){
     paint = "green"
     
     Top_bottom(ID, hdr)
-    try(Cutout(keyvalues, i), silent = TRUE)
+    tryCatch({Cutout(keyvalues, i)}, error = function(e) {print(paste("Error:", e))})
     cat("Printing image of ", colour, ID, "\n")
-    try(Image_Maker(ID, colour, loc, paint), silent = TRUE)
+    tryCatch({Image_Maker(ID, colour, loc, paint)}, error = function(e) {print(paste("Error:", e))})
   }else if(grepl(colour,"r") == TRUE){
     image_header = r_image$header
     keyvalues = r_image$keyvalues
@@ -86,9 +88,9 @@ for(ID in asteroids$groupID){
     paint = "red"
     
     Top_bottom(ID, hdr)
-    try(Cutout(keyvalues, i), silent = TRUE)
+    tryCatch({Cutout(keyvalues, i)}, error = function(e) {print(paste("Error:", e))})
     cat("Printing image of ", colour, ID, "\n")
-    try(Image_Maker(ID, colour, loc, paint), silent = TRUE)
+    tryCatch({Image_Maker(ID, colour, loc, paint)}, error = function(e) {print(paste("Error:", e))})
   }else if(grepl(colour,"i") == TRUE){
     image_header = i_image$header
     keyvalues = i_image$keyvalues
@@ -96,9 +98,9 @@ for(ID in asteroids$groupID){
     paint = "blue"
     
     Top_bottom(ID, hdr)
-    try(Cutout(keyvalues, i), silent = TRUE)
+    tryCatch({Cutout(keyvalues, i)}, error = function(e) {print(paste("Error:", e))})
     cat("Printing image of ", colour, ID, "\n")
-    try(Image_Maker(ID, colour, loc, paint), silent = TRUE)
+    tryCatch({Image_Maker(ID, colour, loc, paint)}, error = function(e) {print(paste("Error:", e))})
   }
 }
     cat("Writing out data with top & bottom locations\n")
