@@ -23,12 +23,6 @@ box<-c(2*wid,2*wid)
 mulim<-22.0
 kids<-(0.339^2)*(10^(0.4*(0-mulim)))
 viking<-(0.339^2)*(10^(0.4*(30-mulim)))
-continue_on_error <- function()
-{
-  print("NOTE: THERE WAS AN ERROR HERE. We are continuing because we have set
-'options(error=continue_on_error())'")
-}
-options(error=continue_on_error)
 
 
 Group_Cutter <- function(loc, images){
@@ -81,6 +75,7 @@ for(ID in asteroids$groupID){
     tryCatch({Cutout(keyvalues, i)}, error = function(e) {print(paste("Error:", e))})
     cat("Printing image of ", colour, ID, "\n")
     tryCatch({Image_Maker(ID, colour, loc, paint)}, error = function(e) {print(paste("Error:", e))})
+    
   }else if(grepl(colour,"r") == TRUE){
     image_header = r_image$header
     keyvalues = r_image$keyvalues
@@ -91,6 +86,7 @@ for(ID in asteroids$groupID){
     tryCatch({Cutout(keyvalues, i)}, error = function(e) {print(paste("Error:", e))})
     cat("Printing image of ", colour, ID, "\n")
     tryCatch({Image_Maker(ID, colour, loc, paint)}, error = function(e) {print(paste("Error:", e))})
+    
   }else if(grepl(colour,"i") == TRUE){
     image_header = i_image$header
     keyvalues = i_image$keyvalues
@@ -101,6 +97,7 @@ for(ID in asteroids$groupID){
     tryCatch({Cutout(keyvalues, i)}, error = function(e) {print(paste("Error:", e))})
     cat("Printing image of ", colour, ID, "\n")
     tryCatch({Image_Maker(ID, colour, loc, paint)}, error = function(e) {print(paste("Error:", e))})
+    
   }
 }
     cat("Writing out data with top & bottom locations\n")
