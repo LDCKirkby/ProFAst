@@ -8,7 +8,9 @@ library(common)
 args = commandArgs(trailingOnly=TRUE)
 loc = args[[1]]
 
+cat("Reading observation times\n")
 obs_times = read.delim("./obs_times_full.txt", header =FALSE, col.names = c("frame","obs1","obs2","obs3","obs4","obs5","obs6","obs7","obs8","obs9"),  sep = ",")
+cat("Reading asteroid data\n")
 asteroids = read.csv(paste0("./",loc,"/",loc,"_Asteroids.csv"))
 
 exposure = 0 
@@ -20,6 +22,9 @@ astcheck = c()
 for( i in 1:length(asteroids$groupID)){
   colour = asteroids$Colour[i]
   ID = asteroids$groupID[i]
+  
+  cat("Formatting asteriod ", colour, ID,"\n")
+  
   
   if("g" %in% colour == TRUE){
     exposure = 900 #seconds
@@ -116,6 +121,8 @@ for( i in 1:length(asteroids$groupID)){
   find_orb <- append(find_orb, line)
   find_orb <- append(find_orb, line2)
 }
+
+cat("Writing formatted data to ", loc,"_findorb.txt\n")
 write.table(find_orb, paste0("./",loc,"/",loc,"_findorb.txt"), sep = " ", row.names = FALSE, col.names = FALSE, quote = FALSE)
 
 # 
