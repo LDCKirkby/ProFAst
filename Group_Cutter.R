@@ -23,6 +23,13 @@ box<-c(2*wid,2*wid)
 mulim<-22.0
 kids<-(0.339^2)*(10^(0.4*(0-mulim)))
 viking<-(0.339^2)*(10^(0.4*(30-mulim)))
+continue_on_error <- function()
+{
+  print("NOTE: THERE WAS AN ERROR HERE. We are continuing because we have set
+'options(error=continue_on_error())'")
+}
+options(error=continue_on_error)
+
 
 Group_Cutter <- function(loc, images){
 
@@ -67,6 +74,7 @@ for(ID in asteroids$groupID){
     keyvalues = g_image$keyvalues
     hdr = g_hdr$hdr
     paint = "green"
+    
     Top_bottom(ID, hdr)
     try(Cutout(keyvalues, i), silent = TRUE)
     cat("Printing image of ", colour, ID, "\n")
@@ -76,6 +84,7 @@ for(ID in asteroids$groupID){
     keyvalues = r_image$keyvalues
     hdr = r_hdr$hdr
     paint = "red"
+    
     Top_bottom(ID, hdr)
     try(Cutout(keyvalues, i), silent = TRUE)
     cat("Printing image of ", colour, ID, "\n")
@@ -85,6 +94,7 @@ for(ID in asteroids$groupID){
     keyvalues = i_image$keyvalues
     hdr = i_hdr$hdr
     paint = "blue"
+    
     Top_bottom(ID, hdr)
     try(Cutout(keyvalues, i), silent = TRUE)
     cat("Printing image of ", colour, ID, "\n")
@@ -136,6 +146,7 @@ Data_Reader <- function(loc, images){
   }
 
 Edger <- function(){
+  
   groupimage = groupim$groupim
   xrun=1:(dim(groupimage)[1]-1)
   yrun=1:(dim(groupimage)[2]-1)
@@ -162,6 +173,8 @@ Edger <- function(){
 }
 
 Top_bottom <- function(ID, hdr){
+  cat("Finding top and bottom of object\n")
+  
   `%notin%`<-Negate(`%in%`)
   asteroid_image = groupimage
   asteroid_image[asteroid_image%notin%ID]=0
