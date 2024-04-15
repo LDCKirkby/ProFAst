@@ -115,7 +115,7 @@ for( i in 1:length(asteroids$groupID)){
   colour = asteroids$Colour[i]
   
   line  = paste0(spacer1," ",ID," ","P",ymd_start, "  ", RA_top, " ", Dec_top,spaces(9),spaces(8-nchar(mag)),mag,colour," X11")
-  line2 = paste0(spacer2," ",ID," ","P", ymd_end , "  ", RA_top, " ", Dec_top,spaces(9),spaces(8-nchar(mag)),mag,colour," X11")
+  line2 = paste0(spacer2," ",ID," ","P", ymd_end , "  ", RA_bottom, " ", Dec_bottom,spaces(9),spaces(8-nchar(mag)),mag,colour," X11")
   cat(line, "\n")
   cat(line2, "\n")
   find_orb <- append(find_orb, line)
