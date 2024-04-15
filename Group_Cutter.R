@@ -70,7 +70,11 @@ for(ID in asteroids$groupID){
     hdr = g_hdr$hdr
     paint = "green"
     
-    asteroids <<- Top_bottom(asteroids, ID, hdr)
+    list[ast, error] <- Top_bottom(asteroids, ID, hdr)
+    if(error == -1){
+      next
+    }
+    asteroids <<- ast
     Cutout(keyvalues, i)
     cat("Printing image of ", colour, ID, "\n")
     Image_Maker(ID, colour, loc, paint)
@@ -81,7 +85,11 @@ for(ID in asteroids$groupID){
     hdr = r_hdr$hdr
     paint = "red"
     
-    asteroids <<- Top_bottom(asteroids, ID, hdr)
+    list[ast, error] <- Top_bottom(asteroids, ID, hdr)
+    if(error == -1){
+      next
+    }
+    asteroids <<- ast
     Cutout(keyvalues, i)
     cat("Printing image of ", colour, ID, "\n")
     Image_Maker(ID, colour, loc, paint)
@@ -92,7 +100,11 @@ for(ID in asteroids$groupID){
     hdr = i_hdr$hdr
     paint = "blue"
     
-    asteroids <<- Top_bottom(asteroids, ID, hdr)
+    list[ast, error] <- Top_bottom(asteroids, ID, hdr)
+    if(error == -1){
+      next
+    }
+    asteroids <<- ast
     Cutout(keyvalues, i)
     cat("Printing image of ", colour, ID, "\n")
     Image_Maker(ID, colour, loc, paint)
@@ -183,7 +195,7 @@ Top_bottom <- function(ast, ID, hdr){
     assign("asteroid_image", asteroid_image, envir = .GlobalEnv)
     assign("locations", c(0,0), envir = .GlobalEnv)
     cat("No group outline found for ", ID,",\n")
-    return()
+    return(list(ast, -1))
   }
   
   top_right <- obj_points[which.max(obj_points[, 1] + obj_points[, 2]), ]
@@ -216,7 +228,7 @@ Top_bottom <- function(ast, ID, hdr){
   assign("asteroid_image", asteroid_image, envir = .GlobalEnv)
   assign("locations", locations, envir = .GlobalEnv)
   
-  return(ast)
+  return(list(ast,1))
 }
 
 Cutout <- function(keyvalues, i){
