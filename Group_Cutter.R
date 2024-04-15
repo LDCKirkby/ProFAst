@@ -145,7 +145,7 @@ Data_Reader <- function(loc, images){
   }
 
 Edger <- function(){
-  
+  cat("Finding the edges of group segmentation masks\n")
   groupimage = groupim$groupim
   xrun=1:(dim(groupimage)[1]-1)
   yrun=1:(dim(groupimage)[2]-1)
