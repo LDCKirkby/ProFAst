@@ -24,6 +24,10 @@ mulim<-22.0
 kids<-(0.339^2)*(10^(0.4*(0-mulim)))
 viking<-(0.339^2)*(10^(0.4*(30-mulim)))
 
+cat("Reading in asteroid data\n")
+asteroids = read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv"))
+asteroids <- cbind(asteroids, data.frame(tl_RA = 0, tl_Dec = 0, tr_RA = 0, tr_Dec = 0, bl_RA = 0, bl_Dec = 0, br_RA = 0, br_Dec = 0, top_RA = 0, top_Dec = 0, bot_RA = 0, bot_Dec = 0))
+
 
 Group_Cutter <- function(loc, images){
 
@@ -33,11 +37,6 @@ if(dir_exists(paste0("./",loc,"Group_Cutouts"))){
   dir_delete(paste0("./",loc,"/Group_Cutouts/"))
 }
 dir.create(paste0("./",loc,"/Group_Cutouts/"))
-
-cat("Reading in asteroid data\n")
-asteroids = read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv"))
-asteroids <- cbind(asteroids, data.frame(tl_RA = 0, tl_Dec = 0, tr_RA = 0, tr_Dec = 0, bl_RA = 0, bl_Dec = 0, br_RA = 0, br_Dec = 0, top_RA = 0, top_Dec = 0, bot_RA = 0, bot_Dec = 0))
-assign("asteroids", asteroids, envir = .GlobalEnv)
 
 if(missing(images)){
   cat("Images not supplied\n")
