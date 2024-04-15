@@ -25,7 +25,6 @@ kids<-(0.339^2)*(10^(0.4*(0-mulim)))
 viking<-(0.339^2)*(10^(0.4*(30-mulim)))
 
 Group_Cutter <- function(loc, images){
-`%notin%`<-Negate(`%in%`)
 
 #Make a directory to save the cutouts
 if(dir_exists(paste0("./",loc,"Group_Cutouts"))){
@@ -62,33 +61,34 @@ for(ID in asteroids$groupID){
   assign("i", i, envir = .GlobalEnv)
   colour = asteroids[asteroids$groupID == ID, "Colour"][1]
   cat(ID,i,colour,"\n")
+
   if(grepl(colour,"g") == TRUE){
     image_header = g_image$header
     keyvalues = g_image$keyvalues
     hdr = g_hdr$hdr
     paint = "green"
     Top_bottom(ID, hdr)
-    try(Cutout(keyvalues, i))
+    try(Cutout(keyvalues, i), silent = TRUE)
     cat("Printing image of ", colour, ID, "\n")
-    try(Image_Maker(ID, colour, loc, paint))
+    try(Image_Maker(ID, colour, loc, paint), silent = TRUE)
   }else if(grepl(colour,"r") == TRUE){
     image_header = r_image$header
     keyvalues = r_image$keyvalues
     hdr = r_hdr$hdr
     paint = "red"
     Top_bottom(ID, hdr)
-    try(Cutout(keyvalues, i))
+    try(Cutout(keyvalues, i), silent = TRUE)
     cat("Printing image of ", colour, ID, "\n")
-    try(Image_Maker(ID, colour, loc, paint))
+    try(Image_Maker(ID, colour, loc, paint), silent = TRUE)
   }else if(grepl(colour,"i") == TRUE){
     image_header = i_image$header
     keyvalues = i_image$keyvalues
     hdr = i_hdr$hdr
     paint = "blue"
     Top_bottom(ID, hdr)
-    try(Cutout(keyvalues, i))
+    try(Cutout(keyvalues, i), silent = TRUE)
     cat("Printing image of ", colour, ID, "\n")
-    try(Image_Maker(ID, colour, loc, paint))
+    try(Image_Maker(ID, colour, loc, paint), silent = TRUE)
   }
 }
     cat("Writing out data with top & bottom locations\n")
@@ -108,7 +108,7 @@ Data_Reader <- function(loc, images){
   
   if(missing(images) == TRUE){
   cat("Loading images as pointers\n")
-  g_image = Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
+  g_image = Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
   r_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
   i_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"),header=TRUE,ext=1)
   cat("Warping r&i frames\n")
@@ -156,10 +156,13 @@ Edger <- function(){
   
   groupimage[groupimage_edge==4]=0
   
+  rm(groupimage_edge, groupimage_temp, groupimage_lb, groupimage_lt, groupimage_rt, groupimage_rb)
+  
   assign("groupimage", groupimage, envir = .GlobalEnv)
 }
 
 Top_bottom <- function(ID, hdr){
+  `%notin%`<-Negate(`%in%`)
   asteroid_image = groupimage
   asteroid_image[asteroid_image%notin%ID]=0
   
