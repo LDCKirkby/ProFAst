@@ -94,13 +94,13 @@ for( i in 1:length(asteroids$groupID)){
     day_end = paste0(day(obs_end) + trunc((hour(obs_end)/24 + minute(obs_end)/(24*60) + second(obs_end)/(24*60*60))*10^4)/10^4)
   }
   
-  # if(nchar(day_start) < 9){
-  #   day_start = paste0(day_start, "0")
-  # }
-  # 
-  # if(nchar(day_end) < 9){
-  #   day_end = paste0(day_end, "0")
-  # }
+  if(nchar(day_start) < 7){
+    day_start = paste0(day_start, "0")
+  }
+
+  if(nchar(day_end) < 7){
+    day_end = paste0(day_end, "0")
+  }
   ymd_start = paste0(ymd_start, day_start)
   ymd_end = paste0(ymd_end, day_end)
 
