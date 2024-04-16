@@ -65,12 +65,10 @@ for( i in 1:length(asteroids$groupID)){
     ID = paste0(long, substr(ID, nchar(ID) - 7, nchar(ID)))
     print(long_alpha)
   }else if(nchar(ID) < 7){
-    add = ""
-    while(nchar(ID) < 7){
-      add = paste0(add," ")
-      ID = paste0(add,ID)
+    add = spaces(7-nchar(ID))
+    ID = paste0(add,ID)
     }
-  }
+
 
   
     
