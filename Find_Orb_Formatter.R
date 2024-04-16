@@ -71,7 +71,7 @@ for( i in 1:length(asteroids$groupID)){
       ID = paste0(add,ID)
     }
   }
-  }
+
   
     
   ymd_start = paste0(year(obs_start)," ")
