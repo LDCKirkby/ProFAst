@@ -71,14 +71,14 @@ for(ID in asteroids$groupID){
     hdr = g_hdr$hdr
     paint = "green"
     
-    list[ast, error] <- Top_bottom(asteroids, ID, hdr)
+    list[ast, locations, error] <- Top_bottom(asteroids, ID, hdr)
     if(error == -1){
       next
     }
     asteroids <<- ast
     Cutout(keyvalues, i)
     cat("Printing image of ", colour, ID, "\n")
-    Image_Maker(ID, colour, loc, paint)
+    Image_Maker(ID, colour, locations, paint)
     
   }else if(grepl(colour,"r") == TRUE){
     image_header = r_image$header
@@ -86,14 +86,14 @@ for(ID in asteroids$groupID){
     hdr = r_hdr$hdr
     paint = "red"
     
-    list[ast, error] <- Top_bottom(asteroids, ID, hdr)
+    list[ast, locations, error] <- Top_bottom(asteroids, ID, hdr)
     if(error == -1){
       next
     }
     asteroids <<- ast
     Cutout(keyvalues, i)
     cat("Printing image of ", colour, ID, "\n")
-    Image_Maker(ID, colour, loc, paint)
+    Image_Maker(ID, colour, locations, paint)
     
   }else if(grepl(colour,"i") == TRUE){
     image_header = i_image$header
@@ -101,14 +101,14 @@ for(ID in asteroids$groupID){
     hdr = i_hdr$hdr
     paint = "blue"
     
-    list[ast, error] <- Top_bottom(asteroids, ID, hdr)
+    list[ast, locations, error] <- Top_bottom(asteroids, ID, hdr)
     if(error == -1){
       next
     }
     asteroids <<- ast
     Cutout(keyvalues, i)
     cat("Printing image of ", colour, ID, "\n")
-    Image_Maker(ID, colour, loc, paint)
+    Image_Maker(ID, colour, locations, paint)
     
   }
 }
@@ -194,9 +194,9 @@ Top_bottom <- function(ast, ID, hdr){
   
   if(length(obj_points) < 2){
     assign("asteroid_image", asteroid_image, envir = .GlobalEnv)
-    assign("locations", c(0,0), envir = .GlobalEnv)
+    #assign("locations", c(0,0), envir = .GlobalEnv)
     cat("No group outline found for ", ID,",\n")
-    return(list(ast, -1))
+    return(list(ast, list(c(0,0),c(0,0)), -1))
   }
   
   top_right <- obj_points[which.max(obj_points[, 1] + obj_points[, 2]), ]
@@ -227,9 +227,9 @@ Top_bottom <- function(ast, ID, hdr){
   y = c(ave_top[[2]],ave_bottom[[2]])
   locations = cbind(x,y)
   assign("asteroid_image", asteroid_image, envir = .GlobalEnv)
-  assign("locations", locations, envir = .GlobalEnv)
+  #assign("locations", locations, envir = .GlobalEnv)
   
-  return(list(ast,1))
+  return(list(ast,locations,1))
 }
 
 Cutout <- function(keyvalues, i){
@@ -254,7 +254,7 @@ Cutout <- function(keyvalues, i){
 }
 
   
-Image_Maker <- function(ID, colour, loc, paint){
+Image_Maker <- function(ID, colour, locations, paint){
   
   cat("Printing ",colour,ID," postage stamp\n")
   png(filename=paste0("./",loc,"/Group_Cutouts/",colour,ID,".png"))
@@ -281,7 +281,9 @@ Image_Maker <- function(ID, colour, loc, paint){
   
   cat("Adding max & min points\n")
   points(locations, col=c("#FFA500", "#05ffa1"), add=TRUE, pch = 4, lwd = 3)
+  
   legend(x ="topright", legend = c("Right Midpoint", "Left Midpoint"), pch = c(3,3,3,3), col = c("#FFA500", "#05ffa1"))
+  
   text(1,2*wid-50, label=paste0("ID=",paint,ID), cex=2.0, pos=4)
   
   dev.off()

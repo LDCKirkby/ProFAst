@@ -124,9 +124,18 @@ for( i in 1:length(asteroids$groupID)){
 cat("Writing formatted data to ", loc,"_findorb.txt\n")
 write.table(find_orb, paste0("./",loc,"/",loc,"_findorb.txt"), sep = " ", row.names = FALSE, col.names = FALSE, quote = FALSE)
 
-# 
-# 
-# 
+
+# To call find_orb and produce x,y,z location parameters
+# fo *findorb.txt -C 500 -e ./orbital_params/%p/ephem_%p.json
+
+
+ 
+
+
+
+
+
+
 # for( i in 1:length(asteroids$groupID)){
 #   colour = asteroids$Colour[i]
 #   
