@@ -12,6 +12,8 @@ require(MASS)
 library(ProPane)
 library(gsubfn)
 library(fs)
+library(showtext)
+font_add("Arial", "~/Library/Fonts/Arial.ttf")
 # source("./R_files/fastcutout.r")
 
 #
