@@ -40,9 +40,9 @@ for( i in 1:length(asteroids$groupID)){
   obs_start = as.POSIXct(obs$obs1, tz = "UTC")
   obs_end = as.POSIXct(obs$obs5, tz = "UTC") + (exposure/5)
 
-  RA_top = paste0(deg2hms(asteroids[i, "tr_RA"])[[1]], " ",deg2hms(asteroids[i, "tr_RA"])[[2]], " ",deg2hms(asteroids[i, "tr_RA"], digits = 3)[[3]])
+  RA_top = paste0(deg2hms(asteroids[i, "tr_RA"])[[1]], " ",deg2hms(asteroids[i, "tr_RA"])[[2]], " ",deg2hms(asteroids[i, "tr_RA"], digits = 2)[[3]])
   Dec_top = paste0(deg2dms(asteroids[i, "tr_Dec"])[[1]], " ",deg2dms(asteroids[i, "tr_Dec"])[[2]], " ",deg2dms(asteroids[i, "tr_Dec"], digits = 2)[[3]])
-  RA_bottom = paste0(deg2hms(asteroids[i, "bl_RA"])[[1]], " ",deg2hms(asteroids[i, "bl_RA"])[[2]], " ",deg2hms(asteroids[i, "bl_RA"], digits = 3)[[3]])
+  RA_bottom = paste0(deg2hms(asteroids[i, "bl_RA"])[[1]], " ",deg2hms(asteroids[i, "bl_RA"])[[2]], " ",deg2hms(asteroids[i, "bl_RA"], digits = 2)[[3]])
   Dec_bottom = paste0(deg2dms(asteroids[i, "bl_Dec"])[[1]], " ",deg2dms(asteroids[i, "bl_Dec"])[[2]], " ",deg2dms(asteroids[i, "bl_Dec"], digits = 2)[[3]])
   
   
@@ -65,7 +65,7 @@ for( i in 1:length(asteroids$groupID)){
     ID = paste0(long, substr(ID, nchar(ID) - 7, nchar(ID)))
     print(long_alpha)
   }else if(nchar(ID) < 6){
-    add = ""
+    add = "0"
     for(j in 1: (6 - nchar(ID))){
       add = paste0(add,"0")
     }
@@ -87,11 +87,11 @@ for( i in 1:length(asteroids$groupID)){
   }
   
   if(day(obs_start) < 10){
-    day_start = paste0("0",day(obs_start) + trunc((hour(obs_start)/24 + minute(obs_start)/(24*60) + second(obs_start)/(24*60*60))*10^6)/10^6)
-    day_end = paste0("0",day(obs_end) + trunc((hour(obs_end)/24 + minute(obs_end)/(24*60) + second(obs_end)/(24*60*60))*10^6)/10^6)
+    day_start = paste0("0",day(obs_start) + trunc((hour(obs_start)/24 + minute(obs_start)/(24*60) + second(obs_start)/(24*60*60))*10^4)/10^4)
+    day_end = paste0("0",day(obs_end) + trunc((hour(obs_end)/24 + minute(obs_end)/(24*60) + second(obs_end)/(24*60*60))*10^4)/10^4)
   }else{
-    day_start = paste0(day(obs_start) + trunc((hour(obs_start)/24 + minute(obs_start)/(24*60) + second(obs_start)/(24*60*60))*10^6)/10^6)
-    day_end = paste0(day(obs_end) + trunc((hour(obs_end)/24 + minute(obs_end)/(24*60) + second(obs_end)/(24*60*60))*10^6)/10^6)
+    day_start = paste0(day(obs_start) + trunc((hour(obs_start)/24 + minute(obs_start)/(24*60) + second(obs_start)/(24*60*60))*10^4)/10^4)
+    day_end = paste0(day(obs_end) + trunc((hour(obs_end)/24 + minute(obs_end)/(24*60) + second(obs_end)/(24*60*60))*10^4)/10^4)
   }
   
   if(nchar(day_start) < 9){
@@ -114,8 +114,8 @@ for( i in 1:length(asteroids$groupID)){
   }
   colour = asteroids$Colour[i]
   
-  line  = paste0(ID,"        P",ymd_start, "  ", RA_top, " ", Dec_top,spaces(19-nchar(mag)),mag,colour," X11")
-  line2 = paste0(ID,"        P",ymd_end  , "  ", RA_bottom, " ", Dec_bottom,spaces(19-nchar(mag)),mag,colour," X11")
+  line  = paste0(ID,"        P",ymd_start, " ", RA_top, " ", Dec_top,spaces(19-nchar(mag)),mag,colour," X11")
+  line2 = paste0(ID,"        P",ymd_end  , " ", RA_bottom, " ", Dec_bottom,spaces(19-nchar(mag)),mag,colour," X11")
   cat(line, "\n")
   cat(line2, "\n")
   find_orb <- append(find_orb, line)
