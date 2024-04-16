@@ -62,6 +62,7 @@ for(ID in asteroids$groupID){
   colour = asteroids[asteroids$groupID == ID, "Colour"][1]
   cat(ID,i,colour,"\n")
   
+  error = 0
 
   
   if(grepl(colour,"g") == TRUE){
@@ -287,6 +288,7 @@ Image_Maker <- function(ID, colour, loc, paint){
 }
 
 tryCatch({Group_Cutter(loc)}, error = function(e) {print(paste("Error:", e))})
+warnings()
 # astcheck = data.frame()
 # colours = c("green", "red", "blue")
 # for(i in 1:3){
