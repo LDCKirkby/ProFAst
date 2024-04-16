@@ -46,8 +46,8 @@ for( i in 1:length(asteroids$groupID)){
   Dec_bottom = paste0(deg2dms(asteroids[i, "bl_Dec"])[[1]], " ",deg2dms(asteroids[i, "bl_Dec"])[[2]], " ",deg2dms(asteroids[i, "bl_Dec"], digits = 2)[[3]])
   
   
-  spacer1 = "00001"
-  spacer2 = "00002"
+  # spacer1 = "00001"
+  # spacer2 = "00002"
   
   if(nchar(ID) > 7){
     long = substr(ID, 1, (nchar(ID) - 7))
@@ -114,8 +114,8 @@ for( i in 1:length(asteroids$groupID)){
   }
   colour = asteroids$Colour[i]
   
-  line  = paste0(spacer1," ",ID," ","P",ymd_start, "  ", RA_top, " ", Dec_top,spaces(9),spaces(8-nchar(mag)),mag,colour," X11")
-  line2 = paste0(spacer2," ",ID," ","P", ymd_end , "  ", RA_bottom, " ", Dec_bottom,spaces(9),spaces(8-nchar(mag)),mag,colour," X11")
+  line  = paste0(ID,"        P",ymd_start, "  ", RA_top, " ", Dec_top,spaces(19-nchar(mag)),mag,colour," X11")
+  line2 = paste0(ID,"        P",ymd_end  , "  ", RA_bottom, " ", Dec_bottom,spaces(19-nchar(mag)),mag,colour," X11")
   cat(line, "\n")
   cat(line2, "\n")
   find_orb <- append(find_orb, line)
