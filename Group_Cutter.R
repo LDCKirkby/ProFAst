@@ -23,6 +23,7 @@ box<-c(2*wid,2*wid)
 mulim<-22.0
 kids<-(0.339^2)*(10^(0.4*(0-mulim)))
 viking<-(0.339^2)*(10^(0.4*(30-mulim)))
+par(family = "Arial")
 
 cat("Reading in asteroid data\n")
 asteroids = read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv"))
