@@ -47,10 +47,8 @@ library(dplyr, quietly = TRUE)
 # write.csv(RA_Dec, "/Users/lkirkby/bearings.csv")
 
 
-  bruh = commandArgs()
-  num_args = length(bruh)
-  print(bruh[[num_args]])
-  i = as.numeric(bruh[[num_args]])
+  args = commandArgs(trailingOnly=TRUE)
+  i = args[[1]]
   dir = getwd()
   kids = as.data.frame(read.csv("./todo.csv"))
     
@@ -60,13 +58,11 @@ library(dplyr, quietly = TRUE)
     RA_DEC = paste0(kids$RA[i],".0_",kids$Dec[i])
   }
   cat("*************\n","Beginning Detection on:",RA_DEC,"\n","*************\n")
-  Pre_Proc_RAM = peakRAM(data <- Pre_Proc(RA_DEC))
+  Pre_Proc_RAM = peakRAM(frames <- Pre_Proc(RA_DEC))
   post_text_to_ntfy(paste0("Time elapsed for ",RA_DEC," :", Pre_Proc_RAM$Elapsed_Time_sec, 
                            "\nTotal RAM used during Pre_Proc for ", RA_DEC," :", Pre_Proc_RAM$Total_RAM_Used_MiB,
                            "\nMax RAM used during Pre_Proc for ", RA_DEC," :", Pre_Proc_RAM$Peak_RAM_Used_MiB))
-  frames = data[[1]]
-  run_time = data[[2]]
-  New_Detect_RAM = peakRAM(all_data = New_Detect(RA_DEC, frames, run_time))
+  New_Detect_RAM = peakRAM(New_Detect(RA_DEC, frames))
   post_text_to_ntfy(paste0("Time elapsed for ",RA_DEC," :", New_Detect_RAM$Elapsed_Time_sec, 
                            "\nTotal RAM used during New_Detect for ", RA_DEC," :", New_Detect_RAM$Total_RAM_Used_MiB,
                            "\nMax RAM used during New_Detect for ", RA_DEC," :", New_Detect_RAM$Peak_RAM_Used_MiB))

@@ -14,7 +14,6 @@
 
 
 Pre_Proc <- function(loc){
-  start_time <- Sys.time()
 
   cat("Loading images\n")
   g=Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"))
@@ -41,7 +40,5 @@ Pre_Proc <- function(loc){
 
   
   
-  end_time <- Sys.time()
-  data = list(list(g, rx, i1x), end_time-start_time)
-  return(data)
+  return(list(g, rx, i1x))
 }

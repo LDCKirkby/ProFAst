@@ -19,8 +19,8 @@ showtext_auto()
 # source("./R_files/fastcutout.r")
 
 #
-args = commandArgs(trailingOnly=TRUE)
-loc = args[[1]]
+# args = commandArgs(trailingOnly=TRUE)
+# loc = args[[1]]
 
 wid <- 200.0
 box<-c(2*wid,2*wid)
@@ -287,7 +287,7 @@ Image_Maker <- function(ID, colour, locations, paint){
   cat("Adding max & min points\n")
   points(locations, col=c("#FFA500", "#05ffa1"), add=TRUE, pch = 4, lwd = 3)
   
-  legend(x ="topright", legend = c("Right Midpoint", "Left Midpoint"), pch = c(3,3,3,3), col = c("#FFA500", "#05ffa1"), family = "")
+  legend(x ="topright", legend = c("Right Midpoint", "Left Midpoint"), pch = c(3,3,3,3), col = c("#FFA500", "#05ffa1"))
   
   text(1,2*wid-50, label=paste0("ID=",paint,ID), cex=2.0, pos=4, family = "")
   

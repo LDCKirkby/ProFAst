@@ -29,9 +29,7 @@
 #######################
 
 
-New_Detect <- function(loc, frames, Pre_Proc_time){
-
-start_time <- Sys.time()
+New_Detect <- function(loc, frames){
 
 
 #Set working directory and detection parameters
@@ -124,12 +122,10 @@ write.csv(datafile0,file=paste0(savelocation,"allcati.csv"))
 #plot(trim$pro_detect)
 #dev.off()
 
-end_time <- Sys.time()
-run_time <- end_time - start_time
 
 #Print out input args for verification
-input_args = c(paste0("Pixcut:",pixcut),paste0("Skycut:",skycut),paste0("Smooth:",smooth),paste0("Sigma:",sigma),paste0("Tolerance:",tolerance), paste0("Relative Tolerance:", reltol),paste0("ext:",ext), paste0("Pre_Proc Time:", Pre_Proc_time), paste0("Runtime: ", run_time))
-write.csv(input_args, file = paste0(savelocation,"/Input_Args.csv"))
+# input_args = c(paste0("Pixcut:",pixcut),paste0("Skycut:",skycut),paste0("Smooth:",smooth),paste0("Sigma:",sigma),paste0("Tolerance:",tolerance), paste0("Relative Tolerance:", reltol),paste0("ext:",ext))
+# write.csv(input_args, file = paste0(savelocation,"/Input_Args.csv"))
 
 
 }
