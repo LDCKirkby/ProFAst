@@ -13,7 +13,9 @@ library(ProPane)
 library(gsubfn)
 library(fs)
 library(showtext)
-font_add("Arial", "~/Library/Fonts/Arial.ttf")
+font_add("Arial", "/Library/Fonts/Arial.ttf")
+showtext_auto()
+
 # source("./R_files/fastcutout.r")
 
 #
@@ -25,7 +27,7 @@ box<-c(2*wid,2*wid)
 mulim<-22.0
 kids<-(0.339^2)*(10^(0.4*(0-mulim)))
 viking<-(0.339^2)*(10^(0.4*(30-mulim)))
-par(family = "Arial")
+#par(family = "Arial")
 
 cat("Reading in asteroid data\n")
 asteroids = read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv"))
@@ -283,11 +285,11 @@ Image_Maker <- function(ID, colour, locations, paint){
   magimage(astercut$image,col=c(NA,rep(paint, max(astercut$image))),magmap=FALSE,add=TRUE,sparse=1)
   
   cat("Adding max & min points\n")
-  points(locations, col=c("#FFA500", "#05ffa1"), add=TRUE, pch = 4, lwd = 3)
+  points(locations, col=c("#FFA500", "#05ffa1"), add=TRUE, pch = 4, lwd = 3, family = "")
   
-  legend(x ="topright", legend = c("Right Midpoint", "Left Midpoint"), pch = c(3,3,3,3), col = c("#FFA500", "#05ffa1"))
+  legend(x ="topright", legend = c("Right Midpoint", "Left Midpoint"), pch = c(3,3,3,3), col = c("#FFA500", "#05ffa1"), family = "")
   
-  text(1,2*wid-50, label=paste0("ID=",paint,ID), cex=2.0, pos=4)
+  text(1,2*wid-50, label=paste0("ID=",paint,ID), cex=2.0, pos=4, family = "")
   
   dev.off()
 }
