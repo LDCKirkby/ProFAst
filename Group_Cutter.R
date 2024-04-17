@@ -285,7 +285,7 @@ Image_Maker <- function(ID, colour, locations, paint){
   magimage(astercut$image,col=c(NA,rep(paint, max(astercut$image))),magmap=FALSE,add=TRUE,sparse=1)
   
   cat("Adding max & min points\n")
-  points(locations, col=c("#FFA500", "#05ffa1"), add=TRUE, pch = 4, lwd = 3, family = "")
+  points(locations, col=c("#FFA500", "#05ffa1"), add=TRUE, pch = 4, lwd = 3)
   
   legend(x ="topright", legend = c("Right Midpoint", "Left Midpoint"), pch = c(3,3,3,3), col = c("#FFA500", "#05ffa1"), family = "")
   
