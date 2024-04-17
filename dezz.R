@@ -62,6 +62,7 @@ library(dplyr, quietly = TRUE)
   post_text_to_ntfy(paste0("Time elapsed for ",RA_DEC," :", Pre_Proc_RAM$Elapsed_Time_sec, 
                            "\nTotal RAM used during Pre_Proc for ", RA_DEC," :", Pre_Proc_RAM$Total_RAM_Used_MiB,
                            "\nMax RAM used during Pre_Proc for ", RA_DEC," :", Pre_Proc_RAM$Peak_RAM_Used_MiB))
+  
   New_Detect_RAM = peakRAM(New_Detect(RA_DEC, frames))
   post_text_to_ntfy(paste0("Time elapsed for ",RA_DEC," :", New_Detect_RAM$Elapsed_Time_sec, 
                            "\nTotal RAM used during New_Detect for ", RA_DEC," :", New_Detect_RAM$Total_RAM_Used_MiB,
@@ -77,7 +78,7 @@ library(dplyr, quietly = TRUE)
                            "\nTotal RAM used during Axrat_Comparison for ", RA_DEC," :", Axrat_Comparison_RAM$Total_RAM_Used_MiB,
                            "\nMax RAM used during Axrat_Comparison for ", RA_DEC," :", Axrat_Comparison_RAM$Peak_RAM_Used_MiB))
   
-  Group_Cutter_RAM = peakRAM(Group_Cutter(RA_DEC, frames))
+  Group_Cutter_RAM = peakRAM(tryCatch({Group_Cutter(loc)}, error = function(e) {print(paste("Error:", e))}))
   post_text_to_ntfy(paste0("Time elapsed for ",RA_DEC," :", Group_Cutter_RAM$Elapsed_Time_sec, 
                            "\nTotal RAM used during Group_Cutter for ", RA_DEC," :", Group_Cutter_RAM$Total_RAM_Used_MiB,
                            "\nMax RAM used during Group_Cutter for ", RA_DEC," :", Group_Cutter_RAM$Peak_RAM_Used_MiB))

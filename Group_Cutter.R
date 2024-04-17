@@ -22,6 +22,9 @@ showtext_auto()
 # args = commandArgs(trailingOnly=TRUE)
 # loc = args[[1]]
 
+
+
+Group_Cutter <- function(loc, images){
 wid <- 200.0
 box<-c(2*wid,2*wid)
 mulim<-22.0
@@ -32,9 +35,6 @@ viking<-(0.339^2)*(10^(0.4*(30-mulim)))
 cat("Reading in asteroid data\n")
 asteroids = read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv"))
 asteroids <- cbind(asteroids, data.frame(tl_RA = 0, tl_Dec = 0, tr_RA = 0, tr_Dec = 0, bl_RA = 0, bl_Dec = 0, br_RA = 0, br_Dec = 0, top_RA = 0, top_Dec = 0, bot_RA = 0, bot_Dec = 0))
-
-
-Group_Cutter <- function(loc, images){
 
 #Make a directory to save the cutouts
 if(dir_exists(paste0("./",loc,"Group_Cutouts"))){
@@ -293,9 +293,9 @@ Image_Maker <- function(ID, colour, locations, paint){
   
   dev.off()
 }
-
-tryCatch({Group_Cutter(loc)}, error = function(e) {print(paste("Error:", e))})
-warnings()
+# 
+# tryCatch({Group_Cutter(loc)}, error = function(e) {print(paste("Error:", e))})
+# warnings()
 # astcheck = data.frame()
 # colours = c("green", "red", "blue")
 # for(i in 1:3){
