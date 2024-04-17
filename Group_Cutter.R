@@ -262,7 +262,7 @@ Cutout <- function(keyvalues, i){
 Image_Maker <- function(ID, colour, locations, paint){
   
   cat("Printing ",colour,ID," postage stamp\n")
-  png(filename=paste0("./",loc,"/Group_Cutouts/",colour,ID,".png"))
+  png(filename=paste0("./",loc,"/Group_Cutouts/",colour,ID,".png"), family = "")
   
   par(mfrow=c(1,1),mar=c(3,3,2,2))
   
