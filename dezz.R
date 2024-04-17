@@ -47,8 +47,10 @@ library(dplyr, quietly = TRUE)
 # write.csv(RA_Dec, "/Users/lkirkby/bearings.csv")
 
 
-  args = commandArgs(trailingOnly=TRUE)
-  i = args[[1]]
+  bruh = commandArgs()
+  num_args = length(bruh)
+  print(bruh[[num_args]])
+  i = as.numeric(bruh[[num_args]])
   dir = getwd()
   kids = as.data.frame(read.csv("./todo.csv"))
     
