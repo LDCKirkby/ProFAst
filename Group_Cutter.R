@@ -30,11 +30,17 @@ box<-c(2*wid,2*wid)
 mulim<-22.0
 kids<-(0.339^2)*(10^(0.4*(0-mulim)))
 viking<-(0.339^2)*(10^(0.4*(30-mulim)))
+assign("wid", wid, envir = .GlobalEnv)
+assign("box", box, envir = .GlobalEnv)
+assign("mulim", mulim, envir = .GlobalEnv)
+assign("kids", kids, envir = .GlobalEnv)
+assign("viking", viking, envir = .GlobalEnv)
 #par(family = "Arial")
 
 cat("Reading in asteroid data\n")
 asteroids = read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv"))
 asteroids <- cbind(asteroids, data.frame(tl_RA = 0, tl_Dec = 0, tr_RA = 0, tr_Dec = 0, bl_RA = 0, bl_Dec = 0, br_RA = 0, br_Dec = 0, top_RA = 0, top_Dec = 0, bot_RA = 0, bot_Dec = 0))
+assign("asteroids", asteroids, envir = .GlobalEnv)
 
 #Make a directory to save the cutouts
 if(dir_exists(paste0("./",loc,"Group_Cutouts"))){
@@ -50,8 +56,8 @@ if(missing(images)){
   Data_Reader(loc,images)
 }
 
-Data_Reader(loc)
-Edger()      
+  Data_Reader(loc)
+  Edger()      
 
 for(ID in asteroids$groupID){
   #Makes sure we don't image the same object twice
