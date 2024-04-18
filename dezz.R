@@ -22,6 +22,10 @@ require(MASS,quietly = TRUE)
 library(ProPane, quietly = TRUE)
 library(ggplot2, quietly = TRUE)
 library(dplyr, quietly = TRUE)
+library(gsubfn, quietly = TRUE)
+library(fs, quietly = TRUE)
+library(showtext, quietly = TRUE)
+font_add("Arial", "/Library/Fonts/Arial.ttf")
 
 
 #Uncomment to create ordered heading csv
