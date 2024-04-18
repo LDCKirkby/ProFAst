@@ -36,7 +36,6 @@ assign("mulim", mulim, envir = .GlobalEnv)
 assign("kids", kids, envir = .GlobalEnv)
 assign("viking", viking, envir = .GlobalEnv)
 assign("loc", loc, envir = .GlobalEnv)
-assign("images", images, envir = .GlobalEnv)
 #par(family = "Arial")
 
 cat("Reading in asteroid data\n")
@@ -55,6 +54,7 @@ if(missing(images)){
   cat("Images not supplied\n")
   Data_Reader(loc)
 }else{
+  assign("images", images, envir = .GlobalEnv)
   Data_Reader(loc,images)
 }
 
