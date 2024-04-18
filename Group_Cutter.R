@@ -35,6 +35,7 @@ assign("box", box, envir = .GlobalEnv)
 assign("mulim", mulim, envir = .GlobalEnv)
 assign("kids", kids, envir = .GlobalEnv)
 assign("viking", viking, envir = .GlobalEnv)
+assign("loc", loc, envir = .GlobalEnv)
 #par(family = "Arial")
 
 cat("Reading in asteroid data\n")
