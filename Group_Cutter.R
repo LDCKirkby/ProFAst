@@ -55,8 +55,6 @@ if(missing(images)){
   assign("images", images, envir = .GlobalEnv)
   Data_Reader(loc,images)
 }
-
-  Data_Reader(loc)
   Edger()      
 
 for(ID in asteroids$groupID){
