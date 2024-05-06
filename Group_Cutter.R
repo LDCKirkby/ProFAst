@@ -328,7 +328,7 @@ Image_Maker <- function(segID, groupID, colour, locations, groupcol, segcol){
   
   legend(x ="topright", legend = c("Top Right", "Bottom Right", "Right Midpoint", "Top Left", "Bottom Left", "Left Midpoint", "Center of Flux", "Max Flux"), pch = c(3,3,3,3), col = c("orangered" , "orange", "sienna1", "darkviolet", "mediumorchid" , "darkmagenta", "hotpink", "gold"))
   
-  text(1,2*wid-50, label=paste0("segID=",paint,segID), cex=2.0, pos=4, family = "")
+  text(1,2*wid-50, label=paste0("segID=",groupcol,segID), cex=2.0, pos=4, family = "")
   
   dev.off()
 }
