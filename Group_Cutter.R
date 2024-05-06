@@ -93,7 +93,7 @@ for(i in 1:length(asteroids$segID)){
       next
     }
     
-    Cutout(keyvalues, i)
+    Cutout(target, keyvalues, i)
     cat("Printing image of ", colour, segID, "\n")
     Image_Maker(segID, colour, locations, paint)
     
@@ -109,7 +109,7 @@ for(i in 1:length(asteroids$segID)){
     }
     
     # asteroids <<- ast
-    Cutout(keyvalues, i)
+    Cutout(target, keyvalues, i)
     cat("Printing image of ", colour, segID, "\n")
     Image_Maker(segID, colour, locations, paint)
     
@@ -125,11 +125,12 @@ for(i in 1:length(asteroids$segID)){
     }
     
     #asteroids <<- ast
-    Cutout(keyvalues, i)
+    Cutout(target, keyvalues, i)
     cat("Printing image of ", colour, segID, "\n")
     Image_Maker(segID, colour, locations, paint)
     
   }
+  asteroids[i,] = target
 }
     cat("Writing out data with top & bottom locations\n")
     write.csv(asteroids, file=paste0("./", loc,"/",loc,"_Asteroids.csv"))
@@ -262,7 +263,7 @@ Top_bottom <- function(ast, segID, hdr){
 
 
 
-Cutout <- function(keyvalues, i){
+Cutout <- function(target, keyvalues, i){
   # galpos=asteroids[asteroids$segID == segID, c("xmax","ymax")]
   galradec = target[c("RAcen", "Deccen")]
   #galradec = asteroids[i , c("RAcen", "Deccen")]
