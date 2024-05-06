@@ -36,20 +36,20 @@ assign("viking", viking, envir = .GlobalEnv)
 assign("loc", loc, envir = .GlobalEnv)
 #par(family = "Arial")
 
-cat("Reading in asteroid data\n")
+cat("Reading in asteroid data\n\n")
 asteroids = read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv"))
 asteroids <- cbind(asteroids, data.frame(tl_RA = 0, tl_Dec = 0, tr_RA = 0, tr_Dec = 0, bl_RA = 0, bl_Dec = 0, br_RA = 0, br_Dec = 0, top_RA = 0, top_Dec = 0, bot_RA = 0, bot_Dec = 0))
 assign("asteroids", asteroids, envir = .GlobalEnv)
 
 #Make a directory to save the cutouts
 if(dir_exists(paste0("./",loc,"Group_Cutouts"))){
-  cat("Group_Cutouts already exists\n")
+  cat("Group_Cutouts already exists\n\n")
   dir_delete(paste0("./",loc,"/Group_Cutouts/"))
 }
 dir.create(paste0("./",loc,"/Group_Cutouts/"))
 
 if(missing(images)){
-  cat("Images not supplied\n")
+  cat("Images not supplied\n\n")
   Data_Reader(loc)
 }else{
   assign("images", images, envir = .GlobalEnv)
@@ -71,7 +71,7 @@ for(ID in asteroids$groupID){
   i = which(asteroids$groupID == ID)[1]
   assign("i", i, envir = .GlobalEnv)
   colour = asteroids[asteroids$groupID == ID, "Colour"][1]
-  cat(ID,i,colour,"\n")
+  cat(ID,i,colour,"\n\n")
   
   error = 0
 
@@ -88,7 +88,7 @@ for(ID in asteroids$groupID){
     }
     asteroids <<- ast
     Cutout(keyvalues, i)
-    cat("Printing image of ", colour, ID, "\n")
+    cat("Printing image of ", colour, ID, "\n\n")
     Image_Maker(ID, colour, locations, paint)
     
   }else if(grepl(colour,"r") == TRUE){
@@ -103,7 +103,7 @@ for(ID in asteroids$groupID){
     }
     asteroids <<- ast
     Cutout(keyvalues, i)
-    cat("Printing image of ", colour, ID, "\n")
+    cat("Printing image of ", colour, ID, "\n\n")
     Image_Maker(ID, colour, locations, paint)
     
   }else if(grepl(colour,"i") == TRUE){
@@ -118,32 +118,32 @@ for(ID in asteroids$groupID){
     }
     asteroids <<- ast
     Cutout(keyvalues, i)
-    cat("Printing image of ", colour, ID, "\n")
+    cat("Printing image of ", colour, ID, "\n\n")
     Image_Maker(ID, colour, locations, paint)
     
   }
 }
-    cat("Writing out data with top & bottom locations\n")
+    cat("Writing out data with top & bottom locations\n\n")
     write.csv(asteroids, file=paste0("./", loc,"/",loc,"_Asteroids.csv"))
 }
 
 Data_Reader <- function(loc, images){
-  #cat("Reading in asteroid data\n")
+  #cat("Reading in asteroid data\n\n")
   #asteroids = as.data.frame(read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv")))
   #asteroids = as.data.frame(read.csv(paste0("./", loc, "/", loc,"_Filtered_Asteroids.csv")))
   #asteroids <- cbind(asteroids, data.frame(tl_RA = 0, tl_Dec = 0, tr_RA = 0, tr_Dec = 0, bl_RA = 0, bl_Dec = 0, br_RA = 0, br_Dec = 0, top_RA = 0, top_Dec = 0, bot_RA = 0, bot_Dec = 0))
   
-  cat("Reading in segmentation map data\n")
+  cat("Reading in segmentation map data\n\n")
   segim <- as.matrix(read.csv(paste0("./",loc,"/segim.csv")))
-  cat("Generating groupim\n")
+  cat("Generating groupim\n\n")
   groupim = profoundSegimGroup(segim = segim)
   
   if(missing(images) == TRUE){
-  cat("Loading images as pointers\n")
+  cat("Loading images as pointers\n\n")
   g_image = Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
   r_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
   i_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"),header=TRUE,ext=1)
-  cat("Warping r&i frames\n")
+  cat("Warping r&i frames\n\n")
   r_image=propaneWarp(r_image_input,keyvalues_out= g_image$keyvalues)
   i_image=propaneWarp(i_image_input,keyvalues_out= g_image$keyvalues)
   }else{
@@ -168,7 +168,7 @@ Data_Reader <- function(loc, images){
   }
 
 Edger <- function(){
-  cat("Finding the edges of group segmentation masks\n")
+  cat("Finding the edges of group segmentation masks\n\n")
   groupimage = groupim$groupim
   xrun=1:(dim(groupimage)[1]-1)
   yrun=1:(dim(groupimage)[2]-1)
@@ -195,7 +195,7 @@ Edger <- function(){
 }
 
 Top_bottom <- function(ast, ID, hdr){
-  cat("Finding top and bottom of object\n")
+  cat("Finding top and bottom of object\n\n")
   
   `%notin%`<-Negate(`%in%`)
   asteroid_image = groupimage
@@ -206,7 +206,7 @@ Top_bottom <- function(ast, ID, hdr){
   if(length(obj_points) < 2){
     assign("asteroid_image", asteroid_image, envir = .GlobalEnv)
     #assign("locations", c(0,0), envir = .GlobalEnv)
-    cat("No group outline found for ", ID,",\n")
+    cat("No group outline found for ", ID,",\n\n")
     return(list(ast, list(c(0,0),c(0,0)), -1))
   }
   
@@ -255,7 +255,7 @@ Cutout <- function(keyvalues, i){
   cutim_r=r_image[galpos,box=box]
   cutim_i=i_image[galpos,box=box]
   
-  cat("Making groupcut\n")
+  cat("Making groupcut\n\n")
   groupcut=magcutout(image = groupimage, loc=as.numeric(galpos),box=box,loc.type="image")
   astercut=magcutout(image = asteroid_image, loc=as.numeric(galpos),box=box,loc.type="image")
   
@@ -270,7 +270,7 @@ Cutout <- function(keyvalues, i){
   
 Image_Maker <- function(ID, colour, locations, paint){
   
-  cat("Printing ",colour,ID," postage stamp\n")
+  cat("Printing ",colour,ID," postage stamp\n\n")
   png(filename=paste0("./",loc,"/Group_Cutouts/",colour,ID,".png"), family = "")
   
   par(mfrow=c(1,1),mar=c(3,3,2,2))
@@ -286,14 +286,14 @@ Image_Maker <- function(ID, colour, locations, paint){
     locut[[3]] = kids
   }
   
-  cat("Time to start printing images!\n")
+  cat("Time to start printing images!\n\n")
   Rwcs_imageRGB(R=cutim_r, G=cutim_g, B=cutim_i, Rkeyvalues = r_image$keyvalues, Gkeyvalues = g_image$keyvalues, Bkeyvalues = i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
   
-  cat("Adding group outlines\n")
+  cat("Adding group outlines\n\n")
   magimage(groupcut$image,col=c(NA,rep("moccasin",max(groupcut$image))),magmap=FALSE,add=TRUE,sparse=1)
   magimage(astercut$image,col=c(NA,rep(paint, max(astercut$image))),magmap=FALSE,add=TRUE,sparse=1)
   
-  cat("Adding max & min points\n")
+  cat("Adding max & min points\n\n")
   points(locations, col=c("orangered" , "orange", "sienna1", "darkviolet", "mediumorchid" , "darkmagenta", "hotpink", "gold"), add=TRUE, pch = 4, lwd = 3)
   
   legend(x ="topright", legend = c("Top Right", "Bottom Right", "Right Midpoint", "Top Left", "Bottom Left", "Left Midpoint", "Center of Flux", "Max Flux"), pch = c(3,3,3,3), col = c("orangered" , "orange", "sienna1", "darkviolet", "mediumorchid" , "darkmagenta", "hotpink", "gold"))
