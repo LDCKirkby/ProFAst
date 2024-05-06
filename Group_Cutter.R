@@ -16,11 +16,9 @@ library(showtext)
 font_add("Arial", "/Library/Fonts/Arial.ttf")
 showtext_auto()
 
-# source("./R_files/fastcutout.r")
 
-#
-# args = commandArgs(trailingOnly=TRUE)
-# loc = args[[1]]
+args = commandArgs(trailingOnly=TRUE)
+loc = args[[1]]
 
 
 
