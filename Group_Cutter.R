@@ -57,7 +57,7 @@ if(missing(images)){
   Data_Reader(loc,images)
 }
 cat("**************************\n")
-  Edger(groupim$image)
+  Edger(groupim)
   Edger(segim)
 cat("**************************\n")
   
@@ -167,7 +167,7 @@ Data_Reader <- function(loc, images){
   i_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"))
   
   assign("segim", segim, envir = .GlobalEnv)
-  assign("groupim", groupim, envir = .GlobalEnv)
+  assign("groupim", groupim$groupim, envir = .GlobalEnv)
   assign("g_image", g_image, envir = .GlobalEnv)
   assign("r_image", r_image, envir = .GlobalEnv)
   assign("i_image", i_image, envir = .GlobalEnv)
