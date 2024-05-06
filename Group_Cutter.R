@@ -179,30 +179,30 @@ Data_Reader <- function(loc, images){
 
 
 Edger <- function(){
-  cat("Finding the edges of group segmentation masks\n")
-  groupimage = groupim#$groupim
-  xrun=1:(dim(groupimage)[1]-1)
-  yrun=1:(dim(groupimage)[2]-1)
+  cat("Finding the edges of segment segmentation masks\n")
+  segimage = segim#$segim
+  xrun=1:(dim(segimage)[1]-1)
+  yrun=1:(dim(segimage)[2]-1)
   
-  groupimage_lb=groupimage[xrun,yrun]
-  groupimage_lt=groupimage[xrun+1,yrun]
-  groupimage_rt=groupimage[xrun+1,yrun+1]
-  groupimage_rb=groupimage[xrun,yrun+1]
+  segimage_lb=segimage[xrun,yrun]
+  segimage_lt=segimage[xrun+1,yrun]
+  segimage_rt=segimage[xrun+1,yrun+1]
+  segimage_rb=segimage[xrun,yrun+1]
   
-  groupimage_temp = (groupimage_lb == groupimage_lt) & (groupimage_rt == groupimage_rb) & (groupimage_lb == groupimage_rb) & (groupimage_lt == groupimage_rt)
+  segimage_temp = (segimage_lb == segimage_lt) & (segimage_rt == segimage_rb) & (segimage_lb == segimage_rb) & (segimage_lt == segimage_rt)
   
-  groupimage_edge=matrix(0,dim(groupimage)[1],dim(groupimage)[2])
+  segimage_edge=matrix(0,dim(segimage)[1],dim(segimage)[2])
   
-  groupimage_edge[xrun,yrun]=groupimage_edge[xrun,yrun]+groupimage_temp
-  groupimage_edge[xrun+1,yrun]=groupimage_edge[xrun+1,yrun]+groupimage_temp
-  groupimage_edge[xrun+1,yrun+1]=groupimage_edge[xrun+1,yrun+1]+groupimage_temp
-  groupimage_edge[xrun,yrun+1]=groupimage_edge[xrun,yrun+1]+groupimage_temp
+  segimage_edge[xrun,yrun]=segimage_edge[xrun,yrun]+segimage_temp
+  segimage_edge[xrun+1,yrun]=segimage_edge[xrun+1,yrun]+segimage_temp
+  segimage_edge[xrun+1,yrun+1]=segimage_edge[xrun+1,yrun+1]+segimage_temp
+  segimage_edge[xrun,yrun+1]=segimage_edge[xrun,yrun+1]+segimage_temp
   
-  groupimage[groupimage_edge==4]=0
+  segimage[segimage_edge==4]=0
   
-  rm(groupimage_edge, groupimage_temp, groupimage_lb, groupimage_lt, groupimage_rt, groupimage_rb)
+  rm(segimage_edge, segimage_temp, segimage_lb, segimage_lt, segimage_rt, segimage_rb)
   
-  assign("groupimage", groupimage, envir = .GlobalEnv)
+  assign("segimage", segimage, envir = .GlobalEnv)
 }
 
 
@@ -210,7 +210,7 @@ Edger <- function(){
 Top_bottom <- function(ast, segID, hdr){
   cat("Identifying key points of object\n")
   `%notin%`<-Negate(`%in%`)
-  asteroid_image = groupimage
+  asteroid_image = segimage
   asteroid_image[asteroid_image%notin%segID]=0
   
   obj_points <- which(asteroid_image == segID, arr.ind = TRUE)
@@ -218,7 +218,7 @@ Top_bottom <- function(ast, segID, hdr){
   if(length(obj_points) < 2){
     assign("asteroid_image", asteroid_image, envir = .GlobalEnv)
     #assign("locations", c(0,0), envir = .GlobalEnv)
-    cat("No group outline found for ", segID,",\n")
+    cat("No segment outline found for ", segID,",\n")
     return(list(ast, list(c(0,0),c(0,0)), -1))
   }
   
@@ -270,14 +270,14 @@ Cutout <- function(target, keyvalues, i){
   cutim_r=r_image[galpos,box=box]
   cutim_i=i_image[galpos,box=box]
   
-  cat("Making groupcut\n")
-  groupcut=magcutout(image = groupimage, loc=as.numeric(galpos),box=box,loc.type="image")
+  cat("Making segcut\n")
+  segcut=magcutout(image = segimage, loc=as.numeric(galpos),box=box,loc.type="image")
   astercut=magcutout(image = asteroid_image, loc=as.numeric(galpos),box=box,loc.type="image")
   
   assign("cutim_g", cutim_g, envir = .GlobalEnv)
   assign("cutim_r", cutim_r, envir = .GlobalEnv)
   assign("cutim_i", cutim_i, envir = .GlobalEnv)
-  assign("groupcut", groupcut, envir = .GlobalEnv)
+  assign("segcut", segcut, envir = .GlobalEnv)
   assign("astercut", astercut, envir = .GlobalEnv)
   
 }
@@ -304,8 +304,8 @@ Image_Maker <- function(segID, colour, locations, paint){
   
   Rwcs_imageRGB(R=cutim_r, G=cutim_g, B=cutim_i, Rkeyvalues = r_image$keyvalues, Gkeyvalues = g_image$keyvalues, Bkeyvalues = i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
   
-  cat("Adding group outlines\n")
-  magimage(groupcut$image,col=c(NA,rep("moccasin",max(groupcut$image))),magmap=FALSE,add=TRUE,sparse=1)
+  cat("Adding segment outlines\n")
+  magimage(segcut$image,col=c(NA,rep("moccasin",max(segcut$image))),magmap=FALSE,add=TRUE,sparse=1)
   magimage(astercut$image,col=c(NA,rep(paint, max(astercut$image))),magmap=FALSE,add=TRUE,sparse=1)
   
   cat("Adding max & min points\n")
