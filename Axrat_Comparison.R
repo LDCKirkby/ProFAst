@@ -40,8 +40,12 @@ write.csv(filtered_asteroids, file = paste0("./",loc,"/",loc,"_Filtered_Asteroid
 
 #N100 filter
 cat("*********\n")
-cat("Performing N100 Filter\n")
-N100_filtered_asteroids = subset(filtered_asteroids, N100 >= 100 | N100 >= 100 | N100 >= 100)
+cat("Performing small N100 filter\n")
+N100_filtered_asteroids = subset(filtered_asteroids, N100 >= 100 | N100_i1xt >= 100 | N100_rxt >= 100 | N100_gt >= 100)
+
+cat("Performing large N100 filter\n")
+N100_filtered_asteroids = subset(N100_filtered_asteroids, N100 <= 2500 | N100_i1xt <= 2500 | N100_rxt <= 2500 | N100_gt <= 2500)
+
 
 cat("Removed ", length(filtered_asteroids$groupID) - length(N100_filtered_asteroids$groupID), " small errors\n")
 cat("Final number of ", length(N100_filtered_asteroids$groupID), " possible asteroids\n")
