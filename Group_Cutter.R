@@ -57,7 +57,7 @@ if(missing(images)){
   Data_Reader(loc,images)
 }
 cat("**************************\n")
-  Edger(groupim)
+  Edger(groupim$image)
   Edger(segim)
 cat("**************************\n")
   
@@ -167,7 +167,7 @@ Data_Reader <- function(loc, images){
   i_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"))
   
   assign("segim", segim, envir = .GlobalEnv)
-  assign("groupim", groupim$image, envir = .GlobalEnv)
+  assign("groupim", groupim, envir = .GlobalEnv)
   assign("g_image", g_image, envir = .GlobalEnv)
   assign("r_image", r_image, envir = .GlobalEnv)
   assign("i_image", i_image, envir = .GlobalEnv)
@@ -184,7 +184,7 @@ Data_Reader <- function(loc, images){
 Edger <- function(input_image){
   name = deparse(substitute(input_image))
   cat("Finding the edges of segment segmentation masks\n")
-  image = input_image#$segim
+  image = input_image
   xrun=1:(dim(image)[1]-1)
   yrun=1:(dim(image)[2]-1)
   
