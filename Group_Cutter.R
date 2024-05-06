@@ -19,7 +19,6 @@ showtext_auto()
 
 args = commandArgs(trailingOnly=TRUE)
 loc = args[[1]]
-warnings()
 
 
 Group_Cutter <- function(loc, images){
@@ -323,6 +322,8 @@ Image_Maker <- function(segID, colour, locations, paint){
 
 
 Group_Cutter(loc)
+warnings()
+
 # 
 # tryCatch({Group_Cutter(loc)}, error = function(e) {print(paste("Error:", e))})
 # warnings()
