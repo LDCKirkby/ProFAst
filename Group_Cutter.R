@@ -94,7 +94,6 @@ for(i in 1:length(asteroids$segID)){
     cat("**************************\n")
     Cutout(target, keyvalues, i)
     cat("**************************\n")
-    cat("Printing image of ", colour, segID, "\n")
     Image_Maker(segID, colour, locations, paint)
     
   }else if(grepl(colour,"r") == TRUE){
@@ -110,7 +109,6 @@ for(i in 1:length(asteroids$segID)){
     
     # asteroids <<- ast
     Cutout(target, keyvalues, i)
-    cat("Printing image of ", colour, segID, "\n")
     Image_Maker(segID, colour, locations, paint)
     
   }else if(grepl(colour,"i") == TRUE){
@@ -126,7 +124,6 @@ for(i in 1:length(asteroids$segID)){
     
     #asteroids <<- ast
     Cutout(target, keyvalues, i)
-    cat("Printing image of ", colour, segID, "\n")
     Image_Maker(segID, colour, locations, paint)
     
   }
