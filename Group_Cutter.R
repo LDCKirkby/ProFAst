@@ -57,8 +57,10 @@ if(missing(images)){
   Data_Reader(loc,images)
 }
 cat("**************************\n")
-  Edger(groupim)
-  Edger(segim)
+
+Edger(groupim)
+Edger(segim)
+
 cat("**************************\n")
   
 cat("Time to start printing images!\n")
@@ -88,8 +90,8 @@ for(i in 1:length(asteroids$segID)){
     groupcol = "green"
     segcol = "green3"
     cat("**************************\n")
-    list[target, locations, status] <- Top_bottom(groupim_edged, target, groupID, hdr)
-    list[target, locations, status] <- Top_bottom(segim_edged, target, segID, hdr)
+    list[target, locations, status] <- Top_bottom(groupim, target, groupID, hdr)
+    list[target, locations, status] <- Top_bottom(segim, target, segID, hdr)
     
     
     if(status == -1){
@@ -108,8 +110,8 @@ for(i in 1:length(asteroids$segID)){
     groupcol = "red"
     segcol = "red3"
     
-    list[target, locations, status] <- Top_bottom(groupim_edged, target, groupID, hdr)
-    list[target, locations, status] <- Top_bottom(segim_edged, target, segID, hdr)
+    list[target, locations, status] <- Top_bottom(groupim, target, groupID, hdr)
+    list[target, locations, status] <- Top_bottom(segim, target, segID, hdr)
     if(status == -1){
       next
     }
@@ -124,8 +126,8 @@ for(i in 1:length(asteroids$segID)){
     groupcol = "blue"
     segcol = "blue3"
     
-    list[target, locations, status] <- Top_bottom(groupim_edged, target, groupID, hdr)
-    list[target, locations, status] <- Top_bottom(segim_edged, target, segID, hdr)
+    list[target, locations, status] <- Top_bottom(groupim, target, groupID, hdr)
+    list[target, locations, status] <- Top_bottom(segim, target, segID, hdr)
     if(status == -1){
       next
     }
@@ -281,16 +283,16 @@ Cutout <- function(target, keyvalues, i){
   cat("Making cut images\n")
   segimcut=magcutout(image = segim_edged, loc=as.numeric(galpos),box=box,loc.type="image")
   groupcut=magcutout(image = groupim_edged, loc=as.numeric(galpos),box=box,loc.type="image")
-  aster_segim=magcutout(image = ast_segimimage, loc=as.numeric(galpos),box=box,loc.type="image")
-  aster_group=magcutout(image = ast_groupimage, loc=as.numeric(galpos),box=box,loc.type="image")
+  ast_segimcut=magcutout(image = ast_segim, loc=as.numeric(galpos),box=box,loc.type="image")
+  ast_groupcut=magcutout(image = ast_groupim, loc=as.numeric(galpos),box=box,loc.type="image")
   
   assign("cutim_g", cutim_g, envir = .GlobalEnv)
   assign("cutim_r", cutim_r, envir = .GlobalEnv)
   assign("cutim_i", cutim_i, envir = .GlobalEnv)
   assign("segimcut",segimcut, envir = .GlobalEnv)
   assign("groupcut",groupcut,envir = .GlobalEnv)
-  assign("aster_segim", aster_segim, envir = .GlobalEnv)
-  assign("aster_group", aster_group, envir = .GlobalEnv)
+  assign("ast_segimcut", ast_segimcut, envir = .GlobalEnv)
+  assign("ast_groupcut", ast_groupcut, envir = .GlobalEnv)
 }
 
   
@@ -318,8 +320,8 @@ Image_Maker <- function(segID, groupID, colour, locations, groupcol, segcol){
   cat("Adding segment outlines\n")
   magimage(segimcut$image,col=c(NA,rep("moccasin",max(segcut$image))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.5)
   magimage(groupcut$image,col=c(NA,rep("navajowhite3",max(segcut$image))),magmap = FALSE,add=TRUE,sparse=1,lwd=0.6)
-  magimage(aster_segim$image,col=c(NA,rep(segcol, max(astercut$image))),magmap=FALSE,add=TRUE,sparse=1)
-  magimage(aster_group$image,col=c(NA,rep(groupcol, max(astercut$image))),magmap=FALSE,add=TRUE,sparse=1)
+  magimage(ast_segimcut$image,col=c(NA,rep(segcol, max(astercut$image))),magmap=FALSE,add=TRUE,sparse=1)
+  magimage(ast_groupcut$image,col=c(NA,rep(groupcol, max(astercut$image))),magmap=FALSE,add=TRUE,sparse=1)
   
   cat("Adding max & min points\n")
   points(locations, col=c("orangered" , "orange", "sienna1", "darkviolet", "mediumorchid" , "darkmagenta", "hotpink", "gold"), pch = 4, lwd = 3)
