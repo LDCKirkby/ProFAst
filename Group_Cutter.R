@@ -135,6 +135,8 @@ for(i in 1:length(asteroids$segID)){
     write.csv(asteroids, file=paste0("./", loc,"/",loc,"_Asteroids.csv"))
 }
 
+
+
 Data_Reader <- function(loc, images){
   #cat("Reading in asteroid data\n")
   #asteroids = as.data.frame(read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv")))
@@ -176,9 +178,11 @@ Data_Reader <- function(loc, images){
   
   }
 
+
+
 Edger <- function(){
   cat("Finding the edges of group segmentation masks\n")
-  groupimage = groupim$groupim
+  groupimage = groupim#$groupim
   xrun=1:(dim(groupimage)[1]-1)
   yrun=1:(dim(groupimage)[2]-1)
   
@@ -202,6 +206,8 @@ Edger <- function(){
   
   assign("groupimage", groupimage, envir = .GlobalEnv)
 }
+
+
 
 Top_bottom <- function(ast, segID, hdr){
   cat("Identifying key points of object\n")
@@ -254,6 +260,8 @@ Top_bottom <- function(ast, segID, hdr){
   return(list(ast,locations,1))
 }
 
+
+
 Cutout <- function(keyvalues, i){
   # galpos=asteroids[asteroids$segID == segID, c("xmax","ymax")]
   galradec = target[c("RAcen", "Deccen")]
@@ -277,6 +285,7 @@ Cutout <- function(keyvalues, i){
 }
 
   
+
 Image_Maker <- function(segID, colour, locations, paint){
   
   cat("Printing ",colour,segID," postage stamp\n")
@@ -310,6 +319,8 @@ Image_Maker <- function(segID, colour, locations, paint){
   
   dev.off()
 }
+
+
 
 Group_Cutter(loc)
 # 
