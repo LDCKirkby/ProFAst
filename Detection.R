@@ -51,8 +51,6 @@ font_add("Arial", "/Library/Fonts/Arial.ttf")
 # write.csv(RA_Dec, "/Users/lkirkby/bearings.csv")
 
 
-  # commmand = commandArgs()
-  # i = as.numeric(command[[length(command)]])
   args = commandArgs(trailingOnly = TRUE)
   i = as.numeric(args[[1]])
   dir = getwd()
@@ -64,31 +62,16 @@ font_add("Arial", "/Library/Fonts/Arial.ttf")
     RA_DEC = paste0(kids$RA[i],".0_",kids$Dec[i])
   }
   cat("*************\n","Beginning Detection on:",RA_DEC,"\n","*************\n")
-  Pre_Proc_RAM = peakRAM(frames <- Pre_Proc(RA_DEC))
-  post_text_to_ntfy(paste0("Time elapsed for ",RA_DEC," :", Pre_Proc_RAM$Elapsed_Time_sec, 
-                           "\nTotal RAM used during Pre_Proc for ", RA_DEC," :", Pre_Proc_RAM$Total_RAM_Used_MiB,
-                           "\nMax RAM used during Pre_Proc for ", RA_DEC," :", Pre_Proc_RAM$Peak_RAM_Used_MiB))
-  
-  New_Detect_RAM = peakRAM(New_Detect(RA_DEC, frames))
-  post_text_to_ntfy(paste0("Time elapsed for ",RA_DEC," :", New_Detect_RAM$Elapsed_Time_sec, 
-                           "\nTotal RAM used during New_Detect for ", RA_DEC," :", New_Detect_RAM$Total_RAM_Used_MiB,
-                           "\nMax RAM used during New_Detect for ", RA_DEC," :", New_Detect_RAM$Peak_RAM_Used_MiB))
-  
-  Flux_Comparison_RAM = peakRAM(Flux_Comparison(RA_DEC))
-  post_text_to_ntfy(paste0("Time elapsed for ",RA_DEC," :", Flux_Comparison_RAM$Elapsed_Time_sec, 
-                           "\nTotal RAM used during Flux_Comparison for ", RA_DEC," :", Flux_Comparison_RAM$Total_RAM_Used_MiB,
-                           "\nMax RAM used during Flux_Comparison for ", RA_DEC," :", Flux_Comparison_RAM$Peak_RAM_Used_MiB))
-  
-  Axrat_Comparison_RAM = peakRAM(Axrat_Comparison(RA_DEC))
-  post_text_to_ntfy(paste0("Time elapsed for ",RA_DEC," :", Axrat_Comparison_RAM$Elapsed_Time_sec, 
-                           "\nTotal RAM used during Axrat_Comparison for ", RA_DEC," :", Axrat_Comparison_RAM$Total_RAM_Used_MiB,
-                           "\nMax RAM used during Axrat_Comparison for ", RA_DEC," :", Axrat_Comparison_RAM$Peak_RAM_Used_MiB))
-  
-  Group_Cutter_RAM = peakRAM(tryCatch({Group_Cutter(RA_DEC, frames)}, error = function(e) {print(paste("Error:", e))}))
-  post_text_to_ntfy(paste0("Time elapsed for ",RA_DEC," :", Group_Cutter_RAM$Elapsed_Time_sec, 
-                           "\nTotal RAM used during Group_Cutter for ", RA_DEC," :", Group_Cutter_RAM$Total_RAM_Used_MiB,
-                           "\nMax RAM used during Group_Cutter for ", RA_DEC," :", Group_Cutter_RAM$Peak_RAM_Used_MiB))
-  
+  frames <- Pre_Proc(RA_DEC)
+
+  New_Detect(RA_DEC, frames)
+
+  Flux_Comparison(RA_DEC)
+
+  Axrat_Comparison(RA_DEC)
+
+  tryCatch({Group_Cutter(RA_DEC, frames)}, error = function(e) {print(paste("Error:", e))})
+
   
   #Uncomment to remove any unwanted files
   #file.remove(paste0("/Volumes/WAVES/lkirkby/",RA_DEC,"/stacked.rds"))
@@ -97,6 +80,11 @@ font_add("Arial", "/Library/Fonts/Arial.ttf")
   #file.remove(paste0("/Users/lkirkby/",RA_DEC,"/objectcati.csv"))
   #file.remove(paste0("/Users/lkirkby/",RA_DEC,"/Possible_Asteroids.csv"))
   
+  # Add after each function call to record ram usage
+  # peakRAM()
+  # post_text_to_ntfy(paste0("Time elapsed for ",RA_DEC," :", New_Detect_RAM$Elapsed_Time_sec, 
+  #                          "\nTotal RAM used during New_Detect for ", RA_DEC," :", New_Detect_RAM$Total_RAM_Used_MiB,
+  #                          "\nMax RAM used during New_Detect for ", RA_DEC," :", New_Detect_RAM$Peak_RAM_Used_MiB))
   
   
   
