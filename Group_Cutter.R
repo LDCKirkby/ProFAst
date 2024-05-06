@@ -82,7 +82,7 @@ for(ID in asteroids$groupID){
     image_header = g_image$header
     keyvalues = g_image$keyvalues
     hdr = g_hdr$hdr
-    paint = "green"
+    paint = "green3"
     
     list[ast, locations, error] <- Top_bottom(asteroids, ID, hdr)
     if(error == -1){
@@ -97,7 +97,7 @@ for(ID in asteroids$groupID){
     image_header = r_image$header
     keyvalues = r_image$keyvalues
     hdr = r_hdr$hdr
-    paint = "red"
+    paint = "red2"
     
     list[ast, locations, error] <- Top_bottom(asteroids, ID, hdr)
     if(error == -1){
@@ -112,7 +112,7 @@ for(ID in asteroids$groupID){
     image_header = i_image$header
     keyvalues = i_image$keyvalues
     hdr = i_hdr$hdr
-    paint = "blue"
+    paint = "blue2"
     
     list[ast, locations, error] <- Top_bottom(asteroids, ID, hdr)
     if(error == -1){
@@ -236,8 +236,11 @@ Top_bottom <- function(ast, ID, hdr){
   ast$bot_RA[i] = xy2radec(ave_bottom[[1]],ave_bottom[[2]], hdr)[1]
   ast$bot_Dec[i] = xy2radec(ave_bottom[[1]],ave_bottom[[2]], hdr)[2]
   
-  x = c(ave_top[[1]],ave_bottom[[1]])
-  y = c(ave_top[[2]],ave_bottom[[2]])
+  cen_flux = c(asteroids$xcen, asteroids$ycen)
+  max_flux = c(asteroids$xmax, asteroids$ymax)
+  
+  x = c(top_right[[1]], top_left[[1]], bottom_right[[1]], bottom_left[[1]], ave_top[[1]], ave_bottom[[1]], cen_flux[[1]], max_flux[[1]])
+  y = c(top_right[[2]], top_left[[2]], bottom_right[[2]], bottom_left[[2]], ave_top[[2]], ave_bottom[[2]], cen_flux[[2]], max_flux[[2]])
   locations = cbind(x,y)
   assign("asteroid_image", asteroid_image, envir = .GlobalEnv)
   #assign("locations", locations, envir = .GlobalEnv)
@@ -289,13 +292,13 @@ Image_Maker <- function(ID, colour, locations, paint){
   Rwcs_imageRGB(R=cutim_r, G=cutim_g, B=cutim_i, Rkeyvalues = r_image$keyvalues, Gkeyvalues = g_image$keyvalues, Bkeyvalues = i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
   
   cat("Adding group outlines\n")
-  magimage(groupcut$image,col=c(NA,rep("skyblue",max(groupcut$image))),magmap=FALSE,add=TRUE,sparse=1)
+  magimage(groupcut$image,col=c(NA,rep("moccasin",max(groupcut$image))),magmap=FALSE,add=TRUE,sparse=1)
   magimage(astercut$image,col=c(NA,rep(paint, max(astercut$image))),magmap=FALSE,add=TRUE,sparse=1)
   
   cat("Adding max & min points\n")
-  points(locations, col=c("#FFA500", "#05ffa1"), add=TRUE, pch = 4, lwd = 3)
+  points(locations, col=c("orangered" , "orange", "sienna1", "darkviolet", "mediumorchid" , "darkmagenta", "hotpink", "gold"), add=TRUE, pch = 4, lwd = 3)
   
-  legend(x ="topright", legend = c("Right Midpoint", "Left Midpoint"), pch = c(3,3,3,3), col = c("#FFA500", "#05ffa1"))
+  legend(x ="topright", legend = c("Top Right", "Bottom Right", "Right Midpoint", "Top Left", "Bottom Left", "Left Midpoint", "Center of Flux", "Max Flux"), pch = c(3,3,3,3), col = c("orangered" , "orange", "sienna1", "darkviolet", "mediumorchid" , "darkmagenta", "hotpink", "gold"))
   
   text(1,2*wid-50, label=paste0("ID=",paint,ID), cex=2.0, pos=4, family = "")
   
