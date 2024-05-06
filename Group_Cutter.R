@@ -62,6 +62,7 @@ cat("**************************\n")
   
 cat("Time to start printing images!\n")
 for(i in 1:length(asteroids$segID)){
+  cat("**************************\n")
   
   assign("i", i, envir = .GlobalEnv)
   target = asteroids[i,]
@@ -85,13 +86,14 @@ for(i in 1:length(asteroids$segID)){
     keyvalues = g_image$keyvalues
     hdr = g_hdr$hdr
     paint = "green3"
-    
+    cat("**************************\n")
     list[target, locations, status] <- Top_bottom(target, segID, hdr)
     if(status == -1){
       next
     }
-    
+    cat("**************************\n")
     Cutout(target, keyvalues, i)
+    cat("**************************\n")
     cat("Printing image of ", colour, segID, "\n")
     Image_Maker(segID, colour, locations, paint)
     
