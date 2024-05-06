@@ -61,9 +61,8 @@ cat("**************************\n")
   Edger()      
 cat("**************************\n")
   
-
+cat("Time to start printing images!\n")
 for(i in 1:length(asteroids$segID)){
-  cat("Time to start printing images!\n")
   
   assign("i", i, envir = .GlobalEnv)
   target = asteroids[i,]
@@ -78,7 +77,7 @@ for(i in 1:length(asteroids$segID)){
   colour = target$Colour
   #colour = asteroids$Colour[[i]]
   #colour = asteroids[asteroids$groupID == groupID, "Colour"][1]
-  cat("Imaging segID:",segID, ", i:", i, ", colour:", colour,"\n")
+  cat("\nImaging segID:",segID, ", i:", i, ", colour:", colour,"\n")
   
   error = 0
 
