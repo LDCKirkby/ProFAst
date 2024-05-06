@@ -217,7 +217,7 @@ Top_bottom <- function(image, ast, ID, hdr){
   
   name = deparse(substitute(image))
   
-  cat("Identifying key points of object\n")
+  cat("Identifying key points of object in", name, "\n")
   `%notin%`<-Negate(`%in%`)
   asteroid_image = image
   asteroid_image[asteroid_image%notin%ID]=0
@@ -318,10 +318,10 @@ Image_Maker <- function(segID, groupID, colour, locations, groupcol, segcol){
   Rwcs_imageRGB(R=cutim_r, G=cutim_g, B=cutim_i, Rkeyvalues = r_image$keyvalues, Gkeyvalues = g_image$keyvalues, Bkeyvalues = i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
   
   cat("Adding segment outlines\n")
-  magimage(segimcut$image,col=c(NA,rep("moccasin",max(segcut$image))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.5)
-  magimage(groupcut$image,col=c(NA,rep("navajowhite3",max(segcut$image))),magmap = FALSE,add=TRUE,sparse=1,lwd=0.6)
-  magimage(ast_segimcut$image,col=c(NA,rep(segcol, max(astercut$image))),magmap=FALSE,add=TRUE,sparse=1)
-  magimage(ast_groupcut$image,col=c(NA,rep(groupcol, max(astercut$image))),magmap=FALSE,add=TRUE,sparse=1)
+  magimage(segimcut$image,col=c(NA,rep("moccasin",max(segimcut$image))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.5)
+  magimage(groupcut$image,col=c(NA,rep("navajowhite3",max(groupcut$image))),magmap = FALSE,add=TRUE,sparse=1,lwd=0.6)
+  magimage(ast_segimcut$image,col=c(NA,rep(segcol, max(ast_segimcut$image))),magmap=FALSE,add=TRUE,sparse=1)
+  magimage(ast_groupcut$image,col=c(NA,rep(groupcol, max(ast_groupcut$image))),magmap=FALSE,add=TRUE,sparse=1)
   
   cat("Adding max & min points\n")
   points(locations, col=c("orangered" , "orange", "sienna1", "darkviolet", "mediumorchid" , "darkmagenta", "hotpink", "gold"), pch = 4, lwd = 3)
