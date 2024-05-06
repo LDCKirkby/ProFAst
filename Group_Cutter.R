@@ -4,9 +4,9 @@ library(Cairo)
 library(Rfits)
 library(Rwcs)
 library(ProFound)
-library('magicaxis')
-library('data.table')
-library('plotrix')
+library(magicaxis)
+library(data.table)
+library(plotrix)
 require(foreign)
 require(MASS)
 library(ProPane)
@@ -302,6 +302,8 @@ Image_Maker <- function(ID, colour, locations, paint){
   
   dev.off()
 }
+
+Group_Cutter(loc)
 # 
 # tryCatch({Group_Cutter(loc)}, error = function(e) {print(paste("Error:", e))})
 # warnings()
