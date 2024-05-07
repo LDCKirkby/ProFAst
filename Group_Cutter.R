@@ -127,10 +127,11 @@ for(i in 1:length(asteroids$segID)){
     segcol = "blue3"
     
     list[target, locations, status] <- Top_bottom(groupim, target, groupID, hdr)
-    list[target, locations, status] <- Top_bottom(segim, target, segID, hdr)
     if(status == -1){
-      next
+      groupim = segim
     }
+    list[target, locations, status] <- Top_bottom(segim, target, segID, hdr)
+
     
     Cutout(target, keyvalues, i)
     Image_Maker(segID, groupID, colour, locations, groupcol, segcol)
@@ -185,7 +186,7 @@ Data_Reader <- function(loc, images){
 
 Edger <- function(input_image){
   name = deparse(substitute(input_image))
-  cat("Finding the edges of segment segmentation masks\n")
+  cat("Finding the edges of ",name," segmentation masks\n")
   image = input_image
   xrun=1:(dim(image)[1]-1)
   yrun=1:(dim(image)[2]-1)
@@ -227,7 +228,7 @@ Top_bottom <- function(image, ast, ID, hdr){
   if(length(obj_points) < 2){
     assign("asteroid_image", asteroid_image, envir = .GlobalEnv)
     #assign("locations", c(0,0), envir = .GlobalEnv)
-    cat("No segment outline found for ", ID,",\n")
+    cat("No outline found for ", ID," in ", name, "\n")
     return(list(ast, list(c(0,0),c(0,0)), -1))
   }
   
