@@ -65,7 +65,7 @@ cat("**************************\n")
   
 cat("Time to start printing images!\n")
 for(i in 1:length(asteroids$segID)){
-  cat("**************************\n")
+  cat("\n**************************\n")
   
   assign("i", i, envir = .GlobalEnv)
   target = asteroids[i,]
@@ -79,7 +79,7 @@ for(i in 1:length(asteroids$segID)){
   
   colour = target$Colour
 
-  cat("\nImaging groupID:", groupID, ", segID:",segID, ", i:", i, ", colour:", colour,"\n")
+  cat("Imaging groupID:", groupID, ", segID:",segID, ", i:", i, ", colour:", colour,"\n")
   
   error = 0
 
@@ -89,15 +89,12 @@ for(i in 1:length(asteroids$segID)){
     hdr = g_hdr$hdr
     groupcol = "seagreen2"
     segcol = "green"
-    cat("**************************\n")
     list[target, locations, status] <- Top_bottom(groupim, target, groupID, hdr)
     if(status == -1){
       groupim = segim
     }
     list[target, locations, status] <- Top_bottom(segim, target, segID, hdr)
-    cat("**************************\n")
     Cutout(target, keyvalues, i)
-    cat("**************************\n")
     Image_Maker(segID, groupID, colour, locations, groupcol, segcol)
     
     
@@ -107,15 +104,12 @@ for(i in 1:length(asteroids$segID)){
     hdr = r_hdr$hdr
     groupcol = "firebrick2"
     segcol = "firebrick4"
-    cat("**************************\n")
     list[target, locations, status] <- Top_bottom(groupim, target, groupID, hdr)
     if(status == -1){
       groupim = segim
     }
     list[target, locations, status] <- Top_bottom(segim, target, segID, hdr)
-    cat("**************************\n")
     Cutout(target, keyvalues, i)
-    cat("**************************\n")
     Image_Maker(segID, groupID, colour, locations, groupcol, segcol)
     
   }else if(grepl(colour,"i") == TRUE){
@@ -124,19 +118,18 @@ for(i in 1:length(asteroids$segID)){
     hdr = i_hdr$hdr
     groupcol = "skyblue"
     segcol = "blue"
-    cat("**************************\n")
     list[target, locations, status] <- Top_bottom(groupim, target, groupID, hdr)
     if(status == -1){
       groupim = segim
     }
     list[target, locations, status] <- Top_bottom(segim, target, segID, hdr)
-    cat("**************************\n")
     Cutout(target, keyvalues, i)
-    cat("**************************\n")
     Image_Maker(segID, groupID, colour, locations, groupcol, segcol)
     
   }
   asteroids[i,] = target
+  cat("**************************\n")
+  
 }
     cat("Writing out data with top & bottom locations\n")
     write.csv(asteroids, file=paste0("./", loc,"/",loc,"_Asteroids.csv"))
