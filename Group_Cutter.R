@@ -320,7 +320,7 @@ Image_Maker <- function(segID, groupID, colour, locations, groupcol, segcol){
   
   cat("Adding segment outlines\n")
   magimage(segimcut$image,col=c(NA,rep("moccasin",max(segimcut$image))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.5)
-  magimage(groupcut$image,col=c(NA,rep("navajowhite3",max(groupcut$image))),magmap = FALSE,add=TRUE,sparse=1,lwd=0.6)
+  magimage(groupcut$image,col=c(NA,rep("peru",max(groupcut$image))),magmap = FALSE,add=TRUE,sparse=1,lwd=1)
   magimage(ast_segimcut$image,col=c(NA,rep(segcol, max(ast_segimcut$image))),magmap=FALSE,add=TRUE,sparse=1)
   magimage(ast_groupcut$image,col=c(NA,rep(groupcol, max(ast_groupcut$image))),magmap=FALSE,add=TRUE,sparse=1)
   
