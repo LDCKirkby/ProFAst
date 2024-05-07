@@ -58,8 +58,8 @@ if(missing(images)){
 }
 cat("**************************\n")
 
-Edger(groupim)
 Edger(segim)
+Edger(groupim)
 
 cat("**************************\n")
   
@@ -186,6 +186,7 @@ Data_Reader <- function(loc, images){
 
 Edger <- function(input_image){
   name = deparse(substitute(input_image))
+  
   cat("Finding the edges of ",name," segmentation masks\n")
   image = input_image
   xrun=1:(dim(image)[1]-1)
@@ -209,7 +210,7 @@ Edger <- function(input_image){
   
   rm(image_edge, image_temp, image_lb, image_lt, image_rt, image_rb)
   
-  assign(paste0(name,"_edged"), image, envir = .GlobalEnv)
+  assign(name, image, envir = .GlobalEnv)
 }
 
 
@@ -282,8 +283,8 @@ Cutout <- function(target, keyvalues, i){
   cutim_i=i_image[galpos,box=box]
   
   cat("Making cut images\n")
-  segimcut=magcutout(image = segim_edged, loc=as.numeric(galpos),box=box,loc.type="image")
-  groupcut=magcutout(image = groupim_edged, loc=as.numeric(galpos),box=box,loc.type="image")
+  segimcut=magcutout(image = segim, loc=as.numeric(galpos),box=box,loc.type="image")
+  groupcut=magcutout(image = groupim, loc=as.numeric(galpos),box=box,loc.type="image")
   ast_segimcut=magcutout(image = ast_segim, loc=as.numeric(galpos),box=box,loc.type="image")
   ast_groupcut=magcutout(image = ast_groupim, loc=as.numeric(galpos),box=box,loc.type="image")
   
@@ -321,15 +322,16 @@ Image_Maker <- function(segID, groupID, colour, locations, groupcol, segcol){
   cat("Adding segment outlines\n")
   magimage(segimcut$image,col=c(NA,rep("moccasin",max(segimcut$image))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.5)
   magimage(groupcut$image,col=c(NA,rep("peru",max(groupcut$image))),magmap = FALSE,add=TRUE,sparse=1,lwd=1)
-  magimage(ast_segimcut$image,col=c(NA,rep(segcol, max(ast_segimcut$image))),magmap=FALSE,add=TRUE,sparse=1)
-  magimage(ast_groupcut$image,col=c(NA,rep(groupcol, max(ast_groupcut$image))),magmap=FALSE,add=TRUE,sparse=1)
+  
+  magimage(ast_segimcut$image,col=c(NA,rep(segcol, max(ast_segimcut$image))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.5)
+  magimage(ast_groupcut$image,col=c(NA,rep(groupcol, max(ast_groupcut$image))),magmap=FALSE,add=TRUE,sparse=1,lwd=1)
   
   cat("Adding max & min points\n")
-  points(locations, col=c("orangered" , "orange", "sienna1", "darkviolet", "mediumorchid" , "darkmagenta", "hotpink", "gold"), pch = 4, lwd = 3)
+  points(locations, col=c("orangered" , "orange", "sienna1", "darkviolet", "mediumorchid" , "darkmagenta", "hotpink", "gold"),add=TRUE, pch = 4, lwd = 3)
   
   legend(x ="topright", legend = c("Top Right", "Bottom Right", "Right Midpoint", "Top Left", "Bottom Left", "Left Midpoint", "Center of Flux", "Max Flux"), pch = c(3,3,3,3), col = c("orangered" , "orange", "sienna1", "darkviolet", "mediumorchid" , "darkmagenta", "hotpink", "gold"))
   
-  text(1,2*wid-50, label=paste0("segID=",groupcol,segID), cex=2.0, pos=4, family = "")
+  text(1,2*wid-50, col=groupcol, label=paste0("segID=",groupcol,segID), cex=2.0, pos=4, family = "")
   
   dev.off()
 }
