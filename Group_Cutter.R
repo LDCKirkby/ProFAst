@@ -87,16 +87,14 @@ for(i in 1:length(asteroids$segID)){
     image_header = g_image$header
     keyvalues = g_image$keyvalues
     hdr = g_hdr$hdr
-    groupcol = "green"
-    segcol = "green3"
+    groupcol = "seagreen2"
+    segcol = "green"
     cat("**************************\n")
     list[target, locations, status] <- Top_bottom(groupim, target, groupID, hdr)
-    list[target, locations, status] <- Top_bottom(segim, target, segID, hdr)
-    
-    
     if(status == -1){
-      next
+      groupim = segim
     }
+    list[target, locations, status] <- Top_bottom(segim, target, segID, hdr)
     cat("**************************\n")
     Cutout(target, keyvalues, i)
     cat("**************************\n")
@@ -107,33 +105,34 @@ for(i in 1:length(asteroids$segID)){
     image_header = r_image$header
     keyvalues = r_image$keyvalues
     hdr = r_hdr$hdr
-    groupcol = "red"
-    segcol = "red3"
-    
+    groupcol = "firebrick2"
+    segcol = "firebrick4"
+    cat("**************************\n")
     list[target, locations, status] <- Top_bottom(groupim, target, groupID, hdr)
-    list[target, locations, status] <- Top_bottom(segim, target, segID, hdr)
     if(status == -1){
-      next
+      groupim = segim
     }
-    
+    list[target, locations, status] <- Top_bottom(segim, target, segID, hdr)
+    cat("**************************\n")
     Cutout(target, keyvalues, i)
+    cat("**************************\n")
     Image_Maker(segID, groupID, colour, locations, groupcol, segcol)
     
   }else if(grepl(colour,"i") == TRUE){
     image_header = i_image$header
     keyvalues = i_image$keyvalues
     hdr = i_hdr$hdr
-    groupcol = "blue"
-    segcol = "blue3"
-    
+    groupcol = "skyblue"
+    segcol = "blue"
+    cat("**************************\n")
     list[target, locations, status] <- Top_bottom(groupim, target, groupID, hdr)
     if(status == -1){
       groupim = segim
     }
     list[target, locations, status] <- Top_bottom(segim, target, segID, hdr)
-
-    
+    cat("**************************\n")
     Cutout(target, keyvalues, i)
+    cat("**************************\n")
     Image_Maker(segID, groupID, colour, locations, groupcol, segcol)
     
   }
@@ -327,7 +326,7 @@ Image_Maker <- function(segID, groupID, colour, locations, groupcol, segcol){
   magimage(ast_groupcut$image,col=c(NA,rep(groupcol, max(ast_groupcut$image))),magmap=FALSE,add=TRUE,sparse=1,lwd=1)
   
   cat("Adding max & min points\n")
-  points(locations, col=c("orangered" , "orange", "sienna1", "darkviolet", "mediumorchid" , "darkmagenta", "hotpink", "gold"),add=TRUE, pch = 4, lwd = 3)
+  points(locations, col=c("orangered" , "orange", "sienna1", "darkviolet", "mediumorchid" , "darkmagenta", "hotpink", "gold"), pch = 4, lwd = 3)
   
   legend(x ="topright", legend = c("Top Right", "Bottom Right", "Right Midpoint", "Top Left", "Bottom Left", "Left Midpoint", "Center of Flux", "Max Flux"), pch = c(3,3,3,3), col = c("orangered" , "orange", "sienna1", "darkviolet", "mediumorchid" , "darkmagenta", "hotpink", "gold"))
   
