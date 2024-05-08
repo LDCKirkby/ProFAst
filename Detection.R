@@ -72,6 +72,8 @@ font_add("Arial", "/Library/Fonts/Arial.ttf")
   Axrat_Comparison(RA_DEC)
 
   Group_Cutter(RA_DEC, frames)
+  
+  warnings()
 
   
   #Uncomment to remove any unwanted files
