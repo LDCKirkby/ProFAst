@@ -56,7 +56,7 @@ showtext_auto()
   num_args = length(bruh)
   i = as.numeric(bruh[[num_args]])
   dir = getwd()
-  kids = as.data.frame(read.csv("./done.csv"))
+  kids = as.data.frame(read.csv("./todo.csv"))
   
     
   if(grepl(".", kids$RA[i], fixed = TRUE)){

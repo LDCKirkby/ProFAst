@@ -13,13 +13,18 @@
 
 
 
-Pre_Proc <- function(loc){
-  start_time <- Sys.time()
+Pre_Proc <- function(loc, computer){
 
   cat("Loading images\n")
+  if("sabine" == tolower(computer)){
+    g=Rfits_read_image(paste0("/Volumes/ThunderBay/WAVES/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"g_DMAG.fits"))
+    r=Rfits_read_image(paste0("/Volumes/ThunderBay/WAVES/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"r_DMAG.fits"))
+    i1=Rfits_read_image(paste0("/Volumes/ThunderBay/WAVES/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"i1_DMAG.fits"))
+  }else{
   g=Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"))
   r=Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"))
   i1=Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"))
+  }
   #i2=Rfits_read_image(paste0("/Volumes/WAVES/waves/wavesdata/kids/dr5/preprocessed/KIDS_",loc,"_i2_DMAG.fits"))
   #
   cat("Resizing images\n")
@@ -41,7 +46,5 @@ Pre_Proc <- function(loc){
 
   
   
-  end_time <- Sys.time()
-  data = list(list(g, rx, i1x), end_time-start_time)
-  return(data)
+  return(list(g, rx, i1x))
 }
