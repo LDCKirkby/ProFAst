@@ -7,6 +7,7 @@ source("./R_Files/memobj.R")
 source("./R_files/fastcutout.r")
 
 library(peakRAM,quietly = TRUE)
+library(xtable, quietly = TRUE)
 library(dst,quietly=TRUE)
 library(celestial,quietly = TRUE)
 library(devtools,quietly = TRUE)
