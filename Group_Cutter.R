@@ -16,11 +16,11 @@ library(showtext)
 font_add("Arial", "/Library/Fonts/Arial.ttf")
 showtext_auto()
 
-
-args = commandArgs(trailingOnly=TRUE)
-loc = args[[1]]
-comp = arge[[2]]
-
+# 
+# args = commandArgs(trailingOnly=TRUE)
+# loc = args[[1]]
+# comp = args[[2]]
+# 
 
 Group_Cutter <- function(loc, images){
   
@@ -333,9 +333,9 @@ Image_Maker <- function(segID, groupID, colour, groupcol, segcol){
 }
 
 
-
-Group_Cutter(loc)
-warnings()
+# 
+# Group_Cutter(loc)
+# warnings()
 
 # 
 # tryCatch({Group_Cutter(loc)}, error = function(e) {print(paste("Error:", e))})
