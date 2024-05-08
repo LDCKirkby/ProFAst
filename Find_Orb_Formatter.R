@@ -44,7 +44,10 @@ for( i in 1:length(asteroids$groupID)){
   Dec_top = paste0(deg2dms(asteroids[i, "tr_Dec"])[[1]], " ",deg2dms(asteroids[i, "tr_Dec"])[[2]], " ",deg2dms(asteroids[i, "tr_Dec"], digits = 2)[[3]])
   RA_bottom = paste0(deg2hms(asteroids[i, "bl_RA"])[[1]], " ",deg2hms(asteroids[i, "bl_RA"])[[2]], " ",deg2hms(asteroids[i, "bl_RA"], digits = 2)[[3]])
   Dec_bottom = paste0(deg2dms(asteroids[i, "bl_Dec"])[[1]], " ",deg2dms(asteroids[i, "bl_Dec"])[[2]], " ",deg2dms(asteroids[i, "bl_Dec"], digits = 2)[[3]])
-  
+  RA_cen = paste0(deg2hms(asteroids[i, "RAcen"])[[1]], " ",deg2hms(asteroids[i, "RAcen"])[[2]], " ",deg2hms(asteroids[i, "RAcen"], digits = 2)[[3]])
+  Dec_cen = paste0(deg2dms(asteroids[i, "Deccen"])[[1]], " ",deg2dms(asteroids[i, "Deccen"])[[2]], " ",deg2dms(asteroids[i, "Deccen"], digits = 2)[[3]])
+  RA_max = paste0(deg2hms(asteroids[i, "RAmax"])[[1]], " ",deg2hms(asteroids[i, "RAmax"])[[2]], " ",deg2hms(asteroids[i, "RAmax"], digits = 2)[[3]])
+  Dec_max = paste0(deg2dms(asteroids[i, "Decmax"])[[1]], " ",deg2dms(asteroids[i, "Decmax"])[[2]], " ",deg2dms(asteroids[i, "Decmax"], digits = 2)[[3]])
   
   # spacer1 = "00001"
   # spacer2 = "00002"
