@@ -16,7 +16,7 @@
 Pre_Proc <- function(loc, computer){
 
   cat("Loading images\n")
-  if(grep("Sabine", computer, fixed = TRUE)){
+  if("sabine" == tolower(computer)){
     g=Rfits_read_image(paste0("/Volumes/ThunderBay/WAVES/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"g_DMAG.fits"))
     r=Rfits_read_image(paste0("/Volumes/ThunderBay/WAVES/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"r_DMAG.fits"))
     i1=Rfits_read_image(paste0("/Volumes/ThunderBay/WAVES/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"i1_DMAG.fits"))
