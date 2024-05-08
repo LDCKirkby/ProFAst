@@ -53,6 +53,7 @@ font_add("Arial", "/Library/Fonts/Arial.ttf")
 
   args = commandArgs(trailingOnly = TRUE)
   i = as.numeric(args[[1]])
+  computer = as.string(args[[2]])
   dir = getwd()
   kids = as.data.frame(read.csv("./todo.csv"))
     
@@ -62,7 +63,7 @@ font_add("Arial", "/Library/Fonts/Arial.ttf")
     RA_DEC = paste0(kids$RA[i],".0_",kids$Dec[i])
   }
   cat("*************\n","Beginning Detection on:",RA_DEC,"\n","*************\n")
-  frames <- Pre_Proc(RA_DEC)
+  frames <- Pre_Proc(RA_DEC, computer)
 
   New_Detect(RA_DEC, frames)
 
@@ -70,7 +71,7 @@ font_add("Arial", "/Library/Fonts/Arial.ttf")
 
   Axrat_Comparison(RA_DEC)
 
-  tryCatch({Group_Cutter(RA_DEC, frames)}, error = function(e) {print(paste("Error:", e))})
+  Group_Cutter(RA_DEC, frames)
 
   
   #Uncomment to remove any unwanted files

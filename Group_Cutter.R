@@ -82,6 +82,7 @@ for(i in 1:length(asteroids$segID)){
   cat("Imaging groupID:", groupID, ", segID:",segID, ", i:", i, ", colour:", colour,"\n")
   
   error = 0
+  locations = c()
 
   if(grepl(colour,"g") == TRUE){
     image_header = g_image$header
@@ -89,11 +90,11 @@ for(i in 1:length(asteroids$segID)){
     hdr = g_hdr$hdr
     groupcol = "seagreen2"
     segcol = "green"
-    list[target, locations, status] <- Top_bottom(groupim, target, groupID, hdr)
+    list[target, status] <- Top_bottom(groupim, target, groupID, hdr)
     if(status == -1){
       groupim = segim
     }
-    list[target, locations, status] <- Top_bottom(segim, target, segID, hdr)
+    list[target, status] <- Top_bottom(segim, target, segID, hdr)
     Cutout(target, keyvalues, i)
     Image_Maker(segID, groupID, colour, locations, groupcol, segcol)
     
@@ -104,11 +105,11 @@ for(i in 1:length(asteroids$segID)){
     hdr = r_hdr$hdr
     groupcol = "firebrick2"
     segcol = "firebrick4"
-    list[target, locations, status] <- Top_bottom(groupim, target, groupID, hdr)
+    list[target, status] <- Top_bottom(groupim, target, groupID, hdr)
     if(status == -1){
       groupim = segim
     }
-    list[target, locations, status] <- Top_bottom(segim, target, segID, hdr)
+    list[target, status] <- Top_bottom(segim, target, segID, hdr)
     Cutout(target, keyvalues, i)
     Image_Maker(segID, groupID, colour, locations, groupcol, segcol)
     
@@ -118,11 +119,11 @@ for(i in 1:length(asteroids$segID)){
     hdr = i_hdr$hdr
     groupcol = "skyblue"
     segcol = "blue"
-    list[target, locations, status] <- Top_bottom(groupim, target, groupID, hdr)
+    list[target, status] <- Top_bottom(groupim, target, groupID, hdr)
     if(status == -1){
       groupim = segim
     }
-    list[target, locations, status] <- Top_bottom(segim, target, segID, hdr)
+    list[target, status] <- Top_bottom(segim, target, segID, hdr)
     Cutout(target, keyvalues, i)
     Image_Maker(segID, groupID, colour, locations, groupcol, segcol)
     
@@ -254,12 +255,14 @@ Top_bottom <- function(image, ast, ID, hdr){
   
   x = c(top_right[[1]], top_left[[1]], bottom_right[[1]], bottom_left[[1]], ave_top[[1]], ave_bottom[[1]], cen_flux[[1]], max_flux[[1]])
   y = c(top_right[[2]], top_left[[2]], bottom_right[[2]], bottom_left[[2]], ave_top[[2]], ave_bottom[[2]], cen_flux[[2]], max_flux[[2]])
-  locations = cbind(x,y)
+  locs = cbind(x,y)
+  
+  
   
   assign(paste0("ast_",name), asteroid_image, envir = .GlobalEnv)
-  #assign("locations", locations, envir = .GlobalEnv)
+  assign("locations", rbind(locations, locs), envir = .GlobalEnv)
   
-  return(list(ast,locations,1))
+  return(list(ast,1))
 }
 
 
@@ -291,7 +294,7 @@ Cutout <- function(target, keyvalues, i){
 
   
 
-Image_Maker <- function(segID, groupID, colour, locations, groupcol, segcol){
+Image_Maker <- function(segID, groupID, colour, groupcol, segcol){
   
   cat("Printing ",colour,segID," postage stamp\n")
   png(filename=paste0("./",loc,"/Group_Cutouts/",colour,segID,".png"), family = "")
@@ -312,7 +315,7 @@ Image_Maker <- function(segID, groupID, colour, locations, groupcol, segcol){
   Rwcs_imageRGB(R=cutim_r, G=cutim_g, B=cutim_i, Rkeyvalues = r_image$keyvalues, Gkeyvalues = g_image$keyvalues, Bkeyvalues = i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
   
   cat("Adding segment outlines\n")
-  magimage(segimcut$image,col=c(NA,rep("moccasin",max(segimcut$image))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.5)
+  magimage(segimcut$image,col=c(NA,rep("moccasin",max(segimcut$image))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.25)
   magimage(groupcut$image,col=c(NA,rep("peru",max(groupcut$image))),magmap = FALSE,add=TRUE,sparse=1,lwd=1)
   
   magimage(ast_segimcut$image,col=c(NA,rep(segcol, max(ast_segimcut$image))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.5)
