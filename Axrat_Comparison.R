@@ -38,7 +38,7 @@ cat("*********\n\n")
 
 write.csv(filtered_asteroids, file = paste0("./",loc,"/",loc,"_Filtered_Asteroids.csv"))
 
-#N100 filter
+#N100 filter, filter done in all bands for completeness, even though they are they are all the same value
 cat("*********\n")
 cat("Performing small N100 filter\n")
 N100_filtered_asteroids = subset(filtered_asteroids, N100 >= 100 | N100_i1xt >= 100 | N100_rxt >= 100 | N100_gt >= 100)
