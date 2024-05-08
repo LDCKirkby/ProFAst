@@ -54,7 +54,7 @@ font_add("Arial", "/Library/Fonts/Arial.ttf")
 
   args = commandArgs(trailingOnly = TRUE)
   i = as.numeric(args[[1]])
-  computer = as.string(args[[2]])
+  computer = as.character(args[[2]])
   dir = getwd()
   kids = as.data.frame(read.csv("./todo.csv"))
     
