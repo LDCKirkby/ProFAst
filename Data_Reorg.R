@@ -23,9 +23,6 @@ library(ProPane, quietly = TRUE)
 library(ggplot2, quietly = TRUE)
 library(dplyr, quietly = TRUE)
 library(fs, quietly = TRUE)
-library(showtext)
-font_add("Arial", "/Library/Fonts/Arial.ttf")
-showtext_auto()
 
 
 
@@ -56,7 +53,7 @@ showtext_auto()
   num_args = length(bruh)
   i = as.numeric(bruh[[num_args]])
   dir = getwd()
-  kids = as.data.frame(read.csv("./todo.csv"))
+  kids = as.data.frame(read.csv("./done.csv"))
   
     
   if(grepl(".", kids$RA[i], fixed = TRUE)){
@@ -76,17 +73,17 @@ showtext_auto()
   #                         "\nTotal RAM used during New_Detect for ", RA_DEC," :", New_Detect_RAM$Total_RAM_Used_MiB,
   #                         "\nMax RAM used during New_Detect for ", RA_DEC," :", New_Detect_RAM$Peak_RAM_Used_MiB))
   
-  #Flux_Comparison_RAM = peakRAM(Flux_Comparison(RA_DEC))
+  Flux_Comparison_RAM = peakRAM(Flux_Comparison(RA_DEC))
   #post_text_to_ntfy(paste0("Time elapsed for ",RA_DEC," :", Flux_Comparison_RAM$Elapsed_Time_sec, 
   #                         "\nTotal RAM used during Flux_Comparison for ", RA_DEC," :", Flux_Comparison_RAM$Total_RAM_Used_MiB,
   #                         "\nMax RAM used during Flux_Comparison for ", RA_DEC," :", Flux_Comparison_RAM$Peak_RAM_Used_MiB))
   
-  #Axrat_Comparison_RAM = peakRAM(Axrat_Comparison(RA_DEC))
+  Axrat_Comparison_RAM = peakRAM(Axrat_Comparison(RA_DEC))
   #post_text_to_ntfy(paste0("Time elapsed for ",RA_DEC," :", Axrat_Comparison_RAM$Elapsed_Time_sec, 
   #                         "\nTotal RAM used during Axrat_Comparison for ", RA_DEC," :", Axrat_Comparison_RAM$Total_RAM_Used_MiB,
   #                         "\nMax RAM used during Axrat_Comparison for ", RA_DEC," :", Axrat_Comparison_RAM$Peak_RAM_Used_MiB))
 
-  Group_Cutter_RAM = peakRAM(Group_Cutter(RA_DEC))#, frames))
+  #Group_Cutter_RAM = peakRAM(Group_Cutter(RA_DEC))#, frames))
   #post_text_to_ntfy(paste0("Time elapsed for ",RA_DEC," :", Group_Cutter_RAM$Elapsed_Time_sec,
   #                         "\nTotal RAM used during Group_Cutter for ", RA_DEC," :", Group_Cutter_RAM$Total_RAM_Used_MiB,
   #                         "\nMax RAM used during Group_Cutter for ", RA_DEC," :", Group_Cutter_RAM$Peak_RAM_Used_MiB))

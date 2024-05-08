@@ -1,18 +1,18 @@
 #############
 # LIBRARIES #
 #############
-library(celestial)
-library(devtools)
-library(Cairo)
-library(ProFound)
-library(magicaxis)
-library(data.table)
-require(foreign)
-require(MASS)
-library(dst)
-library(Rwcs)
-library(ProPane)
-library(Rfits)
+# library(celestial)
+# library(devtools)
+# library(Cairo)
+# library(ProFound)
+# library(magicaxis)
+# library(data.table)
+# require(foreign)
+# require(MASS)
+# library(dst)
+# library(Rwcs)
+# library(ProPane)
+# library(Rfits)
 
 #
 #######################
@@ -29,9 +29,7 @@ library(Rfits)
 #######################
 
 
-New_Detect <- function(loc, frames, Pre_Proc_time){
-
-start_time <- Sys.time()
+New_Detect <- function(loc, frames){
 
 
 #Set working directory and detection parameters
@@ -99,9 +97,13 @@ rm(segimlist)
 # Extract segment info, colour, total, deblend, aperture, and groups measurements
 
 cat_objects <- as.data.table(cbind(trim$pro_detect$segstats,trim$cat_tot))
+
 cat_groupinfo=cbind(segID=unlist(trim$pro_detect$group$groupsegID$segID),groupID=rep(trim$pro_detect$group$groupsegID$groupID,times=trim$pro_detect$group$groupsegID$Ngroup), Ngroup=rep(trim$pro_detect$group$groupsegID$Ngroup, times=trim$pro_detect$group$groupsegID$Ngroup))
+
 cat_objects=cbind(cat_objects,cat_groupinfo[match(cat_objects$segID, cat_groupinfo[,"segID"]),2:3])
+
 cat_groups <- as.data.table(cbind(trim$pro_detect$group$groupsegID$Ngroup,trim$pro_detect$groupstats$groupID,trim$cat_grp))
+
 names(cat_groups)[1] <- "Ngroup"
 names(cat_groups)[2] <- "groupID"
 
@@ -120,12 +122,10 @@ write.csv(datafile0,file=paste0(savelocation,"allcati.csv"))
 #plot(trim$pro_detect)
 #dev.off()
 
-end_time <- Sys.time()
-run_time <- end_time - start_time
 
 #Print out input args for verification
-input_args = c(paste0("Pixcut:",pixcut),paste0("Skycut:",skycut),paste0("Smooth:",smooth),paste0("Sigma:",sigma),paste0("Tolerance:",tolerance), paste0("Relative Tolerance:", reltol),paste0("ext:",ext), paste0("Pre_Proc Time:", Pre_Proc_time), paste0("Runtime: ", run_time))
-write.csv(input_args, file = paste0(savelocation,"/Input_Args.csv"))
+# input_args = c(paste0("Pixcut:",pixcut),paste0("Skycut:",skycut),paste0("Smooth:",smooth),paste0("Sigma:",sigma),paste0("Tolerance:",tolerance), paste0("Relative Tolerance:", reltol),paste0("ext:",ext))
+# write.csv(input_args, file = paste0(savelocation,"/Input_Args.csv"))
 
 
 }

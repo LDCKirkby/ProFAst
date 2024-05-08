@@ -1,26 +1,30 @@
-library(celestial)
-library(devtools)
-library(Cairo)
-library(ProFound)
-library(magicaxis)
-library(data.table)
-require(foreign)
-require(MASS)
-library(dst)
-library(Rwcs)
-library(ProPane)
-library(Rfits)
-# cat("Enter RA_DEC to process:")
-# loc = readLines(file("stdin"),1)
-Pre_Proc <- function(loc){
-  start_time <- Sys.time()
-  # home = pwd()
-  # location = paste0(home,"/")
-  #
+# library(celestial)
+# library(devtools)
+# library(Cairo)
+# library(ProFound)
+# library(magicaxis)
+# library(data.table)
+# require(foreign)
+# require(MASS)
+# library(dst)
+# library(Rwcs)
+# library(ProPane)
+# library(Rfits)
+
+
+
+Pre_Proc <- function(loc, computer){
+
   cat("Loading images\n")
+  if("sabine" == tolower(computer)){
+    g=Rfits_read_image(paste0("/Volumes/ThunderBay/WAVES/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"g_DMAG.fits"))
+    r=Rfits_read_image(paste0("/Volumes/ThunderBay/WAVES/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"r_DMAG.fits"))
+    i1=Rfits_read_image(paste0("/Volumes/ThunderBay/WAVES/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"i1_DMAG.fits"))
+  }else{
   g=Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"))
   r=Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"))
   i1=Rfits_read_image(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"))
+  }
   #i2=Rfits_read_image(paste0("/Volumes/WAVES/waves/wavesdata/kids/dr5/preprocessed/KIDS_",loc,"_i2_DMAG.fits"))
   #
   cat("Resizing images\n")
@@ -31,7 +35,7 @@ Pre_Proc <- function(loc){
   remove(i1)
   #i2x=propaneWarp(i2,keyvalues_out=g$keyvalues)
   # 
-  # cat("Printing images\n")
+  
   #Removing this line as it creates storage issues when running on large image numbers
   # dir.create(paste0(location,"Fits_files/",loc))
   # Rfits_write_image(g, filename = paste0(location,"Fits_files/",loc,"/g.fits"))
@@ -42,7 +46,5 @@ Pre_Proc <- function(loc){
 
   
   
-  end_time <- Sys.time()
-  data = list(list(g, rx, i1x), end_time-start_time)
-  return(data)
+  return(list(g, rx, i1x))
 }

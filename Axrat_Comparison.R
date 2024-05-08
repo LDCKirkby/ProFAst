@@ -1,43 +1,61 @@
-library(celestial)
-library(devtools)
-library(Cairo)
-library(ProFound)
-library(magicaxis)
-library(data.table)
-require(foreign)
-require(MASS)
+# library(celestial)
+# library(devtools)
+# library(Cairo)
+# library(ProFound)
+# library(magicaxis)
+# library(data.table)
+# require(foreign)
+# require(MASS)
 #
 
 Axrat_Comparison <- function(loc){
 
 possible_asteroids = read.csv(paste0("./",loc,"/Possible_Asteroids.csv"), header = TRUE, fill = TRUE)
 possible_asteroids = as.data.table(possible_asteroids)
-cat(length(possible_asteroids$axrat_gt), "potential asteroids\n")
 
 cat("*********\n")
 cat("Beginning axial filtering\n")
-cat("*********\n")
+cat("*********\n\n")
 
+#Axrat filter
 filtered_asteroids = subset(possible_asteroids, axrat_gt <= 0.35 | axrat_rxt <= 0.35 | axrat_i1xt <= 0.35)
+
 
 top_tail = subset(filtered_asteroids, select = c(Colour, X.1))
 
 filtered_asteroids = distinct(subset(filtered_asteroids, select = -c(X.1, Colour)))
 
 filtered_asteroids = cbind(subset(filtered_asteroids, select = c(groupID)), "Colour" = top_tail[top_tail$X.1 %in% filtered_asteroids$X ==TRUE,]$Colour, subset(filtered_asteroids, select = c(Ngroup)), subset(filtered_asteroids, select = -c(groupID, Ngroup)))
+filtered_asteroids = setorder(filtered_asteroids, "groupID")
 
 cat("*********\n")
 cat("Filtered to ", length(filtered_asteroids$axrat_gt), "potential asteroids\n")
-cat("*********\n")
+cat("*********\n\n")
 
 cat("*********\n")
-cat("Writing to ", paste0("./", loc,"/Possible_Asteroids.csv"),"\n")
+cat("Writing to ", paste0("./", loc,"/",loc,"Filtered_Asteroids.csv"),"\n")
+cat("*********\n\n")
+
+write.csv(filtered_asteroids, file = paste0("./",loc,"/",loc,"_Filtered_Asteroids.csv"))
+
+#N100 filter, filter done in all bands for completeness, even though they are they are all the same value
 cat("*********\n")
+cat("Performing small N100 filter\n")
+N100_filtered_asteroids = subset(filtered_asteroids, N100 >= 100 | N100_i1xt >= 100 | N100_rxt >= 100 | N100_gt >= 100)
 
-write.csv(filtered_asteroids, file = paste0("./",loc,"/Filtered_Asteroids.csv"))
+cat("Performing large N100 filter\n")
+N100_filtered_asteroids = subset(N100_filtered_asteroids, N100 <= 2500 | N100_i1xt <= 2500 | N100_rxt <= 2500 | N100_gt <= 2500)
 
 
-rm(possible_asteroids, top_tail, filtered_asteroids) 
+cat("Removed ", length(filtered_asteroids$groupID) - length(N100_filtered_asteroids$groupID), " small errors\n")
+cat("Final number of ", length(N100_filtered_asteroids$groupID), " possible asteroids\n")
+
+write.csv(N100_filtered_asteroids, file = paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv"))
+cat("Writing to " ,paste0("./", loc,"/",loc,"_N100_Filtered_Asteroids.csv"),"\n")
+cat("*********\n\n")
+
+
+rm(possible_asteroids, top_tail, filtered_asteroids, N100_filtered_asteroids) 
 gc()
 
 
