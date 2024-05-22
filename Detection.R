@@ -5,7 +5,6 @@ source("./R_Files/Axrat_Filter.R")
 source("./R_Files/N100_Filter.R")
 source("./R_Files/Group_Cutter.R")
 source("./R_Files/memobj.R")
-source("./R_files/fastcutout.r")
 
 library(peakRAM,quietly = TRUE)
 library(xtable, quietly = TRUE)
