@@ -1,7 +1,8 @@
 source("./R_Files/Pre_Proc.R")
 source("./R_Files/New_Detect.R")
-source("./R_Files/Flux_Comparison.R")
-source("./R_Files/Axrat_Comparison.R")
+source("./R_Files/Flux_Filter.R")
+source("./R_Files/Axrat_Filter.R")
+source("./R_Files/N100_Filter.R")
 source("./R_Files/Group_Cutter.R")
 source("./R_Files/memobj.R")
 source("./R_files/fastcutout.r")
@@ -68,9 +69,11 @@ font_add("Arial", "/Library/Fonts/Arial.ttf")
 
   New_Detect(RA_DEC, frames)
 
-  Flux_Comparison(RA_DEC)
+  Flux_Filter(RA_DEC)
 
-  Axrat_Comparison(RA_DEC)
+  Axrat_Filter(RA_DEC)
+  
+  N100_Filter(RA_DEC)
 
   Group_Cutter(RA_DEC, frames)
   
