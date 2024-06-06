@@ -13,14 +13,19 @@ library(ProPane)
 library(gsubfn)
 library(fs)
 library(showtext)
+source("./R_Files/Pre_Proc.R")
 font_add("Arial", "/Library/Fonts/Arial.ttf")
 showtext_auto()
 
-# 
-# args = commandArgs(trailingOnly=TRUE)
-# loc = args[[1]]
-# comp = args[[2]]
-# 
+`%notin%`<-Negate(`%in%`)
+# KEY for understanding code 
+# segID = ID for each segment identified by ProFound
+# groupID = ID for segments grouped together by ProFound
+# target = current asteroid from csv being imaged
+# color = color band asteroid is most present in
+
+
+
 
 Group_Cutter <- function(loc, images){
   
@@ -40,7 +45,15 @@ assign("loc", loc, envir = .GlobalEnv)
 cat("**************************\n")
 cat("Reading in data\n")
 asteroids = read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv"))
-asteroids <- cbind(asteroids, data.frame(tl_RA = 0, tl_Dec = 0, tr_RA = 0, tr_Dec = 0, bl_RA = 0, bl_Dec = 0, br_RA = 0, br_Dec = 0, top_RA = 0, top_Dec = 0, bot_RA = 0, bot_Dec = 0))
+
+#Add edge variables
+group_edge_points = c("group_tl_RA", "group_tl_Dec", "group_tr_RA", "group_tr_Dec", "group_bl_RA", "group_bl_Dec", "group_br_RA", "group_br_Dec", "group_top_RA", "group_top_Dec", "group_bot_RA", "group_bot_Dec")
+segment_edge_points = c("segment_tl_RA", "segment_tl_Dec", "segment_tr_RA", "segment_tr_Dec", "segment_bl_RA", "segment_bl_Dec", "segment_br_RA", "segment_br_Dec", "segment_top_RA", "segment_top_Dec", "segment_bot_RA", "segment_bot_Dec")
+edge_points = c(group_edge_points, segment_edge_points)
+#Append extra columns to asteroids table
+names = c(colnames(asteroids), edge_points)
+asteroids[,edge_points] <- NA
+
 assign("asteroids", asteroids, envir = .GlobalEnv)
 
 #Make a directory to save the cutouts
@@ -57,17 +70,18 @@ if(missing(images)){
   assign("images", images, envir = .GlobalEnv)
   Data_Reader(loc,images)
 }
+
+
 cat("**************************\n")
 
 Edger(segim)
 Edger(groupim)
 
 cat("**************************\n")
-  
 cat("Time to start printing images!\n")
+
 for(i in 1:length(asteroids$segID)){
   cat("\n**************************\n")
-  
   assign("i", i, envir = .GlobalEnv)
   target = asteroids[i,]
 
@@ -82,7 +96,6 @@ for(i in 1:length(asteroids$segID)){
 
   cat("Imaging groupID:", groupID, ", segID:",segID, ", i:", i, ", colour:", colour,"\n")
   
-  error = 0
   locations = c()
 
   if(grepl(colour,"g") == TRUE){
@@ -91,11 +104,26 @@ for(i in 1:length(asteroids$segID)){
     hdr = g_hdr$hdr
     groupcol = "seagreen2"
     segcol = "green"
-    list[target, status] <- Top_bottom(groupim, target, groupID, hdr)
-    if(status == -1){
-      groupim = segim
+    
+    
+    list[segment_edges] <- Top_bottom(segim, target, groupID, hdr)
+    segment_index = which(colnames(target)=="segment_tl_RA")
+    target[,segment_index:segment_index+12]=segment_edges
+    
+    #Identify if there is a corresponding groupID for the segID
+    group_image = groupim
+    group_image[group_image%notin%groupID]=0
+    num_points <- which(group_image == groupID, arr.ind = TRUE)
+    #If no valid groupID then only segment edges are graphed
+    if(length(num_points) < 2){
+      cat("No groupID with ID = ", ID, "\n")
+    }else{
+      list[group_edges] <- Top_bottom(groupim, target, groupID, hdr)
+      group_index = which(colnames(target)=="group_tl_RA")
+      target[,group_index:group_index+12]=group_edges
     }
-    list[target, status] <- Top_bottom(segim, target, segID, hdr)
+
+    
     Cutout(target, keyvalues, i)
     Image_Maker(segID, groupID, colour, locations, groupcol, segcol)
     
@@ -106,11 +134,24 @@ for(i in 1:length(asteroids$segID)){
     hdr = r_hdr$hdr
     groupcol = "firebrick2"
     segcol = "firebrick4"
-    list[target, status] <- Top_bottom(groupim, target, groupID, hdr)
-    if(status == -1){
-      groupim = segim
+    list[segment_edges] <- Top_bottom(segim, target, groupID, hdr)
+    segment_index = which(colnames(target)=="segment_tl_RA")
+    target[,segment_index:segment_index+12]=segment_edges
+    
+    #Identify if there is a corresponding groupID for the segID
+    group_image = groupim
+    group_image[group_image%notin%groupID]=0
+    num_points <- which(group_image == groupID, arr.ind = TRUE)
+    #If no valid groupID then only segment edges are graphed
+    if(length(num_points) < 2){
+      cat("No groupID with ID = ", ID, "\n")
+    }else{
+      list[group_edges] <- Top_bottom(groupim, target, groupID, hdr)
+      group_index = which(colnames(target)=="group_tl_RA")
+      target[,group_index:group_index+12]=group_edges
     }
-    list[target, status] <- Top_bottom(segim, target, segID, hdr)
+    
+    
     Cutout(target, keyvalues, i)
     Image_Maker(segID, groupID, colour, locations, groupcol, segcol)
     
@@ -120,11 +161,24 @@ for(i in 1:length(asteroids$segID)){
     hdr = i_hdr$hdr
     groupcol = "skyblue"
     segcol = "blue"
-    list[target, status] <- Top_bottom(groupim, target, groupID, hdr)
-    if(status == -1){
-      groupim = segim
+    list[segment_edges] <- Top_bottom(segim, target, groupID, hdr)
+    segment_index = which(colnames(target)=="segment_tl_RA")
+    target[,segment_index:segment_index+12]=segment_edges
+    
+    #Identify if there is a corresponding groupID for the segID
+    group_image = groupim
+    group_image[group_image%notin%groupID]=0
+    num_points <- which(group_image == groupID, arr.ind = TRUE)
+    #If no valid groupID then only segment edges are graphed
+    if(length(num_points) < 2){
+      cat("No groupID with ID = ", ID, "\n")
+    }else{
+      list[group_edges] <- Top_bottom(groupim, target, groupID, hdr)
+      group_index = which(colnames(target)=="group_tl_RA")
+      target[,group_index:group_index+12]=group_edges
     }
-    list[target, status] <- Top_bottom(segim, target, segID, hdr)
+    
+    
     Cutout(target, keyvalues, i)
     Image_Maker(segID, groupID, colour, locations, groupcol, segcol)
     
@@ -210,60 +264,50 @@ Edger <- function(input_image){
 
 
 Top_bottom <- function(image, ast, ID, hdr){
+  `%notin%`<-Negate(`%in%`)
   
   name = deparse(substitute(image))
-  
   cat("Identifying key points of object in", name, "\n")
-  `%notin%`<-Negate(`%in%`)
   asteroid_image = image
   asteroid_image[asteroid_image%notin%ID]=0
   
   obj_points <- which(asteroid_image == ID, arr.ind = TRUE)
   
-  if(length(obj_points) < 2){
-    assign("asteroid_image", asteroid_image, envir = .GlobalEnv)
-    #assign("locations", c(0,0), envir = .GlobalEnv)
-    cat("No outline found for ", ID," in ", name, "\n")
-    return(list(ast, list(c(0,0),c(0,0)), -1))
-  }
-  
   top_right <- obj_points[which.max(obj_points[, 1] + obj_points[, 2]), ]
-  ast$tr_RA = xy2radec(top_right[[1]],top_right[[2]], hdr)[1]
-  ast$tr_Dec = xy2radec(top_right[[1]],top_right[[2]], hdr)[2]
+  tr = xy2radec(top_right[[1]],top_right[[2]], hdr)
   
   top_left <- obj_points[which.min(obj_points[, 1] - obj_points[, 2]), ]
-  ast$tl_RA = xy2radec(top_left[[1]], top_left[[2]], hdr)[1]
-  ast$tl_Dec = xy2radec(top_left[[1]],top_left[[2]], hdr)[2]
+  tl = xy2radec(top_left[[1]], top_left[[2]], hdr)
   
   bottom_right <- obj_points[which.max(obj_points[, 1] - obj_points[, 2]), ]
-  ast$br_RA = xy2radec(bottom_right[[1]], bottom_right[[2]], hdr)[1]
-  ast$br_Dec = xy2radec(bottom_right[[1]],bottom_right[[2]], hdr)[2]
+  br = xy2radec(bottom_right[[1]], bottom_right[[2]], hdr)
   
   bottom_left <- obj_points[which.min(obj_points[, 1] + obj_points[, 2]), ]
-  ast$bl_RA = xy2radec(bottom_left[[1]], bottom_left[[2]], hdr)[1]
-  ast$bl_Dec = xy2radec(bottom_left[[1]], bottom_left[[2]], hdr)[2]
+  bl = xy2radec(bottom_left[[1]], bottom_left[[2]], hdr)
   
   ave_top <- c((top_right[[1]] + bottom_right[[1]])/2 , (top_right[[2]] + bottom_right[[2]])/2)
-  ast$top_RA = xy2radec(ave_top[[1]], ave_top[[2]], hdr)[1]
-  ast$top_Dec = xy2radec(ave_top[[1]],ave_top[[2]], hdr)[2]
+  top = xy2radec(ave_top[[1]], ave_top[[2]], hdr)
   
   ave_bottom <- c((top_left[[1]] + bottom_left[[1]])/2 , (top_left[[2]] + bottom_left[[2]])/2)
-  ast$bot_RA = xy2radec(ave_bottom[[1]],ave_bottom[[2]], hdr)[1]
-  ast$bot_Dec = xy2radec(ave_bottom[[1]],ave_bottom[[2]], hdr)[2]
+  bottom = xy2radec(ave_bottom[[1]],ave_bottom[[2]], hdr)
   
-  cen_flux = c(asteroids$xcen, asteroids$ycen)
-  max_flux = c(asteroids$xmax, asteroids$ymax)
+  cen_flux = c(ast$xcen, ast$ycen)
+  max_flux = c(ast$xmax, ast$ymax)
   
+  #Binding locations together for records
+  RA_points = c(tr[[1]], tl[[1]], br[[1]], bl[[1]], top[[1]], bottom[[1]])
+  Dec_points = c(tr[[2]], tl[[2]], br[[2]], bl[[2]], top[[2]], bottom[[2]])
+  points = c(RA_points, Dec_Points)
+  
+  #Binding locations together for imaging
   x = c(top_right[[1]], top_left[[1]], bottom_right[[1]], bottom_left[[1]], ave_top[[1]], ave_bottom[[1]], cen_flux[[1]], max_flux[[1]])
   y = c(top_right[[2]], top_left[[2]], bottom_right[[2]], bottom_left[[2]], ave_top[[2]], ave_bottom[[2]], cen_flux[[2]], max_flux[[2]])
   locs = cbind(x,y)
   
-  
-  
   assign(paste0("ast_",name), asteroid_image, envir = .GlobalEnv)
   assign("locations", rbind(locations, locs), envir = .GlobalEnv)
   
-  return(list(ast,1))
+  return(list(points))
 }
 
 
@@ -333,9 +377,10 @@ Image_Maker <- function(segID, groupID, colour, groupcol, segcol){
 }
 
 
-# 
-# Group_Cutter(loc)
-# warnings()
+args = commandArgs(trailingOnly=TRUE)
+loc = args[[1]]
+Group_Cutter(loc)
+warnings()
 
 # 
 # tryCatch({Group_Cutter(loc)}, error = function(e) {print(paste("Error:", e))})
