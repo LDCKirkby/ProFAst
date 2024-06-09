@@ -54,7 +54,7 @@ font_add("Arial", "/Library/Fonts/Arial.ttf")
 args = commandArgs(trailingOnly = TRUE)
 i = as.numeric(args[[1]])
 dir = getwd()
-locs = read.csv("./done.csv")
+locs = read.delim("./done.txt")
 RA_DEC = locs[[i]]
 
 cat("*************\n","Beginning Detection on:",RA_DEC,"\n","*************\n")
