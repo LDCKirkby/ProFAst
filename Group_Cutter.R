@@ -134,7 +134,7 @@ for(i in 1:length(asteroids$segID)){
 
     
     Cutout(target, keyvalues, i)
-    Image_Maker(segID, groupID, colour, locations)
+    Image_Maker(segID, groupID, colour)
     
     
   }else if(grepl(colour,"r") == TRUE){
@@ -170,7 +170,7 @@ for(i in 1:length(asteroids$segID)){
     
     
     Cutout(target, keyvalues, i)
-    Image_Maker(segID, groupID, colour, locations)
+    Image_Maker(segID, groupID, colour)
     
   }else if(grepl(colour,"i") == TRUE){
     image_header = i_image$header
@@ -205,7 +205,7 @@ for(i in 1:length(asteroids$segID)){
     
     
     Cutout(target, keyvalues, i)
-    Image_Maker(segID, groupID, colour, locations)
+    Image_Maker(segID, groupID, colour)
     
   }
   asteroids[i,] = target
