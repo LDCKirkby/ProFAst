@@ -97,6 +97,7 @@ for(i in 1:length(asteroids$segID)){
   cat("Imaging groupID:", groupID, ", segID:",segID, ", i:", i, ", colour:", colour,"\n")
   
   locations = c()
+  assign("locations", locations, envir = .GlobalEnv)
 
   if(grepl(colour,"g") == TRUE){
     image_header = g_image$header
@@ -305,7 +306,7 @@ Top_bottom <- function(image, ast, ID, hdr){
   locs = cbind(x,y)
   
   assign(paste0("ast_",name), asteroid_image, envir = .GlobalEnv)
-  assign("locations", rbind(locations, locs), envir = .GlobalEnv)
+  assign("locations", rbind(locs), envir = .GlobalEnv)
   
   return(list(points))
 }
