@@ -52,8 +52,10 @@ font_add("Arial", "/Library/Fonts/Arial.ttf")
 
 
 args = commandArgs(trailingOnly = TRUE)
-RA_DEC = as.numeric(args[[1]])
+i = as.numeric(args[[1]])
 dir = getwd()
+locs = read.csv("./done.txt")
+RA_DEC = locs[[i]]
 
 cat("*************\n","Beginning Detection on:",RA_DEC,"\n","*************\n")
 frames <- Pre_Proc(RA_DEC, "Simon")
