@@ -1,21 +1,21 @@
-library(celestial)
-library(devtools)
-library(Cairo)
-library(Rfits)
-library(Rwcs)
-library(ProFound)
-library(magicaxis)
-library(data.table)
-library(plotrix)
-require(foreign)
-require(MASS)
-library(ProPane)
-library(gsubfn)
-library(fs)
-library(showtext)
-source("./R_Files/Pre_Proc.R")
-font_add("Arial", "/Library/Fonts/Arial.ttf")
-showtext_auto()
+# library(celestial)
+# library(devtools)
+# library(Cairo)
+# library(Rfits)
+# library(Rwcs)
+# library(ProFound)
+# library(magicaxis)
+# library(data.table)
+# library(plotrix)
+# require(foreign)
+# require(MASS)
+# library(ProPane)
+# library(gsubfn)
+# library(fs)
+# library(showtext)
+# source("./R_Files/Pre_Proc.R")
+# font_add("Arial", "/Library/Fonts/Arial.ttf")
+# showtext_auto()
 
 `%notin%`<-Negate(`%in%`)
 # KEY for understanding code 
@@ -389,12 +389,12 @@ Image_Maker <- function(segID, groupID, colour, segcol, groupcol){
   
   dev.off()
 }
-
-
-args = commandArgs(trailingOnly=TRUE)
-loc = args[[1]]
-Group_Cutter(loc)
-warnings()
+# 
+# 
+# args = commandArgs(trailingOnly=TRUE)
+# loc = args[[1]]
+# Group_Cutter(loc)
+# warnings()
 
 # 
 # tryCatch({Group_Cutter(loc)}, error = function(e) {print(paste("Error:", e))})
