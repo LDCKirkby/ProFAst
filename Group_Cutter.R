@@ -124,7 +124,10 @@ for(i in 1:length(asteroids$segID)){
     }else{
       list[group_edges] <- Top_bottom(groupim, target, groupID, hdr)
       group_index = which(colnames(target)=="group_tl_RA")
-      target[,group_index:group_index+12]=group_edges
+      for(i in 1:12){
+        target[,group_index+i] = group_index[i]
+      }
+      #target[,group_index:group_index+12]=group_edges
     }
 
     
@@ -140,7 +143,10 @@ for(i in 1:length(asteroids$segID)){
     segcol = "firebrick4"
     list[segment_edges] <- Top_bottom(segim, target, groupID, hdr)
     segment_index = which(colnames(target)=="segment_tl_RA")
-    target[,segment_index:segment_index+12]=segment_edges
+    for(i in 1:12){
+      target[,segment_index+i] = segment_edges[i]
+    }
+    #target[,segment_index:segment_index+12]=segment_edges
     
     #Identify if there is a corresponding groupID for the segID
     group_image = groupim
@@ -152,7 +158,10 @@ for(i in 1:length(asteroids$segID)){
     }else{
       list[group_edges] <- Top_bottom(groupim, target, groupID, hdr)
       group_index = which(colnames(target)=="group_tl_RA")
-      target[,group_index:group_index+12]=group_edges
+      for(i in 1:12){
+        target[,group_index+i] = group_index[i]
+      }
+      #target[,group_index:group_index+12]=group_edges
     }
     
     
@@ -167,7 +176,10 @@ for(i in 1:length(asteroids$segID)){
     segcol = "blue"
     list[segment_edges] <- Top_bottom(segim, target, groupID, hdr)
     segment_index = which(colnames(target)=="segment_tl_RA")
-    target[,segment_index:segment_index+12]=segment_edges
+    for(i in 1:12){
+      target[,segment_index+i] = segment_edges[i]
+    }
+    #target[,segment_index:segment_index+12]=segment_edges
     
     #Identify if there is a corresponding groupID for the segID
     group_image = groupim
@@ -179,7 +191,10 @@ for(i in 1:length(asteroids$segID)){
     }else{
       list[group_edges] <- Top_bottom(groupim, target, groupID, hdr)
       group_index = which(colnames(target)=="group_tl_RA")
-      target[,group_index:group_index+12]=group_edges
+      for(i in 1:12){
+        target[,group_index+i] = group_index[i]
+      }
+      #target[,group_index:group_index+12]=group_edges
     }
     
     
