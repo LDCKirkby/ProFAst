@@ -297,7 +297,7 @@ Top_bottom <- function(image, ast, ID, hdr){
   #Binding locations together for records
   RA_points = c(tr[[1]], tl[[1]], br[[1]], bl[[1]], top[[1]], bottom[[1]])
   Dec_points = c(tr[[2]], tl[[2]], br[[2]], bl[[2]], top[[2]], bottom[[2]])
-  points = c(RA_points, Dec_Points)
+  points = c(RA_points, Dec_points)
   
   #Binding locations together for imaging
   x = c(top_right[[1]], top_left[[1]], bottom_right[[1]], bottom_left[[1]], ave_top[[1]], ave_bottom[[1]], cen_flux[[1]], max_flux[[1]])
