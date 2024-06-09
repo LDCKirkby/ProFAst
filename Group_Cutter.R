@@ -106,28 +106,25 @@ for(i in 1:length(asteroids$segID)){
     groupcol = "seagreen2"
     segcol = "green"
 
-    
     list[segment_edges] <- Top_bottom(segim, target, groupID, hdr)
     segment_index = which(colnames(target)=="segment_tl_RA")
     for(i in 1:12){
       target[,segment_index+i] = segment_edges[i]
     }
-    #target[,segment_index:segment_index+12]=segment_edges
-    
+
     #Identify if there is a corresponding groupID for the segID
     group_image = groupim
     group_image[group_image%notin%groupID]=0
     num_points <- which(group_image == groupID, arr.ind = TRUE)
     #If no valid groupID then only segment edges are graphed
     if(length(num_points) < 2){
-      cat("No groupID with ID = ", ID, "\n")
+      cat("No groupID with ID = ", groupID, "\n")
     }else{
       list[group_edges] <- Top_bottom(groupim, target, groupID, hdr)
       group_index = which(colnames(target)=="group_tl_RA")
       for(i in 1:12){
         target[,group_index+i] = group_index[i]
       }
-      #target[,group_index:group_index+12]=group_edges
     }
 
     
@@ -141,27 +138,26 @@ for(i in 1:length(asteroids$segID)){
     hdr = r_hdr$hdr
     groupcol = "firebrick2"
     segcol = "firebrick4"
+    
     list[segment_edges] <- Top_bottom(segim, target, groupID, hdr)
     segment_index = which(colnames(target)=="segment_tl_RA")
     for(i in 1:12){
       target[,segment_index+i] = segment_edges[i]
     }
-    #target[,segment_index:segment_index+12]=segment_edges
-    
+
     #Identify if there is a corresponding groupID for the segID
     group_image = groupim
     group_image[group_image%notin%groupID]=0
     num_points <- which(group_image == groupID, arr.ind = TRUE)
     #If no valid groupID then only segment edges are graphed
     if(length(num_points) < 2){
-      cat("No groupID with ID = ", ID, "\n")
+      cat("No groupID with ID = ", groupID, "\n")
     }else{
       list[group_edges] <- Top_bottom(groupim, target, groupID, hdr)
       group_index = which(colnames(target)=="group_tl_RA")
       for(i in 1:12){
         target[,group_index+i] = group_index[i]
       }
-      #target[,group_index:group_index+12]=group_edges
     }
     
     
@@ -174,27 +170,26 @@ for(i in 1:length(asteroids$segID)){
     hdr = i_hdr$hdr
     groupcol = "skyblue"
     segcol = "blue"
+    
     list[segment_edges] <- Top_bottom(segim, target, groupID, hdr)
     segment_index = which(colnames(target)=="segment_tl_RA")
     for(i in 1:12){
       target[,segment_index+i] = segment_edges[i]
     }
-    #target[,segment_index:segment_index+12]=segment_edges
-    
+
     #Identify if there is a corresponding groupID for the segID
     group_image = groupim
     group_image[group_image%notin%groupID]=0
     num_points <- which(group_image == groupID, arr.ind = TRUE)
     #If no valid groupID then only segment edges are graphed
     if(length(num_points) < 2){
-      cat("No groupID with ID = ", ID, "\n")
+      cat("No groupID with ID = ", groupID, "\n")
     }else{
       list[group_edges] <- Top_bottom(groupim, target, groupID, hdr)
       group_index = which(colnames(target)=="group_tl_RA")
       for(i in 1:12){
         target[,group_index+i] = group_index[i]
       }
-      #target[,group_index:group_index+12]=group_edges
     }
     
     
