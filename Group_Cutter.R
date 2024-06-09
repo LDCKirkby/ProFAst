@@ -103,8 +103,10 @@ for(i in 1:length(asteroids$segID)){
     image_header = g_image$header
     keyvalues = g_image$keyvalues
     hdr = g_hdr$hdr
+    assign("groupcol", "seagreen2", envir = .GlobalEnv)
     groupcol = "seagreen2"
     segcol = "green"
+    assign("groupcol", "green", envir = .GlobalEnv)
     
     
     list[segment_edges] <- Top_bottom(segim, target, groupID, hdr)
@@ -132,15 +134,17 @@ for(i in 1:length(asteroids$segID)){
 
     
     Cutout(target, keyvalues, i)
-    Image_Maker(segID, groupID, colour, locations, groupcol, segcol)
+    Image_Maker(segID, groupID, colour, locations)
     
     
   }else if(grepl(colour,"r") == TRUE){
     image_header = r_image$header
     keyvalues = r_image$keyvalues
     hdr = r_hdr$hdr
+    assign("groupcol", "firebrick2", envir = .GlobalEnv)
     groupcol = "firebrick2"
     segcol = "firebrick4"
+    assign("groupcol", "firebrick4", envir = .GlobalEnv)
     list[segment_edges] <- Top_bottom(segim, target, groupID, hdr)
     segment_index = which(colnames(target)=="segment_tl_RA")
     for(i in 1:12){
@@ -166,14 +170,16 @@ for(i in 1:length(asteroids$segID)){
     
     
     Cutout(target, keyvalues, i)
-    Image_Maker(segID, groupID, colour, locations, groupcol, segcol)
+    Image_Maker(segID, groupID, colour, locations)
     
   }else if(grepl(colour,"i") == TRUE){
     image_header = i_image$header
     keyvalues = i_image$keyvalues
     hdr = i_hdr$hdr
+    assign("groupcol","skyblue", envir = .GlobalEnv)
     groupcol = "skyblue"
     segcol = "blue"
+    assign("groupcol","blue", envir = .GlobalEnv)
     list[segment_edges] <- Top_bottom(segim, target, groupID, hdr)
     segment_index = which(colnames(target)=="segment_tl_RA")
     for(i in 1:12){
@@ -199,7 +205,7 @@ for(i in 1:length(asteroids$segID)){
     
     
     Cutout(target, keyvalues, i)
-    Image_Maker(segID, groupID, colour, locations, groupcol, segcol)
+    Image_Maker(segID, groupID, colour, locations)
     
   }
   asteroids[i,] = target
@@ -358,7 +364,7 @@ Cutout <- function(target, keyvalues, i){
 
   
 
-Image_Maker <- function(segID, groupID, colour, groupcol, segcol){
+Image_Maker <- function(segID, groupID, colour){
   
   cat("Printing ",colour,segID," postage stamp\n")
   png(filename=paste0("./",loc,"/Group_Cutouts/",colour,segID,".png"), family = "")
