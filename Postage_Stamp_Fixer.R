@@ -52,16 +52,9 @@ font_add("Arial", "/Library/Fonts/Arial.ttf")
 
 
 args = commandArgs(trailingOnly = TRUE)
-i = as.numeric(args[[1]])
-computer = as.character(args[[2]])
+RA_DEC = as.numeric(args[[1]])
 dir = getwd()
-kids = as.data.frame(read.csv("./old_todo.csv"))
 
-if(grepl(".", kids$RA[i], fixed = TRUE)){
-  RA_DEC = paste0(kids$RA[i],"_",kids$Dec[i])
-}else{
-  RA_DEC = paste0(kids$RA[i],".0_",kids$Dec[i])
-}
 cat("*************\n","Beginning Detection on:",RA_DEC,"\n","*************\n")
 frames <- Pre_Proc(RA_DEC, computer)
 
