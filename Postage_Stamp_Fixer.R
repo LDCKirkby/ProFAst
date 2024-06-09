@@ -56,7 +56,7 @@ RA_DEC = as.numeric(args[[1]])
 dir = getwd()
 
 cat("*************\n","Beginning Detection on:",RA_DEC,"\n","*************\n")
-frames <- Pre_Proc(RA_DEC, computer)
+frames <- Pre_Proc(RA_DEC)
 
 Flux_Filter(RA_DEC)
 
