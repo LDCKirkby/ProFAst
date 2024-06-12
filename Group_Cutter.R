@@ -141,8 +141,8 @@ for(i in 1:length(asteroids$segID)){
     
     list[segment_edges] <- Top_bottom(segim, target, groupID, hdr)
     segment_index = which(colnames(target)=="segment_tl_RA")
-    for(i in 1:12){
-      target[,segment_index+i] = segment_edges[i]
+    for(i in 0:11){
+      target[,segment_index+i] = segment_edges[i+1]
     }
 
     #Identify if there is a corresponding groupID for the segID
@@ -155,8 +155,8 @@ for(i in 1:length(asteroids$segID)){
     }else{
       list[group_edges] <- Top_bottom(groupim, target, groupID, hdr)
       group_index = which(colnames(target)=="group_tl_RA")
-      for(i in 1:12){
-        target[,group_index+i] = group_index[i]
+      for(i in 0:11){
+        target[,group_index+i] = group_index[i+1]
       }
     }
     
@@ -173,8 +173,8 @@ for(i in 1:length(asteroids$segID)){
     
     list[segment_edges] <- Top_bottom(segim, target, groupID, hdr)
     segment_index = which(colnames(target)=="segment_tl_RA")
-    for(i in 1:12){
-      target[,segment_index+i] = segment_edges[i]
+    for(i in 0:11){
+      target[,segment_index+i] = segment_edges[i+1]
     }
 
     #Identify if there is a corresponding groupID for the segID
@@ -187,8 +187,8 @@ for(i in 1:length(asteroids$segID)){
     }else{
       list[group_edges] <- Top_bottom(groupim, target, groupID, hdr)
       group_index = which(colnames(target)=="group_tl_RA")
-      for(i in 1:12){
-        target[,group_index+i] = group_index[i]
+      for(i in 0:11){
+        target[,group_index+i] = group_index[i+1]
       }
     }
     
