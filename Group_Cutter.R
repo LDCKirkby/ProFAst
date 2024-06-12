@@ -103,7 +103,7 @@ for(i in 1:length(asteroids$segID)){
     groupcol = "seagreen2"
     segcol = "green"
 
-    segment_edges <- Top_bottom(segim, target, groupID, hdr)
+    list[segment_edges] <- Top_bottom(segim, target, segID, hdr)
     segment_index = which(colnames(target)=="segment_tl_RA")
     for(i in 0:11){
       target[,segment_index+i] = segment_edges[i+1]
@@ -117,7 +117,7 @@ for(i in 1:length(asteroids$segID)){
     if(length(num_points) < 2){
       cat("No groupID with ID = ", groupID, "\n")
     }else{
-      group_edges <- Top_bottom(groupim, target, groupID, hdr)
+      list[group_edges] <- Top_bottom(groupim, target, groupID, hdr)
       group_index = which(colnames(target)=="group_tl_RA")
       for(i in 0:11){
         target[,group_index+i] = group_index[i+1]
@@ -136,7 +136,7 @@ for(i in 1:length(asteroids$segID)){
     groupcol = "firebrick2"
     segcol = "firebrick4"
     
-    segment_edges <- Top_bottom(segim, target, groupID, hdr)
+    list[segment_edges] <- Top_bottom(segim, target, segID, hdr)
     segment_index = which(colnames(target)=="segment_tl_RA")
     for(i in 1:12){
       target[,segment_index+i] = segment_edges[i]
@@ -150,7 +150,7 @@ for(i in 1:length(asteroids$segID)){
     if(length(num_points) < 2){
       cat("No groupID with ID = ", groupID, "\n")
     }else{
-      group_edges <- Top_bottom(groupim, target, groupID, hdr)
+      list[group_edges] <- Top_bottom(groupim, target, groupID, hdr)
       group_index = which(colnames(target)=="group_tl_RA")
       for(i in 1:12){
         target[,group_index+i] = group_index[i]
@@ -168,7 +168,7 @@ for(i in 1:length(asteroids$segID)){
     groupcol = "skyblue"
     segcol = "blue"
     
-    segment_edges <- Top_bottom(segim, target, groupID, hdr)
+    list[segment_edges] <- Top_bottom(segim, target, segID, hdr)
     segment_index = which(colnames(target)=="segment_tl_RA")
     for(i in 1:12){
       target[,segment_index+i] = segment_edges[i]
@@ -182,7 +182,7 @@ for(i in 1:length(asteroids$segID)){
     if(length(num_points) < 2){
       cat("No groupID with ID = ", groupID, "\n")
     }else{
-      group_edges <- Top_bottom(groupim, target, groupID, hdr)
+      list[group_edges] <- Top_bottom(groupim, target, groupID, hdr)
       group_index = which(colnames(target)=="group_tl_RA")
       for(i in 1:12){
         target[,group_index+i] = group_index[i]
