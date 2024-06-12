@@ -38,24 +38,7 @@ cat("*********\n\n")
 
 write.csv(filtered_asteroids, file = paste0("./",loc,"/",loc,"_Filtered_Asteroids.csv"))
 
-#N100 filter, filter done in all bands for completeness, even though they are they are all the same value
-cat("*********\n")
-cat("Performing small N100 filter\n")
-N100_filtered_asteroids = subset(filtered_asteroids, N100 >= 100 | N100_i1xt >= 100 | N100_rxt >= 100 | N100_gt >= 100)
-
-cat("Performing large N100 filter\n")
-N100_filtered_asteroids = subset(N100_filtered_asteroids, N100 <= 2500 | N100_i1xt <= 2500 | N100_rxt <= 2500 | N100_gt <= 2500)
-
-
-cat("Removed ", length(filtered_asteroids$groupID) - length(N100_filtered_asteroids$groupID), " small errors\n")
-cat("Final number of ", length(N100_filtered_asteroids$groupID), " possible asteroids\n")
-
-write.csv(N100_filtered_asteroids, file = paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv"))
-cat("Writing to " ,paste0("./", loc,"/",loc,"_N100_Filtered_Asteroids.csv"),"\n")
-cat("*********\n\n")
-
-
-rm(possible_asteroids, top_tail, filtered_asteroids, N100_filtered_asteroids) 
+rm(possible_asteroids, top_tail, filtered_asteroids) 
 gc()
 
 

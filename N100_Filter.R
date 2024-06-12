@@ -14,8 +14,8 @@ N100_Filter <- function(loc){
   cat("Applying N100 filter\n")
   cat("*********\n\n")
   
-  filtered_asteroids = read.csv(paste0("./", loc,"/",loc,"Filtered_Asteroids.csv"))
-  
+  filtered_asteroids = read.csv(paste0("./", loc,"/",loc,"_Filtered_Asteroids.csv"))
+
   #N100 filter, filter done in all bands for completeness, even though they are they are all the same value
   cat("*********\n")
   cat("Performing small N100 filter\n")
