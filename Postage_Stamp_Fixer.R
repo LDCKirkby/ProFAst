@@ -58,7 +58,7 @@ locs = read.delim("./done.txt")
 RA_DEC = locs[i,]
 
 cat("*************\n","Beginning Detection on:",RA_DEC,"\n","*************\n")
-frames <- Pre_Proc(RA_DEC, "Simon")
+list[frames] <- Pre_Proc(RA_DEC, "Simon")
 
 Flux_Filter(RA_DEC)
 
@@ -66,7 +66,7 @@ Axrat_Filter(RA_DEC)
 
 N100_Filter(RA_DEC)
 
-Group_Cutter(RA_DEC, frames)
+Group_Cutter(RA_DEC)
 
 warnings()
 
