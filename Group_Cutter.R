@@ -72,8 +72,8 @@
   }
   
   cat("**************************\n")
-  Edger(segimcut)
-  Edger(groupcut)
+  Edger(segim)
+  Edger(groupim)
   cat("**************************\n")
   cat("Time to start printing images!\n")
 
