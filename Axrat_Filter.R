@@ -8,7 +8,7 @@
 # require(MASS)
 #
 
-Axrat_Comparison <- function(loc){
+Axrat_Filter <- function(loc){
 
 possible_asteroids = read.csv(paste0("./",loc,"/Possible_Asteroids.csv"), header = TRUE, fill = TRUE)
 possible_asteroids = as.data.table(possible_asteroids)
