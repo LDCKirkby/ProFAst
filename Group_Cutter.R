@@ -138,8 +138,8 @@ for(i in 1:length(asteroids$segID)){
     
     list[segment_edges] <- Top_bottom(segim, target, segID, hdr)
     segment_index = which(colnames(target)=="segment_tl_RA")
-    for(i in 1:12){
-      target[,segment_index+i] = segment_edges[i]
+    for(i in 0:11){
+      target[,segment_index+i] = segment_edges[i+1]
     }
 
     #Identify if there is a corresponding groupID for the segID
@@ -152,8 +152,8 @@ for(i in 1:length(asteroids$segID)){
     }else{
       list[group_edges] <- Top_bottom(groupim, target, groupID, hdr)
       group_index = which(colnames(target)=="group_tl_RA")
-      for(i in 1:12){
-        target[,group_index+i] = group_index[i]
+      for(i in 0:11){
+        target[,group_index+i] = group_index[i+1]
       }
     }
     
@@ -170,8 +170,8 @@ for(i in 1:length(asteroids$segID)){
     
     list[segment_edges] <- Top_bottom(segim, target, segID, hdr)
     segment_index = which(colnames(target)=="segment_tl_RA")
-    for(i in 1:12){
-      target[,segment_index+i] = segment_edges[i]
+    for(i in 0:11){
+      target[,segment_index+i] = segment_edges[i+1]
     }
 
     #Identify if there is a corresponding groupID for the segID
@@ -184,8 +184,8 @@ for(i in 1:length(asteroids$segID)){
     }else{
       list[group_edges] <- Top_bottom(groupim, target, groupID, hdr)
       group_index = which(colnames(target)=="group_tl_RA")
-      for(i in 1:12){
-        target[,group_index+i] = group_index[i]
+      for(i in 0:11){
+        target[,group_index+i] = group_index[i+1]
       }
     }
     
@@ -372,7 +372,7 @@ Image_Maker <- function(segID, groupID, colour, segcol, groupcol, asteroid){
   Rwcs_imageRGB(R=cutim_r, G=cutim_g, B=cutim_i, Rkeyvalues = r_image$keyvalues, Gkeyvalues = g_image$keyvalues, Bkeyvalues = i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
   
   cat("Adding segment outlines\n")
-  magimage(segimcut$image,col=c(NA,rep("moccasin",max(segimcut$image))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.25)
+  magimage(segimcut$image,col=c(NA,rep("moccasin",max(segimcut$image))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.15)
   magimage(groupcut$image,col=c(NA,rep("peru",max(groupcut$image))),magmap = FALSE,add=TRUE,sparse=1,lwd=1)
   
   magimage(ast_segimcut$image,col=c(NA,rep(segcol, max(ast_segimcut$image))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.5)
