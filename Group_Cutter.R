@@ -311,12 +311,12 @@ Top_bottom <- function(image, ast, ID, hdr){
   points = c(RA_points, Dec_points)
   
   #Binding locations together for imaging
-  # x = c(top_right[[1]], top_left[[1]], bottom_right[[1]], bottom_left[[1]], ave_top[[1]], ave_bottom[[1]], cen_flux[[1]], max_flux[[1]])
-  # y = c(top_right[[2]], top_left[[2]], bottom_right[[2]], bottom_left[[2]], ave_top[[2]], ave_bottom[[2]], cen_flux[[2]], max_flux[[2]])
-  # locs = cbind(x,y)
+  x = c(top_right[[1]], top_left[[1]], bottom_right[[1]], bottom_left[[1]], ave_top[[1]], ave_bottom[[1]], cen_flux[[1]], max_flux[[1]])
+  y = c(top_right[[2]], top_left[[2]], bottom_right[[2]], bottom_left[[2]], ave_top[[2]], ave_bottom[[2]], cen_flux[[2]], max_flux[[2]])
+  locs = cbind(x,y)
   
   assign(paste0("ast_",name), asteroid_image, envir = .GlobalEnv)
-  # assign("locations", rbind(locations, locs), envir = .GlobalEnv)
+  assign(paste0(name,"_locs"), locs, envir = .GlobalEnv)
   
   return(list(points))
 }
@@ -379,11 +379,7 @@ Image_Maker <- function(segID, groupID, colour, segcol, groupcol, asteroid){
   magimage(ast_groupcut$image,col=c(NA,rep(groupcol, max(ast_groupcut$image))),magmap=FALSE,add=TRUE,sparse=1,lwd=1)
   
   cat("Adding max & min points\n")
-  x = c(asteroid$segment_tl_RA, asteroid$segment_tr_RA , asteroid$segment_bl_RA , asteroid$segment_br_RA , asteroid$segment_top_RA , asteroid$segment_bot_RA, asteroid$RAcen, asteroid$RAmax)
-  y = c(asteroid$segment_tl_Dec, asteroid$segment_tr_Dec , asteroid$segment_bl_Dec , asteroid$segment_br_Dec , asteroid$segment_top_Dec , asteroid$segment_bot_Dec, asteroid$Deccen, asteroid$Decmax)
-  min_max_seg = data.frame(x, y)
-
-  points(min_max_seg, col=c("orangered" , "orange", "sienna1", "darkviolet", "mediumorchid" , "darkmagenta", "hotpink", "gold"), pch = 4, lwd = 3)
+  points(segimcut_locs, col=c("orangered" , "orange", "sienna1", "darkviolet", "mediumorchid" , "darkmagenta", "hotpink", "gold"), pch = 4, lwd = 3)
   
   #legend(x ="topright", legend = c("Top Right", "Top Left", "Bottom Right", "Bottom Left", "Average Top", "Average Bottom", "Center of Flux", "Max Flux"), pch = c(2,2,2,2), col = c("orangered" , "orange", "sienna1", "darkviolet", "mediumorchid" , "darkmagenta", "hotpink", "gold"))
   
