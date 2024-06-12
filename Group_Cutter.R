@@ -82,8 +82,6 @@ for(i in 1:length(asteroids$segID)){
   assign("i", i, envir = .GlobalEnv)
   target = asteroids[i,]
 
-  #i = which(asteroids$segID == segID)[1]
-  #segID = asteroids$segID[[i]]
   groupID = target$groupID
   assign("groupID", groupID, envir = .GlobalEnv)
   segID = target$segID
@@ -316,7 +314,7 @@ Top_bottom <- function(image, ast, ID, hdr){
   locs = cbind(x,y)
   
   assign(paste0("ast_",name), asteroid_image, envir = .GlobalEnv)
-  assign(paste0(name,"_locs"), locs, envir = .GlobalEnv)
+  assign(paste0("locs"), locs, envir = .GlobalEnv)
   
   return(list(points))
 }
@@ -379,7 +377,7 @@ Image_Maker <- function(segID, groupID, colour, segcol, groupcol, asteroid){
   magimage(ast_groupcut$image,col=c(NA,rep(groupcol, max(ast_groupcut$image))),magmap=FALSE,add=TRUE,sparse=1,lwd=1)
   
   cat("Adding max & min points\n")
-  points(segimcut_locs, col=c("orangered" , "orange", "sienna1", "darkviolet", "mediumorchid" , "darkmagenta", "hotpink", "gold"), pch = 4, lwd = 3)
+  points(locs, col=c("orangered" , "orange", "sienna1", "darkviolet", "mediumorchid" , "darkmagenta", "hotpink", "gold"), pch = 4, lwd = 3)
   
   #legend(x ="topright", legend = c("Top Right", "Top Left", "Bottom Right", "Bottom Left", "Average Top", "Average Bottom", "Center of Flux", "Max Flux"), pch = c(2,2,2,2), col = c("orangered" , "orange", "sienna1", "darkviolet", "mediumorchid" , "darkmagenta", "hotpink", "gold"))
   
