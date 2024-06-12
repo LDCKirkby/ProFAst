@@ -95,9 +95,6 @@ for(i in 1:length(asteroids$segID)){
   colour = target$Colour
 
   cat("Imaging groupID:", groupID, ", segID:",segID, ", i:", i, ", colour:", colour,"\n")
-  
-  # locations = c()
-  # assign("locations", locations, envir = .GlobalEnv)
 
   if(grepl(colour,"g") == TRUE){
     image_header = g_image$header
@@ -105,12 +102,6 @@ for(i in 1:length(asteroids$segID)){
     hdr = g_hdr$hdr
     groupcol = "seagreen2"
     segcol = "green"
-
-    list[segment_edges] <- Top_bottom(segim, target, groupID, hdr)
-    segment_index = which(colnames(target)=="segment_tl_RA")
-    for(i in 0:11){
-      target[,segment_index+i] = segment_edges[i+1]
-    }
 
     #Identify if there is a corresponding groupID for the segID
     group_image = groupim
@@ -126,7 +117,12 @@ for(i in 1:length(asteroids$segID)){
         target[,group_index+i] = group_index[i+1]
       }
     }
-
+    
+    list[segment_edges] <- Top_bottom(segim, target, groupID, hdr)
+    segment_index = which(colnames(target)=="segment_tl_RA")
+    for(i in 0:11){
+      target[,segment_index+i] = segment_edges[i+1]
+    }
     
     Cutout(target, keyvalues, i)
     Image_Maker(segID, groupID, colour, segcol, groupcol, target)
@@ -139,11 +135,6 @@ for(i in 1:length(asteroids$segID)){
     groupcol = "firebrick2"
     segcol = "firebrick4"
     
-    list[segment_edges] <- Top_bottom(segim, target, groupID, hdr)
-    segment_index = which(colnames(target)=="segment_tl_RA")
-    for(i in 0:11){
-      target[,segment_index+i] = segment_edges[i+1]
-    }
 
     #Identify if there is a corresponding groupID for the segID
     group_image = groupim
@@ -160,6 +151,11 @@ for(i in 1:length(asteroids$segID)){
       }
     }
     
+    list[segment_edges] <- Top_bottom(segim, target, groupID, hdr)
+    segment_index = which(colnames(target)=="segment_tl_RA")
+    for(i in 0:11){
+      target[,segment_index+i] = segment_edges[i+1]
+    }
     
     Cutout(target, keyvalues, i)
     Image_Maker(segID, groupID, colour, segcol, groupcol, target)
@@ -170,12 +166,6 @@ for(i in 1:length(asteroids$segID)){
     hdr = i_hdr$hdr
     groupcol = "skyblue"
     segcol = "blue"
-    
-    list[segment_edges] <- Top_bottom(segim, target, groupID, hdr)
-    segment_index = which(colnames(target)=="segment_tl_RA")
-    for(i in 0:11){
-      target[,segment_index+i] = segment_edges[i+1]
-    }
 
     #Identify if there is a corresponding groupID for the segID
     group_image = groupim
@@ -192,6 +182,11 @@ for(i in 1:length(asteroids$segID)){
       }
     }
     
+    list[segment_edges] <- Top_bottom(segim, target, groupID, hdr)
+    segment_index = which(colnames(target)=="segment_tl_RA")
+    for(i in 0:11){
+      target[,segment_index+i] = segment_edges[i+1]
+    }
     
     Cutout(target, keyvalues, i)
     Image_Maker(segID, groupID, colour, segcol, groupcol, target)
@@ -314,12 +309,12 @@ Top_bottom <- function(image, ast, ID, hdr){
   points = c(RA_points, Dec_points)
   
   #Binding locations together for imaging
-  # x = c(top_right[[1]], top_left[[1]], bottom_right[[1]], bottom_left[[1]], ave_top[[1]], ave_bottom[[1]], cen_flux[[1]], max_flux[[1]])
-  # y = c(top_right[[2]], top_left[[2]], bottom_right[[2]], bottom_left[[2]], ave_top[[2]], ave_bottom[[2]], cen_flux[[2]], max_flux[[2]])
-  # locs = cbind(x,y)
+  x = c(top_right[[1]], top_left[[1]], bottom_right[[1]], bottom_left[[1]], ave_top[[1]], ave_bottom[[1]], cen_flux[[1]], max_flux[[1]])
+  y = c(top_right[[2]], top_left[[2]], bottom_right[[2]], bottom_left[[2]], ave_top[[2]], ave_bottom[[2]], cen_flux[[2]], max_flux[[2]])
+  locs = cbind(x,y)
   
   assign(paste0("ast_",name), asteroid_image, envir = .GlobalEnv)
-  # assign("locations", rbind(locations, locs), envir = .GlobalEnv)
+  assign("locations", locs, envir = .GlobalEnv)
   
   return(list(points))
 }
