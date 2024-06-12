@@ -329,10 +329,10 @@ Top_bottom <- function(image, ast, ID, hdr){
 Cutout <- function(target, keyvalues, i){
   # galpos=asteroids[asteroids$segID == segID, c("xmax","ymax")]
   galradec = target[c("RAcen", "Deccen")]
-  cat(galradec)
+  print(galradec)
   #galradec = asteroids[i , c("RAcen", "Deccen")]
   galpos=as.integer(Rwcs_s2p(RA=galradec$RAcen, Dec=galradec$Deccen, keyvalues=keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
-  cat(galpos)
+  print(galpos)
   cutim_g=g_image[galpos,box=box]
   cutim_r=r_image[galpos,box=box]
   cutim_i=i_image[galpos,box=box]
