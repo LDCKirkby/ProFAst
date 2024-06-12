@@ -10,7 +10,7 @@
 # library(dplyr)
 # #
 
-Fulx_Filter <- function(loc){
+Flux_Filter <- function(loc){
 
   
   
