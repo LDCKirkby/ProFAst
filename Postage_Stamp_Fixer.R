@@ -58,7 +58,7 @@ locs = read.delim("./done.txt")
 RA_DEC = locs[i,]
 
 cat("*************\n","Beginning Detection on:",RA_DEC,"\n","*************\n")
-list[frames] <- Pre_Proc(RA_DEC, "Simon")
+# list[frames] <- Pre_Proc(RA_DEC, "Simon")
 
 Flux_Filter(RA_DEC)
 
