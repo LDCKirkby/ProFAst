@@ -12,8 +12,6 @@
 
 Flux_Filter <- function(loc){
 
-  
-  
 if("objectcati.csv" %in% list.files(path = paste0("./",loc,"/")) == FALSE){
   cat("*********\n")
   cat("Objectcati.csv not found\n")
@@ -47,7 +45,7 @@ if("objectcati.csv" %in% list.files(path = paste0("./",loc,"/")) == FALSE){
   gc()
 }
   
-  
+cat("Reading in objectcati\n")
 cat_groups = read.csv(paste0("./",loc,"/objectcati.csv"))
 cat("*********\n")
 cat(length(cat_groups$X), " Objects Detected\n")
