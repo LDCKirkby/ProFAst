@@ -27,58 +27,58 @@
 
 
 
-Group_Cutter <- function(loc, images){
+  Group_Cutter <- function(loc, images){
+    
+  wid <- 200.0
+  box<-c(2*wid,2*wid)
+  mulim<-22.0
+  kids<-(0.339^2)*(10^(0.4*(0-mulim)))
+  viking<-(0.339^2)*(10^(0.4*(30-mulim)))
   
-wid <- 200.0
-box<-c(2*wid,2*wid)
-mulim<-22.0
-kids<-(0.339^2)*(10^(0.4*(0-mulim)))
-viking<-(0.339^2)*(10^(0.4*(30-mulim)))
-
-assign("wid", wid, envir = .GlobalEnv)
-assign("box", box, envir = .GlobalEnv)
-assign("mulim", mulim, envir = .GlobalEnv)
-assign("kids", kids, envir = .GlobalEnv)
-assign("viking", viking, envir = .GlobalEnv)
-assign("loc", loc, envir = .GlobalEnv)
-
-cat("**************************\n")
-cat("Reading in data\n")
-asteroids = read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv"))
-
-#Add edge variables
-group_edge_points = c("group_tl_RA", "group_tl_Dec", "group_tr_RA", "group_tr_Dec", "group_bl_RA", "group_bl_Dec", "group_br_RA", "group_br_Dec", "group_top_RA", "group_top_Dec", "group_bot_RA", "group_bot_Dec")
-segment_edge_points = c("segment_tl_RA", "segment_tl_Dec", "segment_tr_RA", "segment_tr_Dec", "segment_bl_RA", "segment_bl_Dec", "segment_br_RA", "segment_br_Dec", "segment_top_RA", "segment_top_Dec", "segment_bot_RA", "segment_bot_Dec")
-edge_points = c(group_edge_points, segment_edge_points)
-#Append extra columns to asteroids table
-names = c(colnames(asteroids), edge_points)
-asteroids[,edge_points] <- NA
-
-assign("asteroids", asteroids, envir = .GlobalEnv)
-
-#Make a directory to save the cutouts
-if(dir_exists(paste0("./",loc,"Group_Cutouts")) == TRUE){
-  cat("Group_Cutouts already exists\n")
-  dir_delete(paste0("./",loc,"/Group_Cutouts/"))
-}
-dir.create(paste0("./",loc,"/Group_Cutouts/"))
-
-if(missing(images)){
-  cat("Images not supplied\n")
-  Data_Reader(loc)
-}else{
-  assign("images", images, envir = .GlobalEnv)
-  Data_Reader(loc,images)
-}
-
-
-cat("**************************\n")
-
-Edger(segim)
-Edger(groupim)
-
-cat("**************************\n")
-cat("Time to start printing images!\n")
+  assign("wid", wid, envir = .GlobalEnv)
+  assign("box", box, envir = .GlobalEnv)
+  assign("mulim", mulim, envir = .GlobalEnv)
+  assign("kids", kids, envir = .GlobalEnv)
+  assign("viking", viking, envir = .GlobalEnv)
+  assign("loc", loc, envir = .GlobalEnv)
+  
+  cat("**************************\n")
+  cat("Reading in data\n")
+  asteroids = read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv"))
+  
+  #Add edge variables
+  group_edge_points = c("group_tl_RA", "group_tl_Dec", "group_tr_RA", "group_tr_Dec", "group_bl_RA", "group_bl_Dec", "group_br_RA", "group_br_Dec", "group_top_RA", "group_top_Dec", "group_bot_RA", "group_bot_Dec")
+  segment_edge_points = c("segment_tl_RA", "segment_tl_Dec", "segment_tr_RA", "segment_tr_Dec", "segment_bl_RA", "segment_bl_Dec", "segment_br_RA", "segment_br_Dec", "segment_top_RA", "segment_top_Dec", "segment_bot_RA", "segment_bot_Dec")
+  edge_points = c(group_edge_points, segment_edge_points)
+  #Append extra columns to asteroids table
+  names = c(colnames(asteroids), edge_points)
+  asteroids[,edge_points] <- NA
+  
+  assign("asteroids", asteroids, envir = .GlobalEnv)
+  
+  #Make a directory to save the cutouts
+  if(dir_exists(paste0("./",loc,"Group_Cutouts")) == TRUE){
+    cat("Group_Cutouts already exists\n")
+    dir_delete(paste0("./",loc,"/Group_Cutouts/"))
+  }
+  dir.create(paste0("./",loc,"/Group_Cutouts/"))
+  
+  if(missing(images)){
+    cat("Images not supplied\n")
+    Data_Reader(loc)
+  }else{
+    assign("images", images, envir = .GlobalEnv)
+    Data_Reader(loc,images)
+  }
+  
+  
+  cat("**************************\n")
+  
+  Edger(segim)
+  Edger(groupim)
+  
+  cat("**************************\n")
+  cat("Time to start printing images!\n")
 
 for(i in 1:length(asteroids$segID)){
   cat("\n**************************\n")
@@ -96,8 +96,8 @@ for(i in 1:length(asteroids$segID)){
 
   cat("Imaging groupID:", groupID, ", segID:",segID, ", i:", i, ", colour:", colour,"\n")
   
-  locations = c()
-  assign("locations", locations, envir = .GlobalEnv)
+  # locations = c()
+  # assign("locations", locations, envir = .GlobalEnv)
 
   if(grepl(colour,"g") == TRUE){
     image_header = g_image$header
@@ -108,8 +108,8 @@ for(i in 1:length(asteroids$segID)){
 
     list[segment_edges] <- Top_bottom(segim, target, groupID, hdr)
     segment_index = which(colnames(target)=="segment_tl_RA")
-    for(i in 1:12){
-      target[,segment_index+i] = segment_edges[i]
+    for(i in 0:11){
+      target[,segment_index+i] = segment_edges[i+1]
     }
 
     #Identify if there is a corresponding groupID for the segID
@@ -122,14 +122,14 @@ for(i in 1:length(asteroids$segID)){
     }else{
       list[group_edges] <- Top_bottom(groupim, target, groupID, hdr)
       group_index = which(colnames(target)=="group_tl_RA")
-      for(i in 1:12){
-        target[,group_index+i] = group_index[i]
+      for(i in 0:11){
+        target[,group_index+i] = group_index[i+1]
       }
     }
 
     
     Cutout(target, keyvalues, i)
-    Image_Maker(segID, groupID, colour, segcol, groupcol)
+    Image_Maker(segID, groupID, colour, segcol, groupcol, target)
     
     
   }else if(grepl(colour,"r") == TRUE){
@@ -162,7 +162,7 @@ for(i in 1:length(asteroids$segID)){
     
     
     Cutout(target, keyvalues, i)
-    Image_Maker(segID, groupID, colour, segcol, groupcol)
+    Image_Maker(segID, groupID, colour, segcol, groupcol, target)
     
   }else if(grepl(colour,"i") == TRUE){
     image_header = i_image$header
@@ -194,7 +194,7 @@ for(i in 1:length(asteroids$segID)){
     
     
     Cutout(target, keyvalues, i)
-    Image_Maker(segID, groupID, colour, segcol, groupcol)
+    Image_Maker(segID, groupID, colour, segcol, groupcol, target)
     
   }
   asteroids[i,] = target
@@ -314,12 +314,12 @@ Top_bottom <- function(image, ast, ID, hdr){
   points = c(RA_points, Dec_points)
   
   #Binding locations together for imaging
-  x = c(top_right[[1]], top_left[[1]], bottom_right[[1]], bottom_left[[1]], ave_top[[1]], ave_bottom[[1]], cen_flux[[1]], max_flux[[1]])
-  y = c(top_right[[2]], top_left[[2]], bottom_right[[2]], bottom_left[[2]], ave_top[[2]], ave_bottom[[2]], cen_flux[[2]], max_flux[[2]])
-  locs = cbind(x,y)
+  # x = c(top_right[[1]], top_left[[1]], bottom_right[[1]], bottom_left[[1]], ave_top[[1]], ave_bottom[[1]], cen_flux[[1]], max_flux[[1]])
+  # y = c(top_right[[2]], top_left[[2]], bottom_right[[2]], bottom_left[[2]], ave_top[[2]], ave_bottom[[2]], cen_flux[[2]], max_flux[[2]])
+  # locs = cbind(x,y)
   
   assign(paste0("ast_",name), asteroid_image, envir = .GlobalEnv)
-  assign("locations", rbind(locs), envir = .GlobalEnv)
+  # assign("locations", rbind(locations, locs), envir = .GlobalEnv)
   
   return(list(points))
 }
@@ -353,7 +353,7 @@ Cutout <- function(target, keyvalues, i){
 
   
 
-Image_Maker <- function(segID, groupID, colour, segcol, groupcol){
+Image_Maker <- function(segID, groupID, colour, segcol, groupcol, asteroid){
   
   cat("Printing ",colour,segID," postage stamp\n")
   png(filename=paste0("./",loc,"/Group_Cutouts/",colour,segID,".png"), family = "")
@@ -381,9 +381,13 @@ Image_Maker <- function(segID, groupID, colour, segcol, groupcol){
   magimage(ast_groupcut$image,col=c(NA,rep(groupcol, max(ast_groupcut$image))),magmap=FALSE,add=TRUE,sparse=1,lwd=1)
   
   cat("Adding max & min points\n")
-  points(locations, col=c("orangered" , "orange", "sienna1", "darkviolet", "mediumorchid" , "darkmagenta", "hotpink", "gold"), pch = 4, lwd = 3)
+  x = c(asteroid$segment_tl_RA, asteroid$segment_tr_RA , asteroid$segment_bl_RA , asteroid$segment_br_RA , asteroid$segment_top_RA , asteroid$segment_bot_RA, asteroid$RAcen, asteroid$RAmax)
+  y = c(asteroid$segment_tl_Dec, asteroid$segment_tr_Dec , asteroid$segment_bl_Dec , asteroid$segment_br_Dec , asteroid$segment_top_Dec , asteroid$segment_bot_Dec, asteroid$Deccen, asteroid$Decmax)
+  min_max_seg = data.frame(x, y)
+
+  points(min_max_seg, col=c("orangered" , "orange", "sienna1", "darkviolet", "mediumorchid" , "darkmagenta", "hotpink", "gold"), pch = 4, lwd = 3)
   
-  legend(x ="topright", legend = c("Top Right", "Bottom Right", "Right Midpoint", "Top Left", "Bottom Left", "Left Midpoint", "Center of Flux", "Max Flux"), pch = c(3,3,3,3), col = c("orangered" , "orange", "sienna1", "darkviolet", "mediumorchid" , "darkmagenta", "hotpink", "gold"))
+  legend(x ="topright", legend = c("Top Right", "Top Left", "Bottom Right", "Bottom Left", "Average Top", "Average Bottom", "Center of Flux", "Max Flux"), pch = c(2,2,2,2), col = c("orangered" , "orange", "sienna1", "darkviolet", "mediumorchid" , "darkmagenta", "hotpink", "gold"))
   
   text(1,2*wid-50, col=groupcol, label=paste0("segID=",groupcol,segID), cex=2.0, pos=4, family = "")
   
