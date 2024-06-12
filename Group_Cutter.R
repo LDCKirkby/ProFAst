@@ -73,11 +73,6 @@
   
   
   cat("**************************\n")
-  
-  Edger(segim)
-  Edger(groupim)
-  
-  cat("**************************\n")
   cat("Time to start printing images!\n")
 
 for(i in 1:length(asteroids$segID)){
@@ -129,6 +124,8 @@ for(i in 1:length(asteroids$segID)){
 
     
     Cutout(target, keyvalues, i)
+    Edger(segimcut)
+    Edger(groupcut)
     Image_Maker(segID, groupID, colour, segcol, groupcol, target)
     
     
@@ -162,6 +159,8 @@ for(i in 1:length(asteroids$segID)){
     
     
     Cutout(target, keyvalues, i)
+    Edger(segimcut)
+    Edger(groupcut)
     Image_Maker(segID, groupID, colour, segcol, groupcol, target)
     
   }else if(grepl(colour,"i") == TRUE){
@@ -194,6 +193,8 @@ for(i in 1:length(asteroids$segID)){
     
     
     Cutout(target, keyvalues, i)
+    Edger(segimcut)
+    Edger(groupcut)
     Image_Maker(segID, groupID, colour, segcol, groupcol, target)
     
   }
