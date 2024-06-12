@@ -47,12 +47,12 @@
   asteroids = read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv"))
   
   #Add edge variables
-  group_edge_points = c("group_tl_RA", "group_tl_Dec", "group_tr_RA", "group_tr_Dec", "group_bl_RA", "group_bl_Dec", "group_br_RA", "group_br_Dec", "group_top_RA", "group_top_Dec", "group_bot_RA", "group_bot_Dec")
+  #group_edge_points = c("group_tl_RA", "group_tl_Dec", "group_tr_RA", "group_tr_Dec", "group_bl_RA", "group_bl_Dec", "group_br_RA", "group_br_Dec", "group_top_RA", "group_top_Dec", "group_bot_RA", "group_bot_Dec")
   segment_edge_points = c("segment_tl_RA", "segment_tl_Dec", "segment_tr_RA", "segment_tr_Dec", "segment_bl_RA", "segment_bl_Dec", "segment_br_RA", "segment_br_Dec", "segment_top_RA", "segment_top_Dec", "segment_bot_RA", "segment_bot_Dec")
-  edge_points = c(group_edge_points, segment_edge_points)
+  #edge_points = c(group_edge_points, segment_edge_points)
   #Append extra columns to asteroids table
-  names = c(colnames(asteroids), edge_points)
-  asteroids[,edge_points] <- NA
+  names = c(colnames(asteroids), segment_edge_points)
+  asteroids[,segment_edge_points] <- NA
   
   assign("asteroids", asteroids, envir = .GlobalEnv)
   
@@ -114,15 +114,15 @@ for(i in 1:length(asteroids$segID)){
     group_image[group_image%notin%groupID]=0
     num_points <- which(group_image == groupID, arr.ind = TRUE)
     #If no valid groupID then only segment edges are graphed
-    if(length(num_points) < 2){
-      cat("No groupID with ID = ", groupID, "\n")
-    }else{
-      list[group_edges] <- Top_bottom(groupim, target, groupID, hdr)
-      group_index = which(colnames(target)=="group_tl_RA")
-      for(i in 0:11){
-        target[,group_index+i] = group_index[i+1]
-      }
-    }
+    # if(length(num_points) < 2){
+    #   cat("No groupID with ID = ", groupID, "\n")
+    # }else{
+    #   list[group_edges] <- Top_bottom(groupim, target, groupID, hdr)
+    #   group_index = which(colnames(target)=="group_tl_RA")
+    #   for(i in 0:11){
+    #     target[,group_index+i] = group_index[i+1]
+    #   }
+    # }
 
     
     Cutout(target, keyvalues, i)
@@ -147,15 +147,15 @@ for(i in 1:length(asteroids$segID)){
     group_image[group_image%notin%groupID]=0
     num_points <- which(group_image == groupID, arr.ind = TRUE)
     #If no valid groupID then only segment edges are graphed
-    if(length(num_points) < 2){
-      cat("No groupID with ID = ", groupID, "\n")
-    }else{
-      list[group_edges] <- Top_bottom(groupim, target, groupID, hdr)
-      group_index = which(colnames(target)=="group_tl_RA")
-      for(i in 0:11){
-        target[,group_index+i] = group_index[i+1]
-      }
-    }
+    # if(length(num_points) < 2){
+    #   cat("No groupID with ID = ", groupID, "\n")
+    # }else{
+    #   list[group_edges] <- Top_bottom(groupim, target, groupID, hdr)
+    #   group_index = which(colnames(target)=="group_tl_RA")
+    #   for(i in 0:11){
+    #     target[,group_index+i] = group_index[i+1]
+    #   }
+    # }
     
     
     Cutout(target, keyvalues, i)
@@ -179,16 +179,16 @@ for(i in 1:length(asteroids$segID)){
     group_image[group_image%notin%groupID]=0
     num_points <- which(group_image == groupID, arr.ind = TRUE)
     #If no valid groupID then only segment edges are graphed
-    if(length(num_points) < 2){
-      cat("No groupID with ID = ", groupID, "\n")
-    }else{
-      list[group_edges] <- Top_bottom(groupim, target, groupID, hdr)
-      group_index = which(colnames(target)=="group_tl_RA")
-      for(i in 0:11){
-        target[,group_index+i] = group_index[i+1]
-      }
-    }
-    
+    # if(length(num_points) < 2){
+    #   cat("No groupID with ID = ", groupID, "\n")
+    # }else{
+    #   list[group_edges] <- Top_bottom(groupim, target, groupID, hdr)
+    #   group_index = which(colnames(target)=="group_tl_RA")
+    #   for(i in 0:11){
+    #     target[,group_index+i] = group_index[i+1]
+    #   }
+    # }
+    # 
     
     Cutout(target, keyvalues, i)
     Image_Maker(segID, groupID, colour, segcol, groupcol, target)
