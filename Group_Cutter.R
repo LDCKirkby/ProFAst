@@ -234,7 +234,7 @@ Edger <- function(input_image){
 }
 
 
-Image_Prepper <- function(segID, groupID, image_header, keyvalues, hdr){
+Image_Prepper <- function(segID, groupID, target, image_header, keyvalues, hdr){
   
   list[group_edges] <- Top_bottom(groupim, target, groupID, hdr)
   group_index = which(colnames(target)=="group_tl_RA")
