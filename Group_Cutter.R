@@ -111,7 +111,7 @@ for(i in 1:length(asteroids$segID)){
     
     #Adds edge locations to the asteroids
     #Calls Top_Bottom, giving relevant information
-    target <- Image_Prepper(segID, groupID, target, image_header, keyvalues, hdr, groupcol, segcol)
+    target <- Image_Prepper(segID, groupID, target, image_header, keyvalues, hdr)
     
     #Cuts out region of the image for postage stamp
     Cutout(target, keyvalues, i)
@@ -129,7 +129,7 @@ for(i in 1:length(asteroids$segID)){
     
     #Adds edge locations to the asteroids
     #Calls Top_Bottom, giving relevant information
-    target <- Image_Prepper(segID, groupID, target, image_header, keyvalues, hdr, groupcol, segcol)
+    target <- Image_Prepper(segID, groupID, target, image_header, keyvalues, hdr)
     
     #Cuts out region of the image for postage stamp
     Cutout(target, keyvalues, i)
@@ -146,7 +146,7 @@ for(i in 1:length(asteroids$segID)){
     
     #Adds edge locations to the asteroids
     #Calls Top_Bottom, giving relevant information
-    target <- Image_Prepper(segID, groupID, target, image_header, keyvalues, hdr, groupcol, segcol)
+    target <- Image_Prepper(segID, groupID, target, image_header, keyvalues, hdr)
     
     #Cuts out region of the image for postage stamp
     Cutout(target, keyvalues, i)
@@ -234,7 +234,7 @@ Edger <- function(input_image){
 }
 
 
-Image_Prepper <- function(segID, groupID, image_header, keyvalues, hdr, groupcol, segcol){
+Image_Prepper <- function(segID, groupID, image_header, keyvalues, hdr){
   
   list[group_edges] <- Top_bottom(groupim, target, groupID, hdr)
   group_index = which(colnames(target)=="group_tl_RA")
