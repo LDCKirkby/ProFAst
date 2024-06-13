@@ -236,10 +236,20 @@ Edger <- function(input_image){
 
 Image_Prepper <- function(segID, groupID, target, image_header, keyvalues, hdr){
   
-  list[group_edges] <- Top_bottom(groupim, target, groupID, hdr)
-  group_index = which(colnames(target)=="group_tl_RA")
-  for(i in 0:11){
-    target[,group_index+i] = group_index[i+1]
+  #Identify if there is a corresponding groupID for the segID
+  group_image = groupim
+  group_image[group_image%notin%groupID]=0
+  num_points <- which(group_image == groupID, arr.ind = TRUE)
+  
+  #If no valid groupID then only segment edges are graphed
+  if(length(num_points) < 2){
+    cat("No groupID with ID = ", groupID, "\n")
+  }else{
+    list[group_edges] <- Top_bottom(groupim, target, groupID, hdr)
+    group_index = which(colnames(target)=="group_tl_RA")
+    for(i in 0:11){
+      target[,group_index+i] = group_index[i+1]
+    }
   }
   
   list[segment_edges] <- Top_bottom(segim, target, segID, hdr)
