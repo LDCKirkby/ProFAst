@@ -207,7 +207,7 @@ Data_Reader <- function(loc, images){
 Edger <- function(input_image){
   name = deparse(substitute(input_image))
   
-  cat("Finding the edges of ",name," segmentation masks\n")
+  cat("Finding the edges of ",name,"\n")
   image = input_image
   xrun=1:(dim(image)[1]-1)
   yrun=1:(dim(image)[2]-1)
