@@ -240,7 +240,6 @@ Image_Prepper <- function(segID, groupID, target, image_header, keyvalues, hdr){
   group_image = groupim
   group_image[group_image%notin%groupID]=0
   num_points <- which(group_image == groupID, arr.ind = TRUE)
-  
   #If no valid groupID then only segment edges are graphed
   if(length(num_points) < 2){
     cat("No groupID with ID = ", groupID, "\n")
