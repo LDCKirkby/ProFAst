@@ -18,7 +18,7 @@
 # showtext_auto()
 
 `%notin%`<-Negate(`%in%`)
-# KEY for understanding code 
+# Useful named items
 # segID = ID for each segment identified by ProFound
 # groupID = ID for segments grouped together by ProFound
 # target = current asteroid from csv being imaged
@@ -34,8 +34,6 @@ Group_Cutter <- function(loc, images){
   mulim<-22.0
   kids<-(0.339^2)*(10^(0.4*(0-mulim)))
   viking<-(0.339^2)*(10^(0.4*(30-mulim)))
-  
-
   
   cat("**************************\n")
   cat("Reading in data\n")
@@ -60,11 +58,9 @@ Group_Cutter <- function(loc, images){
   assign("loc", loc, envir = .GlobalEnv)
   
   #Make a directory to save the cutouts
-  if(dir_exists(paste0("./",loc,"Group_Cutouts")) == TRUE){
-    cat("Group_Cutouts already exists\n")
-    dir_delete(paste0("./",loc,"/Group_Cutouts/"))
-  }
-  dir.create(paste0("./",loc,"/Group_Cutouts/"))
+  unlink(paste0("./",loc,"/Group_Cutouts"), recursive=TRUE)
+  dir_create("./",loc,"/Group_Cutouts")
+
   
   #Check to see if images were passed to the function
   #If not, need to propane warp new ones
