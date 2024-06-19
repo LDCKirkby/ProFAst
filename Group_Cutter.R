@@ -327,6 +327,11 @@ Cutout <- function(target, keyvalues, i){
   ast_segimcut=magcutout(image = ast_segim, loc=as.numeric(galpos),box=box,loc.type="image")
   ast_groupcut=magcutout(image = ast_groupim, loc=as.numeric(galpos),box=box,loc.type="image")
   
+  segimcut[is.na(segimcut)] <- 0
+  groupcut[is.na(groupcut)] <- 0
+  ast_segimcut[is.na(ast_segimcut)] <- 0
+  ast_groupcut[is.na(ast_groupcut)] <- 0
+  
   assign("cutim_g", cutim_g, envir = .GlobalEnv)
   assign("cutim_r", cutim_r, envir = .GlobalEnv)
   assign("cutim_i", cutim_i, envir = .GlobalEnv)
