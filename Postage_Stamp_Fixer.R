@@ -53,6 +53,7 @@ font_add("Arial", "/Library/Fonts/Arial.ttf")
 
 args = commandArgs(trailingOnly = TRUE)
 i = as.numeric(args[[1]])
+computer = as.character(args[[2]])
 dir = getwd()
 locs = read.delim("./done.txt")
 RA_DEC = locs[i,]
@@ -66,7 +67,7 @@ Axrat_Filter(RA_DEC)
 
 N100_Filter(RA_DEC)
 
-Group_Cutter(RA_DEC)
+Group_Cutter(RA_DEC, computer)
 
 warnings()
 
