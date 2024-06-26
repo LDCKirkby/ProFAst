@@ -19,7 +19,7 @@ Data_Cutout <- function(ast, image_data, groupcol, segcol){
   segimcut=magcutout(image = image_data$segim, loc=as.numeric(galpos),box=box,loc.type="image")
   groupcut=magcutout(image = image_data$groupim, loc=as.numeric(galpos),box=box,loc.type="image")
   
-  data = list("cutim_g" = cutim_g, "cutim_r" = cutim_r, "cutim_i" = cutim_i, "segimcut" = segimcut$image, "groupcut" = groupcut$image)
+  data = list("cutim_g" = cutim_g, "cutim_r" = cutim_r, "cutim_i" = cutim_i, "segimcut" = segimcut, "groupcut" = groupcut)
   return(data)
 }
 
@@ -30,6 +30,7 @@ Edger <- function(groupID, segID, ast, data){
   ID = c(segID, groupID)
   for(i in 1:2){
     image = data[[images[i]]]
+    image = image$image
     if(dim(image) <= 2){
       next
     }
