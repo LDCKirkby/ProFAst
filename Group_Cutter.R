@@ -19,7 +19,7 @@ Data_Cutout <- function(ast, image_data, groupcol, segcol){
   segimcut=magcutout(image = image_data$segim, loc=as.numeric(galpos),box=box,loc.type="image")
   groupcut=magcutout(image = image_data$groupim, loc=as.numeric(galpos),box=box,loc.type="image")
   
-  data = list("cutim_g" = cutim_g, "cutim_r" = cutim_r, "cutim_i" = cutim_i, "segimcut" = segimcut, "groupcut" = groupcut)
+  data = list("cutim_g" = cutim_g, "cutim_r" = cutim_r, "cutim_i" = cutim_i, "segimcut" = segimcut$image, "groupcut" = groupcut$image)
   return(data)
 }
 
@@ -91,11 +91,11 @@ Plotter <- function(loc, ast_dat, im_dat, groupcol, segcol, keyvalue_data){
   Rwcs_imageRGB(R=imdat_$cutim_r, G=im_dat$cutim_g, B=im_dat$cutim_i, Rkeyvalues = keyvalue_data$r_image$keyvalues, Gkeyvalues = keyvalue_data$g_image$keyvalues, Bkeyvalues = keyvalue_data$i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
   
   cat("Adding segment outlines\n")
-  magimage(im_dat$segimcut$image,col=c(NA,rep("moccasin",max(im_dat$segimcut$image))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.25)
-  magimage(im_dat$groupcut$image,col=c(NA,rep("peru",max(im_dat$groupcut$image))),magmap = FALSE,add=TRUE,sparse=1,lwd=1)
+  magimage(im_dat$segimcut,col=c(NA,rep("moccasin",max(im_dat$segimcut))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.25)
+  magimage(im_dat$groupcut,col=c(NA,rep("peru",max(im_dat$groupcut))),magmap = FALSE,add=TRUE,sparse=1,lwd=1)
   
-  magimage(im_dat$ast_segimcut$image,col=c(NA,rep(segcol, max(im_dat$ast_segimcut$image))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.5)
-  magimage(im_dat$ast_groupcut$image,col=c(NA,rep(groupcol, max(im_dat$ast_groupcut$image))),magmap=FALSE,add=TRUE,sparse=1,lwd=1)
+  magimage(im_dat$ast_segimcut,col=c(NA,rep(segcol, max(im_dat$ast_segimcut))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.5)
+  magimage(im_dat$ast_groupcut,col=c(NA,rep(groupcol, max(im_dat$ast_groupcut))),magmap=FALSE,add=TRUE,sparse=1,lwd=1)
   
   # Uncomment if you want min & max points added to image
   # cat("Adding max & min points\n")
