@@ -116,56 +116,32 @@ Postage_Stamper <- function(ast, image_data){
   cat("Imaging groupID:", groupID, ", segID:",segID, ", colour:", colour,"\n")
   
   if(grepl(colour,"g") == TRUE){
-    
-    cut_image_data <- Data_Cutout(ast, image_data){
+    cut_image_data <- Data_Cutout(ast, image_data)
     
     cut_image_data <- Edger(groupID, segID, ast, cut_image_data)
     
     #Creates png and overlays points and segment/group outlines
     Image_Maker(loc, ast, cut_image_data, "seagreen2", "green", image_data)
     
-    
   }else if(grepl(colour,"r") == TRUE){
-    red_data = list("image_header" = image_data$r_image$header, "keyvalues" = image_data$r_image$keyvalues, "hdr" = image_data$r_hdr$hdr, "groupcol" = "firebrick1", "segcol" = "red2")
-    # image_header = r_image$header
-    # keyvalues = r_image$keyvalues
-    # hdr = r_hdr$hdr
-    # groupcol = "firebrick2"
-    # segcol = "firebrick4"
+    cut_image_data <- Data_Cutout(ast, image_data)
     
-    #Adds edge locations to the asteroids
-    #Calls Top_Bottom, giving relevant information
-    target <- Image_Prepper(segID, groupID, target, image_header, keyvalues, hdr)
-    
-    #Cuts out region of the image for postage stamp
-    Cutout(target, keyvalues, i)
+    cut_image_data <- Edger(groupID, segID, ast, cut_image_data)
     
     #Creates png and overlays points and segment/group outlines
-    Image_Maker(segID, groupID, colour, segcol, groupcol, target)
+    Image_Maker(loc, ast, cut_image_data, "firebrick1", "red2", image_data)
     
   }else if(grepl(colour,"i") == TRUE){
-    blue_data = list("image_header" = image_data$i_image$header, "keyvalues" = image_data$i_image$keyvalues, "hdr" = image_data$i_hdr$hdr, "groupcol" = "skyblue", "segcol" = "blue")
-    # image_header = i_image$header
-    # keyvalues = i_image$keyvalues
-    # hdr = i_hdr$hdr
-    # groupcol = "skyblue"
-    # segcol = "blue"
+    cut_image_data <- Data_Cutout(ast, image_data)
     
-    #Adds edge locations to the asteroids
-    #Calls Top_Bottom, giving relevant information
-    target <- Image_Prepper(segID, groupID, target, image_header, keyvalues, hdr)
-    
-    #Cuts out region of the image for postage stamp
-    Cutout(target, keyvalues, i)
+    cut_image_data <- Edger(groupID, segID, ast, cut_image_data)
     
     #Creates png and overlays points and segment/group outlines
-    Image_Maker(segID, groupID, colour, segcol, groupcol, target)
+    Image_Maker(loc, ast, cut_image_data, "skyblue", "blue", image_data)
     
   }
 }
-  
-  
-  
+
 Group_Cutter <- function(loc, computer){
   
   #Load in asteroid data
