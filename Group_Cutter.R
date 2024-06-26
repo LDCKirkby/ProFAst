@@ -7,7 +7,7 @@ Data_Cutout <- function(ast, image_data, groupcol, segcol){
   
   galradec = ast[c("RAcen", "Deccen")]
   colour = paste0(ast$Colour, "_image")
-  keyvalues = image_data[[ colour ]]
+  keyvalues = image_data[[ paste0(colour) ]]
   keyvalues = keyvalues$keyvalues
   galpos=as.integer(Rwcs_s2p(RA=galradec$RAcen, Dec=galradec$Deccen, keyvalues=keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
   
