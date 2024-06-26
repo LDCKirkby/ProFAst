@@ -6,7 +6,8 @@ Data_Cutout <- function(ast, image_data, groupcol, segcol){
   viking<-(0.339^2)*(10^(0.4*(30-mulim)))
   
   galradec = ast[c("RAcen", "Deccen")]
-  keyvalues = image_data[[paste0(ast$Colour, "_image")]]
+  colour = paste0(ast$Colour, "_image")
+  keyvalues = image_data[[ colour ]]
   keyvalues = keyvalues$keyvalues
   galpos=as.integer(Rwcs_s2p(RA=galradec$RAcen, Dec=galradec$Deccen, keyvalues=keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
   
