@@ -7,7 +7,7 @@ Data_Cutout <- function(ast, image_data, groupcol, segcol){
   
   galradec = ast[c("RAcen", "Deccen")]
   colour = paste0(ast$Colour, "_image")
-  keyvalues = image_data[[ paste0(colour) ]]
+  keyvalues = image_data[[ colour ]]
   keyvalues = keyvalues$keyvalues
   galpos=as.integer(Rwcs_s2p(RA=galradec$RAcen, Dec=galradec$Deccen, keyvalues=keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
   
@@ -159,7 +159,7 @@ Group_Cutter <- function(loc, computer){
   asteroids[,edge_points] <- NA
   
   #Read in data for the locations  
-  Data <- function(loc, computer){
+  Data_reader <- function(loc, computer){
     cat("Reading in segmentation map data\n")
     segim <- as.matrix(read.csv(paste0("./",loc,"/segim.csv")))
     cat("Generating groupim\n")
@@ -194,6 +194,7 @@ Group_Cutter <- function(loc, computer){
   }
   
   #Make a directory to save the cutouts
+  Data <- Data_reader(loc, computer)
   unlink(paste0("./",loc,"/Group_Cutouts"), recursive=TRUE)
   dir_create("./",loc,"/Group_Cutouts")
   
