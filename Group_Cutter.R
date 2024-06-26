@@ -31,9 +31,7 @@ Edger <- function(groupID, segID, ast, data){
   for(i in 1:2){
     image = data[[images[i]]]
     image = image$image
-    if(dim(image) <= 2){
-      next
-    }
+
     xrun=1:(dim(image)[1]-1)
     yrun=1:(dim(image)[2]-1)
     
