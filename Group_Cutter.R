@@ -6,7 +6,8 @@ Data_Cutout <- function(ast, image_data, groupcol, segcol){
   viking<-(0.339^2)*(10^(0.4*(30-mulim)))
   
   galradec = ast[c("RAcen", "Deccen")]
-  keyvalues = image_data[[paste0(ast$Colour, "_image")]]$keyvalues
+  keyvalues = image_data[[paste0(ast$Colour, "_image")]]
+  keyvalues = keyvalues$keyvalues
   galpos=as.integer(Rwcs_s2p(RA=galradec$RAcen, Dec=galradec$Deccen, keyvalues=keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
   
   cutim_g=image_data$g_image[galpos,box=box] # Cuts g_image to be postage-stamp centered on target asteroid
