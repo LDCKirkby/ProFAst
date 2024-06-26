@@ -187,8 +187,8 @@ Group_Cutter <- function(loc, computer){
       r_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"))
       i_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"))
     }
-    r_image=propaneWarp(r_image_input,keyvalues_out= g_image$keyvalues)
-    i_image=propaneWarp(i_image_input,keyvalues_out= g_image$keyvalues)
+    r_image=propaneWarp(r,keyvalues_out= g_image$keyvalues)
+    i_image=propaneWarp(i1,keyvalues_out= g_image$keyvalues)
     
     return(list("g_image" = g_image, "r_image" = r_image, "i_image" = i_image, "groupim" = groupim$groupim, "segim" = segim, "g_hdr" = g_hdr, "r_hdr" = r_hdr, "i_hdr" = i_hdr))
   }
