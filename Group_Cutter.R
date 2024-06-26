@@ -27,9 +27,12 @@ Edger <- function(groupID, segID, ast, data){
   cat("Finding the edges of segment images\n")
   
   images = c("segimcut", "groupcut")
+  ID = c(segID, groupID)
   for(i in 1:2){
     image = data[[images[i]]]
-    
+    if(dim(image) <= 2){
+      next
+    }
     xrun=1:(dim(image)[1]-1)
     yrun=1:(dim(image)[2]-1)
     
@@ -51,8 +54,8 @@ Edger <- function(groupID, segID, ast, data){
     image[is.na(image)] <- 0
     
     asteroid_image = image
-    asteroid_image[asteroid_image%notin%ID]=0 #Makes two copies, one for the asteroid of interest
-    image[image%in%ID]=0                      #And one for all other objects in the frame
+    asteroid_image[asteroid_image%notin%ID[i]]=0 #Makes two copies, one for the asteroid of interest
+    image[image%in%ID[i]]=0                      #And one for all other objects in the frame
     
     data[[images[i]]] = image
     
