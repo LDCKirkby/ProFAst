@@ -63,7 +63,7 @@ Edger <- function(groupID, segID, ast, data){
   return(data)
 }
 
-Plotter <- function(loc, ast_dat, im_dat, groupcol, segcol, keyvalue_data){
+Image_Maker <- function(loc, ast_dat, im_dat, groupcol, segcol, keyvalue_data){
   wid <- 200.0
   box<-c(2*wid,2*wid)
   mulim<-22.0
