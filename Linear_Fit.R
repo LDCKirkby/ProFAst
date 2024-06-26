@@ -1,0 +1,87 @@
+library(peakRAM,quietly = TRUE)
+library(xtable, quietly = TRUE)
+library(dst,quietly=TRUE)
+library(celestial,quietly = TRUE)
+library(devtools,quietly = TRUE)
+library(Cairo,quietly = TRUE)
+library(Rfits,quietly = TRUE)
+library(Rwcs,quietly = TRUE)
+library(ProFound,quietly = TRUE)
+library(magicaxis,quietly = TRUE)
+library(data.table,quietly = TRUE)
+library(plotrix,quietly = TRUE)
+require(foreign,quietly = TRUE)
+require(MASS,quietly = TRUE)
+library(ProPane, quietly = TRUE)
+library(ggplot2, quietly = TRUE)
+library(dplyr, quietly = TRUE)
+library(gsubfn, quietly = TRUE)
+library(fs, quietly = TRUE)
+library(showtext, quietly = TRUE)
+library(png)
+library(Matrix)
+
+cat("Reading in segmentation map data\n")
+segim <- as.matrix(read.csv(paste0("./",loc,"/segim.csv")))
+cat("Generating groupim\n")
+groupim = profoundSegimGroup(segim = segim)
+
+cat("Loading images as pointers\n")
+g_image = Rfits_point(paste0("D:/Swap/Thesis/",loc,"/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
+# r_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
+# i_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"),header=TRUE,ext=1)
+cat("Warping r&i frames\n")
+# r_image=propaneWarp(r_image_input,keyvalues_out= g_image$keyvalues)
+# i_image=propaneWarp(i_image_input,keyvalues_out= g_image$keyvalues)
+
+asteroids = read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv"))
+
+#Can implement a loop here to make linear fits for all the asteroids{
+
+target = asteroids[5,]
+ID = target$segID
+
+galradec = target[c("RAcen", "Deccen")]
+galpos=as.integer(Rwcs_s2p(RA=galradec$RAcen, Dec=galradec$Deccen, keyvalues=g_image$keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
+wid <- 200.0
+box<-c(2*wid,2*wid)
+mulim<-22.0
+kids<-(0.339^2)*(10^(0.4*(0-mulim)))
+viking<-(0.339^2)*(10^(0.4*(30-mulim)))
+cutim_g=g_image[galpos,box=box]
+segimcut=magcutout(image = segim, loc=as.numeric(galpos),box=box,loc.type="image")
+
+obj_points <- which(segimcut$image==ID, arr.ind = TRUE)
+
+weights <- cutim_g$imDat[segimcut$image] / max(cutim_g$imDat)
+
+y_vals = obj_points[,2]
+x_vals = obj_points[,1]
+
+brightness_vals = g_image$imDat[obj_points]
+
+brightness_vals[brightness_vals<0] <- 0
+
+fit <- lm(y_vals ~ poly(x_vals, 1, raw = TRUE), weights = brightness_vals)
+
+# x_new <- seq(min(x_vals), max(x_vals), length.out = 100)
+# y_pred <- predict(fit, newdata = data.frame(x_vals = x_new))
+
+x_range <- range(x_vals) + c(-0.01,10) # Extend the range of x_vals by 1 unit on each side
+
+x_pred <- seq(min(x_range), max(x_range), length.out = 100)
+y_pred <- predict(fit, newdata = data.frame(x_vals = x_pred))
+
+locut = c(median(cutim_g$imDat,na.rm=TRUE),median(cutim_g$imDat,na.rm=TRUE),median(cutim_g$imDat,na.rm=TRUE))
+Rwcs_imageRGB(R=cutim_g, G=cutim_g, B=cutim_g, Rkeyvalues = g_image$keyvalues, Gkeyvalues = g_image$keyvalues, Bkeyvalues = g_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)", coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)
+
+
+lines(x_pred, y_pred, col = "red", lwd = 3)
+
+plot(x_vals, y_vals, pch = 16, col = "blue", xlab = "X", ylab = "Y", main = paste0("Linear Fit to asteroid ", ID, " image"))
+lines(x_pred, y_pred, col = "red", lwd = 3)
+legend("topleft", legend = c("Data", "Fitted Polynomial"), col = c("blue", "red"), lwd = 2, pch = 16)
+
+RA_Dec = xy2radec(x_new, y_pred, header=g_image$hdr)
+
+#} The end of the would be loop

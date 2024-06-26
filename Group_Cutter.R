@@ -27,7 +27,7 @@
 
 
 
-Group_Cutter <- function(loc, images){
+Group_Cutter <- function(loc, computer){
     
   wid <- 200.0
   box<-c(2*wid,2*wid)
@@ -64,13 +64,8 @@ Group_Cutter <- function(loc, images){
   
   #Check to see if images were passed to the function
   #If not, need to propane warp new ones
-  if(missing(images)){
-    cat("Images not supplied\n")
-    Data_Reader(loc)
-  }else{
-    assign("images", images, envir = .GlobalEnv)
-    Data_Reader(loc,images)
-  }
+
+  Data_Reader(loc,computer)
   
   
   cat("**************************\n")
@@ -162,29 +157,39 @@ for(i in 1:length(asteroids$segID)){
 
 
 
-Data_Reader <- function(loc, images){
+Data_Reader <- function(loc, computer){
 
   cat("Reading in segmentation map data\n")
   segim <- as.matrix(read.csv(paste0("./",loc,"/segim.csv")))
   cat("Generating groupim\n")
   groupim = profoundSegimGroup(segim = segim)
   
-  if(missing(images) == TRUE){
-  cat("Loading images as pointers\n")
-  g_image = Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
-  r_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
-  i_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"),header=TRUE,ext=1)
-  cat("Warping r&i frames\n")
+  cat("Loading images\n")
+  if("sabine" == tolower(computer)){
+    #Image Information
+    g=Rfits_point(paste0("/Volumes/ThunderBay/WAVES/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"g_DMAG.fits"), header=TRUE, ext=1)
+    r=Rfits_point(paste0("/Volumes/ThunderBay/WAVES/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"r_DMAG.fits"), header=TRUE, ext=1)
+    i1=Rfits_point(paste0("/Volumes/ThunderBay/WAVES/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"i1_DMAG.fits"), header=TRUE, ext=1)
+    
+    #Header information
+    g_hdr = Rfits_read_header(paste0("/Volumes/ThunderBay/WAVES/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"g_DMAG.fits"))
+    r_hdr = Rfits_read_header(paste0("/Volumes/ThunderBay/WAVES/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"r_DMAG.fits"))
+    i_hdr = Rfits_read_header(paste0("/Volumes/ThunderBay/WAVES/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"i1_DMAG.fits"))
+  }else{
+    #Image Information
+    g=Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"), header=TRUE, ext=1)
+    r=Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"), header=TRUE, ext=1)
+    i1=Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"), header=TRUE, ext=1)
+    
+    #Header Information
+    g_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"))
+    r_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"))
+    i_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"))
+  }
   r_image=propaneWarp(r_image_input,keyvalues_out= g_image$keyvalues)
   i_image=propaneWarp(i_image_input,keyvalues_out= g_image$keyvalues)
-  }else{
-    g_image = images[1]
-    r_image = images[2]
-    i_image = images[3]
-  }
-  g_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"))
-  r_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"))
-  i_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"))
+
+  
   
   assign("segim", segim, envir = .GlobalEnv)
   assign("groupim", groupim$groupim, envir = .GlobalEnv)

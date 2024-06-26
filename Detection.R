@@ -74,7 +74,7 @@ font_add("Arial", "/Library/Fonts/Arial.ttf")
   
   N100_Filter(RA_DEC)
 
-  Group_Cutter(RA_DEC, frames)
+  Group_Cutter(RA_DEC, computer)
   
   warnings()
 
