@@ -111,7 +111,7 @@ Image_Maker <- function(loc, ast_dat, im_dat, groupcol, segcol, keyvalue_data){
 }
 
 
-Postage_Stamper <- function(ast, image_data){
+Postage_Stamper <- function(loc, ast, image_data){
   groupID = ast$groupID
   segID = ast$segID
   colour = ast$Colour
@@ -202,7 +202,7 @@ Group_Cutter <- function(loc, computer){
   for(i in 1:length(asteroids$segID)){
     #Pulls out data for target asteroid
     target = asteroids[i,]
-    Postage_Stamper(target, Data)
+    Postage_Stamper(loc, target, Data)
   }
   
 }
