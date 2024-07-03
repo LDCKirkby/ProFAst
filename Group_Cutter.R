@@ -73,7 +73,7 @@ Image_Maker <- function(loc, ast_dat, im_dat, groupcol, segcol, keyvalue_data){
   cat("Printing ",ast_dat$colour,ast_dat$segID," postage stamp\n")
   png(filename=paste0("./",loc,"/Group_Cutouts/",ast_dat$colour,ast_dat$segID,".png"))
   
-  par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial Unicode")
+  par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
   
   locut = c(median(im_dat$cutim_r$imDat,na.rm=TRUE),median(im_dat$cutim_g$imDat,na.rm=TRUE),median(im_dat$cutim_i$imDat,na.rm=TRUE))
   if(locut[[1]] > kids){
@@ -86,7 +86,7 @@ Image_Maker <- function(loc, ast_dat, im_dat, groupcol, segcol, keyvalue_data){
     locut[[3]] = kids
   }
   
-  Rwcs_imageRGB(R=im_dat$cutim_r, G=im_dat$cutim_g, B=im_dat$cutim_i, Rkeyvalues = keyvalue_data$r_image$keyvalues, Gkeyvalues = keyvalue_data$g_image$keyvalues, Bkeyvalues = keyvalue_data$i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
+  Rwcs_imageRGB(R=im_dat$cutim_r, G=im_dat$cutim_g, B=im_dat$cutim_i, Rkeyvalues = keyvalue_data$r_image$keyvalues, Gkeyvalues = keyvalue_data$g_image$keyvalues, Bkeyvalues = keyvalue_data$i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE, family="Arial")#, grid = TRUE)
   
   cat("Adding segment outlines\n")
   magimage(im_dat$segimcut,col=c(NA,rep("moccasin",max(im_dat$segimcut))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.25)
@@ -105,7 +105,7 @@ Image_Maker <- function(loc, ast_dat, im_dat, groupcol, segcol, keyvalue_data){
   # 
   # legend(x ="topright", legend = c("Top Right", "Top Left", "Bottom Right", "Bottom Left", "Average Top", "Average Bottom", "Center of Flux", "Max Flux"), pch = c(2,2,2,2), col = c("orangered" , "orange", "sienna1", "darkviolet", "mediumorchid" , "darkmagenta", "hotpink", "gold"))
   # 
-  text(1,2*wid-50, col=groupcol, label=paste0("segID=",ast_dat$colour,ast_dat$segID), cex=2.0, pos=4)
+  text(1,2*wid-50, col=groupcol, label=paste0("segID=",ast_dat$colour,ast_dat$segID), cex=2.0, pos=4, family="Arial")
   
   dev.off()
 }
