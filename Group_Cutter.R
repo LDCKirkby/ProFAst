@@ -23,13 +23,13 @@ Data_Cutout <- function(ast, image_data, groupcol, segcol){
   return(data)
 }
 
-Edger <- function(groupID, segID, ast, data){
+Edger <- function(groupID, segID, ast, image_data){
   cat("Finding the edges of segment images\n")
   
   images = list("segimcut", "groupcut")
   ID = list(segID, groupID)
   for(i in 1:2){
-    image = data[[ images[[i]] ]]$image
+    image = image_data[[ images[[i]] ]]$image
 
     xrun=1:(dim(image)[1]-1)
     yrun=1:(dim(image)[2]-1)
@@ -55,9 +55,9 @@ Edger <- function(groupID, segID, ast, data){
     asteroid_image[asteroid_image%notin%ID[[i]]]=0 #Makes two copies, one for the asteroid of interest
     image[image%in%ID[[i]]]=0                      #And one for all other objects in the frame
     
-    data[[images[[i]]]] = image
+    image_data[[images[[i]]]] = image
     
-    data[[ paste0("ast_",images[[i]]) ]] = asteroid_image
+    image_data[[ paste0("ast_",images[[i]]) ]] = asteroid_image
   }
   
   return(data)
@@ -75,7 +75,7 @@ Image_Maker <- function(loc, ast_dat, im_dat, groupcol, segcol, keyvalue_data){
   
   par(mfrow=c(1,1),mar=c(3,3,2,2))
   
-  locut = c(median(cutim_r$imDat,na.rm=TRUE),median(cutim_g$imDat,na.rm=TRUE),median(cutim_i$imDat,na.rm=TRUE))
+  locut = c(median(im_dat$cutim_r$imDat,na.rm=TRUE),median(im_dat$cutim_g$imDat,na.rm=TRUE),median(im_dat$cutim_i$imDat,na.rm=TRUE))
   if(locut[[1]] > kids){
     locut[[1]] = kids
   }
