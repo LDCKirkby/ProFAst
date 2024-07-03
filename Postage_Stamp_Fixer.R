@@ -53,14 +53,13 @@ args = commandArgs(trailingOnly = TRUE)
 i = as.numeric(args[[1]])
 computer = as.character(args[[2]])
 if(tolower(computer) == "sabine"){
-  font_add("Arial", "/Users/lukekirkby/Library/Fonts/Arial.ttf")
+  font_add("Arial", "/Users/lukekirkby/Library/Fonts/Arial Unicode.ttf")
 }else if(tolower(computer) == "simon"){
-  font_add("Arial", "/Users/lkirkby/Library/Fonts/Arial.ttf")
+  font_add("Arial", "/Users/lkirkby/Library/Fonts/Arial Unicode.ttf")
 }else{
-  font_add("Arial", "/Library/Fonts/Arial.ttf")
+  font_add("Arial", "/Library/Fonts/Arial Unicode.ttf")
 }
-
-
+showtext_auto()
 dir = getwd()
 locs = read.delim("./done.txt")
 RA_DEC = locs[i,]

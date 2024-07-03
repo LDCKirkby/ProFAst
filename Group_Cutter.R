@@ -73,7 +73,7 @@ Image_Maker <- function(loc, ast_dat, im_dat, groupcol, segcol, keyvalue_data){
   cat("Printing ",ast_dat$colour,ast_dat$segID," postage stamp\n")
   png(filename=paste0("./",loc,"/Group_Cutouts/",ast_dat$colour,ast_dat$segID,".png"))
   
-  par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
+  par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial Unicode")
   
   locut = c(median(im_dat$cutim_r$imDat,na.rm=TRUE),median(im_dat$cutim_g$imDat,na.rm=TRUE),median(im_dat$cutim_i$imDat,na.rm=TRUE))
   if(locut[[1]] > kids){
