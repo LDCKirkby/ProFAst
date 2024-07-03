@@ -60,7 +60,7 @@ Edger <- function(groupID, segID, ast, image_data){
     image_data[[ paste0("ast_",images[[i]]) ]] = asteroid_image
   }
   
-  return(data)
+  return(image_data)
 }
 
 Image_Maker <- function(loc, ast_dat, im_dat, groupcol, segcol, keyvalue_data){
