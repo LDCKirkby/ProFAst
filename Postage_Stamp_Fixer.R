@@ -25,7 +25,7 @@ library(dplyr, quietly = TRUE)
 library(gsubfn, quietly = TRUE)
 library(fs, quietly = TRUE)
 library(showtext, quietly = TRUE)
-
+font_add("Arial", "~/Library/Fonts/Arial.ttf")
 
 #Uncomment to create ordered heading csv
 # bearings = as.data.frame(list.files(path = "/Volumes/WAVES/waves/wavesdata/kids/dr5/preprocessed/", pattern = "_u_"))
