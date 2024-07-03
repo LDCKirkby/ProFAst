@@ -86,7 +86,7 @@ Image_Maker <- function(loc, ast_dat, im_dat, groupcol, segcol, keyvalue_data){
     locut[[3]] = kids
   }
   
-  Rwcs_imageRGB(R=imdat_$cutim_r, G=im_dat$cutim_g, B=im_dat$cutim_i, Rkeyvalues = keyvalue_data$r_image$keyvalues, Gkeyvalues = keyvalue_data$g_image$keyvalues, Bkeyvalues = keyvalue_data$i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
+  Rwcs_imageRGB(R=im_dat$cutim_r, G=im_dat$cutim_g, B=im_dat$cutim_i, Rkeyvalues = keyvalue_data$r_image$keyvalues, Gkeyvalues = keyvalue_data$g_image$keyvalues, Bkeyvalues = keyvalue_data$i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)#, grid = TRUE)
   
   cat("Adding segment outlines\n")
   magimage(im_dat$segimcut,col=c(NA,rep("moccasin",max(im_dat$segimcut))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.25)
