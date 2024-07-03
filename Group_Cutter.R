@@ -71,9 +71,9 @@ Image_Maker <- function(loc, ast_dat, im_dat, groupcol, segcol, keyvalue_data){
   viking<-(0.339^2)*(10^(0.4*(30-mulim)))
   
   cat("Printing ",ast_dat$colour,ast_dat$segID," postage stamp\n")
-  png(filename=paste0("./",loc,"/Group_Cutouts/",ast_dat$colour,ast_dat$segID,".png"), family = "")
+  png(filename=paste0("./",loc,"/Group_Cutouts/",ast_dat$colour,ast_dat$segID,".png"))
   
-  par(mfrow=c(1,1),mar=c(3,3,2,2))
+  par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
   
   locut = c(median(im_dat$cutim_r$imDat,na.rm=TRUE),median(im_dat$cutim_g$imDat,na.rm=TRUE),median(im_dat$cutim_i$imDat,na.rm=TRUE))
   if(locut[[1]] > kids){
@@ -105,7 +105,7 @@ Image_Maker <- function(loc, ast_dat, im_dat, groupcol, segcol, keyvalue_data){
   # 
   # legend(x ="topright", legend = c("Top Right", "Top Left", "Bottom Right", "Bottom Left", "Average Top", "Average Bottom", "Center of Flux", "Max Flux"), pch = c(2,2,2,2), col = c("orangered" , "orange", "sienna1", "darkviolet", "mediumorchid" , "darkmagenta", "hotpink", "gold"))
   # 
-  text(1,2*wid-50, col=groupcol, label=paste0("segID=",ast_dat$colour,ast_dat$segID), cex=2.0, pos=4, family = "")
+  text(1,2*wid-50, col=groupcol, label=paste0("segID=",ast_dat$colour,ast_dat$segID), cex=2.0, pos=4)
   
   dev.off()
 }
@@ -205,7 +205,7 @@ Group_Cutter <- function(loc, computer){
     cat("Imaging object w/ groupID:", target$groupID, ", segID:", target$segID, ", Colour:", target$Colour, "\n")
     cat("**************************\n")
     Postage_Stamper(loc, target, Data)
-    cat("**************************\n")
+    cat("**************************\n\n")
   }
   
 }
