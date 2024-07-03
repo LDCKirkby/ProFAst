@@ -25,7 +25,6 @@ library(dplyr, quietly = TRUE)
 library(gsubfn, quietly = TRUE)
 library(fs, quietly = TRUE)
 library(showtext, quietly = TRUE)
-font_add("Arial", "~/Library/Fonts/Arial.ttf")
 
 #Uncomment to create ordered heading csv
 # bearings = as.data.frame(list.files(path = "/Volumes/WAVES/waves/wavesdata/kids/dr5/preprocessed/", pattern = "_u_"))
@@ -53,12 +52,21 @@ font_add("Arial", "~/Library/Fonts/Arial.ttf")
 args = commandArgs(trailingOnly = TRUE)
 i = as.numeric(args[[1]])
 computer = as.character(args[[2]])
+if(toLower(computer) == "sabine"){
+  font_add("Arial", "/Users/lukekirkby/Library/Fonts/Arial.ttf")
+}else if(toLower(computer) == "simon"){
+  font_add("Arial", "/Users/lkirkby/Library/Fonts/Arial.ttf")
+}else{
+  font_add("Arial", "/Library/Fonts/Arial.ttf")
+}
+
+
 dir = getwd()
 locs = read.delim("./done.txt")
 RA_DEC = locs[i,]
 
 cat("*************\n","Beginning Detection on:",RA_DEC,"\n","*************\n")
-# frames <- Pre_Proc(RA_DEC, "Simon")
+# frames <- Pre_Proc(RA_DEC, computer)
 
 Flux_Filter(RA_DEC)
 
