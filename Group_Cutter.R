@@ -71,7 +71,7 @@ Image_Maker <- function(loc, ast_dat, im_dat, groupcol, segcol, keyvalue_data){
   viking<-(0.339^2)*(10^(0.4*(30-mulim)))
   
   cat("Printing ",ast_dat$colour,ast_dat$segID," postage stamp\n")
-  png(filename=paste0("./",loc,"/Group_Cutouts/",ast_dat$Colour,ast_dat$segID,".png"))
+  png(filename=paste0("./",loc,"/Group_Cutouts/",loc,"_",ast_dat$Colour,ast_dat$segID,".png"))
   
   par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
   
@@ -108,6 +108,7 @@ Image_Maker <- function(loc, ast_dat, im_dat, groupcol, segcol, keyvalue_data){
   text(1,2*wid-50, col=groupcol, label=paste0("segID=",ast_dat$Colour,ast_dat$segID), cex=2.0, pos=4, family="Arial")
   
   dev.off()
+  system2(command = "cp", arguments = c(paste0("./",loc,"/Group_Cutouts/",loc,"_",ast_dat$Colour,ast_dat$segID,".png"), paste0("./Asteroid_Images/",ast_dat$Colour,"/") ))
 }
 
 
@@ -198,7 +199,7 @@ Group_Cutter <- function(loc, computer){
   Data <- Data_reader(loc, computer)
   unlink(paste0("./",loc,"/Group_Cutouts"), recursive=TRUE)
   dir_create("./",loc,"/Group_Cutouts")
-  
+
   for(i in 1:length(asteroids$segID)){
     #Pulls out data for target asteroid
     target = asteroids[i,]
