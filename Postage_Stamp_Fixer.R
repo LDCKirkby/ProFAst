@@ -25,6 +25,7 @@ library(dplyr, quietly = TRUE)
 library(gsubfn, quietly = TRUE)
 library(fs, quietly = TRUE)
 library(showtext, quietly = TRUE)
+showtext_auto()
 
 #Uncomment to create ordered heading csv
 # bearings = as.data.frame(list.files(path = "/Volumes/WAVES/waves/wavesdata/kids/dr5/preprocessed/", pattern = "_u_"))
@@ -50,8 +51,9 @@ library(showtext, quietly = TRUE)
 
 
 args = commandArgs(trailingOnly = TRUE)
-RA_Dec = as.character(args[[1]])
+RA_DEC = as.character(args[[1]])
 computer = as.character(args[[2]])
+
 if(tolower(computer) == "sabine"){
   font_add("Arial", "/Users/lukekirkby/Library/Fonts/Arial.ttf")
 }else if(tolower(computer) == "simon"){
@@ -59,7 +61,7 @@ if(tolower(computer) == "sabine"){
 }else{
   font_add("Arial", "/Library/Fonts/Arial.ttf")
 }
-showtext_auto()
+
 dir = getwd()
 # locs = read.delim("./done.txt")
 # RA_DEC = locs[i,]
