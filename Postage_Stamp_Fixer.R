@@ -61,8 +61,8 @@ if(tolower(computer) == "sabine"){
 }
 showtext_auto()
 dir = getwd()
-locs = read.delim("./done.txt")
-RA_DEC = locs[i,]
+# locs = read.delim("./done.txt")
+# RA_DEC = locs[i,]
 
 cat("*************\n","Beginning Detection on:",RA_DEC,"\n","*************\n")
 # frames <- Pre_Proc(RA_DEC, computer)
