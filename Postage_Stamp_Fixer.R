@@ -50,7 +50,7 @@ library(showtext, quietly = TRUE)
 
 
 args = commandArgs(trailingOnly = TRUE)
-i = as.numeric(args[[1]])
+RA_Dec = as.character(args[[1]])
 computer = as.character(args[[2]])
 if(tolower(computer) == "sabine"){
   font_add("Arial", "/Users/lukekirkby/Library/Fonts/Arial.ttf")
