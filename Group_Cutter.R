@@ -108,7 +108,7 @@ Image_Maker <- function(loc, ast_dat, im_dat, groupcol, segcol, keyvalue_data){
   text(1,2*wid-50, col=groupcol, label=paste0("segID=",ast_dat$Colour,ast_dat$segID), cex=2.0, pos=4, family="Arial")
   
   dev.off()
-  system2(command = "cp", arguments = c(paste0("./",loc,"/Group_Cutouts/",loc,"_",ast_dat$Colour,ast_dat$segID,".png ./Asteroid_Images/",ast_dat$Colour,"/") ))
+  system2(command = "cp", args = c(paste0("./",loc,"/Group_Cutouts/",loc,"_",ast_dat$Colour,ast_dat$segID,".png ./Asteroid_Images/",ast_dat$Colour,"/") ))
 }
 
 
