@@ -21,8 +21,7 @@ library(showtext, quietly = TRUE)
 showtext_auto()
 
 args = commandArgs(trailingOnly = TRUE)
-RA_DEC = as.character(args[[1]])
-computer = as.character(args[[2]])
+computer = as.character(args[[1]])
 
 if("sabine" == tolower(computer)){
   files = as.data.frame(list.files(path = "/Volumes/ThunderBay/WAVES/wavesdata/Wide/kids/dr5/preprocessed/", pattern = "_u_"))
