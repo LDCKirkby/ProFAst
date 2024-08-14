@@ -1,18 +1,3 @@
-# library(celestial)
-# library(devtools)
-# library(Cairo)
-# library(ProFound)
-# library(magicaxis)
-# library(data.table)
-# require(foreign)
-# require(MASS)
-# library(dst)
-# library(Rwcs)
-# library(ProPane)
-# library(Rfits)
-
-
-
 Pre_Proc <- function(loc, computer){
 
   cat("Loading images\n")

@@ -1,19 +1,5 @@
-# library(celestial)
-# library(devtools)
-# library(Cairo)
-# library(ProFound)
-# library(magicaxis)
-# library(data.table)
-# require(foreign)
-# library(ggplot2)
-# require(MASS)
-# library(dplyr)
-# #
-
 Flux_Filter <- function(loc){
 
-  
-  
 if("objectcati.csv" %in% list.files(path = paste0("./",loc,"/")) == FALSE){
   cat("*********\n")
   cat("Objectcati.csv not found\n")
@@ -87,6 +73,7 @@ rm(blue_objects, green_objects, red_objects, possible_asteroids, cat_groups)
 gc()
 
 #Uncomment to make plots of asteroid colour distribution before and after filtering
+{
 
 # fg = ggplot(data = cat_groups, mapping = aes(x=flux_gt)) + geom_bar(stat = "bin", fill = "lightgreen")+ geom_vline(xintercept = 15, colour = "red", linewidth = 1) + xlim(-20, 20) + xlab("g") + ggtitle("g Band Flux")
 # fi = ggplot(data = cat_groups, mapping = aes(x=flux_i1xt)) + geom_bar(stat = "bin", fill = "steelblue")+ geom_vline(xintercept = 15, colour = "red", linewidth = 1) + xlim(-20, 20) + xlab("i") + ggtitle("i Band Flux")
@@ -104,5 +91,6 @@ gc()
 # ggsave(filename = paste0("./",loc,"/ast_flux_gt.png"), g_as)
 # ggsave(filename = paste0("./",loc,"/ast_flux_i1xt.png"), i_as)
 # ggsave(filename = paste0("./",loc,"/ast_flux_rxt.png"), r_as)
-
+}
+  
 }

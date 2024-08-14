@@ -4,7 +4,6 @@ source("./R_Files/Flux_Filter.R")
 source("./R_Files/Axrat_Filter.R")
 source("./R_Files/N100_Filter.R")
 source("./R_Files/Group_Cutter.R")
-source("./R_Files/memobj.R")
 
 library(peakRAM,quietly = TRUE)
 library(xtable, quietly = TRUE)

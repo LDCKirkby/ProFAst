@@ -1,13 +1,3 @@
-# library(celestial)
-# library(devtools)
-# library(Cairo)
-# library(ProFound)
-# library(magicaxis)
-# library(data.table)
-# require(foreign)
-# require(MASS)
-#
-
 N100_Filter <- function(loc){
   
   cat("*********\n")
