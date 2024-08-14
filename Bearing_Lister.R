@@ -43,7 +43,7 @@ RA_Dec = as.data.frame(RA_Dec)
 colnames(RA_Dec) = c("RA", "Dec")
 
 RA_Dec = RA_Dec[order(RA_Dec$Dec, decreasing = TRUE),]
-
+bearings = c()
 for(j in 1:length(RA_Dec$Dec)){
   bearings = append(bearings, paste0(RA_Dec$RA[[j]],"_",RA_Dec$Dec[[j]]))
 }
