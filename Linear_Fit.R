@@ -98,7 +98,15 @@ for(i in 1:length(asteroids$segID)){
   
   locut = c(median(cutim_g$imDat,na.rm=TRUE),median(cutim_g$imDat,na.rm=TRUE),median(cutim_g$imDat,na.rm=TRUE))
   Rwcs_imageRGB(R=cutim_r, G=cutim_g, B=cutim_i, Rkeyvalues = r_image$keyvalues, Gkeyvalues = g_image$keyvalues, Bkeyvalues = i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)", coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)
-  lines(x_pred, y_pred, col = "red", lwd = 3)
+  
+  if(target$Colour == "g"){
+    line_col = "green"
+  }else if(target$Colour == "r"){
+    line_col = "red"
+  }else if(target$Colour == "i"){
+    line_col = "blue"
+  }
+  lines(x_pred, y_pred, col = line_col, lwd = 3)
   
   dev.off()
   
@@ -106,9 +114,9 @@ for(i in 1:length(asteroids$segID)){
   
   par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
   
-  plot(x_vals, y_vals, pch = 16, col = "blue", xlab = "X", ylab = "Y", main = paste0("Linear Fit to asteroid ", ID, " image"))
-  lines(x_pred, y_pred, col = "red", lwd = 3)
-  legend("topleft", legend = c("Data", "Fitted Polynomial"), col = c("blue", "red"), lwd = 2, pch = 16)
+  plot(x_vals, y_vals, pch = 16, col = "black", xlab = "X", ylab = "Y", main = paste0("Linear Fit to asteroid ", ID, " image"))
+  lines(x_pred, y_pred, col = line_col, lwd = 3)
+  legend("topleft", legend = c("Data", "Fitted Polynomial"), col = c("black", line_col), lwd = 2, pch = 16)
   
   # RA_Dec = xy2radec(x_new, y_pred, header=g_image$hdr)
 
