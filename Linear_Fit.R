@@ -47,26 +47,38 @@ for(i in 1:length(asteroids$segID)){
   
   galradec = target[c("RAcen", "Deccen")]
   galpos=as.integer(Rwcs_s2p(RA=galradec$RAcen, Dec=galradec$Deccen, keyvalues=g_image$keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
+  
   wid <- 200.0
   box<-c(2*wid,2*wid)
   mulim<-22.0
   kids<-(0.339^2)*(10^(0.4*(0-mulim)))
   viking<-(0.339^2)*(10^(0.4*(30-mulim)))
+  
   cutim_g=g_image[galpos,box=box]
   cutim_r=r_image[galpos,box=box]
   cutim_i=i_image[galpos,box=box]
-  segimcut=magcutout(image = segim, loc=as.numeric(galpos),box=box,loc.type="image")
+  
+  segimcut=magcutout(image = segim, loc=as.numeric(galpos), box=box, loc.type="image")
   
   obj_points <- which(segimcut$image==ID, arr.ind = TRUE)
-  
-  weights <- cutim_g$imDat[segimcut$image] + cutim_r$imDat[segimcut$image] + cutim_i$imDat[segimcut$image] / max(cutim_g$imDat + cutim_r$imDat + cutim_i$imDat)
+
+  # weights_g <- cutim_g$imDat[segimcut$image]/ max(cutim_g$imDat)
+  # weights_r <- cutim_r$imDat[segimcut$image]/ max(cutim_r$imDat)
+  # weights_i <- cutim_i$imDat[segimcut$image]/ max(cutim_i$imDat)
   
   y_vals = obj_points[,2]
   x_vals = obj_points[,1]
   
-  brightness_vals = g_image$imDat[obj_points]
-  
-  brightness_vals[brightness_vals<0] <- 0
+  if(target$Colour == "g"){
+    brightness_vals = g_image$imDat[obj_points]/max(cutim_g$imDat)
+    brightness_vals[brightness_vals<0] <- 0
+  }else if(target$Colour == "r"){
+    brightness_vals = r_image$imDat[obj_points]/max(cutim_r$imDat)
+    brightness_vals[brightness_vals<0] <- 0
+  }else if(target$Colour == "i"){
+    brightness_vals = i_image$imDat[obj_points]/max(cutim_i$imDat)
+    brightness_vals[brightness_vals<0] <- 0
+  }
   
   fit <- lm(y_vals ~ poly(x_vals, 1, raw = TRUE), weights = brightness_vals)
   
