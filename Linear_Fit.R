@@ -21,6 +21,34 @@ library(showtext, quietly = TRUE)
 library(png)
 library(Matrix)
 
+Edger <- function(segimcut, ID){
+  image = segimcut$image
+  
+  xrun=1:(dim(image)[1]-1)
+  yrun=1:(dim(image)[2]-1)
+  
+  image_lb=image[xrun,yrun]
+  image_lt=image[xrun+1,yrun]
+  image_rt=image[xrun+1,yrun+1]
+  image_rb=image[xrun,yrun+1]
+  
+  image_temp = (image_lb == image_lt) & (image_rt == image_rb) & (image_lb == image_rb) & (image_lt == image_rt)
+  
+  image_edge=matrix(0,dim(image)[1],dim(image)[2])
+  
+  image_edge[xrun,yrun]=image_edge[xrun,yrun]+image_temp
+  image_edge[xrun+1,yrun]=image_edge[xrun+1,yrun]+image_temp
+  image_edge[xrun+1,yrun+1]=image_edge[xrun+1,yrun+1]+image_temp
+  image_edge[xrun,yrun+1]=image_edge[xrun,yrun+1]+image_temp
+  
+  image[image_edge==4]=0
+  image[is.na(image)] <- 0
+  
+  image[image%notin%ID]=0
+  return(image)
+}
+
+
 args = commandArgs(trailingOnly = TRUE)
 loc = as.character(args[[1]])
 
@@ -37,7 +65,7 @@ cat("*****************  Warping r&i frames ***************** \n")
 r_image=propaneWarp(r_image_input,keyvalues_out= g_image$keyvalues)
 i_image=propaneWarp(i_image_input,keyvalues_out= g_image$keyvalues)
 
-asteroids = read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv"))
+asteroids = read.csv(paste0("./",loc,"/asteroids_real_data.csv"))
 dir_create("./",loc,"/Linear_Fits")
 
 warnings()
@@ -63,10 +91,8 @@ for(i in 1:length(asteroids$segID)){
   segimcut=magcutout(image = segim, loc=as.numeric(galpos), box=box, loc.type="image")
   
   obj_points <- which(segimcut$image==ID, arr.ind = TRUE)
-
-  # weights_g <- cutim_g$imDat[segimcut$image]/ max(cutim_g$imDat)
-  # weights_r <- cutim_r$imDat[segimcut$image]/ max(cutim_r$imDat)
-  # weights_i <- cutim_i$imDat[segimcut$image]/ max(cutim_i$imDat)
+  
+  edged_segimcut <- Edger(segimcut, ID)
   
   y_vals = obj_points[,2]
   x_vals = obj_points[,1]
@@ -82,10 +108,11 @@ for(i in 1:length(asteroids$segID)){
     brightness_vals[brightness_vals<0] <- 0
   }
   
-  fit <- lm(y_vals ~ poly(x_vals, 1, raw = TRUE), weights = brightness_vals)
+  # weights_g <- cutim_g$imDat[segimcut$image]/ max(cutim_g$imDat)
+  # weights_r <- cutim_r$imDat[segimcut$image]/ max(cutim_r$imDat)
+  # weights_i <- cutim_i$imDat[segimcut$image]/ max(cutim_i$imDat)
   
-  # x_new <- seq(min(x_vals), max(x_vals), length.out = 100)
-  # y_pred <- predict(fit, newdata = data.frame(x_vals = x_new))
+  fit <- lm(y_vals ~ poly(x_vals, 1, raw = TRUE), weights = brightness_vals)
   
   x_range <- range(x_vals) + c(-0.01,10) # Extend the range of x_vals by 1 unit on each side
   
@@ -97,7 +124,6 @@ for(i in 1:length(asteroids$segID)){
   par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
   
   locut = c(median(cutim_g$imDat,na.rm=TRUE),median(cutim_g$imDat,na.rm=TRUE),median(cutim_g$imDat,na.rm=TRUE))
-  Rwcs_imageRGB(R=cutim_r, G=cutim_g, B=cutim_i, Rkeyvalues = r_image$keyvalues, Gkeyvalues = g_image$keyvalues, Bkeyvalues = i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)", coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)
   
   if(target$Colour == "g"){
     line_col = "green"
@@ -106,7 +132,12 @@ for(i in 1:length(asteroids$segID)){
   }else if(target$Colour == "i"){
     line_col = "blue"
   }
-  lines(x_pred, y_pred, col = line_col, lwd = 1.5)
+  
+  Rwcs_imageRGB(R=cutim_r, G=cutim_g, B=cutim_i, Rkeyvalues = r_image$keyvalues, Gkeyvalues = g_image$keyvalues, Bkeyvalues = i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)", coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE)
+  
+  magimage(edged_segimcut,col=c(NA,rep(line_col, max(edged_segimcut))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.5)
+  
+  lines(x_pred, y_pred, col = line_col, lwd = 1)
   
   dev.off()
   
