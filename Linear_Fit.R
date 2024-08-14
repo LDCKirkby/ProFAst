@@ -71,13 +71,13 @@ for(i in 1:length(asteroids$segID)){
   x_vals = obj_points[,1]
   
   if(target$Colour == "g"){
-    brightness_vals = g_image$imDat[obj_points]/max(cutim_g$imDat)
+    brightness_vals = cutim_g$imDat[obj_points]/ max(cutim_g$imDat)
     brightness_vals[brightness_vals<0] <- 0
   }else if(target$Colour == "r"){
-    brightness_vals = r_image$imDat[obj_points]/max(cutim_r$imDat)
+    brightness_vals = cutim_r$imDat[obj_points]/ max(cutim_r$imDat)
     brightness_vals[brightness_vals<0] <- 0
   }else if(target$Colour == "i"){
-    brightness_vals = i_image$imDat[obj_points]/max(cutim_i$imDat)
+    brightness_vals = cutim_i$imDat[obj_points]/ max(cutim_i$imDat)
     brightness_vals[brightness_vals<0] <- 0
   }
   
