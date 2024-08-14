@@ -29,6 +29,7 @@ showtext_auto()
 
 args = commandArgs(trailingOnly = TRUE)
 RA_DEC = as.character(args[[1]])
+cat(RA_DEC)
 computer = as.character(args[[2]])
 
 if(tolower(computer) == "sabine"){
