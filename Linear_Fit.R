@@ -26,8 +26,8 @@ loc = as.character(args[[1]])
 
 cat("***************** Reading in segmentation map data *****************\n")
 segim <- as.matrix(read.csv(paste0("./",loc,"/segim.csv")))
-cat("*****************  Generating groupim ***************** \n")
-groupim = profoundSegimGroup(segim = segim)
+# cat("*****************  Generating groupim ***************** \n")
+# groupim = profoundSegimGroup(segim = segim)
 
 cat("*****************  Loading images as pointers ***************** \n")
 g_image = Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
