@@ -33,7 +33,6 @@ if("objectcati.csv" %in% list.files(path = paste0("./",loc,"/")) == FALSE){
   gc()
 }
   
-  
 cat_groups = read.csv(paste0("./",loc,"/objectcati.csv"))
 cat("*********\n")
 cat(length(cat_groups$X), " Objects Detected\n")
@@ -73,24 +72,21 @@ rm(blue_objects, green_objects, red_objects, possible_asteroids, cat_groups)
 gc()
 
 #Uncomment to make plots of asteroid colour distribution before and after filtering
-{
-
-# fg = ggplot(data = cat_groups, mapping = aes(x=flux_gt)) + geom_bar(stat = "bin", fill = "lightgreen")+ geom_vline(xintercept = 15, colour = "red", linewidth = 1) + xlim(-20, 20) + xlab("g") + ggtitle("g Band Flux")
-# fi = ggplot(data = cat_groups, mapping = aes(x=flux_i1xt)) + geom_bar(stat = "bin", fill = "steelblue")+ geom_vline(xintercept = 15, colour = "red", linewidth = 1) + xlim(-20, 20) + xlab("i") + ggtitle("i Band Flux")
-# fr = ggplot(data = cat_groups, mapping = aes(x=flux_rxt)) + geom_bar(stat = "bin", fill = "firebrick")+ geom_vline(xintercept = 15, colour = "red", linewidth = 1) + xlim(-20, 20) + xlab("r") + ggtitle("r Band Flux")
+# # fg = ggplot(data = cat_groups, mapping = aes(x=flux_gt)) + geom_bar(stat = "bin", fill = "lightgreen")+ geom_vline(xintercept = 15, colour = "red", linewidth = 1) + xlim(-20, 20) + xlab("g") + ggtitle("g Band Flux")
+# # fi = ggplot(data = cat_groups, mapping = aes(x=flux_i1xt)) + geom_bar(stat = "bin", fill = "steelblue")+ geom_vline(xintercept = 15, colour = "red", linewidth = 1) + xlim(-20, 20) + xlab("i") + ggtitle("i Band Flux")
+# # fr = ggplot(data = cat_groups, mapping = aes(x=flux_rxt)) + geom_bar(stat = "bin", fill = "firebrick")+ geom_vline(xintercept = 15, colour = "red", linewidth = 1) + xlim(-20, 20) + xlab("r") + ggtitle("r Band Flux")
+# # 
+# # ggsave(filename = paste0("./",loc,"/flux_gt.png"), fg)
+# # ggsave(filename = paste0("./",loc,"/flux_i1xt.png"), fi)
+# # ggsave(filename = paste0("./",loc,"/flux_rxt.png"), fr)
 # 
-# ggsave(filename = paste0("./",loc,"/flux_gt.png"), fg)
-# ggsave(filename = paste0("./",loc,"/flux_i1xt.png"), fi)
-# ggsave(filename = paste0("./",loc,"/flux_rxt.png"), fr)
-
-
-# g_as = ggplot(data = possible_asteroids, mapping = aes(x=flux_gt)) + geom_bar(stat = "bin", fill = "lightgreen")+ geom_vline(xintercept = 15, colour = "red", linewidth = 1) + xlim(-20, 20) + xlab("g") + ggtitle("Possible Asteroids g Band Flux")
-# i_as = ggplot(data = possible_asteroids, mapping = aes(x=flux_i1xt)) + geom_bar(stat = "bin", fill = "steelblue")+ geom_vline(xintercept = 15, colour = "red", linewidth = 1) + xlim(-20, 20) + xlab("i") + ggtitle("Possible Asteroids i Band Flux")
-# r_as = ggplot(data = possible_asteroids, mapping = aes(x=flux_rxt)) + geom_bar(stat = "bin", fill = "firebrick")+ geom_vline(xintercept = 15, colour = "red", linewidth = 1) + xlim(-20, 20) + xlab("r") + ggtitle("Possible Asteroids r Band Flux")
-
-# ggsave(filename = paste0("./",loc,"/ast_flux_gt.png"), g_as)
-# ggsave(filename = paste0("./",loc,"/ast_flux_i1xt.png"), i_as)
-# ggsave(filename = paste0("./",loc,"/ast_flux_rxt.png"), r_as)
-}
+# 
+# # g_as = ggplot(data = possible_asteroids, mapping = aes(x=flux_gt)) + geom_bar(stat = "bin", fill = "lightgreen")+ geom_vline(xintercept = 15, colour = "red", linewidth = 1) + xlim(-20, 20) + xlab("g") + ggtitle("Possible Asteroids g Band Flux")
+# # i_as = ggplot(data = possible_asteroids, mapping = aes(x=flux_i1xt)) + geom_bar(stat = "bin", fill = "steelblue")+ geom_vline(xintercept = 15, colour = "red", linewidth = 1) + xlim(-20, 20) + xlab("i") + ggtitle("Possible Asteroids i Band Flux")
+# # r_as = ggplot(data = possible_asteroids, mapping = aes(x=flux_rxt)) + geom_bar(stat = "bin", fill = "firebrick")+ geom_vline(xintercept = 15, colour = "red", linewidth = 1) + xlim(-20, 20) + xlab("r") + ggtitle("Possible Asteroids r Band Flux")
+# 
+# # ggsave(filename = paste0("./",loc,"/ast_flux_gt.png"), g_as)
+# # ggsave(filename = paste0("./",loc,"/ast_flux_i1xt.png"), i_as)
+# # ggsave(filename = paste0("./",loc,"/ast_flux_rxt.png"), r_as)
   
 }

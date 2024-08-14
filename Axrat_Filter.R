@@ -33,7 +33,6 @@ gc()
 
 
 #Uncomment to produce axial ratio graphs 
-{
 # g_axrat <- filtered_asteroids$axrat_gt
 # r_axrat <- filtered_asteroids$axrat_rxt
 # i_axrat <- filtered_asteroids$axrat_i1xt
@@ -46,6 +45,5 @@ gc()
 # ggsave(paste0("./",loc,"/ast_g_axrat.png"), axg)
 # ggsave(paste0("./",loc,"/ast_r_axrat.png"), axr)
 # ggsave(paste0("./",loc,"/ast_i_axrat.png"), axi)
-}
 
 }
