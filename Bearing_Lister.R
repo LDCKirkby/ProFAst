@@ -47,5 +47,5 @@ bearings = c()
 for(j in 1:length(RA_Dec$Dec)){
   bearings = append(bearings, paste0(RA_Dec$RA[[j]],"_",RA_Dec$Dec[[j]]))
 }
-colnames(bearings) = "RA_Dec"
+colname(bearings) = c("RA_Dec")
 write.csv(bearings, "./bearings.csv", quote = FALSE)
