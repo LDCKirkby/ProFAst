@@ -107,3 +107,4 @@ for(i in 1:length(asteroids$segID)){
   # RA_Dec = xy2radec(x_new, y_pred, header=g_image$hdr)
 
 }
+warnings()
