@@ -106,7 +106,7 @@ for(i in 1:length(asteroids$segID)){
   }else if(target$Colour == "i"){
     line_col = "blue"
   }
-  lines(x_pred, y_pred, col = line_col, lwd = 3)
+  lines(x_pred, y_pred, col = line_col, lwd = 1.5)
   
   dev.off()
   
