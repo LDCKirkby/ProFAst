@@ -44,6 +44,7 @@ dir_create("./",loc,"/Linear_Fits")
 for(i in 1:length(asteroids$segID)){
   target = asteroids[i,]
   ID = target$segID
+  cat("*****************  Fitting Asteroid ", ID, " *****************\n")
   
   galradec = target[c("RAcen", "Deccen")]
   galpos=as.integer(Rwcs_s2p(RA=galradec$RAcen, Dec=galradec$Deccen, keyvalues=g_image$keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
