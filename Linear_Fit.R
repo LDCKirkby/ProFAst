@@ -104,6 +104,6 @@ for(i in 1:length(asteroids$segID)){
   lines(x_pred, y_pred, col = "red", lwd = 3)
   legend("topleft", legend = c("Data", "Fitted Polynomial"), col = c("blue", "red"), lwd = 2, pch = 16)
   
-  RA_Dec = xy2radec(x_new, y_pred, header=g_image$hdr)
+  # RA_Dec = xy2radec(x_new, y_pred, header=g_image$hdr)
 
 }
