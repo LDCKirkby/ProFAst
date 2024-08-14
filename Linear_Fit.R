@@ -40,6 +40,7 @@ i_image=propaneWarp(i_image_input,keyvalues_out= g_image$keyvalues)
 asteroids = read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv"))
 dir_create("./",loc,"/Linear_Fits")
 
+warnings()
 
 for(i in 1:length(asteroids$segID)){
   target = asteroids[i,]
@@ -112,4 +113,3 @@ for(i in 1:length(asteroids$segID)){
   # RA_Dec = xy2radec(x_new, y_pred, header=g_image$hdr)
 
 }
-warnings()
