@@ -117,7 +117,7 @@ ggplot(data = all_points, mapping = aes(x = gFluxRatio, y = N100, color = axrat)
                                     scale_y_log10() +
                                     geom_point() + scale_color_viridis_c(option = "A") +
                                     ggnewscale::new_scale_color() + 
-                                    geom_point(data = asteroids, mapping = aes(x = gFluxRatio, y = N100, color = axrat)) + scale_colour_gradient(name = "Asteroids", low = "darkgreen", high = "green")
+                                    geom_point(data = asteroids, mapping = aes(x = gFluxRatio, y = N100, z = axrat, color = Colour)) + scale_colour_manual(values = "green", "red", "blue")# + scale_colour_gradient(name = "Asteroids", low = "darkgreen", high = "green")
 
 
 png(filename=paste0("./cutmap_r.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
@@ -128,7 +128,7 @@ ggplot(data = all_points, mapping = aes(x = rFluxRatio, y = N100, color = axrat)
                                     scale_y_log10() +
                                     geom_point() + scale_color_viridis_c(option = "A") +
                                     ggnewscale::new_scale_color() + 
-                                    geom_point(data = asteroids, mapping = aes(x = rFluxRatio, y = N100, color = axrat)) + scale_colour_gradient(name = "Asteroids", low = "firebrick", high = "red")
+                                    geom_point(data = asteroids, mapping = aes(x = rFluxRatio, y = N100, z = axrat, color = Colour)) + scale_colour_manual(values = "green", "red", "blue")# + scale_colour_gradient(name = "Asteroids", low = "firebrick", high = "red")
 
 
 png(filename=paste0("./cutmap_i.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
@@ -139,7 +139,7 @@ ggplot(data = all_points, mapping = aes(x = iFluxRatio, y = N100, color = axrat)
                                     scale_y_log10() +
                                     geom_point() + scale_color_viridis_c(option = "A") +
                                     ggnewscale::new_scale_color() + 
-                                    geom_point(data = asteroids, mapping = aes(x = iFluxRatio, y = N100, color = axrat)) + scale_colour_gradient(name = "Asteroids", low = "darkblue", high = "blue")
+                                    geom_point(data = asteroids, mapping = aes(x = iFluxRatio, y = N100, z = axrat, color = Colour)) + scale_colour_manual(values = "green", "red", "blue")# + scale_colour_gradient(name = "Asteroids", low = "darkblue", high = "blue")
 
 
 png(filename=paste0("./entropy_map.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
@@ -150,7 +150,7 @@ ggplot(data = all_points, mapping = aes(x = Entropy, y = N100, color = axrat)) +
                                     scale_y_log10() +
                                     geom_point() + scale_color_viridis_c(option = "A") +
                                     ggnewscale::new_scale_color() + 
-                                    geom_point(data = asteroids, mapping = aes(x = Entropy, y = N100, color = axrat)) + scale_colour_gradient(name = "Asteroids", low = "deeppink4", high = "deeppink")
+                                    geom_point(data = asteroids, mapping = aes(x = Entropy, y = N100, z = axrat, color = Colour)) + scale_colour_manual(values = "green", "red", "blue")# + scale_colour_gradient(name = "Asteroids", low = "deeppink4", high = "deeppink")
 
 ##############################
 
