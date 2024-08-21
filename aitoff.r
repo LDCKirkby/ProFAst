@@ -110,42 +110,42 @@ asteroids = all_points[all_points$segID %in% asteroid_and_fields$ID & all_points
 
 png(filename=paste0("./cutmap_g.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
 par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
-g = ggplot(data = all_points, mapping = aes(x = gFluxRatio, y = axrat, colour = N100)) + 
+g = ggplot(data = all_points, mapping = aes(x = gFluxRatio, y = axrat, color = N100)) + 
                                     xlab("Flux Ratio (g band)") + ylab("Axial Ratio") + 
                                     scale_x_log10() +
                                     scale_y_log10() +
                                     geom_point()
-g = g + geom_point(data = asteroids, mapping = aes(x = gFluxRatio, y = axrat, colour = N100)) + scale_color_manual(aesthetics = c("colour","fill"), values = c("darkgreen", "green"))
+g = g + geom_point(data = asteroids, mapping = aes(x = gFluxRatio, y = axrat, color = cut(N100, breaks = c(min(asteroids$N100), max(asteroids$N100))))) + scale_color_manual(aesthetics = c("color","fill"), values = c("darkgreen", "green"))
 
 
 png(filename=paste0("./cutmap_r.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
 par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
-r = ggplot(data = all_points, mapping = aes(x = rFluxRatio, y = axrat, colour = N100)) + 
+r = ggplot(data = all_points, mapping = aes(x = rFluxRatio, y = axrat, color = N100)) + 
                                     xlab("Flux Ratio (r band)") + ylab("Axial Ratio") + 
                                     scale_x_log10() +
                                     scale_y_log10() +
                                     geom_point()
-r = r + geom_point(data = asteroids, mapping = aes(x = rFluxRatio, y = axrat, colour = N100)) + scale_color_manual(aesthetics = c("colour","fill"), values = c("firebrick4", "red"))
+r = r + geom_point(data = asteroids, mapping = aes(x = rFluxRatio, y = axrat, color = cut(N100, breaks = c(min(asteroids$N100), max(asteroids$N100))))) + scale_color_manual(aesthetics = c("color","fill"), values = c("firebrick4", "red"))
 
 
 png(filename=paste0("./cutmap_i.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
 par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
-i = ggplot(data = all_points, mapping = aes(x = iFluxRatio, y = axrat, colour = N100)) + 
+i = ggplot(data = all_points, mapping = aes(x = iFluxRatio, y = axrat, color = N100)) + 
                                     xlab("Flux Ratio (i band)") + ylab("Axial Ratio") + 
                                     scale_x_log10() +
                                     scale_y_log10() +
                                     geom_point()
-i = i + geom_point(data = asteroids, mapping = aes(x = iFluxRatio, y = axrat, colour = N100)) + scale_color_manual(aesthetics = c("colour","fill"), values = c("darkblue", "skyblue"))
+i = i + geom_point(data = asteroids, mapping = aes(x = iFluxRatio, y = axrat, color = cut(N100, breaks = c(min(asteroids$N100), max(asteroids$N100))))) + scale_color_manual(aesthetics = c("color","fill"), values = c("darkblue", "skyblue"))
 
 
 png(filename=paste0("./entropy_map.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
 par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
-entropy = ggplot(data = all_points, mapping = aes(x = Entropy, y = axrat, colour = N100)) + 
+entropy = ggplot(data = all_points, mapping = aes(x = Entropy, y = axrat, color = N100)) + 
                                     xlab("Entropy") + ylab("Axial Ratio") + 
                                     scale_x_log10() +
                                     scale_y_log10() +
                                     geom_point()
-entropy = entropy + geom_point(data = asteroids, mapping = aes(x = Entropy, y = axrat, colour = N100)) + scale_color_manual(aesthetics = c("colour","fill"), values = c("orange4", "orange"))
+entropy = entropy + geom_point(data = asteroids, mapping = aes(x = Entropy, y = axrat, color = cut(N100, breaks = c(min(asteroids$N100), max(asteroids$N100))))) + scale_color_manual(aesthetics = c("color","fill"), values = c("orange4", "orange"))
 
 ##############################
 
