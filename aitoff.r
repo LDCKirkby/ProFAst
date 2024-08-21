@@ -57,10 +57,10 @@ for(asteroid in known_asteroids$RA_Dec_ID){
   ID = ""
   if(length(asteroid) == 4){
     RA_Dec = paste0(asteroid[2],"_",asteroid[3])
-    ID = strsplit(asteroid[4], "[.]")[[1]][1]
+    ID = gsub('[griGRI]', '', strsplit(asteroid[4], "[.]")[[1]][1])
   }else if(length(asteroid) == 3){
     RA_Dec = paste0(asteroid[1],"_",asteroid[2])
-    ID = strsplit(asteroid[3], "[.]")[[1]][1]
+    ID = gsub('[griGRI]', '', strsplit(asteroid[3], "[.]")[[1]][1])
   }
   asteroid_and_fields = rbind(asteroid_and_fields, c(RA_Dec, ID))
 }
