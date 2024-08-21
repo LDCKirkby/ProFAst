@@ -116,7 +116,7 @@ g = ggplot(data = all_points, mapping = aes(x = gFluxRatio, y = axrat, color = f
                                     scale_x_log10() +
                                     scale_y_log10() +
                                     geom_point() + scale_fill_viridis_c(option = "D") +
-                                    new_scale_colour() + 
+                                    new_scale("fill") + 
                                     geom_point(data = asteroids, mapping = aes(x = gFluxRatio, y = axrat, color = factor(N100))) + scale_fill_viridis_c(option = "A")
 
 
@@ -127,7 +127,7 @@ r = ggplot(data = all_points, mapping = aes(x = rFluxRatio, y = axrat, color = f
                                     scale_x_log10() +
                                     scale_y_log10() +
                                     geom_point() + scale_fill_viridis_c(option = "D") +
-                                    new_scale_colour() + 
+                                    new_scale("fill") + 
                                     geom_point(data = asteroids, mapping = aes(x = rFluxRatio, y = axrat, color = factor(N100))) + scale_fill_viridis_c(option = "A")
 
 
@@ -138,7 +138,7 @@ i = ggplot(data = all_points, mapping = aes(x = iFluxRatio, y = axrat, color = f
                                     scale_x_log10() +
                                     scale_y_log10() +
                                     geom_point() + scale_fill_viridis_c(option = "D") +
-                                    new_scale_colour() + 
+                                    new_scale("fill") + 
                                     geom_point(data = asteroids, mapping = aes(x = iFluxRatio, y = axrat, color = factor(N100))) + scale_fill_viridis_c(option = "A")
 
 
@@ -149,7 +149,7 @@ entropy = ggplot(data = all_points, mapping = aes(x = Entropy, y = axrat, color 
                                     scale_x_log10() +
                                     scale_y_log10() +
                                     geom_point() + scale_fill_viridis_c(option = "D") +
-                                    new_scale_colour() + 
+                                    new_scale("fill") + 
                                     geom_point(data = asteroids, mapping = aes(x = Entropy, y = axrat, color = factor(N100))) + scale_fill_viridis_c(option = "A")
 
 ##############################
