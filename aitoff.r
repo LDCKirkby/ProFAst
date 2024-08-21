@@ -12,6 +12,9 @@ library(extrafont)
 library(MASS)
 library(grDevices)
 library(showtext)
+source("./R_Files/Flux_Filter.R")
+source("./R_Files/Axrat_Filter.R")
+source("./R_Files/N100_Filter.R")
 font_add("Arial", "/Library/Fonts/Arial.ttf")
 showtext_auto()
 
@@ -74,7 +77,11 @@ all_points = data.frame()
 for(RA_Dec in done$RA_Dec){
   cat(RA_Dec,"\n")
   if(paste0(RA_Dec,"_N100_Filtered_Asteroids.csv") %in% list.files(path = paste0("./",RA_Dec,"/")) == FALSE){
-    cat("FALSE\n")
+    cat("N100_Filtered_Asteroids.csv for", RA_Dec,"\n")
+    cat("Attempting to make ", paste0(RA_Dec,"_N100_Filtered_Asteroids.csv\n"))
+    Flux_Filter(RA_Dec)
+    Axrat_Filter(RA_Dec)
+    N100_Filter(RA_Dec)
     next
   }
   data = as.data.frame(read.csv(paste0("./",RA_Dec,"/",RA_Dec,"_N100_Filtered_Asteroids.csv")))
