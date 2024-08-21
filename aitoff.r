@@ -74,9 +74,9 @@ colnames(done) = "RA_Dec"
 
 all_points = data.frame()
 for(RA_Dec in done$RA_Dec){
-  #cat(RA_Dec,"\n")
+  cat(RA_Dec,"\n")
   if("objectcati.csv" %in% list.files(path = paste0("./",RA_Dec,"/")) == FALSE){
-    #cat("FALSE\n\n")
+    cat("FALSE\n\n")
     next
   }
   data = as.data.frame(read.csv(paste0("./",RA_Dec,"/objectcati.csv")))
