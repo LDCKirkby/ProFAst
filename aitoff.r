@@ -74,7 +74,7 @@ all_points = data.frame()
 for(RA_Dec in done$RA_Dec){
   cat(RA_Dec,"\n")
   if(paste0(RA_Dec,"_N100_Filtered_Asteroids.csv") %in% list.files(path = paste0("./",RA_Dec,"/")) == FALSE){
-    cat("FALSE\n")
+    cat("FALSE\n\n")
     next
   }
   data = as.data.frame(read.csv(paste0("./",RA_Dec,"/",RA_Dec,"_N100_Filtered_Asteroids.csv")))
@@ -106,25 +106,26 @@ asteroids = subset(all_points, subset = all_points$groupID %in% asteroid_and_fie
 
 png(filename=paste0("./cutmap_g.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
 par(mar=c(0,0,0,0),oma=c(0,0,0,0))
-magplot(x=all_points$gFluxRatio, y=all_points$axrat, z=all_points$N100)
-magplot(x=asteroids$gFluxRatio, y=asteroids$axrat, z=asteroids$N100, add=TRUE)
+magplot(x=all_points$gFluxRatio, y=all_points$axrat, z=all_points$N100, log=xy)
+magplot(x=asteroids$gFluxRatio, y=asteroids$axrat, z=asteroids$N100, log=xy, add=TRUE)
 
 
 png(filename=paste0("./cutmap_r.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
 par(mar=c(0,0,0,0),oma=c(0,0,0,0))
-magplot(x=all_points$rFluxRatio, y=all_points$axrat, z=all_points$N100)
-magplot(x=asteroids$rFluxRatio, y=asteroids$axrat, z=asteroids$N100, add=TRUE)
+magplot(x=all_points$rFluxRatio, y=all_points$axrat, z=all_points$N100, log=xy)
+magplot(x=asteroids$rFluxRatio, y=asteroids$axrat, z=asteroids$N100, log=xy, add=TRUE)
 
 
 png(filename=paste0("./cutmap_i.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
 par(mar=c(0,0,0,0),oma=c(0,0,0,0))
-magplot(x=all_points$iFluxRatio, y=all_points$axrat, z=all_points$N100)
-magplot(x=asteroids$iFluxRatio, y=asteroids$axrat, z=asteroids$N100, add=TRUE)
+magplot(x=all_points$iFluxRatio, y=all_points$axrat, z=all_points$N100, log=xy)
+magplot(x=asteroids$iFluxRatio, y=asteroids$axrat, z=asteroids$N100, log=xy, add=TRUE)
 
 png(filename=paste0("./entropy_map.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
 par(mar=c(0,0,0,0),oma=c(0,0,0,0))
-magplot(x=all_points$Entropy, y=all_points$axrat, z=all_points$N100)
-magplot(x=asteroids$Entropy, y=asteroids$axrat, z=asteroids$N100, add=TRUE)
+magplot(x=all_points$Entropy, y=all_points$axrat, z=all_points$N100, log=xy)
+magplot(x=asteroids$Entropy, y=asteroids$axrat, z=asteroids$N100, log=xy, add=TRUE)
+
 
 png(filename=paste0("./projectionmap.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
 par(mar=c(0,0,0,0),oma=c(0,0,0,0))
