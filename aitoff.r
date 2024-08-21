@@ -109,24 +109,24 @@ cat(length(asteroids$gFluxRatio), " asteroids extracted\n")
 cat("segID is", typeof(all_points$segID), ", RA_Dec is ", typeof(all_points$Field), "\n")
 
 png(filename=paste0("./cutmap_g.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
-par(mar=c(0,0,0,0),oma=c(0,0,0,0))
+par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
 magplot(x=all_points$gFluxRatio, y=all_points$axrat, z=all_points$N100, log='xy')
 magplot(x=asteroids$gFluxRatio, y=asteroids$axrat, z=asteroids$N100, log='xy', add=TRUE)
 
 
 png(filename=paste0("./cutmap_r.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
-par(mar=c(0,0,0,0),oma=c(0,0,0,0))
+par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
 magplot(x=all_points$rFluxRatio, y=all_points$axrat, z=all_points$N100, log='xy')
 magplot(x=asteroids$rFluxRatio, y=asteroids$axrat, z=asteroids$N100, log='xy', add=TRUE)
 
 
 png(filename=paste0("./cutmap_i.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
-par(mar=c(0,0,0,0),oma=c(0,0,0,0))
+par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
 magplot(x=all_points$iFluxRatio, y=all_points$axrat, z=all_points$N100, log='xy')
 magplot(x=asteroids$iFluxRatio, y=asteroids$axrat, z=asteroids$N100, log='xy', add=TRUE)
 
 png(filename=paste0("./entropy_map.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
-par(mar=c(0,0,0,0),oma=c(0,0,0,0))
+par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
 magplot(x=all_points$Entropy, y=all_points$axrat, z=all_points$N100, log='xy')
 magplot(x=asteroids$Entropy, y=asteroids$axrat, z=asteroids$N100, log='xy', add=TRUE)
 
