@@ -78,7 +78,7 @@ for(RA_Dec in done$RA_Dec){
     next
   }
   data = as.data.frame(read.csv(paste0("./",RA_Dec,"/",RA_Dec,"_N100_Filtered_Asteroids.csv")))
-  data = cbind(data, "Field" = RA_DEC)
+  data = cbind(data, "Field" = RA_Dec)
   all_points = try(rbind(all_points, data))
 }
 
