@@ -111,14 +111,14 @@ cat("segID is", typeof(all_points$segID), ", RA_Dec is ", typeof(all_points$Fiel
 
 png(filename=paste0("./cutmap_g.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
 par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
-ggplot(data = allpoints, mapping = aes(x = gFluxRatio, y = axrat, colour = N100), log='xy') + xlab("Flux Ratio (g band)") + ylab("Axial Ratio") + geom_point() + geom_point(data = asteroids, mapping = aes(x = gFluxRatio, y = axrat, colour = N100))
+ggplot(data = all_points, mapping = aes(x = gFluxRatio, y = axrat, colour = N100), log='xy') + xlab("Flux Ratio (g band)") + ylab("Axial Ratio") + geom_point() + geom_point(data = asteroids, mapping = aes(x = gFluxRatio, y = axrat, colour = N100))
 # magplot(x=all_points$gFluxRatio, y=all_points$axrat, z=all_points$N100, log='xy', xlab = "Flux Ratio (g band)", ylab = "Axial Ratio", main = "Flux Ratio (g band) vs Axial Ratio (N100 Size Coloured)")
 # plot(x=asteroids$gFluxRatio, y=asteroids$axrat, z=asteroids$N100, log='xy', add=TRUE)#, xlim = c(min(asteroids$gfluxRatio),max(asteroids$gFluxRatio)), ylim = c(min(asteroids$axrat),max(asteroids$axrat)))
 
 
 png(filename=paste0("./cutmap_r.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
 par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
-ggplot(data = allpoints, mapping = aes(x = rFluxRatio, y = axrat, colour = N100), log='xy') + xlab("Flux Ratio (r band)") + ylab("Axial Ratio") + geom_point() + geom_point(data = asteroids, mapping = aes(x = rFluxRatio, y = axrat, colour = N100))
+ggplot(data = all_points, mapping = aes(x = rFluxRatio, y = axrat, colour = N100), log='xy') + xlab("Flux Ratio (r band)") + ylab("Axial Ratio") + geom_point() + geom_point(data = asteroids, mapping = aes(x = rFluxRatio, y = axrat, colour = N100))
 
 # magplot(x=all_points$rFluxRatio, y=all_points$axrat, z=all_points$N100, log='xy', xlab = "Flux Ratio (r band)", ylab = "Axial Ratio", main = "Flux Ratio (r band) vs Axial Ratio (N100 Size Coloured)")
 # plot(x=asteroids$rFluxRatio, y=asteroids$axrat, z=asteroids$N100, log='xy', add=TRUE)#, xlim = c(min(asteroids$rfluxRatio),max(asteroids$gFluxRatio)), ylim = c(min(asteroids$axrat),max(asteroids$axrat)))
@@ -126,14 +126,14 @@ ggplot(data = allpoints, mapping = aes(x = rFluxRatio, y = axrat, colour = N100)
 
 png(filename=paste0("./cutmap_i.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
 par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
-ggplot(data = allpoints, mapping = aes(x = iFluxRatio, y = axrat, colour = N100), log='xy') + xlab("Flux Ratio (i band)") + ylab("Axial Ratio") + geom_point() + geom_point(data = asteroids, mapping = aes(x = iFluxRatio, y = axrat, colour = N100))
+ggplot(data = all_points, mapping = aes(x = iFluxRatio, y = axrat, colour = N100), log='xy') + xlab("Flux Ratio (i band)") + ylab("Axial Ratio") + geom_point() + geom_point(data = asteroids, mapping = aes(x = iFluxRatio, y = axrat, colour = N100))
 
 # magplot(x=all_points$iFluxRatio, y=all_points$axrat, z=all_points$N100, log='xy', xlab = "Flux Ratio (i band)", ylab = "Axial Ratio", main = "Flux Ratio (i band) vs Axial Ratio (N100 Size Coloured)")
 # plot(x=asteroids$iFluxRatio, y=asteroids$axrat, z=asteroids$N100, log='xy', add=TRUE)#, xlim = c(min(asteroids$ifluxRatio),max(asteroids$gFluxRatio)), ylim = c(min(asteroids$axrat),max(asteroids$axrat)))
 
 png(filename=paste0("./entropy_map.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
 par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
-ggplot(data = allpoints, mapping = aes(x = Entropy, y = axrat, colour = N100), log='xy') + xlab("Entropy") + ylab("Axial Ratio") + geom_point() + geom_point(data = asteroids, mapping = aes(x = Entropy, y = axrat, colour = N100))
+ggplot(data = all_points, mapping = aes(x = Entropy, y = axrat, colour = N100), log='xy') + xlab("Entropy") + ylab("Axial Ratio") + geom_point() + geom_point(data = asteroids, mapping = aes(x = Entropy, y = axrat, colour = N100))
 
 # magplot(x=all_points$Entropy, y=all_points$axrat, z=all_points$N100, log='xy', xlab = "Entropy", ylab = "Axial Ratio", main = "Entropy vs Axial Ratio (N100 Size Coloured)")
 # plot(x=asteroids$Entropy, y=asteroids$axrat, z=asteroids$N100, log='xy', add=TRUE)#, xlim = c(min(asteroids$Entropy),max(asteroids$gFluxRatio)), ylim = c(min(asteroids$axrat),max(asteroids$axrat)))
