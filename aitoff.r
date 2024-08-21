@@ -116,7 +116,7 @@ ggplot(data = all_points, mapping = aes(x = gFluxRatio, y = axrat, size = N100, 
                                     scale_x_log10() +
                                     scale_y_log10() +
                                     geom_point() + scale_colour_manual(values = c("darkgreen", "darkblue", "firebrick")) + #scale_color_viridis_c(option = "A") +
-                                    #ggnewscale::new_scale_color() + 
+                                    ggnewscale::new_scale_color() + 
                                     geom_point(data = asteroids, mapping = aes(x = gFluxRatio, y = axrat, size = N100, color = Colour)) + scale_colour_manual(values = c("green", "blue", "red"))# + scale_colour_gradient(name = "Asteroids", low = "darkgreen", high = "green")
 
 
@@ -127,7 +127,7 @@ ggplot(data = all_points, mapping = aes(x = rFluxRatio, y = axrat, size = N100, 
                                     scale_x_log10() +
                                     scale_y_log10() +
                                     geom_point() + scale_colour_manual(values = c("darkgreen", "darkblue", "firebrick")) + #scale_color_viridis_c(option = "A") +
-                                    #ggnewscale::new_scale_color() + 
+                                    ggnewscale::new_scale_color() + 
                                     geom_point(data = asteroids, mapping = aes(x = rFluxRatio, y = axrat, size = N100, color = Colour)) + scale_colour_manual(values = c("green", "blue", "red"))# + scale_colour_gradient(name = "Asteroids", low = "firebrick", high = "red")
 
 
@@ -138,7 +138,7 @@ ggplot(data = all_points, mapping = aes(x = iFluxRatio, y = axrat, size = N100, 
                                     scale_x_log10() +
                                     scale_y_log10() +
                                     geom_point() + scale_colour_manual(values = c("darkgreen", "darkblue", "firebrick")) + #scale_color_viridis_c(option = "A") +
-                                    #ggnewscale::new_scale_color() + 
+                                    ggnewscale::new_scale_color() + 
                                     geom_point(data = asteroids, mapping = aes(x = iFluxRatio, y = axrat, size = N100, color = Colour)) + scale_colour_manual(values = c("green", "blue", "red"))# + scale_colour_gradient(name = "Asteroids", low = "darkblue", high = "blue")
 
 
