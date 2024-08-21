@@ -1,5 +1,3 @@
-install.packages("wesanderson")
-library(wesanderson)
 library(celestial)
 library(mapproj)
 library(devtools)
