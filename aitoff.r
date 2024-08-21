@@ -1,24 +1,19 @@
-#
-# Plot segim for individual object
-#
 library(celestial)
 library(mapproj)
 library(devtools)
 library(ProFound)
 library(Cairo)
 library(sm)
-library('magicaxis')
-library('data.table')
-library('plotrix')
-require(foreign)
+library(magicaxis)
+library(data.table)
+library(plotrix)
+library(foreign)
 library(extrafont)
-require(MASS)
+library(MASS)
 library(grDevices)
 library(showtext)
 font_add("Arial", "/Library/Fonts/Arial.ttf")
 showtext_auto()
-
-#par(family = "Arial Unicode")
 
 #
 omegam=0.3158221
@@ -52,9 +47,30 @@ LSST_Info = data.table(Name = c('WD01', 'WD02', 'WD03', 'WD10'),
 LSST_rad <- 3.5/2.0
 declimit=20.0
 #
+
+known_asteroids = read.delim("./known_asteroids.txt", header = FALSE, skip=2)
+colnames(known_asteroids) = c("RA_Dec_ID")
+asteroid_and_fields = data.frame()
+for(asteroid in known_asteroids$RA_Dec_ID){
+  asteroid = strsplit(asteroid, split="_")[[1]]
+  RA_Dec = ""
+  ID = ""
+  if(length(asteroid) == 4){
+    RA_Dec = paste0(asteroid[2],"_",asteroid[3])
+    ID = strsplit(asteroid[4], "[.]")[[1]][1]
+  }else if(length(asteroid) == 3){
+    RA_Dec = paste0(asteroid[1],"_",asteroid[2])
+    ID = strsplit(asteroid[3], "[.]")[[1]][1]
+  }
+  asteroid_and_fields = rbind(asteroid_and_fields, c(RA_Dec, ID))
+}
+colnames(asteroid_and_fields) = c("RA_Dec", "ID")
+
+
 done = as.data.frame(list.files(path = paste0(pwd()), pattern = "_"))
 colnames(done) = "RA_Dec"
-widengrps = data.frame()
+
+all_points = data.frame()
 for(RA_Dec in done$RA_Dec){
   cat(RA_Dec,"\n")
   if(paste0(RA_Dec,"_N100_Filtered_Asteroids.csv") %in% list.files(path = paste0("./",RA_Dec,"/")) == FALSE){
@@ -62,9 +78,12 @@ for(RA_Dec in done$RA_Dec){
     next
   }
   data = as.data.frame(read.csv(paste0("./",RA_Dec,"/",RA_Dec,"_N100_Filtered_Asteroids.csv")))
-  widengrps = try(rbind(widengrps, data))
+  data = cbind(data, "Field" = RA_DEC)
+  all_points = try(rbind(all_points, data))
 }
-#widengrps=fread("/Users/sdriver/Drpbx/waves/mocks/waves-north_grps.csv")
+
+
+#all_points=fread("/Users/sdriver/Drpbx/waves/mocks/waves-north_grps.csv")
 #widesgrps=fread("/Users/sdriver/Drpbx/waves/mocks/waves-south_grps.csv")
 
 # widedgrps=fread("/Users/sdriver/Drpbx/waves/mocks/waves-deep_grps.csv")
@@ -74,8 +93,38 @@ for(RA_Dec in done$RA_Dec){
 # wideddf4grps=fread("/Users/sdriver/Drpbx/waves/mocks/waves-ddf4_grps.csv")
 # gaiadr3=fread("/Users/sdriver/Drpbx/active/flythru/cats/gaiadr3x.csv")
 #
-# AITOFF Figure
-#
+all_points = cbind(all_points, "gFluxRatio" = all_points$flux_gt/(all_points$flux_gt + all_points$flux_rxt + all_points$flux_i1xt))
+all_points = cbind(all_points, "rFluxRatio" = all_points$flux_rxt/(all_points$flux_gt + all_points$flux_rxt + all_points$flux_i1xt))
+all_points = cbind(all_points, "iFluxRatio" = all_points$flux_i1xt/(all_points$flux_gt + all_points$flux_rxt + all_points$flux_i1xt))
+all_points = cbind(all_points, "norm_g" = all_points$flux_gt/(all_points$flux_gt + all_points$flux_rxt + all_points$flux_i1xt))
+all_points = cbind(all_points, "norm_r" = all_points$flux_rxt/(all_points$flux_gt + all_points$flux_rxt + all_points$flux_i1xt))
+all_points = cbind(all_points, "norm_i" = all_points$flux_i1xt/(all_points$flux_gt + all_points$flux_rxt + all_points$flux_i1xt))
+all_points = cbind(all_points, "Entropy" = as.numeric(-( (all_points$norm_g * log(all_points$norm_g)) +
+                                                           (all_points$norm_i * log(all_points$norm_i))
+                                                         + (all_points$norm_r * log(all_points$norm_r)) )) )
+asteroids = subset(all_points, subset = all_points$groupID %in% asteroid_and_fields$ID)
+
+png(filename=paste0("./cutmap_g.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
+par(mar=c(0,0,0,0),oma=c(0,0,0,0))
+magplot(x=all_points$gFluxRatio, y=all_points$axrat, z=all_points$N100)
+magplot(x=asteroids$gFluxRatio, y=asteroids$axrat, z=asteroids$N100, add=TRUE)
+
+
+png(filename=paste0("./cutmap_r.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
+par(mar=c(0,0,0,0),oma=c(0,0,0,0))
+magplot(x=all_points$rFluxRatio, y=all_points$axrat, z=all_points$N100)
+magplot(x=asteroids$rFluxRatio, y=asteroids$axrat, z=asteroids$N100, add=TRUE)
+
+
+png(filename=paste0("./cutmap_i.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
+par(mar=c(0,0,0,0),oma=c(0,0,0,0))
+magplot(x=all_points$iFluxRatio, y=all_points$axrat, z=all_points$N100)
+magplot(x=asteroids$iFluxRatio, y=asteroids$axrat, z=asteroids$N100, add=TRUE)
+
+png(filename=paste0("./entropy_map.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
+par(mar=c(0,0,0,0),oma=c(0,0,0,0))
+magplot(x=all_points$Entropy, y=all_points$axrat, z=all_points$N100)
+magplot(x=asteroids$Entropy, y=asteroids$axrat, z=asteroids$N100, add=TRUE)
 
 png(filename=paste0("./projectionmap.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
 par(mar=c(0,0,0,0),oma=c(0,0,0,0))
@@ -89,6 +138,7 @@ for (i in 1:30){
 magproj(-100,-100,type="p",pch=".",centre=c(60,0),latlim=c(-90,10),add=T)
 magproj(WD_wide_north,add=T,col='NA')
 magproj(WD_wide_south,add=T,col='NA')
+
 #magproj(WD_deep,plot,add=T,col='NA')
 #for (ii in 1:4){
 #  AESOP_tight_hex_rot = cbind(x = AESOP_tight_hex[,1] * cos(WD_ddf[ii,rot]*pi/180) - AESOP_tight_hex[,2] * sin(WD_ddf[ii,rot]*pi/180),
@@ -101,10 +151,10 @@ magproj(WD_wide_south,add=T,col='NA')
 #}
 #
 cat("magproj time.\n")
-cat(length(widengrps$RAcen), " ", length(widengrps$Deccen),"\n")
-magproj(widengrps$RAcen, widengrps$Deccen, pch=19,col=rgb(1,0,0,0.025),cex=0.1,add=T,type="p")
-#magproj(widengrps[widengrps$Colour == "r", "RAcen"], widengrps[widengrps$Colour == "r", "Deccen"], pch=1, col="red",cex=0.1,add=T,type="p")
-#magproj(widengrps[widengrps$Colour == "i", "RAcen"], widengrps[widengrps$Colour == "i", "Deccen"], pch=1, col="blue",cex=0.1,add=T,type="p")
+cat(length(all_points$RAcen), " ", length(all_points$Deccen),"\n")
+magproj(all_points$RAcen, all_points$Deccen, pch=19,col=rgb(1,0,0,0.025),cex=0.1,add=T,type="p")
+#magproj(all_points[all_points$Colour == "r", "RAcen"], all_points[all_points$Colour == "r", "Deccen"], pch=1, col="red",cex=0.1,add=T,type="p")
+#magproj(all_points[all_points$Colour == "i", "RAcen"], all_points[all_points$Colour == "i", "Deccen"], pch=1, col="blue",cex=0.1,add=T,type="p")
 
 #magproj(widesgrps$ra[widesgrps$Nfof > 10],widesgrps$dec[widesgrps$Nfof > 10],pch=16,col=rgb(0,0,0.0,0.25),cex=0.25,add=T,type="p")
 #magproj(widedgrps$ra[widedgrps$Nfof > 10],widedgrps$dec[widedgrps$Nfof > 10],pch=16,col=rgb(0.39,0.58,0.93,0.5),cex=0.25,add=T,type="p")
