@@ -13,6 +13,7 @@ library(MASS)
 library(grDevices)
 library(showtext)
 library(ggplot2)
+library(ggnewscale)
 font_add("Arial", "/Library/Fonts/Arial.ttf")
 showtext_auto()
 
@@ -115,7 +116,7 @@ g = ggplot(data = all_points, mapping = aes(x = gFluxRatio, y = axrat, color = N
                                     scale_x_log10() +
                                     scale_y_log10() +
                                     geom_point()
-g = g + geom_point(data = asteroids, mapping = aes(x = gFluxRatio, y = axrat, color = N100)) + scale_fill_gradient(low="darkgreen", high="green")
+g = g + new_scale_color() + geom_point(data = asteroids, mapping = aes(x = gFluxRatio, y = axrat, color = N100)) + scale_fill_gradient(low="darkgreen", high="green")
 
 
 png(filename=paste0("./cutmap_r.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
@@ -125,7 +126,7 @@ r = ggplot(data = all_points, mapping = aes(x = rFluxRatio, y = axrat, color = N
                                     scale_x_log10() +
                                     scale_y_log10() +
                                     geom_point()
-r = r + geom_point(data = asteroids, mapping = aes(x = rFluxRatio, y = axrat, color = N100)) + scale_fill_gradient(low ="firebrick4", high="red")
+r = r + new_scale_color() + geom_point(data = asteroids, mapping = aes(x = rFluxRatio, y = axrat, color = N100)) + scale_fill_gradient(low ="firebrick4", high="red")
 
 
 png(filename=paste0("./cutmap_i.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
@@ -135,7 +136,7 @@ i = ggplot(data = all_points, mapping = aes(x = iFluxRatio, y = axrat, color = N
                                     scale_x_log10() +
                                     scale_y_log10() +
                                     geom_point()
-i = i + geom_point(data = asteroids, mapping = aes(x = iFluxRatio, y = axrat, color = N100)) + scale_fill_gradient(low ="darkblue", high = "skyblue")
+i = i + new_scale_color() + geom_point(data = asteroids, mapping = aes(x = iFluxRatio, y = axrat, color = N100)) + scale_fill_gradient(low ="darkblue", high = "skyblue")
 
 
 png(filename=paste0("./entropy_map.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
@@ -145,7 +146,7 @@ entropy = ggplot(data = all_points, mapping = aes(x = Entropy, y = axrat, color 
                                     scale_x_log10() +
                                     scale_y_log10() +
                                     geom_point()
-entropy = entropy + geom_point(data = asteroids, mapping = aes(x = Entropy, y = axrat, color = N100)) + scale_fill_gradient(low = "orange4", high = "orange")
+entropy = entropy + new_scale_color() + geom_point(data = asteroids, mapping = aes(x = Entropy, y = axrat, color = N100)) + scale_fill_gradient(low = "orange4", high = "orange")
 
 ##############################
 
