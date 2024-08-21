@@ -116,7 +116,7 @@ g = ggplot(data = all_points, mapping = aes(x = gFluxRatio, y = axrat, colour = 
                                     scale_x_log10() +
                                     scale_y_log10() +
                                     geom_point() + scale_fill_viridis_c(option = "magma")
-g = g + geom_point(data = asteroids, mapping = aes(x = gFluxRatio, y = axrat, colour = N100)) +  scale_fill_viridis_c()
+g = g + geom_point(data = asteroids, mapping = aes(x = gFluxRatio, y = axrat, colour = N100)) + scale_color_manual(aesthetics = c("colour","fill"), values = c("darkgreen", "green"))
 
 
 png(filename=paste0("./cutmap_r.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
@@ -126,7 +126,7 @@ r = ggplot(data = all_points, mapping = aes(x = rFluxRatio, y = axrat, colour = 
                                     scale_x_log10() +
                                     scale_y_log10() +
                                     geom_point() + scale_fill_viridis_c(option = "magma")
-r = r + geom_point(data = asteroids, mapping = aes(x = rFluxRatio, y = axrat, colour = N100)) + scale_fill_viridis_c()
+r = r + geom_point(data = asteroids, mapping = aes(x = rFluxRatio, y = axrat, colour = N100)) + scale_color_manual(aesthetics = c("colour","fill"), values = c("firebrick4", "red"))
 
 
 png(filename=paste0("./cutmap_i.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
@@ -136,7 +136,7 @@ i = ggplot(data = all_points, mapping = aes(x = iFluxRatio, y = axrat, colour = 
                                     scale_x_log10() +
                                     scale_y_log10() +
                                     geom_point() + scale_fill_viridis_c(option = "magma")
-i = i + geom_point(data = asteroids, mapping = aes(x = iFluxRatio, y = axrat, colour = N100)) + scale_fill_viridis_c()
+i = i + geom_point(data = asteroids, mapping = aes(x = iFluxRatio, y = axrat, colour = N100)) + scale_color_manual(aesthetics = c("colour","fill"), values = c("darkblue", "skyblue"))
 
 
 png(filename=paste0("./entropy_map.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
@@ -146,7 +146,7 @@ entropy = ggplot(data = all_points, mapping = aes(x = Entropy, y = axrat, colour
                                     scale_x_log10() +
                                     scale_y_log10() +
                                     geom_point() + scale_fill_viridis_c(option = "magma")
-entropy = entropy + geom_point(data = asteroids, mapping = aes(x = Entropy, y = axrat, colour = N100)) + scale_fill_viridis_c()
+entropy = entropy + geom_point(data = asteroids, mapping = aes(x = Entropy, y = axrat, colour = N100)) + scale_color_manual(aesthetics = c("colour","fill"), values = c("orange4", "orange"))
 
 ##############################
 
