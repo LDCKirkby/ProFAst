@@ -104,6 +104,8 @@ all_points = cbind(all_points, "Entropy" = as.numeric(-( (all_points$norm_g * lo
                                                          + (all_points$norm_r * log(all_points$norm_r)) )) )
 asteroids = subset(all_points, subset = all_points$groupID %in% asteroid_and_fields$ID)
 
+cat(length(asteroids$gFluxRatio), " asteroids extracted\n")
+
 png(filename=paste0("./cutmap_g.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
 par(mar=c(0,0,0,0),oma=c(0,0,0,0))
 magplot(x=all_points$gFluxRatio, y=all_points$axrat, z=all_points$N100, log=xy)
