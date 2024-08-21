@@ -115,7 +115,7 @@ g = ggplot(data = all_points, mapping = aes(x = gFluxRatio, y = axrat, colour = 
                                     xlab("Flux Ratio (g band)") + ylab("Axial Ratio") + 
                                     scale_x_log10() +
                                     scale_y_log10() +
-                                    geom_point() + scale_fill_viridis_c(option = "magma")
+                                    geom_point()
 g = g + geom_point(data = asteroids, mapping = aes(x = gFluxRatio, y = axrat, colour = N100)) + scale_color_manual(aesthetics = c("colour","fill"), values = c("darkgreen", "green"))
 
 
@@ -125,7 +125,7 @@ r = ggplot(data = all_points, mapping = aes(x = rFluxRatio, y = axrat, colour = 
                                     xlab("Flux Ratio (r band)") + ylab("Axial Ratio") + 
                                     scale_x_log10() +
                                     scale_y_log10() +
-                                    geom_point() + scale_fill_viridis_c(option = "magma")
+                                    geom_point()
 r = r + geom_point(data = asteroids, mapping = aes(x = rFluxRatio, y = axrat, colour = N100)) + scale_color_manual(aesthetics = c("colour","fill"), values = c("firebrick4", "red"))
 
 
@@ -135,7 +135,7 @@ i = ggplot(data = all_points, mapping = aes(x = iFluxRatio, y = axrat, colour = 
                                     xlab("Flux Ratio (i band)") + ylab("Axial Ratio") + 
                                     scale_x_log10() +
                                     scale_y_log10() +
-                                    geom_point() + scale_fill_viridis_c(option = "magma")
+                                    geom_point()
 i = i + geom_point(data = asteroids, mapping = aes(x = iFluxRatio, y = axrat, colour = N100)) + scale_color_manual(aesthetics = c("colour","fill"), values = c("darkblue", "skyblue"))
 
 
@@ -145,7 +145,7 @@ entropy = ggplot(data = all_points, mapping = aes(x = Entropy, y = axrat, colour
                                     xlab("Entropy") + ylab("Axial Ratio") + 
                                     scale_x_log10() +
                                     scale_y_log10() +
-                                    geom_point() + scale_fill_viridis_c(option = "magma")
+                                    geom_point()
 entropy = entropy + geom_point(data = asteroids, mapping = aes(x = Entropy, y = axrat, colour = N100)) + scale_color_manual(aesthetics = c("colour","fill"), values = c("orange4", "orange"))
 
 ##############################
