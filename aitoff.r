@@ -72,9 +72,9 @@ colnames(done) = "RA_Dec"
 
 all_points = data.frame()
 for(RA_Dec in done$RA_Dec){
-  cat(RA_Dec,"\n")
+  #cat(RA_Dec,"\n")
   if(paste0(RA_Dec,"_N100_Filtered_Asteroids.csv") %in% list.files(path = paste0("./",RA_Dec,"/")) == FALSE){
-    cat("FALSE\n\n")
+    #cat("FALSE\n\n")
     next
   }
   data = as.data.frame(read.csv(paste0("./",RA_Dec,"/",RA_Dec,"_N100_Filtered_Asteroids.csv")))
