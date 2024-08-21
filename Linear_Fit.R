@@ -137,7 +137,7 @@ for(i in 1:length(asteroids$segID)){
   
   magimage(edged_segimcut,col=c(NA,rep(line_col, max(edged_segimcut))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.5)
   
-  lines(x_pred, y_pred, col = line_col, lwd = 1)
+  lines(x_vals, y_vals, col = line_col, lwd = 1)
   
   dev.off()
   
@@ -145,9 +145,9 @@ for(i in 1:length(asteroids$segID)){
   
   par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
   
-  plot(x_vals, y_vals, pch = brightness_vals, col = "black", xlab = "X", ylab = "Y", main = paste0("Linear Fit to asteroid ", ID, " image"))
+  magplot(x_vals, y_vals, pch = brightness_vals, col = "black", xlab = "X", ylab = "Y", main = paste0("Linear Fit to asteroid ", ID, " image"))
   lines(x_pred, y_pred, col = line_col, lwd = 3)
-  legend("topleft", legend = c("Data", "Fitted Polynomial"), col = c("black", line_col), lwd = 2, pch = 16)
+  #legend("topleft", legend = c("Data", "Fitted Polynomial"), col = c("black", line_col), lwd = 2, pch = 16)
   
   # RA_Dec = xy2radec(x_new, y_pred, header=g_image$hdr)
 
