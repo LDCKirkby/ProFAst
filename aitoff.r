@@ -106,8 +106,7 @@ all_points = cbind(all_points, "Entropy" = as.numeric(-( (all_points$norm_g * lo
 
 asteroids = subset(all_points, segID %in% asteroid_and_fields$ID & Field %in% asteroid_and_fields$RA_Dec)
 asteroids = all_points[all_points$segID %in% asteroid_and_fields$ID & all_points$Field %in% asteroid_and_fields$RA_Dec, ]
-cat(length(asteroids$gFluxRatio), " asteroids extracted\n")
-cat("segID is", typeof(all_points$segID), ", RA_Dec is ", typeof(all_points$Field), "\n")
+
 
 png(filename=paste0("./cutmap_g.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
 par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
