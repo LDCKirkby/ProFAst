@@ -116,7 +116,7 @@ for(i in 1:length(asteroids$segID)){
   
   x_range <- range(x_vals) + c(-0.01,10) # Extend the range of x_vals by 1 unit on each side
   
-  x_pred <- seq(min(x_range), max(x_range), length.out = 100)
+  x_pred <- seq(min(x_range), max(x_range), length.out = 10)
   y_pred <- predict(fit, newdata = data.frame(x_vals = x_pred))
   
   png(filename=paste0("./",loc,"/Linear_Fits/",loc,"_",target$Colour,target$segID,"_linear_fit.png"))
@@ -145,7 +145,7 @@ for(i in 1:length(asteroids$segID)){
   
   par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
   
-  plot(x_vals, y_vals, pch = 16, col = "black", xlab = "X", ylab = "Y", main = paste0("Linear Fit to asteroid ", ID, " image"))
+  plot(x_vals, y_vals, pch = brightness_vals, col = "black", xlab = "X", ylab = "Y", main = paste0("Linear Fit to asteroid ", ID, " image"))
   lines(x_pred, y_pred, col = line_col, lwd = 3)
   legend("topleft", legend = c("Data", "Fitted Polynomial"), col = c("black", line_col), lwd = 2, pch = 16)
   
