@@ -103,8 +103,8 @@ all_points = cbind(all_points, "Entropy" = as.numeric(-( (all_points$norm_g * lo
                                                            (all_points$norm_i * log(all_points$norm_i))
                                                          + (all_points$norm_r * log(all_points$norm_r)) )) )
 
-asteroids = subset(all_points, subset = segID %in% asteroid_and_fields$ID & Field %in% asteroid_and_fields$RA_Dec)
-
+asteroids = subset(all_points, segID %in% asteroid_and_fields$ID & Field %in% asteroid_and_fields$RA_Dec)
+asteroids = all_points[all_points$segID %in% asteroid_and_fields$ID & all_points$Field %in% asteroid_and_fields$RA_Dec, ]
 cat(length(asteroids$gFluxRatio), " asteroids extracted\n")
 
 png(filename=paste0("./cutmap_g.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
