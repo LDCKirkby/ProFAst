@@ -147,6 +147,8 @@ for(i in 1:length(asteroids$segID)){
   
   magplot(x_vals, y_vals, cex = brightness_vals, col = "black", xlab = "X", ylab = "Y", main = paste0("Linear Fit to asteroid ", ID, " image"))
   lines(x_pred, y_pred, col = line_col, lwd = 3)
+  
+  dev.off()
   #legend("topleft", legend = c("Data", "Fitted Polynomial"), col = c("black", line_col), lwd = 2, pch = 16)
   
   # RA_Dec = xy2radec(x_new, y_pred, header=g_image$hdr)
