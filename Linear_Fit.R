@@ -145,7 +145,7 @@ for(i in 1:length(asteroids$segID)){
   
   par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
   
-  magplot(x_vals, y_vals, z=brightness_vals, cex = brightness_vals, xlab = "X", ylab = "Y", main = paste0("Linear Fit to asteroid ", ID, " image"))
+  magplot(x_vals, y_vals, z=brightness_vals, cex = 2, xlab = "X", ylab = "Y", main = paste0("Linear Fit to asteroid ", ID, " image"))
   lines(x_pred, y_pred, col = line_col, lwd = 3)
   
   dev.off()
