@@ -116,7 +116,7 @@ cat("****************Making all object images****************\n")
 png(filename=paste0("./cutmap_g.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
 par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
 ggplot(data = all_points, mapping = aes(x = gFluxRatio, y = axrat, size = N100, color = Colour, alpha = 0.5)) +
-                                    scale_x_log10(breaks = c(0.0001, 0.001, 0.01, 0.1, 1, 10), n.breaks = 6, labels = c("0.0001","0.001", "0.01", "0.1", "1", "10")) +
+                                    scale_x_log10(breaks = c(0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100), labels = c("0.00001","0.0001","0.001", "0.01", "0.1", "1", "10","100")) +
                                     xlab("Flux Ratio (g band)") + ylab("Axial Ratio") + 
                                     scale_y_log10(labels = comma) +
                                     geom_point() + scale_colour_manual(values = c("darkgreen", "darkblue", "firebrick")) + #scale_color_viridis_c(option = "A") +
@@ -128,7 +128,7 @@ dev.off()
 png(filename=paste0("./cutmap_r.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
 par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
 ggplot(data = all_points, mapping = aes(x = rFluxRatio, y = axrat, size = N100, color = Colour, alpha = 0.5)) +
-                                    scale_x_log10(breaks = c(0.0001, 0.001, 0.01, 0.1, 1, 10), n.breaks = 6, labels = c("0.0001","0.001", "0.01", "0.1", "1", "10")) +
+                                    scale_x_log10(breaks = c(0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100), labels = c("0.00001","0.0001","0.001", "0.01", "0.1", "1", "10","100")) +
                                     xlab("Flux Ratio (r band)") + ylab("Axial Ratio") + 
                                     scale_y_log10(labels = comma) +
                                     geom_point() + scale_colour_manual(values = c("darkgreen", "darkblue", "firebrick")) + #scale_color_viridis_c(option = "A") +
@@ -140,7 +140,7 @@ dev.off()
 png(filename=paste0("./cutmap_i.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
 par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
 ggplot(data = all_points, mapping = aes(x = iFluxRatio, y = axrat, size = N100, color = Colour, alpha = 0.5)) + 
-                                    scale_x_log10(breaks = c(0.0001, 0.001, 0.01, 0.1, 1, 10), n.breaks = 6, labels = c("0.0001","0.001", "0.01", "0.1", "1", "10")) +
+                                    scale_x_log10(breaks = c(0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100), labels = c("0.00001","0.0001","0.001", "0.01", "0.1", "1", "10","100")) +
                                     xlab("Flux Ratio (i band)") + ylab("Axial Ratio") + 
                                     scale_y_log10(labels = comma) +
                                     geom_point() + scale_colour_manual(values = c("darkgreen", "darkblue", "firebrick")) + #scale_color_viridis_c(option = "A") +
