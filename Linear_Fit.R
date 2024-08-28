@@ -137,7 +137,7 @@ for(i in 1:length(asteroids$segID)){
   
   magimage(edged_segimcut,col=c(NA,rep(line_col, max(edged_segimcut))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.5)
   
-  lines(x_vals, y_vals, col = line_col, lwd = 1)
+  lines(x_pred, y_pred, col = line_col, lwd = 1)
   
   dev.off()
   
