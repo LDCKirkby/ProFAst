@@ -50,7 +50,7 @@ LSST_Info = data.table(Name = c('WD01', 'WD02', 'WD03', 'WD10'),
 LSST_rad <- 3.5/2.0
 declimit=20.0
 #
-
+cat("****************Loading data****************\n")
 known_asteroids = read.delim("./known_asteroids.txt", header = FALSE, skip=2)
 colnames(known_asteroids) = c("RA_Dec_ID")
 asteroid_and_fields = data.frame()
@@ -112,6 +112,7 @@ asteroids = all_points[all_points$segID %in% asteroid_and_fields$ID & all_points
 ##########################################################
 ####################### All Objects ######################
 ##########################################################
+cat("****************Making all object images****************\n")
 png(filename=paste0("./cutmap_g.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
 par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
 ggplot(data = all_points, mapping = aes(x = gFluxRatio, y = axrat, size = N100, color = Colour, alpha = 0.5)) +
@@ -162,6 +163,7 @@ dev.off()
 ##########################################################
 ############### Known Asteroids Only######################
 ##########################################################
+cat("****************Making asteroid only images****************\n")
 png(filename=paste0("./asteroid_cutmap_g.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
 par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
 ggplot(data = asteroids, mapping = aes(x = gFluxRatio, y = axrat, size = N100, color = Colour, alpha = 0.5)) +
