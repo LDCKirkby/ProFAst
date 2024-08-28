@@ -126,7 +126,7 @@ formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
   
     
     cat("Writing formatted data to ", loc,"_findorb.txt\n")
-    write.table(find_orb, paste0("./",loc,"/",loc,"_",ID,".mpc"), sep = " ", row.names = FALSE, col.names = FALSE, quote = FALSE)
+    write.table(find_orb, paste0("./",loc,"/Linear_Fits/",loc,"_",ID,".mpc"), sep = " ", row.names = FALSE, col.names = FALSE, quote = FALSE)
 
 }
 # To call find_orb and produce x,y,z location parameters
