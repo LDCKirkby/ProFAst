@@ -20,6 +20,7 @@ library(fs, quietly = TRUE)
 library(showtext, quietly = TRUE)
 library(png)
 library(Matrix)
+source("./R_Files/MPC_Formatter.R")
 
 Edger <- function(segimcut, ID){
   image = segimcut$image
@@ -73,6 +74,7 @@ warnings()
 for(i in 1:length(asteroids$segID)){
   target = asteroids[i,]
   ID = target$segID
+  colour = target$Colour
   cat("*****************  Fitting Asteroid ", ID, " *****************\n")
   
   galradec = target[c("RAcen", "Deccen")]
@@ -97,16 +99,22 @@ for(i in 1:length(asteroids$segID)){
   y_vals = obj_points[,2]
   x_vals = obj_points[,1]
   
-  if(target$Colour == "g"){
-    brightness_vals = cutim_g$imDat[obj_points]/ max(cutim_g$imDat)
-    brightness_vals[brightness_vals<0] <- 0
-  }else if(target$Colour == "r"){
-    brightness_vals = cutim_r$imDat[obj_points]/ max(cutim_r$imDat)
-    brightness_vals[brightness_vals<0] <- 0
-  }else if(target$Colour == "i"){
-    brightness_vals = cutim_i$imDat[obj_points]/ max(cutim_i$imDat)
-    brightness_vals[brightness_vals<0] <- 0
-  }
+  brightness_vals = switch(colour, 
+                           "g" = cutim_g$imDat[obj_points]/ max(cutim_g$imDat),
+                           "r" = cutim_r$imDat[obj_points]/ max(cutim_r$imDat),
+                           "i" = cutim_i$imDat[obj_points]/ max(cutim_i$imDat))
+  brightness_vals[brightness_vals<0] <- 0
+  
+  # if(colour == "g"){
+  #   brightness_vals = cutim_g$imDat[obj_points]/ max(cutim_g$imDat)
+  #   brightness_vals[brightness_vals<0] <- 0
+  # }else if(colour == "r"){
+  #   brightness_vals = cutim_r$imDat[obj_points]/ max(cutim_r$imDat)
+  #   brightness_vals[brightness_vals<0] <- 0
+  # }else if(colour == "i"){
+  #   brightness_vals = cutim_i$imDat[obj_points]/ max(cutim_i$imDat)
+  #   brightness_vals[brightness_vals<0] <- 0
+  # }
   
   # weights_g <- cutim_g$imDat[segimcut$image]/ max(cutim_g$imDat)
   # weights_r <- cutim_r$imDat[segimcut$image]/ max(cutim_r$imDat)
@@ -119,19 +127,30 @@ for(i in 1:length(asteroids$segID)){
   x_pred <- seq(min(x_range), max(x_range), length.out = 10)
   y_pred <- predict(fit, newdata = data.frame(x_vals = x_pred))
   
-  png(filename=paste0("./",loc,"/Linear_Fits/",loc,"_",target$Colour,target$segID,"_linear_fit.png"))
+  RA_vals = c()
+  Dec_vals = c()
+  for(j in 1:length(x_pred)){
+    hdr = switch(colour, "g" = g_image$hdr, "r" = r_image$hdr, "i" = i_image$hdr)
+    RA_Dec = xy2radec(x_pred[[j]], y_pred[[j]], header = hdr)
+    RA_vals <- append(RA_vals, RA_Dec$RA[1])
+    Dec_vals <- append(Dec_vals, RA_Dec$Dec[1])
+  }
+  formatter(loc, ID, colour, target$mag, RA_vals, Dec_vals)
+  
+  png(filename=paste0("./",loc,"/Linear_Fits/",loc,"_",colour,target$segID,"_linear_fit.png"))
   
   par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
   
   locut = c(median(cutim_g$imDat,na.rm=TRUE),median(cutim_g$imDat,na.rm=TRUE),median(cutim_g$imDat,na.rm=TRUE))
   
-  if(target$Colour == "g"){
-    line_col = "green"
-  }else if(target$Colour == "r"){
-    line_col = "red"
-  }else if(target$Colour == "i"){
-    line_col = "blue"
-  }
+  line_col = switch(colour, "g" = "green", "r" = "red", "i" = "blue")
+  # if(colour == "g"){
+  #   line_col = "green"
+  # }else if(colour == "r"){
+  #   line_col = "red"
+  # }else if(colour == "i"){
+  #   line_col = "blue"
+  # }
   
   Rwcs_imageRGB(R=cutim_r, G=cutim_g, B=cutim_i, Rkeyvalues = r_image$keyvalues, Gkeyvalues = g_image$keyvalues, Bkeyvalues = i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)", coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE, family="Arial")
   
@@ -141,7 +160,7 @@ for(i in 1:length(asteroids$segID)){
   
   dev.off()
   
-  png(filename=paste0("./",loc,"/Linear_Fits/",loc,"_",target$Colour,target$segID,"_fit.png"))
+  png(filename=paste0("./",loc,"/Linear_Fits/",loc,"_",colour,target$segID,"_fit.png"))
   
   par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
   
