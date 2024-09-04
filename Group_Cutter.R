@@ -1,4 +1,4 @@
-Data_Cutout <- function(ast, image_data, groupcol, segcol){
+Data_Cutout <- function(ast, image_data, groupcol, segcol) {
   wid <- 200.0
   box<-c(2*wid,2*wid)
   mulim<-22.0
@@ -23,7 +23,7 @@ Data_Cutout <- function(ast, image_data, groupcol, segcol){
   return(data)
 }
 
-Edger <- function(groupID, segID, ast, image_data){
+Edger <- function(groupID, segID, ast, image_data) {
   cat("Finding the edges of segment images\n")
   
   images = list("segimcut", "groupcut")
@@ -63,7 +63,7 @@ Edger <- function(groupID, segID, ast, image_data){
   return(image_data)
 }
 
-Image_Maker <- function(loc, ast_dat, im_dat, groupcol, segcol, keyvalue_data){
+Image_Maker <- function(loc, ast_dat, im_dat, groupcol, segcol, keyvalue_data) {
   wid <- 200.0
   box<-c(2*wid,2*wid)
   mulim<-22.0
@@ -86,7 +86,8 @@ Image_Maker <- function(loc, ast_dat, im_dat, groupcol, segcol, keyvalue_data){
     locut[[3]] = kids
   }
   
-  Rwcs_imageRGB(R=im_dat$cutim_r, G=im_dat$cutim_g, B=im_dat$cutim_i, Rkeyvalues = keyvalue_data$r_image$keyvalues, Gkeyvalues = keyvalue_data$g_image$keyvalues, Bkeyvalues = keyvalue_data$i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE, family="Arial")#, grid = TRUE)
+  Rwcs_imageRGB(R=im_dat$cutim_r, G=im_dat$cutim_g, B=im_dat$cutim_i, Rkeyvalues = keyvalue_data$r_image$keyvalues, Gkeyvalues = keyvalue_data$g_image$keyvalues, Bkeyvalues = keyvalue_data$i_image$keyvalues,
+                xlab="Right Ascension (deg)",ylab="Declination (deg)",coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE, family="Arial")#, grid = TRUE)
   
   cat("Adding segment outlines\n")
   magimage(im_dat$segimcut,col=c(NA,rep("moccasin",max(im_dat$segimcut))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.25)
@@ -100,26 +101,26 @@ Image_Maker <- function(loc, ast_dat, im_dat, groupcol, segcol, keyvalue_data){
   # x = c(ast_dat$segment_tl_RA, ast_dat$segment_tr_RA , ast_dat$segment_bl_RA , ast_dat$segment_br_RA , ast_dat$segment_top_RA , ast_dat$segment_bot_RA, ast_dat$RAcen, ast_dat$RAmax)
   # y = c(ast_dat$segment_tl_Dec, ast_dat$segment_tr_Dec , ast_dat$segment_bl_Dec , ast_dat$segment_br_Dec , ast_dat$segment_top_Dec , ast_dat$segment_bot_Dec, ast_dat$Deccen, ast_dat$Decmax)
   # min_max_seg = data.frame(x, y)
-  # 
+  #
   # points(min_max_seg, col=c("orangered" , "orange", "sienna1", "darkviolet", "mediumorchid" , "darkmagenta", "hotpink", "gold"), pch = 4, lwd = 3)
-  # 
+  #
   # legend(x ="topright", legend = c("Top Right", "Top Left", "Bottom Right", "Bottom Left", "Average Top", "Average Bottom", "Center of Flux", "Max Flux"), pch = c(2,2,2,2), col = c("orangered" , "orange", "sienna1", "darkviolet", "mediumorchid" , "darkmagenta", "hotpink", "gold"))
-  # 
+  #
   text(1,2*wid-50, col=groupcol, label=paste0("segID=",ast_dat$Colour,ast_dat$segID), cex=2.0, pos=4, family="Arial")
   
   dev.off()
-  system2(command = "cp", args = c(paste0("./",loc,"/Group_Cutouts/",loc,"_",ast_dat$Colour,ast_dat$segID,".png ./Asteroid_Images/",ast_dat$Colour,"/") ))
+  system2(command = "cp", args = c(paste0("./",loc,"/Group_Cutouts/",loc,"_",ast_dat$Colour,ast_dat$segID,".png ./Asteroid_Images/",ast_dat$Colour,"/")))
 }
 
 
-Postage_Stamper <- function(loc, ast, image_data){
+Postage_Stamper <- function(loc, ast, image_data) {
   groupID = ast$groupID
   segID = ast$segID
   colour = ast$Colour
   
   cat("Imaging groupID:", groupID, ", segID:",segID, ", colour:", colour,"\n")
   
-  if(grepl(colour,"g") == TRUE){
+  if(grepl(colour,"g") == TRUE) {
     cut_image_data <- Data_Cutout(ast, image_data)
     
     cut_image_data <- Edger(groupID, segID, ast, cut_image_data)
@@ -127,7 +128,7 @@ Postage_Stamper <- function(loc, ast, image_data){
     #Creates png and overlays points and segment/group outlines
     Image_Maker(loc, ast, cut_image_data, "seagreen2", "green", image_data)
     
-  }else if(grepl(colour,"r") == TRUE){
+  }else if(grepl(colour,"r") == TRUE) {
     cut_image_data <- Data_Cutout(ast, image_data)
     
     cut_image_data <- Edger(groupID, segID, ast, cut_image_data)
@@ -135,7 +136,7 @@ Postage_Stamper <- function(loc, ast, image_data){
     #Creates png and overlays points and segment/group outlines
     Image_Maker(loc, ast, cut_image_data, "firebrick1", "red2", image_data)
     
-  }else if(grepl(colour,"i") == TRUE){
+  }else if(grepl(colour,"i") == TRUE) {
     cut_image_data <- Data_Cutout(ast, image_data)
     
     cut_image_data <- Edger(groupID, segID, ast, cut_image_data)
@@ -146,7 +147,7 @@ Postage_Stamper <- function(loc, ast, image_data){
   }
 }
 
-Group_Cutter <- function(loc, computer){
+Group_Cutter <- function(loc, computer) {
   
   #Load in asteroid data
   asteroids = read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv"))
@@ -161,14 +162,14 @@ Group_Cutter <- function(loc, computer){
   asteroids[,edge_points] <- NA
   
   #Read in data for the locations  
-  Data_reader <- function(loc, computer){
+  Data_reader <- function(loc, computer) {
     cat("Reading in segmentation map data\n")
     segim <- as.matrix(read.csv(paste0("./",loc,"/segim.csv")))
     cat("Generating groupim\n")
     groupim = profoundSegimGroup(segim = segim)
     
     cat("Loading images\n")
-    if("sabine" == tolower(computer)){
+    if("sabine" == tolower(computer)) {
       #Image Information
       g_image=Rfits_point(paste0("/Volumes/ThunderBay/WAVES/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"), header=TRUE, ext=1)
       r=Rfits_point(paste0("/Volumes/ThunderBay/WAVES/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"), header=TRUE, ext=1)
@@ -178,7 +179,7 @@ Group_Cutter <- function(loc, computer){
       g_hdr = Rfits_read_header(paste0("/Volumes/ThunderBay/WAVES/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"))
       r_hdr = Rfits_read_header(paste0("/Volumes/ThunderBay/WAVES/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"))
       i_hdr = Rfits_read_header(paste0("/Volumes/ThunderBay/WAVES/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"))
-    }else{
+    }else {
       #Image Information
       g_image=Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"), header=TRUE, ext=1)
       r=Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"), header=TRUE, ext=1)
@@ -200,7 +201,7 @@ Group_Cutter <- function(loc, computer){
   unlink(paste0("./",loc,"/Group_Cutouts"), recursive=TRUE)
   dir_create("./",loc,"/Group_Cutouts")
 
-  for(i in 1:length(asteroids$segID)){
+  for(i in 1:length(asteroids$segID)) {
     #Pulls out data for target asteroid
     target = asteroids[i,]
     cat("Imaging object w/ groupID:", target$groupID, ", segID:", target$segID, ", Colour:", target$Colour, "\n")
