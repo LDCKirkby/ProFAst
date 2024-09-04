@@ -33,9 +33,9 @@ computer = as.character(args[[2]])
 
 if(tolower(computer) == "sabine"){
   font_add("Arial", "/Users/lukekirkby/Library/Fonts/Arial.ttf")
-}else if(tolower(computer) == "simon"){
+}else if (tolower(computer) == "simon") {
   font_add("Arial", "/Users/lkirkby/Library/Fonts/Arial.ttf")
-}else{
+}else {
   font_add("Arial", "/Library/Fonts/Arial.ttf")
 }
 
