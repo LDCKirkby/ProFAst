@@ -7,7 +7,7 @@ source("./R_Files/Group_Cutter.R")
 
 library(peakRAM,quietly = TRUE)
 library(xtable, quietly = TRUE)
-library(dst,quietly=TRUE)
+library(dst,quietly = TRUE)
 library(celestial,quietly = TRUE)
 library(devtools,quietly = TRUE)
 library(Cairo,quietly = TRUE)
@@ -31,7 +31,7 @@ args = commandArgs(trailingOnly = TRUE)
 RA_DEC = gsub("[\r\n]", "", as.character(args[[1]]))
 computer = as.character(args[[2]])
 
-if(tolower(computer) == "sabine"){
+if(tolower(computer) == "sabine") {
   font_add("Arial", "/Users/lukekirkby/Library/Fonts/Arial.ttf")
 }else if (tolower(computer) == "simon") {
   font_add("Arial", "/Users/lkirkby/Library/Fonts/Arial.ttf")
@@ -66,9 +66,6 @@ dir = getwd()
   
   # Add after each function call to record ram usage
   # peakRAM()
-  # post_text_to_ntfy(paste0("Time elapsed for ",RA_DEC," :", New_Detect_RAM$Elapsed_Time_sec, 
+  # post_text_to_ntfy(paste0("Time elapsed for ",RA_DEC," :", New_Detect_RAM$Elapsed_Time_sec,
   #                          "\nTotal RAM used during New_Detect for ", RA_DEC," :", New_Detect_RAM$Total_RAM_Used_MiB,
   #                          "\nMax RAM used during New_Detect for ", RA_DEC," :", New_Detect_RAM$Peak_RAM_Used_MiB))
-  
-  
-  
