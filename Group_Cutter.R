@@ -120,31 +120,41 @@ Postage_Stamper <- function(loc, ast, image_data) {
   
   cat("Imaging groupID:", groupID, ", segID:",segID, ", colour:", colour,"\n")
   
-  if(grepl(colour,"g") == TRUE) {
-    cut_image_data <- Data_Cutout(ast, image_data)
-    
-    cut_image_data <- Edger(groupID, segID, ast, cut_image_data)
-    
-    #Creates png and overlays points and segment/group outlines
-    Image_Maker(loc, ast, cut_image_data, "seagreen2", "green", image_data)
-    
-  }else if(grepl(colour,"r") == TRUE) {
-    cut_image_data <- Data_Cutout(ast, image_data)
-    
-    cut_image_data <- Edger(groupID, segID, ast, cut_image_data)
-    
-    #Creates png and overlays points and segment/group outlines
-    Image_Maker(loc, ast, cut_image_data, "firebrick1", "red2", image_data)
-    
-  }else if(grepl(colour,"i") == TRUE) {
-    cut_image_data <- Data_Cutout(ast, image_data)
-    
-    cut_image_data <- Edger(groupID, segID, ast, cut_image_data)
-    
-    #Creates png and overlays points and segment/group outlines
-    Image_Maker(loc, ast, cut_image_data, "skyblue", "blue", image_data)
-    
-  }
+  cut_image_data <- Data_Cutout(ast, image_data)
+  
+  cut_image_data <- Edger(groupID, segID, ast, cut_image_data)
+  
+  switch(colour, 
+         "g" = Image_Maker(loc, ast, cut_image_data, "seagreen2", "green", image_data),
+         "r" = Image_Maker(loc, ast, cut_image_data, "firebrick1", "red2", image_data),
+         "i" = Image_Maker(loc, ast, cut_image_data, "skyblue", "blue", image_data)
+)
+  
+  # if(grepl(colour,"g") == TRUE) {
+  #   cut_image_data <- Data_Cutout(ast, image_data)
+  #   
+  #   cut_image_data <- Edger(groupID, segID, ast, cut_image_data)
+  #   
+  #   #Creates png and overlays points and segment/group outlines
+  #   Image_Maker(loc, ast, cut_image_data, "seagreen2", "green", image_data)
+  #   
+  # }else if(grepl(colour,"r") == TRUE) {
+  #   cut_image_data <- Data_Cutout(ast, image_data)
+  #   
+  #   cut_image_data <- Edger(groupID, segID, ast, cut_image_data)
+  #   
+  #   #Creates png and overlays points and segment/group outlines
+  #   Image_Maker(loc, ast, cut_image_data, "firebrick1", "red2", image_data)
+  #   
+  # }else if(grepl(colour,"i") == TRUE) {
+  #   cut_image_data <- Data_Cutout(ast, image_data)
+  #   
+  #   cut_image_data <- Edger(groupID, segID, ast, cut_image_data)
+  #   
+  #   #Creates png and overlays points and segment/group outlines
+  #   Image_Maker(loc, ast, cut_image_data, "skyblue", "blue", image_data)
+  #   
+  # }
 }
 
 Group_Cutter <- function(loc, computer) {

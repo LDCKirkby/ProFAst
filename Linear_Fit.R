@@ -105,17 +105,6 @@ for(i in 1:length(asteroids$segID)){
                            "i" = cutim_i$imDat[obj_points]/ max(cutim_i$imDat))
   brightness_vals[brightness_vals<0] <- 0
   
-  # if(colour == "g"){
-  #   brightness_vals = cutim_g$imDat[obj_points]/ max(cutim_g$imDat)
-  #   brightness_vals[brightness_vals<0] <- 0
-  # }else if(colour == "r"){
-  #   brightness_vals = cutim_r$imDat[obj_points]/ max(cutim_r$imDat)
-  #   brightness_vals[brightness_vals<0] <- 0
-  # }else if(colour == "i"){
-  #   brightness_vals = cutim_i$imDat[obj_points]/ max(cutim_i$imDat)
-  #   brightness_vals[brightness_vals<0] <- 0
-  # }
-  
   # weights_g <- cutim_g$imDat[segimcut$image]/ max(cutim_g$imDat)
   # weights_r <- cutim_r$imDat[segimcut$image]/ max(cutim_r$imDat)
   # weights_i <- cutim_i$imDat[segimcut$image]/ max(cutim_i$imDat)
@@ -144,14 +133,7 @@ for(i in 1:length(asteroids$segID)){
   locut = c(median(cutim_g$imDat,na.rm=TRUE),median(cutim_g$imDat,na.rm=TRUE),median(cutim_g$imDat,na.rm=TRUE))
   
   line_col = switch(colour, "g" = "green", "r" = "red", "i" = "blue")
-  # if(colour == "g"){
-  #   line_col = "green"
-  # }else if(colour == "r"){
-  #   line_col = "red"
-  # }else if(colour == "i"){
-  #   line_col = "blue"
-  # }
-  
+
   Rwcs_imageRGB(R=cutim_r, G=cutim_g, B=cutim_i, Rkeyvalues = r_image$keyvalues, Gkeyvalues = g_image$keyvalues, Bkeyvalues = i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)", coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp=FALSE, hersh = FALSE, family="Arial")
   
   magimage(edged_segimcut,col=c(NA,rep(line_col, max(edged_segimcut))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.5)
