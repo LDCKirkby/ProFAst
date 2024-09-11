@@ -96,9 +96,9 @@ for(RA_Dec in done$RA_Dec){
 # wideddf4grps=fread("/Users/sdriver/Drpbx/waves/mocks/waves-ddf4_grps.csv")
 # gaiadr3=fread("/Users/sdriver/Drpbx/active/flythru/cats/gaiadr3x.csv")
 #
-all_points = cbind(all_points, "gFluxRatio" = all_points$flux_gt/(all_points$flux_gt + all_points$flux_rxt + all_points$flux_i1xt))
-all_points = cbind(all_points, "rFluxRatio" = all_points$flux_rxt/(all_points$flux_gt + all_points$flux_rxt + all_points$flux_i1xt))
-all_points = cbind(all_points, "iFluxRatio" = all_points$flux_i1xt/(all_points$flux_gt + all_points$flux_rxt + all_points$flux_i1xt))
+all_points = cbind(all_points, "gFluxRatio" = all_points$flux_gt/(all_points$flux_rxt + all_points$flux_i1xt))
+all_points = cbind(all_points, "rFluxRatio" = all_points$flux_rxt/(all_points$flux_gt + all_points$flux_i1xt))
+all_points = cbind(all_points, "iFluxRatio" = all_points$flux_i1xt/(all_points$flux_gt + all_points$flux_rxt))
 all_points = cbind(all_points, "norm_g" = all_points$flux_gt/(all_points$flux_gt + all_points$flux_rxt + all_points$flux_i1xt))
 all_points = cbind(all_points, "norm_r" = all_points$flux_rxt/(all_points$flux_gt + all_points$flux_rxt + all_points$flux_i1xt))
 all_points = cbind(all_points, "norm_i" = all_points$flux_i1xt/(all_points$flux_gt + all_points$flux_rxt + all_points$flux_i1xt))
