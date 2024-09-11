@@ -124,6 +124,7 @@ for(i in 1:length(asteroids$segID)){
     RA_vals <- append(RA_vals, RA_Dec[1][1])
     Dec_vals <- append(Dec_vals, RA_Dec[1][2])
   }
+  cat(RA_vals, "\n", Dec_vals)
   formatter(loc, ID, colour, target$mag, RA_vals, Dec_vals)
   
   png(filename=paste0("./",loc,"/Linear_Fits/",loc,"_",colour,target$segID,"_linear_fit.png"))
