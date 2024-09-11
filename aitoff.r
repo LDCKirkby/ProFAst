@@ -109,6 +109,9 @@ all_points = cbind(all_points, "Entropy" = as.numeric(-( (all_points$norm_g * lo
 asteroids = subset(all_points, segID %in% asteroid_and_fields$ID & Field %in% asteroid_and_fields$RA_Dec)
 asteroids = all_points[all_points$segID %in% asteroid_and_fields$ID & all_points$Field %in% asteroid_and_fields$RA_Dec, ]
 
+write.csv(asteroids, "./Verified_Asteroid_Data.csv")
+write.csv(all_points, "./All_Flagged_Objects.csv")
+
 ##########################################################
 ####################### All Objects ######################
 ##########################################################
