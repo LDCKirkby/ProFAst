@@ -21,15 +21,11 @@ Pre_Proc <- function(loc, computer){
 
   i1x=propaneWarp(i1,keyvalues_out=g$keyvalues)
   remove(i1)
+  
+  #Uncomment to add in extra i image
+  #NOT IMPLEMENTED IN OTHER FUNCTIONS
   #i2x=propaneWarp(i2,keyvalues_out=g$keyvalues)
   #remove(i2)
   
-  #Removing this line as it creates storage issues when running on large image numbers
-  # dir.create(paste0(location,"Fits_files/",loc))
-  # Rfits_write_image(g, filename = paste0(location,"Fits_files/",loc,"/g.fits"))
-  # Rfits_write_image(rx, filename = paste0(location,"Fits_files/",loc,"/rx.fits"))
-  # Rfits_write_image(i1x, filename = paste0(location,"Fits_files/",loc,"/i1x.fits"))
-  # #Rfits_write_image(i2x, filename = paste0(location,"Fits_files/",loc,"/i2x.fits"))
-
   return(list(g, rx, i1x))
 }
