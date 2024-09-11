@@ -58,8 +58,7 @@ dir = getwd()
 
   
 #Uncomment to remove any unwanted files
-#file.remove(paste0("/Volumes/WAVES/lkirkby/",RA_DEC,"/stacked.rds"))
-#file.remove(paste0("/Users/lkirkby/",RA_DEC,"/allcati.csv"))
-#file.remove(paste0("/Users/lkirkby/",RA_DEC,"/groupcati.csv"))
-#file.remove(paste0("/Users/lkirkby/",RA_DEC,"/objectcati.csv"))
-#file.remove(paste0("/Users/lkirkby/",RA_DEC,"/Possible_Asteroids.csv"))
+#file.remove(paste0("./",RA_DEC,"/stacked.rds"))
+#file.remove(paste0("./",RA_DEC,"/allcati.csv"))
+#file.remove(paste0("./",RA_DEC,"/groupcati.csv"))
+#file.remove(paste0("./",RA_DEC,"/objectcati.csv"))
