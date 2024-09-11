@@ -57,15 +57,9 @@ dir = getwd()
   warnings()
 
   
-  #Uncomment to remove any unwanted files
-  #file.remove(paste0("/Volumes/WAVES/lkirkby/",RA_DEC,"/stacked.rds"))
-  #file.remove(paste0("/Users/lkirkby/",RA_DEC,"/allcati.csv"))
-  #file.remove(paste0("/Users/lkirkby/",RA_DEC,"/groupcati.csv"))
-  #file.remove(paste0("/Users/lkirkby/",RA_DEC,"/objectcati.csv"))
-  #file.remove(paste0("/Users/lkirkby/",RA_DEC,"/Possible_Asteroids.csv"))
-  
-  # Add after each function call to record ram usage
-  # peakRAM()
-  # post_text_to_ntfy(paste0("Time elapsed for ",RA_DEC," :", New_Detect_RAM$Elapsed_Time_sec,
-  #                          "\nTotal RAM used during New_Detect for ", RA_DEC," :", New_Detect_RAM$Total_RAM_Used_MiB,
-  #                          "\nMax RAM used during New_Detect for ", RA_DEC," :", New_Detect_RAM$Peak_RAM_Used_MiB))
+#Uncomment to remove any unwanted files
+#file.remove(paste0("/Volumes/WAVES/lkirkby/",RA_DEC,"/stacked.rds"))
+#file.remove(paste0("/Users/lkirkby/",RA_DEC,"/allcati.csv"))
+#file.remove(paste0("/Users/lkirkby/",RA_DEC,"/groupcati.csv"))
+#file.remove(paste0("/Users/lkirkby/",RA_DEC,"/objectcati.csv"))
+#file.remove(paste0("/Users/lkirkby/",RA_DEC,"/Possible_Asteroids.csv"))
