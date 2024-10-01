@@ -122,8 +122,8 @@ for(i in 1:length(asteroids$segID)){
     hdr = switch(colour, "g" = g_image$hdr, "r" = r_image$hdr, "i" = i_image$hdr)
     RA_Dec = xy2radec(x_pred[[j]], y_pred[[j]], header = hdr)
     print(RA_Dec)
-    RA_vals <- append(RA_vals, RA_Dec[[1]]$RA)
-    Dec_vals <- append(Dec_vals, RA_Dec[[1]]$Dec)
+    RA_vals <- append(RA_vals, RA_Dec[[1]][[1]])
+    Dec_vals <- append(Dec_vals, RA_Dec[[1]][[2]])
   }
   cat(RA_vals, "\n", Dec_vals)
   formatter(loc, ID, colour, target$mag, RA_vals, Dec_vals)
