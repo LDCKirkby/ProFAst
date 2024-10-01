@@ -108,16 +108,18 @@ formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
     }
     
     RA_first = paste0(deg2hms(RA_vals[[1]])[[1]], " ",deg2hms(RA_vals[[1]])[[2]], " ",deg2hms(RA_vals[[1]], digits = 3)[[3]])
-    Dec_first = paste0(deg2dms(Dec_vals[[1]])[[1]], " ",deg2dms(Dec_vals[[1]])[[2]], " ",deg2dms(Dec_vals[[1]], digits = 3)[[3]])
+    Dec_first = paste0(deg2dms(Dec_vals[[1]])[[1]], " ",deg2dms(Dec_vals[[1]])[[2]], " ",deg2dms(Dec_vals[[1]], digits = 2)[[3]])
+    
     RA_end = paste0(deg2hms(RA_vals[[length(RA_vals)]])[[1]], " ",deg2hms(RA_vals[[length(RA_vals)]])[[2]], " ",deg2hms(RA_vals[[length(RA_vals)]], digits = 3)[[3]])
     Dec_end = paste0(deg2dms(Dec_vals[[length(Dec_vals)]])[[1]], " ",deg2dms(Dec_vals[[length(Dec_vals)]])[[2]], " ",deg2dms(Dec_vals[[length(Dec_vals)]], digits = 2)[[3]])
-    RA_mid = paste0(deg2hms(RA_vals[[as.integer(length(RA_vals)/2)]])[[1]], " ",deg2hms(RA_vals[[as.integer(length(RA_vals)/2)]])[[2]], " ",deg2hms(RA_vals[[as.integer(length(RA_vals)/2)]], digits = 2)[[3]])
+    
+    RA_mid = paste0(deg2hms(RA_vals[[as.integer(length(RA_vals)/2)]])[[1]], " ",deg2hms(RA_vals[[as.integer(length(RA_vals)/2)]])[[2]], " ",deg2hms(RA_vals[[as.integer(length(RA_vals)/2)]], digits = 3)[[3]])
     Dec_mid = paste0(deg2dms(Dec_vals[[as.integer(length(Dec_vals)/2)]])[[1]], " ",deg2dms(Dec_vals[[as.integer(length(Dec_vals)/2)]])[[2]], " ",deg2dms(Dec_vals[[as.integer(length(Dec_vals)/2)]], digits = 2)[[3]])
     
   
-    line  = paste0("     ",ID,"*KP",ymd_start, RA_first, " ", Dec_first,"     ",mag,colour,"      X11")
-    line2 = paste0("     ",ID," KP",ymd_mid  , RA_mid  , " ", Dec_mid  ,"     ",mag,colour,"      X11")
-    line3 = paste0("     ",ID," KP",ymd_end  , RA_end , " ", Dec_end ,"     ",mag,colour,"      X11")
+    line  = paste0("     ",ID,"*KP",ymd_start, RA_first, Dec_first,"         ",mag,colour,"      X11")
+    line2 = paste0("     ",ID," KP",ymd_mid  , RA_mid  , Dec_mid  ,"         ",mag,colour,"      X11")
+    line3 = paste0("     ",ID," KP",ymd_end  , RA_end , Dec_end ,"         ",mag,colour,"      X11")
     cat(line, "\n")
     cat(line2, "\n")
     find_orb <- append(find_orb, line)
