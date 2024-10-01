@@ -6,6 +6,7 @@ library(common)
 
 formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
     cat("Reading observation times\n")
+    orig_ID = ID
     obs_times = read.delim("./obs_times_full.txt", header =FALSE, col.names = c("frame","obs1","obs2","obs3","obs4","obs5","obs6","obs7","obs8","obs9"),  sep = ",")
     # cat("Reading asteroid data\n")
     # asteroids = read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv"))
@@ -128,7 +129,7 @@ formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
   
     
     cat("Writing formatted data to ", loc,"_findorb.txt\n")
-    write.table(find_orb, paste0("./",loc,"/Linear_Fits/",loc,"_",ID,".mpc"), sep = " ", row.names = FALSE, col.names = FALSE, quote = FALSE)
+    write.table(find_orb, paste0("./",loc,"/Linear_Fits/MPC_Format/",loc,"_",orig_ID,".mpc"), sep = " ", row.names = FALSE, col.names = FALSE, quote = FALSE)
 
 }
 # To call find_orb and produce x,y,z location parameters
