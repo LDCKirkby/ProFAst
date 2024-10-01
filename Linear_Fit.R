@@ -68,6 +68,8 @@ i_image=propaneWarp(i_image_input,keyvalues_out= g_image$keyvalues)
 
 asteroids = read.csv(paste0("./",loc,"/asteroids_real_data.csv"))
 dir_create("./",loc,"/Linear_Fits")
+dir_create("./",loc,"/Linear_Fits/MPC_Format")
+dir_create("./",loc,"/Linear_Fits/Fit_Images")
 
 warnings()
 
@@ -124,10 +126,9 @@ for(i in 1:length(asteroids$segID)){
     RA_vals <- append(RA_vals, RA_Dec[[1]][1])
     Dec_vals <- append(Dec_vals, RA_Dec[[2]][1])
   }
-  cat(RA_vals, "\n", Dec_vals)
   formatter(loc, ID, colour, target$mag, RA_vals, Dec_vals)
   
-  png(filename=paste0("./",loc,"/Linear_Fits/",loc,"_",colour,target$segID,"_linear_fit.png"))
+  png(filename=paste0("./",loc,"/Linear_Fits/Fit_Images/",loc,"_",colour,target$segID,"_linear_fit.png"))
   
   par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
   
@@ -143,7 +144,7 @@ for(i in 1:length(asteroids$segID)){
   
   dev.off()
   
-  png(filename=paste0("./",loc,"/Linear_Fits/",loc,"_",colour,target$segID,"_fit.png"))
+  png(filename=paste0("./",loc,"/Linear_Fits/Fit_Images/",loc,"_",colour,target$segID,"_fit.png"))
   
   par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
   
