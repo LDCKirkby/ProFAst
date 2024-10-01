@@ -121,8 +121,8 @@ for(i in 1:length(asteroids$segID)){
   RA_vals = c()
   Dec_vals = c()
   for(j in 1:length(x_pred)){
-    hdr = switch(colour, "g" = g_image$hdr, "r" = r_image$hdr, "i" = i_image$hdr)
-    RA_Dec = xy2radec(x_pred[[j]], y_pred[[j]], header = hdr)
+    # hdr = switch(colour, "g" = g_image$hdr, "r" = r_image$hdr, "i" = i_image$hdr)
+    RA_Dec = xy2radec(x_pred[[j]], y_pred[[j]], header = g_image$hdr)
     RA_vals <- append(RA_vals, RA_Dec[[1]][1])
     Dec_vals <- append(Dec_vals, RA_Dec[[2]][1])
   }
