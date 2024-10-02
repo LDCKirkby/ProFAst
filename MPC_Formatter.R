@@ -118,14 +118,13 @@ formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
     Dec_mid = paste0(deg2dms(Dec_vals[[as.integer(length(Dec_vals)/2)]])[[1]], " ",deg2dms(Dec_vals[[as.integer(length(Dec_vals)/2)]])[[2]], " ",deg2dms(Dec_vals[[as.integer(length(Dec_vals)/2)]], digits = 2)[[3]])
     
   
-    line  = paste0("     ",add,ID,"*KP",ymd_start, RA_first, Dec_first,"         ",mag,colour,"      X11")
-    line2 = paste0("     ",add,ID," KP",ymd_mid  , RA_mid  , Dec_mid  ,"         ",mag,colour,"      X11")
-    line3 = paste0("     ",add,ID," KP",ymd_end  , RA_end , Dec_end ,"         ",mag,colour,"      X11")
-    cat(line, "\n")
-    cat(line2, "\n")
-    find_orb <- append(find_orb, line)
-    find_orb <- append(find_orb, line2)
-    find_orb <- append(find_orb, line3)
+    line  = paste0("     ",add,ID,"*KP",ymd_start, RA_first, Dec_first,"         ",mag,colour,"      X11\n")
+    line2 = paste0("     ",add,ID," KP",ymd_mid  , RA_mid  , Dec_mid  ,"         ",mag,colour,"      X11\n")
+    line3 = paste0("     ",add,ID," KP",ymd_end  , RA_end , Dec_end ,"         ",mag,colour,"      X11\n")
+    find_orb <- c(line, line2, line3)
+    # find_orb <- append(find_orb, line)
+    # find_orb <- append(find_orb, line2)
+    # find_orb <- append(find_orb, line3)
   
     
     cat("Writing formatted data to ", loc,"_findorb.txt\n")
