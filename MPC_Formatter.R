@@ -25,6 +25,7 @@ formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
     #N: Number (1 - 5)
     
     #T: Temporary Designation Number (6 - 12)
+    add = ""
     if(nchar(ID) > 7){
       long = substr(ID, 1, (nchar(ID) - 7))
       capital = FALSE
@@ -42,7 +43,6 @@ formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
       print(long_alpha)
     }else if(nchar(ID) < 7){
       add = spaces(7-nchar(ID))
-      ID <- ID %p% add
       }
   
     exposure = switch(tolower(colour),
@@ -118,9 +118,9 @@ formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
     Dec_mid = paste0(deg2dms(Dec_vals[[as.integer(length(Dec_vals)/2)]])[[1]], " ",deg2dms(Dec_vals[[as.integer(length(Dec_vals)/2)]])[[2]], " ",deg2dms(Dec_vals[[as.integer(length(Dec_vals)/2)]], digits = 2)[[3]])
     
   
-    line  = paste0("     ",ID,"*KP",ymd_start, RA_first, Dec_first,"         ",mag,colour,"      X11")
-    line2 = paste0("     ",ID," KP",ymd_mid  , RA_mid  , Dec_mid  ,"         ",mag,colour,"      X11")
-    line3 = paste0("     ",ID," KP",ymd_end  , RA_end , Dec_end ,"         ",mag,colour,"      X11")
+    line  = paste0("     ",add,ID,"*KP",ymd_start, RA_first, Dec_first,"         ",mag,colour,"      X11")
+    line2 = paste0("     ",add,ID," KP",ymd_mid  , RA_mid  , Dec_mid  ,"         ",mag,colour,"      X11")
+    line3 = paste0("     ",add,ID," KP",ymd_end  , RA_end , Dec_end ,"         ",mag,colour,"      X11")
     cat(line, "\n")
     cat(line2, "\n")
     find_orb <- append(find_orb, line)
