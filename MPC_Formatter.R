@@ -42,9 +42,7 @@ formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
       ID = paste0(long, substr(ID, nchar(ID) - 7, nchar(ID)))
       print(long_alpha)
     }else if(nchar(ID) < 7){
-      for(j in 1:7-nchar(ID)){
-        add = add %p% "0"
-      }
+      add = rep("0",7-nchar(ID))
     }
   
     exposure = switch(tolower(colour),
