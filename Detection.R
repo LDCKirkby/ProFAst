@@ -27,10 +27,12 @@ library(fs, quietly = TRUE)
 library(showtext, quietly = TRUE)
 showtext_auto()
 
+#Reads for input arguments defining target bearing & computer structure
+#GENERALIZE COMPUTER STRUCTURE WHEN PUBLICIZING CODE
 args = commandArgs(trailingOnly = TRUE)
 RA_DEC = gsub("[\r\n]", "", as.character(args[[1]]))
-computer = as.character(args[[2]])
 
+computer = as.character(args[[2]])
 if(tolower(computer) == "sabine") {
   font_add("Arial", "/Users/lukekirkby/Library/Fonts/Arial.ttf")
 }else if (tolower(computer) == "simon") {
@@ -40,7 +42,6 @@ if(tolower(computer) == "sabine") {
 }
 
 dir = getwd()
-
   cat("*************\n","Beginning Detection on:",RA_DEC,"\n","*************\n")
   frames <- Pre_Proc(RA_DEC, computer)
 
@@ -56,9 +57,8 @@ dir = getwd()
   
   warnings()
 
-  
-#Uncomment to remove any unwanted files
-#file.remove(paste0("./",RA_DEC,"/stacked.rds"))
-#file.remove(paste0("./",RA_DEC,"/allcati.csv"))
-#file.remove(paste0("./",RA_DEC,"/groupcati.csv"))
-#file.remove(paste0("./",RA_DEC,"/objectcati.csv"))
+  #Uncomment to remove any unwanted files
+  #file.remove(paste0("./",RA_DEC,"/stacked.rds"))
+  #file.remove(paste0("./",RA_DEC,"/allcati.csv"))
+  #file.remove(paste0("./",RA_DEC,"/groupcati.csv"))
+  #file.remove(paste0("./",RA_DEC,"/objectcati.csv"))

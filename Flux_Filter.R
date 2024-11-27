@@ -1,8 +1,14 @@
 Flux_Filter <- function(loc){
 
+#Checks to see if objectcati.csv exists, if not, checks to see if stacked.rds exists.
+#If neither exist it cancells
 if("objectcati.csv" %in% list.files(path = paste0("./",loc,"/")) == FALSE){
   cat("*********\n")
   cat("Objectcati.csv not found\n")
+  if("stacked.rds" %in% list.files(path = paste0("./",loc,"/")) == FALSE){
+    cat("stacked.rds not found either. Please ensure neccessary files exist or run detection again\n")
+    break
+  }
   trim = readRDS(paste0("./",loc,"/stacked.rds"))
   cat_objects <- as.data.table(cbind(trim$pro_detect$segstats,trim$cat_tot))
   
@@ -53,18 +59,17 @@ blue_objects = cbind(subset(cat_groups, subset = cat_groups$flux_i1xt/(cat_group
 # red_objects = cbind(subset(cat_groups, subset = cat_groups$flux_rxt/cat_groups$flux_gt>=8 | cat_groups$flux_rxt/cat_groups$flux_i1xt>=8), "Colour" = "r")
 # blue_objects = cbind(subset(cat_groups, subset = cat_groups$flux_i1xt/cat_groups$flux_gt>=8 | cat_groups$flux_i1xt/cat_groups$flux_gt>=8), "Colour" = "i")
 
-
 #Applies edge buffer to red and blue, since they've been extended artificially
 RA = as.numeric(strsplit(loc, "_")[[1]][[1]])
 Dec = as.numeric(strsplit(loc, "_")[[1]][[2]])
 
+#Useful to apply edge buffer since some frames are being artificially grown
 cat("Applying edge buffer\n")
-
 red_objects = rbind(red_objects[red_objects$RAcen >= (RA-0.5 + 0.1) & red_objects$RAcen <= (RA+0.5 + 0.1) & red_objects$Deccen >= (Dec-0.5 + 0.1) & red_objects$Deccen <= (Dec+0.5 - 0.1),])
 blue_objects = rbind(blue_objects[blue_objects$RAcen >= (RA-0.5 + 0.1) & blue_objects$RAcen <= (RA+0.5 - 0.1) & blue_objects$Deccen >= (Dec-0.5 + 0.1) & blue_objects$Deccen <= (Dec+0.5 - 0.1),])
 green_objects = rbind(green_objects[green_objects$RAcen >= (RA-0.5 + 0.1) & green_objects$RAcen <= (RA+0.5 - 0.1) & green_objects$Deccen >= (Dec-0.5 + 0.1) & green_objects$Deccen <= (Dec+0.5 - 0.1),])
 
-
+#Bind final lists of objects together
 possible_asteroids <- rbind(blue_objects,green_objects,red_objects)
 print(length(possible_asteroids$groupID))
 
