@@ -2,11 +2,10 @@
 
 for file in *_*.*; do
     echo $file
-    touch "$file"/"$file"_real_asteroids.csv
     touch "$file"/temp.txt
-
     grep "$file" clean-list.txt >> "$file"/temp.txt
-
+    
+    echo "RA,Dec,segID" > "$file"/"$file"_real_asteroids.csv
     while read asteroid; do
        RA=$(echo $asteroid | cut -d'_' -f 1)
        Dec=$(echo $asteroid | cut -d'_' -f 2)
