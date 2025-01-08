@@ -10,6 +10,7 @@ for file in *_*.*; do
         PNG=$(echo $asteroid | cut -d'_' -f 3)
         SEGID=$(echo $PNG | cut -d'.' -f 1)
         if [ $RA"_"$Dec == $file ]; then
+            echo $RA","$Dec","$SEGID
             echo $RA","$Dec","$SEGID >> ./"$file"/"$file"_real_asteroids.csv    
         fi
     done <./Asteroid_Images/clean-list.txt
