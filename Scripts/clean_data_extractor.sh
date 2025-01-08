@@ -4,9 +4,9 @@ for file in *_*.*; do
     echo $file
     touch ./"$file"/"$file"_real_asteroids.csv
 
-    grep "$file" clean-list.txt >> ./"$file"/"$file"_real_asteroids.csv
+    grep "$file" clean-list.txt | cut -d'_' -f 1 -f 2 -f 3 >> ./"$file"/"$file"_real_asteroids.csv
 
-    #while read asteroid; do
+    # while read asteroid; do
     #    RA=$(echo $asteroid | cut -d'_' -f 1)
     #    Dec=$(echo $asteroid | cut -d'_' -f 2)
     #    PNG=$(echo $asteroid | cut -d'_' -f 3)
@@ -15,5 +15,5 @@ for file in *_*.*; do
     #        echo $RA","$Dec","$SEGID
     #        echo $RA","$Dec","$SEGID >> ./"$file"/"$file"_real_asteroids.csv    
     #    fi
-    #done <clean-list.txt
+    # done <clean-list.txt
 done
