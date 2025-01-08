@@ -5,7 +5,7 @@ for file in *_*.*; do
     REAL=$(./"$file"/"$file"_real_asteroids.csv)
     touch $REAL
 
-    grep "$file" clean-list.txt > $REAL
+    grep "$file" clean-list.txt >> $REAL
 
     #while read asteroid; do
     #    RA=$(echo $asteroid | cut -d'_' -f 1)
