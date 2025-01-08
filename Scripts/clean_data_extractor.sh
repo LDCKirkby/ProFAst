@@ -9,7 +9,7 @@ for file in *_*.*; do
         Dec=$(echo $asteroid | cut -d'_' -f 2)
         PNG=$(echo $asteroid | cut -d'_' -f 3)
         SEGID=$(echo $PNG | cut -d'.' -f 1)
-        if [ $RA"_"$Dec == $file ]; then
+        if [ $RA"_"$Dec = $file ]; then
             echo $RA","$Dec","$SEGID
             echo $RA","$Dec","$SEGID >> ./"$file"/"$file"_real_asteroids.csv    
         fi
