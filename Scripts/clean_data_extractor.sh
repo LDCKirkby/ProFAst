@@ -13,5 +13,5 @@ for file in *_*.*; do
             echo $RA","$Dec","$SEGID
             echo $RA","$Dec","$SEGID >> ./"$file"/"$file"_real_asteroids.csv    
         fi
-    done <./Asteroid_Images/clean-list.txt
+    done <clean-list.txt
 done
