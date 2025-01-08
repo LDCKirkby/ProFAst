@@ -2,18 +2,16 @@
 
 for file in *_*.*; do
     echo $file
-    touch ./"$file"/"$file"_real_asteroids.csv
+    touch "$file"/"$file"_real_asteroids.csv
+    touch "$file"/temp.txt
 
-    grep "$file" clean-list.txt | cut -d'_' -f 1 -f 2 -f 3 >> ./"$file"/"$file"_real_asteroids.csv
+    grep "$file" clean-list.txt >> "$file"/temp.txt
 
-    # while read asteroid; do
-    #    RA=$(echo $asteroid | cut -d'_' -f 1)
-    #    Dec=$(echo $asteroid | cut -d'_' -f 2)
-    #    PNG=$(echo $asteroid | cut -d'_' -f 3)
-    #    SEGID=$(echo $PNG | cut -d'.' -f 1)
-    #    if [ $RA"_"$Dec = $file ]; then
-    #        echo $RA","$Dec","$SEGID
-    #        echo $RA","$Dec","$SEGID >> ./"$file"/"$file"_real_asteroids.csv    
-    #    fi
-    # done <clean-list.txt
+    while read asteroid; do
+       RA=$(echo $asteroid | cut -d'_' -f 1)
+       Dec=$(echo $asteroid | cut -d'_' -f 2)
+       PNG=$(echo $asteroid | cut -d'_' -f 3)
+       SEGID=$(echo $PNG | cut -d'.' -f 1)
+       echo $RA","$Dec","$SEGID >> "$file"/"$file"_real_asteroids.csv    
+    done <"$file"/temp.txt
 done
