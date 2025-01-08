@@ -14,4 +14,5 @@ for file in *_*.*; do
        SEGID=$(echo $PNG | cut -d'.' -f 1)
        echo $RA","$Dec","$SEGID >> "$file"/"$file"_real_asteroids.csv    
     done <"$file"/temp.txt
+    rm "$file"/temp.txt
 done
