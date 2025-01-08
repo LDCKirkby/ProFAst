@@ -3,7 +3,6 @@
 for file in ./*_*.*; do
     touch ./"$file"/"$file"_real_asteroids.txt
     touch ./"$file"/"$file"_real_asteroid_data.csv
-    awk "/$file/" ./Asteroid_Images/clean-list.txt > ./"$file"/"$file"_real_asteroids.txt
 
     for asteroid in ./"$file"/"$file"_real_asteroids.txt; do
         RA=$(echo $asteroid | cut -d'_' -f 1)
