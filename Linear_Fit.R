@@ -66,7 +66,7 @@ cat("*****************  Warping r&i frames ***************** \n")
 r_image=propaneWarp(r_image_input,keyvalues_out= g_image$keyvalues)
 i_image=propaneWarp(i_image_input,keyvalues_out= g_image$keyvalues)
 
-asteroids = read.csv(paste0("./",loc,"/asteroids_real_data.csv"))
+asteroids = read.csv(paste0("./",loc,"/",loc,"_Verified.csv"))
 dir_create("./",loc,"/Linear_Fits")
 dir_create("./",loc,"/Linear_Fits/MPC_Format")
 dir_create("./",loc,"/Linear_Fits/Fit_Images")
