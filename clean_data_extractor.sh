@@ -3,7 +3,7 @@
 for file in *_*.*; do
     echo $file
     touch "$file"/temp.txt
-    grep "$file" notable-list.txt >> "$file"/temp.txt
+    grep "$file" clean-list.txt >> "$file"/temp.txt
     
     echo "RA,Dec,segID" > "$file"/"$file"_real_asteroids.csv
     while read asteroid; do
