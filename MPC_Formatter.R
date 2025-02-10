@@ -51,7 +51,6 @@ formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
                       "i" = 1800) #seconds
     
     #Date of Observation (J2000.0)
-    #Lots of formatting to get it into YYYY MM DD.dddddd format
     obs = subset(obs_times, subset = grepl(paste0(loc,"_",colour), obs_times$frame) == TRUE & grepl("i2", obs_times$frame) ==FALSE)
     obs_start = as.POSIXct(obs$obs1, tz = "UTC")
     obs_mid = as.POSIXct(obs$obs3, tz = "UTC")
@@ -74,7 +73,6 @@ formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
     ymd_end = paste0(ymd_end," ", day_end)
   
     #Observed Magnitude and Band (66 - 71)
-    #Need to check if decimals have been removed & add them back in if they have been
     mag = formatC(asteroids$mag[i], digits = 2, width = 5, format = "f", flag = "0")  
     
     RA_first = paste0(deg2hms(RA_vals[[1]])[[1]], " ",deg2hms(RA_vals[[1]])[[2]], " ",deg2hms(RA_vals[[1]], digits = 3)[[3]])
