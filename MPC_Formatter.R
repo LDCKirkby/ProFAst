@@ -57,7 +57,7 @@ formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
     obs_end = as.POSIXct(obs$obs5, tz = "UTC") + (exposure/5)
 
     ym_start = format(obs_start, "%Y %m")
-    ym_mid = format(obs_mid = "%Y %m")
+    ym_mid = format(obs_mid,  "%Y %m")
     ym_end = format(obs_end, "%Y %m")
 
     day_start = as.integer(day(obs_start)) + as.integer(hour(obs_start))/24 + as.integer(minute(obs_start))/(24*60) + as.integer(second(obs_start))/(24*60*60)
