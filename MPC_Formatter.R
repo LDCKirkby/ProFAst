@@ -68,9 +68,9 @@ formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
     day_mid = formatC(day_mid, format = "f", width = 9, digits = 6, flag = "0")
     day_end = formatC(day_end, format = "f", width = 9, digits = 6, flag = "0")
 
-    ymd_start = paste0(ymd_start," ", day_start)
-    ymd_mid = paste0(ymd_mid," ", day_mid)
-    ymd_end = paste0(ymd_end," ", day_end)
+    ymd_start = paste0(ym_start," ", day_start)
+    ymd_mid = paste0(ym_mid," ", day_mid)
+    ymd_end = paste0(ym_end," ", day_end)
   
     #Observed Magnitude and Band (66 - 71)
     mag = formatC(asteroids$mag[i], digits = 2, width = 5, format = "f", flag = "0")  
