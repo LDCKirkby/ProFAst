@@ -42,10 +42,7 @@ formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
       ID = paste0(long, substr(ID, nchar(ID) - 7, nchar(ID)))
       print(long_alpha)
     }else if(nchar(ID) < 7){
-      for(i in 1:7-nchar(ID)){
-        add = paste(add,"0", sep="")
-      }
-      # add = rep("0",7-nchar(ID))
+      ID = formatC(ID, width = 7, flag = "0", format = "d")
     }
   
     exposure = switch(tolower(colour),
@@ -57,48 +54,24 @@ formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
     #Lots of formatting to get it into YYYY MM DD.dddddd format
     obs = subset(obs_times, subset = grepl(paste0(loc,"_",colour), obs_times$frame) == TRUE & grepl("i2", obs_times$frame) ==FALSE)
     obs_start = as.POSIXct(obs$obs1, tz = "UTC")
-    obs_end = as.POSIXct(obs$obs5, tz = "UTC") + (exposure/5)
     obs_mid = as.POSIXct(obs$obs3, tz = "UTC")
-    
-    ymd_start = paste0(year(obs_start)," ")
-    ymd_mid = paste0(year(obs_mid), " ")
-    ymd_end = paste0(year(obs_end), " ")
-    day_start = ""
-    day_mid = ""
-    day_end = ""
-    
-    if(month(obs_start) < 10){
-      ymd_start = paste0(ymd_start, paste0("0",month(obs_start)), " ")
-      ymd_mid = paste0(ymd_mid, paste0("0",month(obs_mid)), " ")
-      ymd_end = paste0(ymd_end, paste0("0",month(obs_end)), " ")
-    }else{
-      ymd_start = paste0(ymd_start, month(obs_start), " ")
-      ymd_mid = paste0(ymd_mid, month(obs_mid), " ")
-      ymd_end = paste0(ymd_end, month(obs_end), " ")
-    }
-    
-    if(day(obs_start) < 10){
-      day_start = paste0("0",day(obs_start) + trunc((hour(obs_start)/24 + minute(obs_start)/(24*60) + second(obs_start)/(24*60*60))*10^6)/10^6)
-      day_mid = paste0("0",day(obs_mid) + trunc((hour(obs_mid)/24 + minute(obs_mid)/(24*60) + second(obs_mid)/(24*60*60))*10^6)/10^6)
-      day_end = paste0("0",day(obs_end) + trunc((hour(obs_end)/24 + minute(obs_end)/(24*60) + second(obs_end)/(24*60*60))*10^6)/10^6)
-    }else{
-      day_start = paste0(day(obs_start) + trunc((hour(obs_start)/24 + minute(obs_start)/(24*60) + second(obs_start)/(24*60*60))*10^6)/10^6)
-      day_mid = paste0(day(obs_mid) + trunc((hour(obs_mid)/24 + minute(obs_mid)/(24*60) + second(obs_mid)/(24*60*60))*10^6)/10^6)
-      day_end = paste0(day(obs_end) + trunc((hour(obs_end)/24 + minute(obs_end)/(24*60) + second(obs_end)/(24*60*60))*10^6)/10^6)
-    }
-    
-    if(nchar(day_start) < 7){
-      day_start = paste0(day_start, "0")
-    }
-    if(nchar(day_mid) < 7){
-      day_mid = paste0(day_mid, "0")
-    }
-    if(nchar(day_end) < 7){
-      day_end = paste0(day_end, "0")
-    }
-    ymd_start = paste0(ymd_start, day_start)
-    ymd_mid = paste0(ymd_mid, day_mid)
-    ymd_end = paste0(ymd_end, day_end)
+    obs_end = as.POSIXct(obs$obs5, tz = "UTC") + (exposure/5)
+
+    ym_start = format(obs_start, "%Y %m")
+    ym_mid = format(obs_mid = "%Y %m")
+    ym_end = format(obs_end, "%Y %m")
+
+    day_start = as.integer(day(obs_start)) + as.integer(hour(obs_start))/24 + as.integer(minute(obs_start))/(24*60) + as.integer(second(obs_start))/(24*60*60)
+    day_mid = as.integer(day(obs_mid)) + as.integer(hour(obs_mid))/24 + as.integer(minute(obs_mid))/(24*60) + as.integer(second(obs_mid))/(24*60*60)
+    day_end = as.integer(day(obs_end)) + as.integer(hour(obs_end))/24 + as.integer(minute(obs_end))/(24*60) + as.integer(second(obs_end))/(24*60*60)
+
+    day_start = formatC(day_start, format = "f", width = 9, digits = 6, flag = "0")
+    day_mid = formatC(day_mid, format = "f", width = 9, digits = 6, flag = "0")
+    day_end = formatC(day_end, format = "f", width = 9, digits = 6, flag = "0")
+
+    ymd_start = paste0(ymd_start," ", day_start)
+    ymd_mid = paste0(ymd_mid," ", day_mid)
+    ymd_end = paste0(ymd_end," ", day_end)
   
     #Observed Magnitude and Band (66 - 71)
     #Need to check if decimals have been removed & add them back in if they have been
@@ -114,9 +87,9 @@ formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
     Dec_mid = paste0(deg2dms(Dec_vals[[as.integer(length(Dec_vals)/2)]])[[1]], " ",deg2dms(Dec_vals[[as.integer(length(Dec_vals)/2)]])[[2]], " ",deg2dms(Dec_vals[[as.integer(length(Dec_vals)/2)]], digits = 2)[[3]])
     
   
-    line  = paste0("     ",add,ID,"*KP",ymd_start, RA_first, Dec_first,"         ",mag,colour,"      X11\n")
-    line2 = paste0("     ",add,ID," KP",ymd_mid  , RA_mid  , Dec_mid  ,"         ",mag,colour,"      X11\n")
-    line3 = paste0("     ",add,ID," KP",ymd_end  , RA_end , Dec_end ,"         ",mag,colour,"      X11\n")
+    line  = paste0("     ",ID,"*KP",ymd_start, RA_first, Dec_first,"         ",mag,colour,"      X11\n")
+    line2 = paste0("     ",ID," KP",ymd_mid  , RA_mid  , Dec_mid  ,"         ",mag,colour,"      X11\n")
+    line3 = paste0("     ",ID," KP",ymd_end  , RA_end  , Dec_end  ,"         ",mag,colour,"      X11\n")
     find_orb <- c(line, line2, line3)
     # find_orb <- append(find_orb, line)
     # find_orb <- append(find_orb, line2)
