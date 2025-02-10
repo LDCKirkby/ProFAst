@@ -54,7 +54,7 @@ args = commandArgs(trailingOnly = TRUE)
 loc = as.character(args[[1]])
 
 asteroids = read.csv(paste0("./",loc,"/",loc,"_Verified.csv"))
-stopifnot(asteroids$segID >= 1)
+stopifnot(length(asteroids$segID) >= 1)
 
 cat("***************** Reading in segmentation map data *****************\n")
 segim <- as.matrix(read.csv(paste0("./",loc,"/segim.csv")))
