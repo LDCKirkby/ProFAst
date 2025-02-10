@@ -85,9 +85,9 @@ formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
     Dec_mid = paste0(deg2dms(Dec_vals[[as.integer(length(Dec_vals)/2)]])[[1]], " ",deg2dms(Dec_vals[[as.integer(length(Dec_vals)/2)]])[[2]], " ",deg2dms(Dec_vals[[as.integer(length(Dec_vals)/2)]], digits = 2)[[3]])
     
   
-    line  = paste0("     ",ID,"*KP",ymd_start, RA_first, Dec_first,"         ",mag,colour,"      X11\n")
-    line2 = paste0("     ",ID," KP",ymd_mid  , RA_mid  , Dec_mid  ,"         ",mag,colour,"      X11\n")
-    line3 = paste0("     ",ID," KP",ymd_end  , RA_end  , Dec_end  ,"         ",mag,colour,"      X11\n")
+    line  = paste0("     ",ID,"*KP",ymd_start, RA_first, Dec_first,"         ",mag,colour,"      X11")
+    line2 = paste0("     ",ID," KP",ymd_mid  , RA_mid  , Dec_mid  ,"         ",mag,colour,"      X11")
+    line3 = paste0("     ",ID," KP",ymd_end  , RA_end  , Dec_end  ,"         ",mag,colour,"      X11")
     find_orb <- c(line, line2, line3)
     # find_orb <- append(find_orb, line)
     # find_orb <- append(find_orb, line2)
