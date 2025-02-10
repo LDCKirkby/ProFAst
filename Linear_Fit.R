@@ -53,6 +53,9 @@ Edger <- function(segimcut, ID){
 args = commandArgs(trailingOnly = TRUE)
 loc = as.character(args[[1]])
 
+asteroids = read.csv(paste0("./",loc,"/",loc,"_Verified.csv"))
+stopifnot(asteroids$segID >= 1)
+
 cat("***************** Reading in segmentation map data *****************\n")
 segim <- as.matrix(read.csv(paste0("./",loc,"/segim.csv")))
 # cat("*****************  Generating groupim ***************** \n")
@@ -66,12 +69,12 @@ cat("*****************  Warping r&i frames ***************** \n")
 r_image=propaneWarp(r_image_input,keyvalues_out= g_image$keyvalues)
 i_image=propaneWarp(i_image_input,keyvalues_out= g_image$keyvalues)
 
-asteroids = read.csv(paste0("./",loc,"/",loc,"_Verified.csv"))
 dir_create("./",loc,"/Linear_Fits")
 dir_create("./",loc,"/Linear_Fits/MPC_Format")
 dir_create("./",loc,"/Linear_Fits/Fit_Images")
 
 warnings()
+
 
 for(i in 1:length(asteroids$segID)){
   target = asteroids[i,]
