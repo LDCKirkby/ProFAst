@@ -102,14 +102,7 @@ formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
   
     #Observed Magnitude and Band (66 - 71)
     #Need to check if decimals have been removed & add them back in if they have been
-    mag = trunc(asteroids$mag[i]*10^2)/10^2
-    if(unlist(gregexpr('[.]', mag)) == -1){
-      mag = paste0(mag,".00")
-    }else if((nchar(toString(mag)) - unlist(gregexpr('[.]', mag))) < 2){
-      for(l in 1:(nchar(toString(mag)) - unlist(gregexpr('[.]', mag)))){
-        mag = paste0(mag,"0")
-      }
-    }
+    mag = formatC(asteroids$mag[i], digits = 2, width = 5, format = "f", flag = "0")  
     
     RA_first = paste0(deg2hms(RA_vals[[1]])[[1]], " ",deg2hms(RA_vals[[1]])[[2]], " ",deg2hms(RA_vals[[1]], digits = 3)[[3]])
     Dec_first = paste0(deg2dms(Dec_vals[[1]])[[1]], " ",deg2dms(Dec_vals[[1]])[[2]], " ",deg2dms(Dec_vals[[1]], digits = 2)[[3]])
