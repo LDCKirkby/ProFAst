@@ -51,39 +51,39 @@ LSST_rad <- 3.5/2.0
 declimit=20.0
 #
 cat("****************Loading data****************\n")
-known_asteroids = read.delim("./known_asteroids.txt", header = FALSE, skip=2)
-colnames(known_asteroids) = c("RA_Dec_ID")
-asteroid_and_fields = data.frame()
-for(asteroid in known_asteroids$RA_Dec_ID){
-  asteroid = strsplit(asteroid, split="_")[[1]]
-  RA_Dec = ""
-  ID = ""
-  if(length(asteroid) == 4){
-    RA_Dec = paste0(asteroid[2],"_",asteroid[3])
-    ID = gsub('[griGRI]', '', strsplit(asteroid[4], "[.]")[[1]][1])
-  }else if(length(asteroid) == 3){
-    RA_Dec = paste0(asteroid[1],"_",asteroid[2])
-    ID = gsub('[griGRI]', '', strsplit(asteroid[3], "[.]")[[1]][1])
-  }
-  asteroid_and_fields = rbind(asteroid_and_fields, c(RA_Dec, ID))
-}
-colnames(asteroid_and_fields) = c("RA_Dec", "ID")
+all_points = read.csv("./all_asteroids.csv", header = TRUE)
+# colnames(known_asteroids) = c("RA_Dec_ID")
+# asteroid_and_fields = data.frame()
+# for(asteroid in known_asteroids$RA_Dec_ID){
+#   asteroid = strsplit(asteroid, split="_")[[1]]
+#   RA_Dec = ""
+#   ID = ""
+#   if(length(asteroid) == 4){
+#     RA_Dec = paste0(asteroid[2],"_",asteroid[3])
+#     ID = gsub('[griGRI]', '', strsplit(asteroid[4], "[.]")[[1]][1])
+#   }else if(length(asteroid) == 3){
+#     RA_Dec = paste0(asteroid[1],"_",asteroid[2])
+#     ID = gsub('[griGRI]', '', strsplit(asteroid[3], "[.]")[[1]][1])
+#   }
+#   asteroid_and_fields = rbind(asteroid_and_fields, c(RA_Dec, ID))
+# }
+# colnames(asteroid_and_fields) = c("RA_Dec", "ID")
 
 
-done = as.data.frame(list.files(path = paste0(pwd()), pattern = "_"))
-colnames(done) = "RA_Dec"
+# done = as.data.frame(list.files(path = paste0(pwd()), pattern = "_"))
+# colnames(done) = "RA_Dec"
 
-all_points = data.frame()
-for(RA_Dec in done$RA_Dec){
-  #cat(RA_Dec,"\n")
-  if(paste0(RA_Dec,"_N100_Filtered_Asteroids.csv") %in% list.files(path = paste0("./",RA_Dec,"/")) == FALSE){
-    #cat("FALSE\n\n")
-    next
-  }
-  data = as.data.frame(read.csv(paste0("./",RA_Dec,"/",RA_Dec,"_N100_Filtered_Asteroids.csv")))
-  data = cbind(data, "Field" = RA_Dec)
-  all_points = try(rbind(all_points, data))
-}
+# all_points = data.frame()
+# for(RA_Dec in done$RA_Dec){
+#   #cat(RA_Dec,"\n")
+#   if(paste0(RA_Dec,"_Verified.csv") %in% list.files(path = paste0("./",RA_Dec,"/")) == FALSE){
+#     #cat("FALSE\n\n")
+#     next
+#   }
+#   data = as.data.frame(read.csv(paste0("./",RA_Dec,"/",RA_Dec,"_Verified.csv")))
+#   data = cbind(data, "Field" = RA_Dec)
+#   all_points = try(rbind(all_points, data))
+# }
 
 
 #all_points=fread("/Users/sdriver/Drpbx/waves/mocks/waves-north_grps.csv")
