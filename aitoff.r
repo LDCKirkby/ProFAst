@@ -234,7 +234,7 @@ magproj(WD_wide_south,add=T,col='NA')
 #
 cat("magproj time.\n")
 cat(length(all_points$RAcen), " ", length(all_points$Deccen),"\n")
-magproj(all_points$RAcen, all_points$Deccen,lwd=5, pch=19,col=rgb(1,0,0,0.025),cex=0.1,add=T,type="p")
+magproj(all_points$RAcen, all_points$Deccen, pch=21,col=rgb(0,0,0,0.2),cex=0.1,add=T,type="p")
 #magproj(all_points[all_points$Colour == "r", "RAcen"], all_points[all_points$Colour == "r", "Deccen"], pch=1, col="red",cex=0.1,add=T,type="p")
 #magproj(all_points[all_points$Colour == "i", "RAcen"], all_points[all_points$Colour == "i", "Deccen"], pch=1, col="blue",cex=0.1,add=T,type="p")
 
