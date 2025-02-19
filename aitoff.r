@@ -96,115 +96,115 @@ all_points = read.csv("./all_asteroids.csv", header = TRUE)
 # wideddf4grps=fread("/Users/sdriver/Drpbx/waves/mocks/waves-ddf4_grps.csv")
 # gaiadr3=fread("/Users/sdriver/Drpbx/active/flythru/cats/gaiadr3x.csv")
 #
-all_points = cbind(all_points, "gFluxRatio" = all_points$flux_gt/(all_points$flux_rxt + all_points$flux_i1xt))
-all_points = cbind(all_points, "rFluxRatio" = all_points$flux_rxt/(all_points$flux_gt + all_points$flux_i1xt))
-all_points = cbind(all_points, "iFluxRatio" = all_points$flux_i1xt/(all_points$flux_gt + all_points$flux_rxt))
-all_points = cbind(all_points, "norm_g" = all_points$flux_gt/(all_points$flux_gt + all_points$flux_rxt + all_points$flux_i1xt))
-all_points = cbind(all_points, "norm_r" = all_points$flux_rxt/(all_points$flux_gt + all_points$flux_rxt + all_points$flux_i1xt))
-all_points = cbind(all_points, "norm_i" = all_points$flux_i1xt/(all_points$flux_gt + all_points$flux_rxt + all_points$flux_i1xt))
-all_points = cbind(all_points, "Entropy" = as.numeric(-( (all_points$norm_g * log(all_points$norm_g)) +
-                                                           (all_points$norm_i * log(all_points$norm_i))
-                                                         + (all_points$norm_r * log(all_points$norm_r)) )) )
+# all_points = cbind(all_points, "gFluxRatio" = all_points$flux_gt/(all_points$flux_rxt + all_points$flux_i1xt))
+# all_points = cbind(all_points, "rFluxRatio" = all_points$flux_rxt/(all_points$flux_gt + all_points$flux_i1xt))
+# all_points = cbind(all_points, "iFluxRatio" = all_points$flux_i1xt/(all_points$flux_gt + all_points$flux_rxt))
+# all_points = cbind(all_points, "norm_g" = all_points$flux_gt/(all_points$flux_gt + all_points$flux_rxt + all_points$flux_i1xt))
+# all_points = cbind(all_points, "norm_r" = all_points$flux_rxt/(all_points$flux_gt + all_points$flux_rxt + all_points$flux_i1xt))
+# all_points = cbind(all_points, "norm_i" = all_points$flux_i1xt/(all_points$flux_gt + all_points$flux_rxt + all_points$flux_i1xt))
+# all_points = cbind(all_points, "Entropy" = as.numeric(-( (all_points$norm_g * log(all_points$norm_g)) +
+#                                                            (all_points$norm_i * log(all_points$norm_i))
+#                                                          + (all_points$norm_r * log(all_points$norm_r)) )) )
 
-asteroids = subset(all_points, segID %in% asteroid_and_fields$ID & Field %in% asteroid_and_fields$RA_Dec)
-asteroids = all_points[all_points$segID %in% asteroid_and_fields$ID & all_points$Field %in% asteroid_and_fields$RA_Dec, ]
+# asteroids = subset(all_points, segID %in% asteroid_and_fields$ID & Field %in% asteroid_and_fields$RA_Dec)
+# asteroids = all_points[all_points$segID %in% asteroid_and_fields$ID & all_points$Field %in% asteroid_and_fields$RA_Dec, ]
 
-write.csv(asteroids, "./Verified_Asteroid_Data.csv")
-write.csv(all_points, "./All_Flagged_Objects.csv")
+# write.csv(asteroids, "./Verified_Asteroid_Data.csv")
+# write.csv(all_points, "./All_Flagged_Objects.csv")
 
-##########################################################
-####################### All Objects ######################
-##########################################################
-cat("****************Making all object images****************\n")
-png(filename=paste0("./cutmap_g.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
-par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
-ggplot(data = all_points, mapping = aes(x = gFluxRatio, y = axrat, size = N100, color = Colour, alpha = 0.5)) +
-                                    scale_x_log10(breaks = c(0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100), labels = c("0.00001","0.0001","0.001", "0.01", "0.1", "1", "10","100")) +
-                                    xlab("Flux Ratio (g band)") + ylab("Axial Ratio") + 
-                                    scale_y_log10(labels = comma) +
-                                    geom_point() + scale_colour_manual(values = c("darkgreen", "darkblue", "firebrick")) + #scale_color_viridis_c(option = "A") +
-                                    ggnewscale::new_scale_color() + 
-                                    geom_point(data = asteroids, mapping = aes(x = gFluxRatio, y = axrat, size = N100, color = Colour)) + scale_colour_manual(values = c("green", "blue", "red"))# + scale_colour_gradient(name = "Asteroids", low = "darkgreen", high = "green")
-dev.off()
-
-
-png(filename=paste0("./cutmap_r.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
-par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
-ggplot(data = all_points, mapping = aes(x = rFluxRatio, y = axrat, size = N100, color = Colour, alpha = 0.5)) +
-                                    scale_x_log10(breaks = c(0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100), labels = c("0.00001","0.0001","0.001", "0.01", "0.1", "1", "10","100")) +
-                                    xlab("Flux Ratio (r band)") + ylab("Axial Ratio") + 
-                                    scale_y_log10(labels = comma) +
-                                    geom_point() + scale_colour_manual(values = c("darkgreen", "darkblue", "firebrick")) + #scale_color_viridis_c(option = "A") +
-                                    ggnewscale::new_scale_color() + 
-                                    geom_point(data = asteroids, mapping = aes(x = rFluxRatio, y = axrat, size = N100, color = Colour)) + scale_colour_manual(values = c("green", "blue", "red"))# + scale_colour_gradient(name = "Asteroids", low = "firebrick", high = "red")
-dev.off()
+# ##########################################################
+# ####################### All Objects ######################
+# ##########################################################
+# cat("****************Making all object images****************\n")
+# png(filename=paste0("./cutmap_g.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
+# par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
+# ggplot(data = all_points, mapping = aes(x = gFluxRatio, y = axrat, size = N100, color = Colour, alpha = 0.5)) +
+#                                     scale_x_log10(breaks = c(0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100), labels = c("0.00001","0.0001","0.001", "0.01", "0.1", "1", "10","100")) +
+#                                     xlab("Flux Ratio (g band)") + ylab("Axial Ratio") + 
+#                                     scale_y_log10(labels = comma) +
+#                                     geom_point() + scale_colour_manual(values = c("darkgreen", "darkblue", "firebrick")) + #scale_color_viridis_c(option = "A") +
+#                                     ggnewscale::new_scale_color() + 
+#                                     geom_point(data = asteroids, mapping = aes(x = gFluxRatio, y = axrat, size = N100, color = Colour)) + scale_colour_manual(values = c("green", "blue", "red"))# + scale_colour_gradient(name = "Asteroids", low = "darkgreen", high = "green")
+# dev.off()
 
 
-png(filename=paste0("./cutmap_i.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
-par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
-ggplot(data = all_points, mapping = aes(x = iFluxRatio, y = axrat, size = N100, color = Colour, alpha = 0.5)) + 
-                                    scale_x_log10(breaks = c(0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100), labels = c("0.00001","0.0001","0.001", "0.01", "0.1", "1", "10","100")) +
-                                    xlab("Flux Ratio (i band)") + ylab("Axial Ratio") + 
-                                    scale_y_log10(labels = comma) +
-                                    geom_point() + scale_colour_manual(values = c("darkgreen", "darkblue", "firebrick")) + #scale_color_viridis_c(option = "A") +
-                                    ggnewscale::new_scale_color() + 
-                                    geom_point(data = asteroids, mapping = aes(x = iFluxRatio, y = axrat, size = N100, color = Colour)) + scale_colour_manual(values = c("green", "blue", "red"))# + scale_colour_gradient(name = "Asteroids", low = "darkblue", high = "blue")
-dev.off()
-
-png(filename=paste0("./entropy_map.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
-par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
-ggplot(data = all_points, mapping = aes(x = Entropy, y = axrat, size = N100, color = Colour, alpha = 0.5)) +
-                                    scale_x_log10(labels = comma) +
-                                    xlab("Entropy") + ylab("Axial Ratio") + 
-                                    scale_y_log10(labels = comma) +
-                                    geom_point() + scale_colour_manual(values = c("darkgreen", "darkblue", "firebrick")) +# scale_color_viridis_c(option = "A") +
-                                    ggnewscale::new_scale_color() + 
-                                    geom_point(data = asteroids, mapping = aes(x = Entropy, y = axrat, size = N100, color = Colour)) + scale_colour_manual(values = c("green", "blue", "red"))# + scale_colour_gradient(name = "Asteroids", low = "deeppink4", high = "deeppink")
-
-dev.off()
-
-##########################################################
-############### Known Asteroids Only######################
-##########################################################
-cat("****************Making asteroid only images****************\n")
-png(filename=paste0("./asteroid_cutmap_g.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
-par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
-ggplot(data = asteroids, mapping = aes(x = gFluxRatio, y = axrat, size = N100, color = Colour, alpha = 0.5)) +
-                                    scale_x_log10(breaks = c(0.0001, 0.001, 0.01, 0.1, 1, 10), n.breaks = 6, labels = c("0.0001","0.001", "0.01", "0.1", "1", "10")) +
-                                    xlab("Flux Ratio (g band)") + ylab("Axial Ratio") + 
-                                    scale_y_log10(labels = comma) +
-                                    geom_point() + scale_colour_manual(values = c("darkgreen", "darkblue", "firebrick"))
-dev.off()
+# png(filename=paste0("./cutmap_r.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
+# par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
+# ggplot(data = all_points, mapping = aes(x = rFluxRatio, y = axrat, size = N100, color = Colour, alpha = 0.5)) +
+#                                     scale_x_log10(breaks = c(0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100), labels = c("0.00001","0.0001","0.001", "0.01", "0.1", "1", "10","100")) +
+#                                     xlab("Flux Ratio (r band)") + ylab("Axial Ratio") + 
+#                                     scale_y_log10(labels = comma) +
+#                                     geom_point() + scale_colour_manual(values = c("darkgreen", "darkblue", "firebrick")) + #scale_color_viridis_c(option = "A") +
+#                                     ggnewscale::new_scale_color() + 
+#                                     geom_point(data = asteroids, mapping = aes(x = rFluxRatio, y = axrat, size = N100, color = Colour)) + scale_colour_manual(values = c("green", "blue", "red"))# + scale_colour_gradient(name = "Asteroids", low = "firebrick", high = "red")
+# dev.off()
 
 
-png(filename=paste0("./asteroid_cutmap_r.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
-par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
-ggplot(data = asteroids, mapping = aes(x = rFluxRatio, y = axrat, size = N100, color = Colour, alpha = 0.5)) +
-                                    scale_x_log10(breaks = c(0.0001, 0.001, 0.01, 0.1, 1, 10), n.breaks = 6, labels = c("0.0001","0.001", "0.01", "0.1", "1", "10")) +
-                                    xlab("Flux Ratio (r band)") + ylab("Axial Ratio") + 
-                                    scale_y_log10(labels = comma) +
-                                    geom_point() + scale_colour_manual(values = c("darkgreen", "darkblue", "firebrick"))
-dev.off()
+# png(filename=paste0("./cutmap_i.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
+# par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
+# ggplot(data = all_points, mapping = aes(x = iFluxRatio, y = axrat, size = N100, color = Colour, alpha = 0.5)) + 
+#                                     scale_x_log10(breaks = c(0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100), labels = c("0.00001","0.0001","0.001", "0.01", "0.1", "1", "10","100")) +
+#                                     xlab("Flux Ratio (i band)") + ylab("Axial Ratio") + 
+#                                     scale_y_log10(labels = comma) +
+#                                     geom_point() + scale_colour_manual(values = c("darkgreen", "darkblue", "firebrick")) + #scale_color_viridis_c(option = "A") +
+#                                     ggnewscale::new_scale_color() + 
+#                                     geom_point(data = asteroids, mapping = aes(x = iFluxRatio, y = axrat, size = N100, color = Colour)) + scale_colour_manual(values = c("green", "blue", "red"))# + scale_colour_gradient(name = "Asteroids", low = "darkblue", high = "blue")
+# dev.off()
+
+# png(filename=paste0("./entropy_map.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
+# par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
+# ggplot(data = all_points, mapping = aes(x = Entropy, y = axrat, size = N100, color = Colour, alpha = 0.5)) +
+#                                     scale_x_log10(labels = comma) +
+#                                     xlab("Entropy") + ylab("Axial Ratio") + 
+#                                     scale_y_log10(labels = comma) +
+#                                     geom_point() + scale_colour_manual(values = c("darkgreen", "darkblue", "firebrick")) +# scale_color_viridis_c(option = "A") +
+#                                     ggnewscale::new_scale_color() + 
+#                                     geom_point(data = asteroids, mapping = aes(x = Entropy, y = axrat, size = N100, color = Colour)) + scale_colour_manual(values = c("green", "blue", "red"))# + scale_colour_gradient(name = "Asteroids", low = "deeppink4", high = "deeppink")
+
+# dev.off()
+
+# ##########################################################
+# ############### Known Asteroids Only######################
+# ##########################################################
+# cat("****************Making asteroid only images****************\n")
+# png(filename=paste0("./asteroid_cutmap_g.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
+# par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
+# ggplot(data = asteroids, mapping = aes(x = gFluxRatio, y = axrat, size = N100, color = Colour, alpha = 0.5)) +
+#                                     scale_x_log10(breaks = c(0.0001, 0.001, 0.01, 0.1, 1, 10), n.breaks = 6, labels = c("0.0001","0.001", "0.01", "0.1", "1", "10")) +
+#                                     xlab("Flux Ratio (g band)") + ylab("Axial Ratio") + 
+#                                     scale_y_log10(labels = comma) +
+#                                     geom_point() + scale_colour_manual(values = c("darkgreen", "darkblue", "firebrick"))
+# dev.off()
 
 
-png(filename=paste0("./asteroid_cutmap_i.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
-par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
-ggplot(data = asteroids, mapping = aes(x = iFluxRatio, y = axrat, size = N100, color = Colour, alpha = 0.5)) +
-                                    scale_x_log10(breaks = c(0.0001, 0.001, 0.01, 0.1, 1, 10), n.breaks = 6, labels = c("0.0001","0.001", "0.01", "0.1", "1", "10")) +
-                                    xlab("Flux Ratio (i band)") + ylab("Axial Ratio") + 
-                                    scale_y_log10(labels = comma) +
-                                    geom_point() + scale_colour_manual(values = c("darkgreen", "darkblue", "firebrick"))
-dev.off()
+# png(filename=paste0("./asteroid_cutmap_r.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
+# par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
+# ggplot(data = asteroids, mapping = aes(x = rFluxRatio, y = axrat, size = N100, color = Colour, alpha = 0.5)) +
+#                                     scale_x_log10(breaks = c(0.0001, 0.001, 0.01, 0.1, 1, 10), n.breaks = 6, labels = c("0.0001","0.001", "0.01", "0.1", "1", "10")) +
+#                                     xlab("Flux Ratio (r band)") + ylab("Axial Ratio") + 
+#                                     scale_y_log10(labels = comma) +
+#                                     geom_point() + scale_colour_manual(values = c("darkgreen", "darkblue", "firebrick"))
+# dev.off()
 
 
-png(filename=paste0("./asteroid_entropy_map.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
-par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
-ggplot(data = asteroids, mapping = aes(x = Entropy, y = axrat, size = N100, color = Colour, alpha = 0.5)) + 
-                                    scale_x_log10(labels = comma) +
-                                    xlab("Entropy") + ylab("Axial Ratio") + 
-                                    scale_y_log10(labels = comma) +
-                                    geom_point() + scale_colour_manual(values = c("darkgreen", "darkblue", "firebrick"))
-dev.off()
+# png(filename=paste0("./asteroid_cutmap_i.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
+# par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
+# ggplot(data = asteroids, mapping = aes(x = iFluxRatio, y = axrat, size = N100, color = Colour, alpha = 0.5)) +
+#                                     scale_x_log10(breaks = c(0.0001, 0.001, 0.01, 0.1, 1, 10), n.breaks = 6, labels = c("0.0001","0.001", "0.01", "0.1", "1", "10")) +
+#                                     xlab("Flux Ratio (i band)") + ylab("Axial Ratio") + 
+#                                     scale_y_log10(labels = comma) +
+#                                     geom_point() + scale_colour_manual(values = c("darkgreen", "darkblue", "firebrick"))
+# dev.off()
+
+
+# png(filename=paste0("./asteroid_entropy_map.png"),width=30.0,height=20.0,units="cm",res=240, family = "")
+# par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
+# ggplot(data = asteroids, mapping = aes(x = Entropy, y = axrat, size = N100, color = Colour, alpha = 0.5)) + 
+#                                     scale_x_log10(labels = comma) +
+#                                     xlab("Entropy") + ylab("Axial Ratio") + 
+#                                     scale_y_log10(labels = comma) +
+#                                     geom_point() + scale_colour_manual(values = c("darkgreen", "darkblue", "firebrick"))
+# dev.off()
 
 ##############################
 
