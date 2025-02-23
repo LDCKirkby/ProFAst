@@ -191,14 +191,14 @@ Group_Cutter <- function(loc, computer) {
       i_hdr = Rfits_read_header(paste0("/Volumes/ThunderBay/WAVES/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"))
     }else {
       #Image Information
-      g_image=Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"), header=TRUE, ext=1)
-      r=Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"), header=TRUE, ext=1)
-      i1=Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"), header=TRUE, ext=1)
+      g_image=Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"), header=TRUE, ext=1)
+      r=Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"), header=TRUE, ext=1)
+      i1=Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"), header=TRUE, ext=1)
       
       #Header Information
-      g_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"))
-      r_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"))
-      i_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/Wide/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"))
+      g_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/kids/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"))
+      r_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/kids/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"))
+      i_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/kids/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"))
     }
     r_image=propaneWarp(r,keyvalues_out= g_image$keyvalues)
     i_image=propaneWarp(i1,keyvalues_out= g_image$keyvalues)
