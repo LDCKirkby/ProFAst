@@ -27,29 +27,6 @@ library(fs, quietly = TRUE)
 library(showtext, quietly = TRUE)
 showtext_auto()
 
-#Uncomment to create ordered heading csv
-# bearings = as.data.frame(list.files(path = "/Volumes/WAVES/waves/wavesdata/kids/dr5/preprocessed/", pattern = "_u_"))
-# colnames(bearings) <- c("RA_Dec")
-# RA = c()
-# Dec = c()
-# for (i in 1:length(bearings$RA_Dec)){
-#   RA = append(RA,strsplit(bearings$RA_Dec[i], split = "_")[[1]][2])
-#   Dec = append(Dec, strsplit(bearings$RA_Dec[i], split = "_")[[1]][3])
-#   #bearings[i] = 
-#   
-# }
-# # colnames(bearings) <- c("RA", "Dec")
-# 
-# RA_Dec = cbind(RA, Dec)
-# 
-# RA_Dec = as.data.frame(RA_Dec)
-# colnames(RA_Dec) = c("RA", "Dec")
-# 
-# RA_Dec = RA_Dec[order(RA_Dec$Dec, decreasing = TRUE),]
-# 
-# write.csv(RA_Dec, "/Users/lkirkby/bearings.csv")
-
-
 args = commandArgs(trailingOnly = TRUE)
 RA_DEC = as.character(args[[1]])
 computer = as.character(args[[2]])
@@ -63,8 +40,6 @@ if(tolower(computer) == "sabine"){
 }
 
 dir = getwd()
-# locs = read.delim("./done.txt")
-# RA_DEC = locs[i,]
 
 cat("*************\n","Beginning Detection on:",RA_DEC,"\n","*************\n")
 # frames <- Pre_Proc(RA_DEC, computer)
@@ -79,19 +54,9 @@ Group_Cutter(RA_DEC, computer)
 
 warnings()
 
-
 #Uncomment to remove any unwanted files
 #file.remove(paste0("/Volumes/WAVES/lkirkby/",RA_DEC,"/stacked.rds"))
 #file.remove(paste0("/Users/lkirkby/",RA_DEC,"/allcati.csv"))
 #file.remove(paste0("/Users/lkirkby/",RA_DEC,"/groupcati.csv"))
 #file.remove(paste0("/Users/lkirkby/",RA_DEC,"/objectcati.csv"))
 #file.remove(paste0("/Users/lkirkby/",RA_DEC,"/Possible_Asteroids.csv"))
-
-# Add after each function call to record ram usage
-# peakRAM()
-# post_text_to_ntfy(paste0("Time elapsed for ",RA_DEC," :", New_Detect_RAM$Elapsed_Time_sec, 
-#                          "\nTotal RAM used during New_Detect for ", RA_DEC," :", New_Detect_RAM$Total_RAM_Used_MiB,
-#                          "\nMax RAM used during New_Detect for ", RA_DEC," :", New_Detect_RAM$Peak_RAM_Used_MiB))
-
-
-

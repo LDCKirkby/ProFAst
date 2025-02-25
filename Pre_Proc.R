@@ -21,11 +21,5 @@ Pre_Proc <- function(loc, computer){
 
   i1x=propaneWarp(i1,keyvalues_out=g$keyvalues)
   remove(i1)
-  
-  #Uncomment to add in extra i image
-  #NOT IMPLEMENTED IN OTHER FUNCTIONS
-  #i2x=propaneWarp(i2,keyvalues_out=g$keyvalues)
-  #remove(i2)
-  
   return(list(g, rx, i1x))
 }

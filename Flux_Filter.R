@@ -98,5 +98,4 @@ gc()
 # # ggsave(filename = paste0("./",loc,"/ast_flux_gt.png"), g_as)
 # # ggsave(filename = paste0("./",loc,"/ast_flux_i1xt.png"), i_as)
 # # ggsave(filename = paste0("./",loc,"/ast_flux_rxt.png"), r_as)
-  
 }

@@ -18,6 +18,7 @@ Data_Cutout <- function(ast, image_data, groupcol, segcol) {
   cat("Making cut images\n")
   segimcut=magcutout(image = image_data$segim, loc=as.numeric(galpos),box=box,loc.type="image")
   groupcut=magcutout(image = image_data$groupim, loc=as.numeric(galpos),box=box,loc.type="image")
+
   
   data = list("cutim_g" = cutim_g, "cutim_r" = cutim_r, "cutim_i" = cutim_i, "segimcut" = segimcut, "groupcut" = groupcut)
   return(data)
@@ -30,7 +31,6 @@ Edger <- function(groupID, segID, ast, image_data) {
   ID = list(segID, groupID)
   for(i in 1:2){
     image = image_data[[ images[[i]] ]]$image
-
     xrun=1:(dim(image)[1]-1)
     yrun=1:(dim(image)[2]-1)
     
@@ -38,6 +38,7 @@ Edger <- function(groupID, segID, ast, image_data) {
     image_lt=image[xrun+1,yrun]
     image_rt=image[xrun+1,yrun+1]
     image_rb=image[xrun,yrun+1]
+
     
     image_temp = (image_lb == image_lt) & (image_rt == image_rb) & (image_lb == image_rb) & (image_lt == image_rt)
     
@@ -54,6 +55,7 @@ Edger <- function(groupID, segID, ast, image_data) {
     asteroid_image = image
     asteroid_image[asteroid_image%notin%ID[[i]]]=0 #Makes two copies, one for the asteroid of interest
     image[image%in%ID[[i]]]=0                      #And one for all other objects in the frame
+
     
     image_data[[images[[i]]]] = image
     
@@ -69,6 +71,7 @@ Image_Maker <- function(loc, ast_dat, im_dat, groupcol, segcol, keyvalue_data) {
   mulim<-22.0
   kids<-(0.339^2)*(10^(0.4*(0-mulim)))
   viking<-(0.339^2)*(10^(0.4*(30-mulim)))
+
   
   cat("Printing ",ast_dat$colour,ast_dat$segID," postage stamp\n")
   png(filename=paste0("./",loc,"/Group_Cutouts/",loc,"_",ast_dat$Colour,ast_dat$segID,".png"))
@@ -107,6 +110,7 @@ Image_Maker <- function(loc, ast_dat, im_dat, groupcol, segcol, keyvalue_data) {
   # legend(x ="topright", legend = c("Top Right", "Top Left", "Bottom Right", "Bottom Left", "Average Top", "Average Bottom", "Center of Flux", "Max Flux"), pch = c(2,2,2,2), col = c("orangered" , "orange", "sienna1", "darkviolet", "mediumorchid" , "darkmagenta", "hotpink", "gold"))
   #
   text(1,2*wid-50, col=groupcol, label=paste0("segID=",ast_dat$Colour,ast_dat$segID), cex=2.0, pos=4, family="Arial")
+
   
   dev.off()
   system2(command = "cp", args = c(paste0("./",loc,"/Group_Cutouts/",loc,"_",ast_dat$Colour,ast_dat$segID,".png ./Asteroid_Images/",ast_dat$Colour,"/")))
