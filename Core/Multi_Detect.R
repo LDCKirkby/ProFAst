@@ -7,8 +7,8 @@
 # library(ProFound)
 # library(magicaxis)
 # library(data.table)
-# require(foreign)
-# require(MASS)
+# library(foreign)
+# library(MASS)
 # library(dst)
 # library(Rwcs)
 # library(ProPane)
@@ -29,18 +29,16 @@
 #######################
 
 
-New_Detect <- function(loc, frames){
-
+Multi_Detect <- function(loc, frames){
 
 #Set working directory and detection parameters
 savelocation = paste0("./",loc,"/")
-
 
 cat("***********\n")
 cat("Beginning detection\n")
 cat("***********\n")
 
-trim=profoundMultiBand( #I prefer this layout for complex calls since then you can write notes to remind ourselves why we have certain settings.
+multi_data=profoundMultiBand( #I prefer this layout for complex calls since then you can write notes to remind ourselves why we have certain settings.
   inputlist = frames,
   skycut=0.6,
   pixcut=15, #Avoids too many detections in very noisy regions etc
@@ -71,22 +69,24 @@ cat("***********\n")
 cat("Detection finished\n")
 cat("***********\n")
 
-
 # Save data structure and produce diagnostic plot
-
 dir.create(savelocation)
-saveRDS(trim,file=paste0(savelocation,"stacked.rds"))
+saveRDS(multi_data,file=paste0(savelocation,"stacked.rds"))
 
-segimlist = trim$segimlist
-segim = trim$pro_detect$segim
-segim_orig = trim$pro_detect$segim_orig
+segimlist = multi_data$segimlist
+segim = multi_data$pro_detect$segim
+segim_orig = multi_data$pro_detect$segim_orig
 
+#Saves all segmentation mask images in a list (segimlist)
+#Not needed & will likely be removed
 cat("Saving slimmed segimlist\n")
 write.csv(segimlist, paste0(savelocation,"segimlist.csv"))
 
+#Save segmentation maps (dilated and converged)
 cat("Saving slimmed segim\n")
 write.csv(segim, paste0(savelocation,"/segim.csv"))
 
+#Save colour segmentation maps (pre dilation)
 cat("Saving slimmed segim_orig\n")
 write.csv(segim_orig, paste0(savelocation,"/segim_orig.csv"))
 
@@ -96,13 +96,13 @@ rm(segimlist)
 
 # Extract segment info, colour, total, deblend, aperture, and groups measurements
 
-cat_objects <- as.data.table(cbind(trim$pro_detect$segstats,trim$cat_tot))
+cat_objects <- as.data.table(cbind(multi_data$pro_detect$segstats,multi_data$cat_tot))
 
-cat_groupinfo=cbind(segID=unlist(trim$pro_detect$group$groupsegID$segID),groupID=rep(trim$pro_detect$group$groupsegID$groupID,times=trim$pro_detect$group$groupsegID$Ngroup), Ngroup=rep(trim$pro_detect$group$groupsegID$Ngroup, times=trim$pro_detect$group$groupsegID$Ngroup))
+cat_groupinfo=cbind(segID=unlist(multi_data$pro_detect$group$groupsegID$segID),groupID=rep(multi_data$pro_detect$group$groupsegID$groupID,times=multi_data$pro_detect$group$groupsegID$Ngroup), Ngroup=rep(multi_data$pro_detect$group$groupsegID$Ngroup, times=multi_data$pro_detect$group$groupsegID$Ngroup))
 
 cat_objects=cbind(cat_objects,cat_groupinfo[match(cat_objects$segID, cat_groupinfo[,"segID"]),2:3])
 
-cat_groups <- as.data.table(cbind(trim$pro_detect$group$groupsegID$Ngroup,trim$pro_detect$groupstats$groupID,trim$cat_grp))
+cat_groups <- as.data.table(cbind(multi_data$pro_detect$group$groupsegID$Ngroup,multi_data$pro_detect$groupstats$groupID,multi_data$cat_grp))
 
 names(cat_groups)[1] <- "Ngroup"
 names(cat_groups)[2] <- "groupID"
@@ -119,7 +119,7 @@ write.csv(datafile0,file=paste0(savelocation,"allcati.csv"))
 #par(mfrow=c(1,1),mar=c(3,3,2,2))
 
 #CairoPDF(file=paste0(savelocation,"test.pdf"),width=24.0,height=24.0)
-#plot(trim$pro_detect)
+#plot(multi_data$pro_detect)
 #dev.off()
 
 

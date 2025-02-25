@@ -3,24 +3,11 @@ library(celestial)
 library(lubridate)
 library(common)
 
-
 formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
     cat("Reading observation times\n")
     orig_ID = ID
     obs_times = read.delim("./obs_times_full.txt", header =FALSE, col.names = c("frame","obs1","obs2","obs3","obs4","obs5","obs6","obs7","obs8","obs9"),  sep = ",")
-    # cat("Reading asteroid data\n")
-    # asteroids = read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv"))
-    
     # half_year = c("A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y")
-    
-    find_orb = c()
-    
-    # for( i in 1:length(asteroids$groupID)){
-    #   colour = asteroids$Colour[i]
-    #   ID = asteroids$segID[i]
-    #   
-    #   cat("Formatting asteriod ", colour, ID,"\n")
-    
     
     #N: Number (1 - 5)
     
@@ -88,14 +75,9 @@ formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
     line  = paste0("     ",ID,"*KP",ymd_start, RA_first, Dec_first,"         ",mag,colour,"      X11")
     line2 = paste0("     ",ID," KP",ymd_mid  , RA_mid  , Dec_mid  ,"         ",mag,colour,"      X11")
     line3 = paste0("     ",ID," KP",ymd_end  , RA_end  , Dec_end  ,"         ",mag,colour,"      X11")
-    find_orb <- c(line, line2, line3)
-    # find_orb <- append(find_orb, line)
-    # find_orb <- append(find_orb, line2)
-    # find_orb <- append(find_orb, line3)
-  
-    
+    output <- c(line, line2, line3)  
     cat("Writing formatted data to ", loc,"_findorb.txt\n")
-    write.table(find_orb, paste0("./",loc,"/Linear_Fits/MPC_Format/",loc,"_",orig_ID,".mpc"), sep = " ", row.names = FALSE, col.names = FALSE, quote = FALSE)
+    write.table(output, paste0("./",loc,"/Linear_Fits/MPC_Format/",loc,"_",orig_ID,".mpc"), sep = " ", row.names = FALSE, col.names = FALSE, quote = FALSE)
 
 }
 # To call find_orb and produce x,y,z location parameters

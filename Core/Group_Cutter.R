@@ -39,7 +39,6 @@ Edger <- function(groupID, segID, ast, image_data) {
     image_rt=image[xrun+1,yrun+1]
     image_rb=image[xrun,yrun+1]
 
-    
     image_temp = (image_lb == image_lt) & (image_rt == image_rb) & (image_lb == image_rb) & (image_lt == image_rt)
     
     image_edge=matrix(0,dim(image)[1],dim(image)[2])
@@ -72,7 +71,6 @@ Image_Maker <- function(loc, ast_dat, im_dat, groupcol, segcol, keyvalue_data) {
   kids<-(0.339^2)*(10^(0.4*(0-mulim)))
   viking<-(0.339^2)*(10^(0.4*(30-mulim)))
 
-  
   cat("Printing ",ast_dat$colour,ast_dat$segID," postage stamp\n")
   png(filename=paste0("./",loc,"/Group_Cutouts/",loc,"_",ast_dat$Colour,ast_dat$segID,".png"))
   
@@ -116,7 +114,6 @@ Image_Maker <- function(loc, ast_dat, im_dat, groupcol, segcol, keyvalue_data) {
   system2(command = "cp", args = c(paste0("./",loc,"/Group_Cutouts/",loc,"_",ast_dat$Colour,ast_dat$segID,".png ./Asteroid_Images/",ast_dat$Colour,"/")))
 }
 
-
 Postage_Stamper <- function(loc, ast, image_data) {
   groupID = ast$groupID
   segID = ast$segID
@@ -132,33 +129,7 @@ Postage_Stamper <- function(loc, ast, image_data) {
          "g" = Image_Maker(loc, ast, cut_image_data, "seagreen2", "green", image_data),
          "r" = Image_Maker(loc, ast, cut_image_data, "firebrick1", "red2", image_data),
          "i" = Image_Maker(loc, ast, cut_image_data, "skyblue", "blue", image_data)
-)
-  
-  # if(grepl(colour,"g") == TRUE) {
-  #   cut_image_data <- Data_Cutout(ast, image_data)
-  #   
-  #   cut_image_data <- Edger(groupID, segID, ast, cut_image_data)
-  #   
-  #   #Creates png and overlays points and segment/group outlines
-  #   Image_Maker(loc, ast, cut_image_data, "seagreen2", "green", image_data)
-  #   
-  # }else if(grepl(colour,"r") == TRUE) {
-  #   cut_image_data <- Data_Cutout(ast, image_data)
-  #   
-  #   cut_image_data <- Edger(groupID, segID, ast, cut_image_data)
-  #   
-  #   #Creates png and overlays points and segment/group outlines
-  #   Image_Maker(loc, ast, cut_image_data, "firebrick1", "red2", image_data)
-  #   
-  # }else if(grepl(colour,"i") == TRUE) {
-  #   cut_image_data <- Data_Cutout(ast, image_data)
-  #   
-  #   cut_image_data <- Edger(groupID, segID, ast, cut_image_data)
-  #   
-  #   #Creates png and overlays points and segment/group outlines
-  #   Image_Maker(loc, ast, cut_image_data, "skyblue", "blue", image_data)
-  #   
-  # }
+  )
 }
 
 Group_Cutter <- function(loc, computer) {
@@ -197,7 +168,7 @@ Group_Cutter <- function(loc, computer) {
       #Image Information
       g_image=Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"), header=TRUE, ext=1)
       r=Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"), header=TRUE, ext=1)
-      i1=Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST//dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"), header=TRUE, ext=1)
+      i1=Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"), header=TRUE, ext=1)
       
       #Header Information
       g_hdr = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"))

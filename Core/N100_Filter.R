@@ -24,8 +24,6 @@ N100_Filter <- function(loc){
   cat("Writing to " ,paste0("./", loc,"/",loc,"_N100_Filtered_Asteroids.csv"),"\n")
   cat("*********\n\n")
   
-  
   rm(N100_filtered_asteroids, filtered_asteroids, large_pass) 
   gc()
-  
 }

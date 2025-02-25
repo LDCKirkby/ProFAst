@@ -1,9 +1,9 @@
-source("./R_Files/Pre_Proc.R")
-source("./R_Files/New_Detect.R")
-source("./R_Files/Flux_Filter.R")
-source("./R_Files/Axrat_Filter.R")
-source("./R_Files/N100_Filter.R")
-source("./R_Files/Group_Cutter.R")
+source("./R_Files/Core/Pre_Proc.R")
+source("./R_Files/Core/Multi_Detect.R")
+source("./R_Files/Core/Flux_Filter.R")
+source("./R_Files/Core/Axrat_Filter.R")
+source("./R_Files/Core/N100_Filter.R")
+source("./R_Files/Core/Group_Cutter.R")
 
 library(peakRAM,quietly = TRUE)
 library(xtable, quietly = TRUE)
@@ -34,18 +34,18 @@ RA_DEC = gsub("[\r\n]", "", as.character(args[[1]]))
 
 computer = as.character(args[[2]])
 if(tolower(computer) == "sabine") {
-  font_add("Arial", "/Users/lukekirkby/Library/Fonts/Arial.ttf")
+  font_add("Arial", "~/Library/Fonts/Arial.ttf")
 }else if (tolower(computer) == "simon") {
-  font_add("Arial", "/Users/lkirkby/Library/Fonts/Arial.ttf")
+  font_add("Arial", "~/Library/Fonts/Arial.ttf")
 }else {
-  font_add("Arial", "/Library/Fonts/Arial.ttf")
+  font_add("Arial", "~/Library/Fonts/Arial.ttf")
 }
 
 dir = getwd()
   cat("*************\n","Beginning Detection on:",RA_DEC,"\n","*************\n")
   frames <- Pre_Proc(RA_DEC, computer)
 
-  New_Detect(RA_DEC, frames)
+  Multi_Detect(RA_DEC, frames)
 
   Flux_Filter(RA_DEC)
 

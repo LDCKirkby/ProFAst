@@ -2,4 +2,4 @@
 
 while read RA_Dec; do
     Rscript R_Files/"$1" $RA_Dec
-done <fields.csv
+done <$2

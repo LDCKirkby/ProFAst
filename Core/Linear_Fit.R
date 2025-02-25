@@ -20,7 +20,7 @@ library(fs, quietly = TRUE)
 library(showtext, quietly = TRUE)
 library(png)
 library(Matrix)
-source("./R_Files/MPC_Formatter.R")
+source("./R_Files/Core/MPC_Formatter.R")
 
 Edger <- function(segimcut, ID){
   image = segimcut$image
@@ -75,10 +75,7 @@ cat("*****************  Warping r&i frames ***************** \n")
 r_image=propaneWarp(r_image_input,keyvalues_out= g_image$keyvalues)
 i_image=propaneWarp(i_image_input,keyvalues_out= g_image$keyvalues)
 
-
-
 warnings()
-
 
 for(i in 1:length(asteroids$segID)){
   target = asteroids[i,]
