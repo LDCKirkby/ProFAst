@@ -58,6 +58,7 @@ stopifnot(length(asteroids$segID) >= 1)
 
 if(dir.exists(file.path(paste0("./",loc,"/"),"Linear_Fits")) == TRUE){
   done = list.files(file.path(paste0("./",loc,"/"),"Linear_Fits/MPC_Format"), pattern = ".", all.files = FALSE, recursive = TRUE, full.names = TRUE)
+  cat(length(done), "files already exist, ", length(asteroids$segID), " asteroids exist for the field.\n")
   if(length(done) == length(asteroids$segID)){
       stopifnot(dir.exists(file.path(paste0("./",loc,"/"),"Linear_Fits")) == FALSE)
   }
