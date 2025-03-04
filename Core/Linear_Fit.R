@@ -56,7 +56,13 @@ loc = as.character(args[[1]])
 asteroids = read.csv(paste0("./",loc,"/",loc,"_Verified.csv"))
 stopifnot(length(asteroids$segID) >= 1)
 
-stopifnot(dir.exists(file.path(paste0("./",loc,"/"),"Linear_Fits")) == FALSE)
+if(dir.exists(file.path(paste0("./",loc,"/"),"Linear_Fits")) == TRUE){
+  done = list.files(file.path(paste0("./",loc,"/"),"Linear_Fits/MPC_Format"), pattern = ".", all.files = FALSE, recursive = TRUE, full.names = TRUE)
+  if(length(done) == length(asteroids$segID)){
+      stopifnot(dir.exists(file.path(paste0("./",loc,"/"),"Linear_Fits")) == FALSE)
+  }
+}
+
 
 dir_create("./",loc,"/Linear_Fits")
 dir_create("./",loc,"/Linear_Fits/MPC_Format")
