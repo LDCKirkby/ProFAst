@@ -93,8 +93,8 @@ for(i in 1:length(asteroids$segID)){
   colour = target$Colour
   cat("*****************  Fitting Asteroid ", ID, " *****************\n")
   
-  galradec = target[c("RAcen", "Deccen")]
-  galpos=as.integer(Rwcs_s2p(RA=galradec$RAcen, Dec=galradec$Deccen, keyvalues=g_image$keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
+  astradec = target[c("RAcen", "Deccen")]
+  astpos=as.integer(Rwcs_s2p(RA=astradec$RAcen, Dec=astradec$Deccen, keyvalues=g_image$keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
   
   wid <- 200.0
   box<-c(2*wid,2*wid)
@@ -102,11 +102,11 @@ for(i in 1:length(asteroids$segID)){
   kids<-(0.339^2)*(10^(0.4*(0-mulim)))
   viking<-(0.339^2)*(10^(0.4*(30-mulim)))
   
-  cutim_g=g_image[galpos,box=box]
-  cutim_r=r_image[galpos,box=box]
-  cutim_i=i_image[galpos,box=box]
+  cutim_g=g_image[astpos,box=box]
+  cutim_r=r_image[astpos,box=box]
+  cutim_i=i_image[astpos,box=box]
   
-  segimcut=magcutout(image = segim, loc=as.numeric(galpos), box=box, loc.type="image")
+  segimcut=magcutout(image = segim, loc=as.numeric(astpos), box=box, loc.type="image")
   
   obj_points <- which(segimcut$image==ID, arr.ind = TRUE)
   
@@ -115,22 +115,23 @@ for(i in 1:length(asteroids$segID)){
   y_vals = obj_points[,2]
   x_vals = obj_points[,1]
   
+  
   brightness_vals = switch(colour, 
-                           "g" = cutim_g$imDat[obj_points]/ max(cutim_g$imDat),
-                           "r" = cutim_r$imDat[obj_points]/ max(cutim_r$imDat),
-                           "i" = cutim_i$imDat[obj_points]/ max(cutim_i$imDat))
+                           "g" = cutim_g$imDat[obj_points]/ max(cutim_g$imDat[obj_points]),
+                           "r" = cutim_r$imDat[obj_points]/ max(cutim_r$imDat[obj_points]),
+                           "i" = cutim_i$imDat[obj_points]/ max(cutim_i$imDat[obj_points]))
   brightness_vals[brightness_vals<0] <- 0
   
   # weights_g <- cutim_g$imDat[segimcut$image]/ max(cutim_g$imDat)
   # weights_r <- cutim_r$imDat[segimcut$image]/ max(cutim_r$imDat)
   # weights_i <- cutim_i$imDat[segimcut$image]/ max(cutim_i$imDat)
   #brightness_vals <- droplevels(brightness_vals)
-  x_vals = droplevels(x_vals)
+  #x_vals = droplevels(x_vals)
   fit <- lm(y_vals ~ poly(x_vals, 1, raw = TRUE), weights = brightness_vals)
   
-  x_range <- range(x_vals) + c(-0.01,10) # Extend the range of x_vals by 1 unit on each side
+  #x_range <- range(x_vals) + c(-0.01,5) # Used to extend the range of x_vals on each side
   
-  x_pred <- seq(min(x_range), max(x_range), length.out = 10)
+  x_pred <- seq(min(x_vals), max(x_vals), length.out = 10)
   y_pred <- predict(fit, newdata = data.frame(x_vals = x_pred))
   
   RA_vals = c()
@@ -147,7 +148,7 @@ for(i in 1:length(asteroids$segID)){
   
   par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
   
-  locut = c(median(cutim_g$imDat,na.rm=TRUE),median(cutim_g$imDat,na.rm=TRUE),median(cutim_g$imDat,na.rm=TRUE))
+  locut = c(median(cutim_r$imDat,na.rm=TRUE),median(cutim_g$imDat,na.rm=TRUE),median(cutim_i$imDat,na.rm=TRUE))
   
   line_col = switch(colour, "g" = "green", "r" = "red", "i" = "blue")
 
