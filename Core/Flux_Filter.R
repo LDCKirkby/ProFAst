@@ -65,9 +65,9 @@ Dec = as.numeric(strsplit(loc, "_")[[1]][[2]])
 
 #Useful to apply edge buffer since some frames are being artificially grown
 cat("Applying edge buffer\n")
-red_objects = rbind(red_objects[red_objects$RAcen >= (RA-0.5 + 0.1) & red_objects$RAcen <= (RA+0.5 + 0.1) & red_objects$Deccen >= (Dec-0.5 + 0.1) & red_objects$Deccen <= (Dec+0.5 - 0.1),])
-blue_objects = rbind(blue_objects[blue_objects$RAcen >= (RA-0.5 + 0.1) & blue_objects$RAcen <= (RA+0.5 - 0.1) & blue_objects$Deccen >= (Dec-0.5 + 0.1) & blue_objects$Deccen <= (Dec+0.5 - 0.1),])
-green_objects = rbind(green_objects[green_objects$RAcen >= (RA-0.5 + 0.1) & green_objects$RAcen <= (RA+0.5 - 0.1) & green_objects$Deccen >= (Dec-0.5 + 0.1) & green_objects$Deccen <= (Dec+0.5 - 0.1),])
+red_objects = rbind(red_objects[red_objects$RAcen >= (RA - 0.5 + 0.01) & red_objects$RAcen <= (RA + 0.5 - 0.01) & red_objects$Deccen >= (Dec-0.5 + 0.01) & red_objects$Deccen <= (Dec + 0.5 - 0.01),])
+blue_objects = rbind(blue_objects[blue_objects$RAcen >= (RA - 0.5 + 0.01) & blue_objects$RAcen <= (RA + 0.5 - 0.01) & blue_objects$Deccen >= (Dec-0.5 + 0.01) & blue_objects$Deccen <= (Dec + 0.5 - 0.01),])
+green_objects = rbind(green_objects[green_objects$RAcen >= (RA - 0.5 + 0.01) & green_objects$RAcen <= (RA + 0.5 - 0.01) & green_objects$Deccen >= (Dec-0.5 + 0.01) & green_objects$Deccen <= (Dec + 0.5 - 0.01),])
 
 #Bind final lists of objects together
 possible_asteroids <- rbind(blue_objects,green_objects,red_objects)

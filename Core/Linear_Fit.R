@@ -56,9 +56,12 @@ loc = as.character(args[[1]])
 asteroids = read.csv(paste0("./",loc,"/",loc,"_Verified.csv"))
 stopifnot(length(asteroids$segID) >= 1)
 
+#Checks to see if linear fit has already been done on the field
 if(dir.exists(file.path(paste0("./",loc,"/"),"Linear_Fits")) == TRUE){
+  #If it has, checks to see it completed fully, fitting all asteroids
   done = list.files(file.path(paste0("./",loc,"/"),"Linear_Fits/MPC_Format"), pattern = ".", all.files = FALSE, recursive = TRUE, full.names = TRUE)
   cat(length(done), "files already exist, ", length(asteroids$segID), " asteroids exist for the field.\n")
+  #Exits if all have been done previously
   if(length(done) == length(asteroids$segID)){
       stopifnot(dir.exists(file.path(paste0("./",loc,"/"),"Linear_Fits")) == FALSE)
   }
@@ -121,7 +124,8 @@ for(i in 1:length(asteroids$segID)){
   # weights_g <- cutim_g$imDat[segimcut$image]/ max(cutim_g$imDat)
   # weights_r <- cutim_r$imDat[segimcut$image]/ max(cutim_r$imDat)
   # weights_i <- cutim_i$imDat[segimcut$image]/ max(cutim_i$imDat)
-  
+  brightness_vals <- droplevels(brightness_vals)
+  x_vals = droplevels(x_vals)
   fit <- lm(y_vals ~ poly(x_vals, 1, raw = TRUE), weights = brightness_vals)
   
   x_range <- range(x_vals) + c(-0.01,10) # Extend the range of x_vals by 1 unit on each side
