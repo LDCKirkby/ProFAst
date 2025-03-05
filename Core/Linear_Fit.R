@@ -124,7 +124,7 @@ for(i in 1:length(asteroids$segID)){
   # weights_g <- cutim_g$imDat[segimcut$image]/ max(cutim_g$imDat)
   # weights_r <- cutim_r$imDat[segimcut$image]/ max(cutim_r$imDat)
   # weights_i <- cutim_i$imDat[segimcut$image]/ max(cutim_i$imDat)
-  brightness_vals <- droplevels(brightness_vals)
+  #brightness_vals <- droplevels(brightness_vals)
   x_vals = droplevels(x_vals)
   fit <- lm(y_vals ~ poly(x_vals, 1, raw = TRUE), weights = brightness_vals)
   
