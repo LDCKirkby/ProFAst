@@ -34,8 +34,8 @@ formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
   
     exposure = switch(tolower(colour),
                       "g" = 900,
-                      "r" = 1080,
-                      "i" = 1800) #seconds
+                      "r" = 1800,
+                      "i" = 1200) #seconds
     
     #Date of Observation (J2000.0)
     obs = subset(obs_times, subset = grepl(paste0(loc,"_",colour), obs_times$frame) == TRUE & grepl("i2", obs_times$frame) ==FALSE)
