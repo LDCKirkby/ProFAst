@@ -3,7 +3,7 @@ library(celestial)
 library(lubridate)
 library(common)
 
-formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
+formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals, ast_type){
     cat("Reading observation times\n")
     orig_ID = ID
     obs_times = read.delim("./obs_times_full.txt", header =FALSE, col.names = c("frame","obs1","obs2","obs3","obs4","obs5","obs6","obs7","obs8","obs9"),  sep = ",")
@@ -77,7 +77,7 @@ formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
     line3 = paste0("     ",ID," KP",ymd_end  , RA_end  , Dec_end  ,"         ",mag,colour,"      X11")
     output <- c(line, line2, line3)  
     cat("Writing formatted data to ", loc,"_findorb.txt\n")
-    write.table(output, paste0("./",loc,"/Linear_Fits/MPC_Format/",loc,"_",orig_ID,".mpc"), sep = " ", row.names = FALSE, col.names = FALSE, quote = FALSE)
+    write.table(output, paste0("./",loc,"/Linear_Fits/",ast_type,"/MPC_Format/",loc,"_",orig_ID,".mpc"), sep = " ", row.names = FALSE, col.names = FALSE, quote = FALSE)
 
 }
 # To call find_orb and produce x,y,z location parameters

@@ -52,25 +52,26 @@ Edger <- function(segimcut, ID){
 
 args = commandArgs(trailingOnly = TRUE)
 loc = as.character(args[[1]])
+ast_type = as.character(args[[2]])
 
-asteroids = read.csv(paste0("./",loc,"/",loc,"_Verified.csv"))
+asteroids = read.csv(paste0("./",loc,"/",loc,"_",ast_type,"_Verified.csv"))
 stopifnot(length(asteroids$segID) >= 1)
 
 #Checks to see if linear fit has already been done on the field
-if(dir.exists(file.path(paste0("./",loc,"/"),"Linear_Fits")) == TRUE){
+if(dir.exists(file.path(paste0("./",loc,"/"),paste0("Linear_Fits/",ast_type))) == TRUE){
   #If it has, checks to see it completed fully, fitting all asteroids
-  done = list.files(file.path(paste0("./",loc,"/"),"Linear_Fits/MPC_Format"), pattern = ".", all.files = FALSE, recursive = TRUE, full.names = TRUE)
+  done = list.files(file.path(paste0("./",loc,"/"),paste0("Linear_Fits/",ast_type,"/MPC_Format")), pattern = ".", all.files = FALSE, recursive = TRUE, full.names = TRUE)
   cat(length(done), "files already exist, ", length(asteroids$segID), " asteroids exist for the field.\n")
   #Exits if all have been done previously
   if(length(done) == length(asteroids$segID)){
-      stopifnot(dir.exists(file.path(paste0("./",loc,"/"),"Linear_Fits")) == FALSE)
+      stopifnot(dir.exists(file.path(paste0("./",loc,"/"),paste0("Linear_Fits/",ast_type))) == FALSE)
   }
 }
 
 
-dir_create("./",loc,"/Linear_Fits")
-dir_create("./",loc,"/Linear_Fits/MPC_Format")
-dir_create("./",loc,"/Linear_Fits/Fit_Images")
+dir_create("./",loc,"/Linear_Fits/",ast_type)
+dir_create("./",loc,"/Linear_Fits/",ast_type,"/MPC_Format")
+dir_create("./",loc,"/Linear_Fits/",ast_type,"/Fit_Images")
 
 cat("***************** Reading in segmentation map data *****************\n")
 segim <- as.matrix(read.csv(paste0("./",loc,"/segim.csv")))
@@ -142,9 +143,9 @@ for(i in 1:length(asteroids$segID)){
     RA_vals <- append(RA_vals, RA_Dec[[1]][1])
     Dec_vals <- append(Dec_vals, RA_Dec[[2]][1])
   }
-  formatter(loc, ID, colour, target$mag, RA_vals, Dec_vals)
+  formatter(loc, ID, colour, target$mag, RA_vals, Dec_vals, ast_type)
   
-  png(filename=paste0("./",loc,"/Linear_Fits/Fit_Images/",loc,"_",colour,target$segID,"_linear_fit.png"))
+  png(filename=paste0("./",loc,"/Linear_Fits/",ast_type,"/Fit_Images/",loc,"_",colour,target$segID,"_linear_fit.png"))
   
   par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
   
@@ -160,7 +161,7 @@ for(i in 1:length(asteroids$segID)){
   
   dev.off()
   
-  png(filename=paste0("./",loc,"/Linear_Fits/Fit_Images/",loc,"_",colour,target$segID,"_fit.png"))
+  png(filename=paste0("./",loc,"/Linear_Fits/",ast_type,"/Fit_Images/",loc,"_",colour,target$segID,"_fit.png"))
   
   par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
   

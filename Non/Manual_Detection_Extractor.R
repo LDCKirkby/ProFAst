@@ -1,9 +1,10 @@
 library(stringr)
 args = commandArgs(trailingOnly = TRUE)
 RA_Dec = gsub("[\r\n]", "", as.character(args[[1]]))
+ast_type = as.character(args[[2]])
 
 filtered_data = read.csv(paste0(RA_Dec,"/",RA_Dec,"_N100_Filtered_Asteroids.csv"))
-visual_asteroids = read.csv(paste0(RA_Dec,"/",RA_Dec,"_clean_asteroids.csv"), header=TRUE)
+visual_asteroids = read.csv(paste0(RA_Dec,"/",RA_Dec,"_",ast_type,".csv"), header=TRUE)
 asteroid_IDS = str_sub(visual_asteroids$segID, 2, -1)
 
 #Check for incorrectly coloured asteroids
@@ -27,5 +28,5 @@ filtered_data[filtered_data$segID %in% i_IDS,]$Colour = "i"
 
 verified_asteroids = subset(filtered_data, filtered_data$segID %in% asteroid_IDS | filtered_data$segID %in% g_IDS |
                             filtered_data$segID %in% r_IDS | filtered_data$segID %in% i_IDS)
-write.csv(verified_asteroids, file=paste0(RA_Dec,"/",RA_Dec,"_Verified.csv"))
+write.csv(verified_asteroids, file=paste0(RA_Dec,"/",RA_Dec,"_",ast_type,"_Verified.csv"))
 
