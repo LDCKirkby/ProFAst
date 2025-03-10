@@ -54,7 +54,7 @@ args = commandArgs(trailingOnly = TRUE)
 loc = as.character(args[[1]])
 ast_type = as.character(args[[2]])
 
-asteroids = read.csv(paste0("./",loc,"/",loc,"_",ast_type,"_Verified.csv"))
+asteroids = read.csv(paste0("./",loc,"/",loc,"_",ast_type,".csv"))
 stopifnot(length(asteroids$segID) >= 1)
 
 #Checks to see if linear fit has already been done on the field
