@@ -1,7 +1,6 @@
 library(stringr)
 args = commandArgs(trailingOnly = TRUE)
 RA_Dec = gsub("[\r\n]", "", as.character(args[[1]]))
-ast_type = as.character(args[[2]])
 
 filtered_data = read.csv(paste0(RA_Dec,"/",RA_Dec,"_N100_Filtered_Asteroids.csv"))
 visual_asteroids = read.csv(paste0(RA_Dec,"/",RA_Dec,"_clean_asteroids.csv"), header=TRUE)
