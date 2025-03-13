@@ -5,7 +5,7 @@ Group_Remover <- function(RA_Dec){
     
     cat(length(dupes$segID), " duplicate groupIDS\n")
 
-    write.csv(no_dupes, paste0("./",RA_Dec,"/",RA_Dec,"_no_dupes.csv"), col.names=TRUE, row.names=FALSE)
+    write.csv(no_dupes, paste0("./",RA_Dec,"/",RA_Dec,"_no_dupes.csv"))
     write.table(dupes$segID, paste0("./",RA_Dec,"/",RA_Dec,"_dupes.txt"), col.names=FALSE, row.names=FALSE)
 }
 
