@@ -1,4 +1,4 @@
-Group_Remover.R <- function(RA_Dec){
+Group_Remover <- function(RA_Dec){
     asteroid_data = read.csv(paste0("./",RA_Dec,"/",RA_Dec,"_Verified.csv"), header=TRUE)
     no_dupes = subset(asteroid_data, !duplicated(groupID))
     dupes = subset(asteroid_data, duplicated(groupID))
@@ -11,3 +11,5 @@ Group_Remover.R <- function(RA_Dec){
 
 args = commandArgs(trailingOnly = TRUE)
 RA_DEC = gsub("[\r\n]", "", as.character(args[[1]]))
+
+Group_Remover(RA_DEC)
