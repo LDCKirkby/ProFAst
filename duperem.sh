@@ -4,7 +4,7 @@ for RA_Dec in *_*.*; do
     echo $RA_Dec
     
     while read dupes; do
-        rm $RA_Dec"/Linear_Fits/MPC_Format/*"$dupes"*"
+        rm "./"$RA_Dec"/Linear_Fits/MPC_Format/"$RA_Dec"_"$dupes".mpc"
     #   RA=$(echo $asteroid | cut -d'_' -f 1)
     #   Dec=$(echo $asteroid | cut -d'_' -f 2)
     #   PNG=$(echo $asteroid | cut -d'_' -f 3)
