@@ -3,6 +3,8 @@ Group_Remover.R <- function(RA_Dec){
     no_dupes = subset(asteroid_data, !duplicated(groupID))
     dupes = subset(asteroid_data, duplicated(groupID))
     
+    cat(length(dupes$segID), " duplicate groupIDS\n")
+
     write.csv(no_dupes, paste0("./",RA_Dec,"/",RA_Dec,"_no_dupes.csv"), col.names=TRUE, row.names=FALSE)
     write.table(dupes$segID, paste0("./",RA_Dec,"/",RA_Dec,"_dupes.txt"), col.names=FALSE, row.names=FALSE)
 }
