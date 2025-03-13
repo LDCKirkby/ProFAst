@@ -10,5 +10,5 @@ for RA_Dec in *_*.*; do
     #    PNG=$(echo $asteroid | cut -d'_' -f 3)
     #    SEGID=$(echo $PNG | cut -d'.' -f 1)
     #    echo $RA","$Dec","$SEGID >> "$file"/"$file"_"$2".csv
-    done <$file"/"$RA_Dec"_dupes.txt"
+    done <$RA_Dec"/"$RA_Dec"_dupes.txt"
 done
