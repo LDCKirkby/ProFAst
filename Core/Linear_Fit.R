@@ -81,8 +81,8 @@ g_image = Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preproce
 r_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
 i_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"),header=TRUE,ext=1)
 cat("*****************  Warping r&i frames ***************** \n")
-r_image=propaneWarp(r_image_input,keyvalues_out= g_image$keyvalues)
-i_image=propaneWarp(i_image_input,keyvalues_out= g_image$keyvalues)
+r_image=propaneWarp(r_image_input,g_image$keyvalues)
+i_image=propaneWarp(i_image_input,g_image$keyvalues)
 
 warnings()
 
@@ -150,7 +150,8 @@ for(i in 1:length(asteroids$segID)){
   
   line_col = switch(colour, "g" = "green", "r" = "red", "i" = "blue")
 
-  Rwcs_imageRGB(R=cutim_r, G=cutim_g, B=cutim_i, Rkeyvalues = r_image$keyvalues, Gkeyvalues = g_image$keyvalues, Bkeyvalues = i_image$keyvalues, xlab="Right Ascension (deg)",ylab="Declination (deg)", main = paste0("Asteroid ", ID) coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", hersh = FALSE, family="Arial")
+  Rwcs_imageRGB(R=cutim_r, G=cutim_g, B=cutim_i, Rkeyvalues = r_image$keyvalues, Gkeyvalues = g_image$keyvalues, Bkeyvalues = i_image$keyvalues,
+                xlab="Right Ascension (deg)",ylab="Declination (deg)", main = paste0("Asteroid ", ID) coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", hersh = FALSE, family="Arial")
   
   magimage(edged_segimcut,col=c(NA,rep(line_col, max(edged_segimcut))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.5)
   
