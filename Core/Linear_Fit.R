@@ -78,7 +78,9 @@ groupim = profoundSegimGroup(segim = segim)
 
 cat("*****************  Loading images as pointers ***************** \n")
 g_image = Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
+# g_hdr = Rfits_read_header()
 r_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
+# r_hdr = Rfits_read_hdr
 i_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"),header=TRUE,ext=1)
 cat("*****************  Warping r&i frames ***************** \n")
 r_image=propaneWarp(r_image_input,g_image$keyvalues)
@@ -91,13 +93,13 @@ for(i in 1:length(asteroids$segID)){
   ID = target$segID
   groupID = target$groupID
   colour = target$Colour
+  hdr = switch(colour, "g" = g_image$keyvalues, "r" = r_image$keyvalues, "i" = i_image$keyvalues)
+
   cat("*****************  Fitting Asteroid ", ID, " *****************\n")
   
   astradec = target[c("RAcen", "Deccen")]
   astpos=as.integer(Rwcs_s2p(RA=astradec$RAcen, Dec=astradec$Deccen, keyvalues=g_image$keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
   
-  cat("*****************  Issue After this 1 *****************\n")
-
   wid <- 100.0
   box<-c(2*wid,2*wid)
   mulim<-22.0
@@ -110,8 +112,6 @@ for(i in 1:length(asteroids$segID)){
   
   groupimcut=magcutout(image = segim, loc=as.numeric(astpos), box=box, loc.type="image")
   
-  cat("*****************  Issue After this 2 *****************\n")
-
   obj_points <- which(groupimcut$image==ID, arr.ind = TRUE)
   
   edged_groupimcut <- Edger(groupimcut, groupID)
@@ -140,12 +140,10 @@ for(i in 1:length(asteroids$segID)){
   RA_vals = c()
   Dec_vals = c()
   for(j in 1:length(x_pred)){
-    hdr = switch(colour, "g" = g_image$hdr, "r" = r_image$hdr, "i" = i_image$hdr)
     RA_Dec = xy2radec(x_pred[[j]], y_pred[[j]], header = hdr)
     RA_vals <- append(RA_vals, RA_Dec[[1]][1])
     Dec_vals <- append(Dec_vals, RA_Dec[[2]][1])
   }
-  cat("*****************  Issue After this 3 *****************\n")
 
   new_IDs = formatter(loc, ID, colour, target$mag, RA_vals, Dec_vals)
   
