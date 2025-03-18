@@ -96,6 +96,8 @@ for(i in 1:length(asteroids$segID)){
   astradec = target[c("RAcen", "Deccen")]
   astpos=as.integer(Rwcs_s2p(RA=astradec$RAcen, Dec=astradec$Deccen, keyvalues=g_image$keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
   
+  cat("*****************  Issue After this 1 *****************\n")
+
   wid <- 100.0
   box<-c(2*wid,2*wid)
   mulim<-22.0
@@ -108,6 +110,8 @@ for(i in 1:length(asteroids$segID)){
   
   groupimcut=magcutout(image = segim, loc=as.numeric(astpos), box=box, loc.type="image")
   
+  cat("*****************  Issue After this 2 *****************\n")
+
   obj_points <- which(groupimcut$image==ID, arr.ind = TRUE)
   
   edged_groupimcut <- Edger(groupimcut, groupID)
@@ -141,6 +145,8 @@ for(i in 1:length(asteroids$segID)){
     RA_vals <- append(RA_vals, RA_Dec[[1]][1])
     Dec_vals <- append(Dec_vals, RA_Dec[[2]][1])
   }
+  cat("*****************  Issue After this 3 *****************\n")
+
   new_IDs = formatter(loc, ID, colour, target$mag, RA_vals, Dec_vals)
   
   png(filename=paste0("./",loc,"/Linear_Fits/Fit_Images/",loc,"_",colour,target$segID,"_linear_fit.png"))
