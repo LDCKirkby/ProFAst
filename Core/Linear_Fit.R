@@ -89,6 +89,7 @@ warnings()
 for(i in 1:length(asteroids$segID)){
   target = asteroids[i,]
   ID = target$segID
+  groupID = target$groupID
   colour = target$Colour
   cat("*****************  Fitting Asteroid ", ID, " *****************\n")
   
@@ -109,7 +110,7 @@ for(i in 1:length(asteroids$segID)){
   
   obj_points <- which(segimcut$image==ID, arr.ind = TRUE)
   
-  edged_segimcut <- Edger(segimcut, ID)
+  edged_segimcut <- Edger(segimcut, groupID)
   
   y_vals = obj_points[,2]
   x_vals = obj_points[,1]
@@ -150,7 +151,7 @@ for(i in 1:length(asteroids$segID)){
   
   line_col = switch(colour, "g" = "green", "r" = "red", "i" = "blue")
 
-  Rwcs_imageRGB(R=cutim_r, G=cutim_g, B=cutim_i, Rkeyvalues = g_image$keyvalues, Gkeyvalues = g_image$keyvalues, Bkeyvalues = g_image$keyvalues,
+  Rwcs_imageRGB(R=cutim_r, G=cutim_g, B=cutim_i, Rkeyvalues = r_image$keyvalues, Gkeyvalues = g_image$keyvalues, Bkeyvalues = i_image$keyvalues,
                 xlab="Right Ascension (deg)",ylab="Declination (deg)", main = paste0("Asteroid ", ID), coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp = FALSE, hersh = FALSE, family="Arial")
   
   magimage(edged_segimcut,col=c(NA,rep(line_col, max(edged_segimcut))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.5)
