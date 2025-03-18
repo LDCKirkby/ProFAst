@@ -97,7 +97,7 @@ formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
   line2 = paste0("     ",temp_mid,ID_3_dig," KC",ymd_mid  , RA_mid  , Dec_mid  ,"         ",mag,colour,"      X11")
   line3 = paste0("     ",temp_end,ID_3_dig," KC",ymd_end  , RA_end  , Dec_end  ,"         ",mag,colour,"      X11")
   output <- c(line, line2, line3)  
-  cat("Writing formatted data to ", loc,"_findorb.txt\n")
+  cat("Writing formatted data to ",loc,"/Linear_Fits/MPC_Format/",loc,"_",orig_ID,".mpc")
   write.table(output, paste0("./",loc,"/Linear_Fits/MPC_Format/",loc,"_",orig_ID,".mpc"), sep = " ", row.names = FALSE, col.names = FALSE, quote = FALSE)
 
 }
