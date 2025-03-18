@@ -78,17 +78,20 @@ segim <- as.matrix(read.csv(paste0("./",loc,"/segim.csv")))
 
 cat("*****************  Loading images as pointers ***************** \n")
 g_image = Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
+g_header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"))
 r_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
+r_header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"))
 i_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"),header=TRUE,ext=1)
+i_header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"))
 cat("*****************  Warping r&i frames ***************** \n")
-r_image=propaneWarp(r_image_input,g_image$keyvalues)
-i_image=propaneWarp(i_image_input,g_image$keyvalues)
+r_image=propaneWarp(r_image_input,keyvalues_out=g_image$keyvalues)
+i_image=propaneWarp(i_image_input,keyvalues_out=g_image$keyvalues)
 
 for(i in 1:length(asteroids$segID)){
   target = asteroids[i,]
   ID = target$segID
   colour = target$Colour
-  hdr = switch(colour, "g" = g_image$hdr, "r" = r_image$hdr, "i" = i_image$hdr)
+  hdr = switch(colour, "g" = g_header$hdr, "r" = r_image$hdr, "i" = i_image$hdr)
   keyvals = switch(colour, "g" = g_image$keyvalues, "r" = r_image$keyvalues, "i" = i_image$keyvalues)
 
   cat("*****************  Fitting Asteroid ", ID, " *****************\n")
