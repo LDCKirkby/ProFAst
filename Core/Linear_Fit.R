@@ -72,9 +72,9 @@ dir_create("./",loc,"/Linear_Fits/Fit_Images")
 
 cat("***************** Reading in segmentation map data *****************\n")
 segim <- as.matrix(read.csv(paste0("./",loc,"/segim.csv")))
-# cat("*****************  Generating groupim ***************** \n")
-# groupim = profoundSegimGroup(segim = segim)
-# groupim = groupim$groupim
+cat("*****************  Generating groupim ***************** \n")
+groupim = profoundSegimGroup(segim = segim)
+groupim = groupim$groupim
 
 cat("*****************  Loading images as pointers ***************** \n")
 g_image = Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
@@ -90,6 +90,7 @@ i_image=propaneWarp(i_image_input,keyvalues_out=g_image$keyvalues)
 for(i in 1:length(asteroids$segID)){
   target = asteroids[i,]
   ID = target$segID
+  groupID = target$groupID
   colour = target$Colour
   hdr = switch(colour, "g" = g_header$hdr, "r" = r_image$hdr, "i" = i_image$hdr)
   keyvals = switch(colour, "g" = g_image$keyvalues, "r" = r_image$keyvalues, "i" = i_image$keyvalues)
@@ -110,10 +111,13 @@ for(i in 1:length(asteroids$segID)){
   cutim_i=i_image[astpos,box=box]
   
   segimcut=magcutout(image = segim, loc=as.numeric(astpos), box=box, loc.type="image")
-  
+  groupcut=magcutout(image = groupim$groupim, loc=as.numeric(astpos), box=box, loc.type="image")
+
   obj_points <- which(segimcut$image==ID, arr.ind = TRUE)
-  
+  group_points <- which(groupcut$image==groupID, arr.ind = TRUE)
+
   edged_segimcut <- Edger(segimcut, ID)
+  edged_groupcut <- Edger(groupcut, groupID)
   
   y_vals = obj_points[,2]
   x_vals = obj_points[,1]
@@ -157,7 +161,8 @@ for(i in 1:length(asteroids$segID)){
                 xlab="Right Ascension (deg)",ylab="Declination (deg)", main = paste0("Asteroid ", ID), coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp = FALSE, hersh = FALSE, family="Arial")
   
   magimage(edged_segimcut,col=c(NA,rep(line_col, max(edged_segimcut))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.5)
-  
+  magimage(edged_groupcut,col=c(NA,rep("white", max(edged_groupcut))),magmap=FALSE,add=TRUE,sparse=1,lwd=1)
+
   text(1,2*wid-50, col=line_col, label=paste0("temp_ID=",new_IDs[1]), cex=2.0, pos=4, family="Arial")
 
   lines(x_pred, y_pred, col = line_col, lwd = 1)
