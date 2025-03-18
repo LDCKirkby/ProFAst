@@ -110,7 +110,7 @@ for(i in 1:length(asteroids$segID)){
   cutim_r=r_image[astpos,box=box]
   cutim_i=i_image[astpos,box=box]
   
-  groupimcut=magcutout(image = segim, loc=as.numeric(astpos), box=box, loc.type="image")
+  groupimcut=magcutout(image = groupim, loc=as.numeric(astpos), box=box, loc.type="image")
   
   obj_points <- which(groupimcut$image==ID, arr.ind = TRUE)
   
