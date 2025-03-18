@@ -66,16 +66,15 @@ if(dir.exists(file.path(paste0("./",loc,"/"),paste0("Linear_Fits"))) == TRUE){
   }
 }
 
-
 dir_create("./",loc,"/Linear_Fits")
 dir_create("./",loc,"/Linear_Fits/MPC_Format")
 dir_create("./",loc,"/Linear_Fits/Fit_Images")
 
 cat("***************** Reading in segmentation map data *****************\n")
 segim <- as.matrix(read.csv(paste0("./",loc,"/segim.csv")))
-cat("*****************  Generating groupim ***************** \n")
-groupim = profoundSegimGroup(segim = segim)
-groupim = groupim$groupim
+# cat("*****************  Generating groupim ***************** \n")
+# groupim = profoundSegimGroup(segim = segim)
+# groupim = groupim$groupim
 
 cat("*****************  Loading images as pointers ***************** \n")
 g_image = Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
@@ -112,11 +111,11 @@ for(i in 1:length(asteroids$segID)){
   cutim_r=r_image[astpos,box=box]
   cutim_i=i_image[astpos,box=box]
   
-  groupimcut=magcutout(image = groupim, loc=as.numeric(astpos), box=box, loc.type="image")
+  segimcut=magcutout(image = segim, loc=as.numeric(astpos), box=box, loc.type="image")
   
-  obj_points <- which(groupimcut$image==ID, arr.ind = TRUE)
+  obj_points <- which(segimcut$image==ID, arr.ind = TRUE)
   
-  edged_groupimcut <- Edger(groupimcut, groupID)
+  edged_segimcut <- Edger(segimcut, groupID)
   
   y_vals = obj_points[,2]
   x_vals = obj_points[,1]
@@ -127,9 +126,9 @@ for(i in 1:length(asteroids$segID)){
                            "i" = cutim_i$imDat[obj_points]/ max(cutim_i$imDat[obj_points]))
   brightness_vals[brightness_vals<0] <- 0
   
-  # weights_g <- cutim_g$imDat[groupimcut$image]/ max(cutim_g$imDat)
-  # weights_r <- cutim_r$imDat[groupimcut$image]/ max(cutim_r$imDat)
-  # weights_i <- cutim_i$imDat[groupimcut$image]/ max(cutim_i$imDat)
+  # weights_g <- cutim_g$imDat[segimcut$image]/ max(cutim_g$imDat)
+  # weights_r <- cutim_r$imDat[segimcut$image]/ max(cutim_r$imDat)
+  # weights_i <- cutim_i$imDat[segimcut$image]/ max(cutim_i$imDat)
   #brightness_vals <- droplevels(brightness_vals)
   #x_vals = droplevels(x_vals)
   fit <- lm(y_vals ~ poly(x_vals, 1, raw = TRUE), weights = brightness_vals)
@@ -159,7 +158,7 @@ for(i in 1:length(asteroids$segID)){
   Rwcs_imageRGB(R=cutim_r, G=cutim_g, B=cutim_i, Rkeyvalues = r_image$keyvalues, Gkeyvalues = g_image$keyvalues, Bkeyvalues = i_image$keyvalues,
                 xlab="Right Ascension (deg)",ylab="Declination (deg)", main = paste0("Asteroid ", ID), coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp = FALSE, hersh = FALSE, family="Arial")
   
-  magimage(edged_groupimcut,col=c(NA,rep(line_col, max(edged_groupimcut))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.5)
+  magimage(edged_segimcut,col=c(NA,rep(line_col, max(edged_segimcut))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.5)
   
   text(1,2*wid-50, col=line_col, label=paste0("temp_ID=",new_IDs[1]), cex=2.0, pos=4, family="Arial")
 
