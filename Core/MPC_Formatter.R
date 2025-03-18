@@ -3,81 +3,102 @@ library(celestial)
 library(lubridate)
 library(common)
 
-formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
-    cat("Reading observation times\n")
-    orig_ID = ID
-    obs_times = read.delim("./obs_times_full.txt", header =FALSE, col.names = c("frame","obs1","obs2","obs3","obs4","obs5","obs6","obs7","obs8","obs9"),  sep = ",")
-    # half_year = c("A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y")
-    
-    #N: Number (1 - 5)
-    
-    #T: Temporary Designation Number (6 - 12)
-    add = ""
-    if(nchar(ID) > 7){
-      long = substr(ID, 1, (nchar(ID) - 7))
-      capital = FALSE
-      if(strtoi(long) > 26){
-        capital = TRUE
-        long = strtoi(long) - 26
-        if(long > 26){
-          next
-        }
-        long = paste0(chartr("0-9JA-I","JA-I0-9",long))
-      }else{
-        long = chartr("0-9ja-i","ja-i0-9",long)
+#Creates outputs according to MPC 80 byte format
+#NNNNNTTTTTTT*KCYYYY M1 D1.d1d1d1HH M2 SS.d2dsD2 M3 SS.d3         OOOOOO      CCC
+#     K24Q00T  C2024 08 27.42670522 42 15.588-01 16 01.10               VEQ054F52
+
+get_half_month_letter <- function(posix_time) {
+  # Convert POSIX time to date
+  date <- as.Date(posix_time)
+
+  # Get the month and day
+  month <- format(date, "%m")
+  day <- as.numeric(format(date, "%d"))
+
+  # Define the mapping for the half-month letters
+  half_month_map <- data.frame(
+    letter = c("A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y"),
+    month_start = c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12),
+    day_threshold = c(15, 16, 15, 16, 15, 16, 15, 16, 15, 16, 15, 16, 15, 16, 15, 16, 15, 16, 15, 16, 15, 16, 15, 16)
+  )
+
+  # Determine the letter based on the month and day
+  for (i in 1:nrow(half_month_map)) {
+    if (as.numeric(month) == half_month_map$month_start[i]) {
+      if (day <= half_month_map$day_threshold[i]) {
+        return(half_month_map$letter[i * 2 - 1])  # First half of the month
+      } else {
+        return(half_month_map$letter[i * 2])  # Second half of the month
       }
-      ID = paste0(long, substr(ID, nchar(ID) - 7, nchar(ID)))
-      print(long_alpha)
-    }else if(nchar(ID) < 7){
-      ID = formatC(ID, width = 7, flag = "0", format = "d")
     }
+  }
+
+  # Return NA if the date doesn't match any criteria
+  return(NA)
+}
+
+formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
+  cat("Reading observation times\n")
+  orig_ID = ID
+  obs_times = read.delim("./obs_times_full.txt", header =FALSE, col.names = c("frame","obs1","obs2","obs3","obs4","obs5","obs6","obs7","obs8","obs9"),  sep = ",")
+
+  exposure = switch(tolower(colour),
+                    "g" = 900,
+                    "r" = 1800,
+                    "i" = 1200) #seconds
   
-    exposure = switch(tolower(colour),
-                      "g" = 900,
-                      "r" = 1800,
-                      "i" = 1200) #seconds
-    
-    #Date of Observation (J2000.0)
-    obs = subset(obs_times, subset = grepl(paste0(loc,"_",colour), obs_times$frame) == TRUE & grepl("i2", obs_times$frame) ==FALSE)
-    obs_start = as.POSIXct(obs$obs1, tz = "UTC")
-    obs_mid = as.POSIXct(obs$obs3, tz = "UTC")
-    obs_end = as.POSIXct(obs$obs5, tz = "UTC") + (exposure/5)
+  #Date of Observation (J2000.0)
+  obs = subset(obs_times, subset = grepl(paste0(loc,"_",colour), obs_times$frame) == TRUE & grepl("i2", obs_times$frame) ==FALSE)
+  obs_start = as.POSIXct(obs$obs1, tz = "UTC")
+  obs_mid = as.POSIXct(obs$obs3, tz = "UTC")
+  obs_end = as.POSIXct(obs$obs5, tz = "UTC") + (exposure/5)
 
-    ym_start = format(obs_start, "%Y %m")
-    ym_mid = format(obs_mid,  "%Y %m")
-    ym_end = format(obs_end, "%Y %m")
+  start_half_month <- get_half_month_letter(obs_start)
+  mid_half_month <- get_half_month_letter(obs_mid)
+  end_half_month <- get_half_month_letter(obs_end)
 
-    day_start = as.integer(day(obs_start)) + as.integer(hour(obs_start))/24 + as.integer(minute(obs_start))/(24*60) + as.integer(second(obs_start))/(24*60*60)
-    day_mid = as.integer(day(obs_mid)) + as.integer(hour(obs_mid))/24 + as.integer(minute(obs_mid))/(24*60) + as.integer(second(obs_mid))/(24*60*60)
-    day_end = as.integer(day(obs_end)) + as.integer(hour(obs_end))/24 + as.integer(minute(obs_end))/(24*60) + as.integer(second(obs_end))/(24*60*60)
+  #T: Temporary Designation Number (6 - 12)
+  temp_start = paste0("K", substr(format(obs_start, "%Y"), 3, 4), start_half_month)
+  temp_mid = paste0("K", substr(format(obs_mid, "%Y"), 3, 4), mid_half_month)
+  temp_end = paste0("K", substr(format(obs_end, "%Y"), 3, 4),end_half_month)
 
-    day_start = formatC(day_start, format = "f", width = 9, digits = 6, flag = "0")
-    day_mid = formatC(day_mid, format = "f", width = 9, digits = 6, flag = "0")
-    day_end = formatC(day_end, format = "f", width = 9, digits = 6, flag = "0")
+  ID_3_dig = as.character(ID %% 1000)
+  #ID = formatC(ID, width = 7, flag = "0", format = "d")
 
-    ymd_start = paste0(ym_start," ", day_start)
-    ymd_mid = paste0(ym_mid," ", day_mid)
-    ymd_end = paste0(ym_end," ", day_end)
+  ym_start = format(obs_start, "%Y %m")
+  ym_mid = format(obs_mid,  "%Y %m")
+  ym_end = format(obs_end, "%Y %m")
+
+  day_start = as.integer(day(obs_start)) + as.integer(hour(obs_start))/24 + as.integer(minute(obs_start))/(24*60) + as.integer(second(obs_start))/(24*60*60)
+  day_mid = as.integer(day(obs_mid)) + as.integer(hour(obs_mid))/24 + as.integer(minute(obs_mid))/(24*60) + as.integer(second(obs_mid))/(24*60*60)
+  day_end = as.integer(day(obs_end)) + as.integer(hour(obs_end))/24 + as.integer(minute(obs_end))/(24*60) + as.integer(second(obs_end))/(24*60*60)
+
+  day_start = formatC(day_start, format = "f", width = 9, digits = 6, flag = "0")
+  day_mid = formatC(day_mid, format = "f", width = 9, digits = 6, flag = "0")
+  day_end = formatC(day_end, format = "f", width = 9, digits = 6, flag = "0")
+
+  ymd_start = paste0(ym_start," ", day_start)
+  ymd_mid = paste0(ym_mid," ", day_mid)
+  ymd_end = paste0(ym_end," ", day_end)
+
+  #Observed Magnitude and Band (66 - 71)
+  mag = formatC(asteroids$mag[i], digits = 2, width = 5, format = "f", flag = "0")  
   
-    #Observed Magnitude and Band (66 - 71)
-    mag = formatC(asteroids$mag[i], digits = 2, width = 5, format = "f", flag = "0")  
-    
-    RA_first = paste0(deg2hms(RA_vals[[1]])[[1]], " ",deg2hms(RA_vals[[1]])[[2]], " ",deg2hms(RA_vals[[1]], digits = 3)[[3]])
-    Dec_first = paste0(deg2dms(Dec_vals[[1]])[[1]], " ",deg2dms(Dec_vals[[1]])[[2]], " ",deg2dms(Dec_vals[[1]], digits = 2)[[3]])
-    
-    RA_end = paste0(deg2hms(RA_vals[[length(RA_vals)]])[[1]], " ",deg2hms(RA_vals[[length(RA_vals)]])[[2]], " ",deg2hms(RA_vals[[length(RA_vals)]], digits = 3)[[3]])
-    Dec_end = paste0(deg2dms(Dec_vals[[length(Dec_vals)]])[[1]], " ",deg2dms(Dec_vals[[length(Dec_vals)]])[[2]], " ",deg2dms(Dec_vals[[length(Dec_vals)]], digits = 2)[[3]])
-    
-    RA_mid = paste0(deg2hms(RA_vals[[as.integer(length(RA_vals)/2)]])[[1]], " ",deg2hms(RA_vals[[as.integer(length(RA_vals)/2)]])[[2]], " ",deg2hms(RA_vals[[as.integer(length(RA_vals)/2)]], digits = 3)[[3]])
-    Dec_mid = paste0(deg2dms(Dec_vals[[as.integer(length(Dec_vals)/2)]])[[1]], " ",deg2dms(Dec_vals[[as.integer(length(Dec_vals)/2)]])[[2]], " ",deg2dms(Dec_vals[[as.integer(length(Dec_vals)/2)]], digits = 2)[[3]])
-    
+  RA_first = paste0(deg2hms(RA_vals[[1]])[[1]], " ",deg2hms(RA_vals[[1]])[[2]], " ",deg2hms(RA_vals[[1]], digits = 3)[[3]])
+  Dec_first = paste0(deg2dms(Dec_vals[[1]])[[1]], " ",deg2dms(Dec_vals[[1]])[[2]], " ",deg2dms(Dec_vals[[1]], digits = 2)[[3]])
   
-    line  = paste0("     ",ID,"*KP",ymd_start, RA_first, Dec_first,"         ",mag,colour,"      X11")
-    line2 = paste0("     ",ID," KP",ymd_mid  , RA_mid  , Dec_mid  ,"         ",mag,colour,"      X11")
-    line3 = paste0("     ",ID," KP",ymd_end  , RA_end  , Dec_end  ,"         ",mag,colour,"      X11")
-    output <- c(line, line2, line3)  
-    cat("Writing formatted data to ", loc,"_findorb.txt\n")
-    write.table(output, paste0("./",loc,"/Linear_Fits/MPC_Format/",loc,"_",orig_ID,".mpc"), sep = " ", row.names = FALSE, col.names = FALSE, quote = FALSE)
+  RA_end = paste0(deg2hms(RA_vals[[length(RA_vals)]])[[1]], " ",deg2hms(RA_vals[[length(RA_vals)]])[[2]], " ",deg2hms(RA_vals[[length(RA_vals)]], digits = 3)[[3]])
+  Dec_end = paste0(deg2dms(Dec_vals[[length(Dec_vals)]])[[1]], " ",deg2dms(Dec_vals[[length(Dec_vals)]])[[2]], " ",deg2dms(Dec_vals[[length(Dec_vals)]], digits = 2)[[3]])
+  
+  RA_mid = paste0(deg2hms(RA_vals[[as.integer(length(RA_vals)/2)]])[[1]], " ",deg2hms(RA_vals[[as.integer(length(RA_vals)/2)]])[[2]], " ",deg2hms(RA_vals[[as.integer(length(RA_vals)/2)]], digits = 3)[[3]])
+  Dec_mid = paste0(deg2dms(Dec_vals[[as.integer(length(Dec_vals)/2)]])[[1]], " ",deg2dms(Dec_vals[[as.integer(length(Dec_vals)/2)]])[[2]], " ",deg2dms(Dec_vals[[as.integer(length(Dec_vals)/2)]], digits = 2)[[3]])
+
+  line  = paste0("     ",temp_start,ID_3_dig,"*KC",ymd_start, RA_first, Dec_first,"         ",mag,colour,"      X11")
+  line2 = paste0("     ",temp_mid,ID_3_dig," KC",ymd_mid  , RA_mid  , Dec_mid  ,"         ",mag,colour,"      X11")
+  line3 = paste0("     ",temp_end,ID_3_dig," KC",ymd_end  , RA_end  , Dec_end  ,"         ",mag,colour,"      X11")
+  output <- c(line, line2, line3)  
+  cat("Writing formatted data to ", loc,"_findorb.txt\n")
+  write.table(output, paste0("./",loc,"/Linear_Fits/MPC_Format/",loc,"_",orig_ID,".mpc"), sep = " ", row.names = FALSE, col.names = FALSE, quote = FALSE)
 
 }
 # To call find_orb and produce x,y,z location parameters
