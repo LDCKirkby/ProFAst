@@ -75,6 +75,7 @@ cat("***************** Reading in segmentation map data *****************\n")
 segim <- as.matrix(read.csv(paste0("./",loc,"/segim.csv")))
 cat("*****************  Generating groupim ***************** \n")
 groupim = profoundSegimGroup(segim = segim)
+groupim = groupim$groupim
 
 cat("*****************  Loading images as pointers ***************** \n")
 g_image = Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
@@ -93,12 +94,13 @@ for(i in 1:length(asteroids$segID)){
   ID = target$segID
   groupID = target$groupID
   colour = target$Colour
-  hdr = switch(colour, "g" = g_image$hdr, "r" = r_image_input$hdr, "i" = i_image_input$hdr)
+  hdr = switch(colour, "g" = g_image$hdr, "r" = r_image$hdr, "i" = i_image$hdr)
+  keyvals = switch(colour, "g" = g_image$keyvalues, "r" = r_image$keyvalues, "i" = i_image$keyvalues)
 
   cat("*****************  Fitting Asteroid ", ID, " *****************\n")
   
   astradec = target[c("RAcen", "Deccen")]
-  astpos=as.integer(Rwcs_s2p(RA=astradec$RAcen, Dec=astradec$Deccen, keyvalues=g_image$keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
+  astpos=as.integer(Rwcs_s2p(RA=astradec$RAcen, Dec=astradec$Deccen, keyvalues=keyvals, EQUINOX = 2000L, RADESYS = "ICRS"))
   
   wid <- 100.0
   box<-c(2*wid,2*wid)
@@ -148,7 +150,6 @@ for(i in 1:length(asteroids$segID)){
   new_IDs = formatter(loc, ID, colour, target$mag, RA_vals, Dec_vals)
   
   png(filename=paste0("./",loc,"/Linear_Fits/Fit_Images/",loc,"_",colour,target$segID,"_linear_fit.png"))
-  
   par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
   
   locut = c(median(cutim_r$imDat,na.rm=TRUE),median(cutim_g$imDat,na.rm=TRUE),median(cutim_i$imDat,na.rm=TRUE))
@@ -167,15 +168,10 @@ for(i in 1:length(asteroids$segID)){
   dev.off()
   
   png(filename=paste0("./",loc,"/Linear_Fits/Fit_Images/",loc,"_",colour,target$segID,"_fit.png"))
-  
   par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
   
   magplot(x_vals, y_vals, z=brightness_vals, cex = 2, xlab = "X", ylab = "Y", main = paste0("Linear Fit to asteroid ", new_IDs[1], " with weights colourised"), position = 'bottomright', range=c(0,1))
   lines(x_pred, y_pred, col = line_col, lwd = 3)
   
   dev.off()
-  #legend("topleft", legend = c("Data", "Fitted Polynomial"), col = c("black", line_col), lwd = 2, pch = 16)
-  
-  # RA_Dec = xy2radec(x_new, y_pred, header=g_image$hdr)
-
 }
