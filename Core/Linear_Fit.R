@@ -93,7 +93,7 @@ for(i in 1:length(asteroids$segID)){
   ID = target$segID
   groupID = target$groupID
   colour = target$Colour
-  hdr = switch(colour, "g" = g_image$keyvalues, "r" = r_image$keyvalues, "i" = i_image$keyvalues)
+  hdr = switch(colour, "g" = g_image$hdr, "r" = r_image_input$hdr, "i" = i_image_input$hdr)
 
   cat("*****************  Fitting Asteroid ", ID, " *****************\n")
   
