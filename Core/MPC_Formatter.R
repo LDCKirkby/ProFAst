@@ -58,7 +58,11 @@ formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
   end_half_month <- get_half_month_letter(obs_end)
 
   #T: Temporary Designation Number (6 - 12)
-  ID_3_dig = as.character(ID %% 1000)
+  base36 <- as.character(as.hexmode(ID))
+  # Convert the base36 to a string of alphanumeric characters
+  base36_alph <- toupper(paste0(base36, collapse=""))
+  # Ensure that the result is exactly two characters
+  ID_3_dig <- substr(base36_alph, nchar(base36_alph)-2, nchar(base36_alph))
   temp_start = paste0("K", substr(format(obs_start, "%Y"), 3, 4), start_half_month,ID_3_dig)
   temp_mid = paste0("K", substr(format(obs_mid, "%Y"), 3, 4), mid_half_month,ID_3_dig)
   temp_end = paste0("K", substr(format(obs_end, "%Y"), 3, 4), end_half_month,ID_3_dig)
