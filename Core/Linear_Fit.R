@@ -140,7 +140,7 @@ for(i in 1:length(asteroids$segID)){
     RA_vals <- append(RA_vals, RA_Dec[[1]][1])
     Dec_vals <- append(Dec_vals, RA_Dec[[2]][1])
   }
-  formatter(loc, ID, colour, target$mag, RA_vals, Dec_vals)
+  new_IDs = formatter(loc, ID, colour, target$mag, RA_vals, Dec_vals)
   
   png(filename=paste0("./",loc,"/Linear_Fits/Fit_Images/",loc,"_",colour,target$segID,"_linear_fit.png"))
   
@@ -155,6 +155,8 @@ for(i in 1:length(asteroids$segID)){
   
   magimage(edged_segimcut,col=c(NA,rep(line_col, max(edged_segimcut))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.5)
   
+  text(1,2*wid-50, col=line_col, label=paste0("temp_ID=",new_IDs[1]), cex=2.0, pos=4, family="Arial")
+
   lines(x_pred, y_pred, col = line_col, lwd = 1)
   
   dev.off()
@@ -163,7 +165,7 @@ for(i in 1:length(asteroids$segID)){
   
   par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
   
-  magplot(x_vals, y_vals, z=brightness_vals, cex = 2, xlab = "X", ylab = "Y", main = paste0("Linear Fit to asteroid ", ID, " with weights colourised"), position = 'bottomright', range=c(0,1))
+  magplot(x_vals, y_vals, z=brightness_vals, cex = 2, xlab = "X", ylab = "Y", main = paste0("Linear Fit to asteroid ", new_IDs[1], " with weights colourised"), position = 'bottomright', range=c(0,1))
   lines(x_pred, y_pred, col = line_col, lwd = 3)
   
   dev.off()

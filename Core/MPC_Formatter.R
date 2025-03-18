@@ -58,11 +58,11 @@ formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
   end_half_month <- get_half_month_letter(obs_end)
 
   #T: Temporary Designation Number (6 - 12)
-  temp_start = paste0("K", substr(format(obs_start, "%Y"), 3, 4), start_half_month)
-  temp_mid = paste0("K", substr(format(obs_mid, "%Y"), 3, 4), mid_half_month)
-  temp_end = paste0("K", substr(format(obs_end, "%Y"), 3, 4),end_half_month)
-
   ID_3_dig = as.character(ID %% 1000)
+  temp_start = paste0("K", substr(format(obs_start, "%Y"), 3, 4), start_half_month,ID_3_dig)
+  temp_mid = paste0("K", substr(format(obs_mid, "%Y"), 3, 4), mid_half_month,ID_3_dig)
+  temp_end = paste0("K", substr(format(obs_end, "%Y"), 3, 4), end_half_month,ID_3_dig)
+
   #ID = formatC(ID, width = 7, flag = "0", format = "d")
 
   ym_start = format(obs_start, "%Y %m")
@@ -93,13 +93,15 @@ formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
   RA_mid = paste0(deg2hms(RA_vals[[as.integer(length(RA_vals)/2)]])[[1]], " ",deg2hms(RA_vals[[as.integer(length(RA_vals)/2)]])[[2]], " ",deg2hms(RA_vals[[as.integer(length(RA_vals)/2)]], digits = 3)[[3]])
   Dec_mid = paste0(deg2dms(Dec_vals[[as.integer(length(Dec_vals)/2)]])[[1]], " ",deg2dms(Dec_vals[[as.integer(length(Dec_vals)/2)]])[[2]], " ",deg2dms(Dec_vals[[as.integer(length(Dec_vals)/2)]], digits = 2)[[3]])
 
-  line  = paste0("     ",temp_start,ID_3_dig,"*KC",ymd_start, RA_first, Dec_first,"         ",mag,colour,"      X11")
-  line2 = paste0("     ",temp_mid,ID_3_dig," KC",ymd_mid  , RA_mid  , Dec_mid  ,"         ",mag,colour,"      X11")
-  line3 = paste0("     ",temp_end,ID_3_dig," KC",ymd_end  , RA_end  , Dec_end  ,"         ",mag,colour,"      X11")
+  line  = paste0("     ",temp_start,"*KC",ymd_start, RA_first, Dec_first,"         ",mag,colour,"      X11")
+  line2 = paste0("     ",temp_mid," KC",ymd_mid  , RA_mid  , Dec_mid  ,"         ",mag,colour,"      X11")
+  line3 = paste0("     ",temp_end," KC",ymd_end  , RA_end  , Dec_end  ,"         ",mag,colour,"      X11")
   output <- c(line, line2, line3)  
   cat("Writing formatted data to ",loc,"/Linear_Fits/MPC_Format/",loc,"_",orig_ID,".mpc")
   write.table(output, paste0("./",loc,"/Linear_Fits/MPC_Format/",loc,"_",orig_ID,".mpc"), sep = " ", row.names = FALSE, col.names = FALSE, quote = FALSE)
 
+  temp_IDs = list(temp_start, temp_mid, temp_end)
+  return(temp_IDs)
 }
 # To call find_orb and produce x,y,z location parameters
 # fo *findorb.txt -C 500 -e ./orbital_params/%p/ephem_%p.json
