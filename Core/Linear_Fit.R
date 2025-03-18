@@ -52,7 +52,7 @@ Edger <- function(segimcut, ID){
 args = commandArgs(trailingOnly = TRUE)
 loc = as.character(args[[1]])
 
-asteroids = read.csv(paste0("./",loc,"/",loc,"_Verified.csv"))
+asteroids = read.csv(paste0("./",loc,"/",loc,"_no_dupes.csv"))
 stopifnot(length(asteroids$segID) >= 1)
 
 #Checks to see if linear fit has already been done on the field
