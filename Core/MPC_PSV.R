@@ -22,10 +22,6 @@ PSV_maker <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
     iso_mid = paste0(format_ISO8601(obs_mid, usetz="Z"),"   ")
     iso_end = paste0(format_ISO8601(obs_end, usetz="Z"),"   ")
 
-    start_half_month <- get_half_month_letter(obs_start)
-    mid_half_month <- get_half_month_letter(obs_mid)
-    end_half_month <- get_half_month_letter(obs_end)
-
     #T: Temporary Designation Number (6 - 12)
     hex_string <- as.hexmode(as.numeric(ID))
     hex_string <- sprintf("%4s", hex_string)
