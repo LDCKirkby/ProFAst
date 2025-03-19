@@ -1,6 +1,6 @@
 library(magicaxis)
 library(celestial)
-library(lubridate)
+library(lubridate)  
 library(common)
 
 get_half_month_letter <- function(posix_time) {
@@ -30,7 +30,7 @@ get_half_month_letter <- function(posix_time) {
   }
 
   # Return NA if the date doesn't match any criteria
-  return(NA)
+  return("0")
 }
 
 PSV_maker <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
@@ -76,7 +76,7 @@ PSV_maker <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
     mag = formatC(as.numeric(magnitude), digits=2, format="f")          
     colour = formatC(colour, format="s", width=4, flag="- ")
 
-    col_vals = c("trkSub ","mode","stn ","obsTime                ","ra         ","dec        ","mag  ","band","remarks")
+    col_vals = c("trkSub  ","mode","stn ","obsTime                ","ra         ","dec        ","mag  ","band","remarks")
     start = c(temp_start," CCD","X11 ",iso_start,RA_start,Dec_start,mag,colour,paste0("surveyID:",ID))
     mid = c(temp_mid," CCD","X11 ",iso_mid,RA_mid,Dec_mid,mag,colour,paste0("surveyID:",ID))
     end = c(temp_end," CCD","X11 ",iso_end,RA_end,Dec_end,mag,colour,paste0("surveyID:",ID))
