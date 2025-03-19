@@ -24,7 +24,7 @@ PSV_maker <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
 
     #T: Temporary Designation Number (6 - 12)
     hex_string <- as.hexmode(as.numeric(ID))
-    hex_string <- sprintf("%4s", hex_string)
+    hex_string <- sprintf("%04s", hex_string)      
     hex_string <- substr(hex_string, 1, 4)
     temp_start = paste0("K", substr(format(obs_start, "%Y"), 3, 4),hex_string)
     temp_mid = paste0("K", substr(format(obs_mid, "%Y"), 3, 4),hex_string)
