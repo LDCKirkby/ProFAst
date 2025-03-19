@@ -99,7 +99,7 @@ for(i in 1:length(asteroids$segID)){
   cat("*****************  Fitting Asteroid ", ID, " *****************\n")
   
   astradec = target[c("RAcen", "Deccen")]
-  astpos=as.integer(Rwcs_s2p(RA=astradec$RAcen, Dec=astradec$Deccen, keyvalues=keyvals, EQUINOX = 2000L, RADESYS = "ICRS"))
+  astpos=as.integer(Rwcs_s2p(RA=astradec$RAcen, Dec=astradec$Deccen, keyvalues=g_image$keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
   
   wid <- 100.0
   box<-c(2*wid,2*wid)
@@ -147,7 +147,7 @@ for(i in 1:length(asteroids$segID)){
   RA_vals = c()
   Dec_vals = c()
   for(j in 1:length(x_pred)){
-    RA_Dec = xy2radec(x_pred[[j]], y_pred[[j]], header = hdr)
+    RA_Dec = Rwcs_p2s(x_pred[[j]], y_pred[[j]], keyvalues=g_image$keyvalues, EQUINOX = 2000L, RADESYS = "ICRS")
     RA_vals <- append(RA_vals, RA_Dec[[1]][1])
     Dec_vals <- append(Dec_vals, RA_Dec[[2]][1])
   }
