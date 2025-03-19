@@ -115,6 +115,9 @@ for(i in 1:length(asteroids$segID)){
 
   # obj_points <- which(segimcut$image==ID, arr.ind = TRUE)
   obj_points <- which(groupcut$image==groupID, arr.ind = TRUE)
+  if(length(obj_points) == 0){
+    obj_points <- which(segimcut$image==ID, arr.ind = TRUE)
+  }
 
   edged_segimcut <- Edger(segimcut, ID)
   edged_groupcut <- Edger(groupcut, groupID)
@@ -161,7 +164,7 @@ for(i in 1:length(asteroids$segID)){
                 xlab="Right Ascension (deg)",ylab="Declination (deg)", main = paste0("Asteroid ", ID), coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp = FALSE, hersh = FALSE, family="Arial")
   
   magimage(edged_segimcut,col=c(NA,rep(line_col, max(edged_segimcut))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.5)
-  magimage(edged_groupcut,col=c(NA,rep("white", max(edged_groupcut))),magmap=FALSE,add=TRUE,sparse=1,lwd=1)
+  magimage(edged_groupcut,col=c(NA,rep(line_col, max(edged_groupcut))),magmap=FALSE,add=TRUE,sparse=1,lwd=1)
 
   text(1,2*wid-50, col=line_col, label=paste0("temp_ID=",new_IDs[1]), cex=2.0, pos=4, family="Arial")
 
