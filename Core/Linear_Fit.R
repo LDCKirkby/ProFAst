@@ -152,7 +152,8 @@ for(i in 1:length(asteroids$segID)){
   }
 
   new_IDs = formatter(loc, ID, colour, target$mag, RA_vals, Dec_vals)
-  
+  PSV_maker(loc, ID, colour, target$mag, RA_vals, Dec_vals)
+
   png(filename=paste0("./",loc,"/Linear_Fits/Fit_Images/",loc,"_",colour,target$segID,"_linear_fit.png"))
   par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
   
