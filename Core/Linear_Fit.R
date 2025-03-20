@@ -59,7 +59,7 @@ stopifnot(length(asteroids$segID) >= 1)
 #Checks to see if linear fit has already been done on the field
 if(dir.exists(file.path(paste0("./",loc,"/"),paste0("Linear_Fits"))) == TRUE){
   #If it has, checks to see it completed fully, fitting all asteroids
-  done = list.files(file.path(paste0("./",loc,"/"),paste0("Linear_Fits/MPC_Format")), pattern = ".", all.files = FALSE, recursive = TRUE, full.names = TRUE)
+  done = list.files(file.path(paste0("./",loc,"/"),paste0("Linear_Fits/MPC_Format")), pattern = ".psv", all.files = FALSE, recursive = TRUE, full.names = TRUE)
   cat(length(done), "files already exist, ", length(asteroids$segID), " asteroids exist for the field.\n")
   #Exits if all have been done previously
   if(length(done) == length(asteroids$segID)){
