@@ -9,12 +9,12 @@ N100_Filter <- function(loc){
   #N100 filter, filter done in all bands for completeness, even though they are they are all the same value
   cat("*********\n")
   cat("Performing small N100 filter\n")
-  large_pass = subset(filtered_asteroids, N100 >= 100 | N100_i1xt >= 100 | N100_rxt >= 100 | N100_gt >= 100)
+  large_pass = subset(filtered_asteroids, N100 >= 150 | N100_i1xt >= 150 | N100_rxt >= 150 | N100_gt >= 150)
   
   cat("Removed ", length(filtered_asteroids$groupID) - length(large_pass$groupID), " small errors\n")
   
   cat("Performing large N100 filter\n")
-  N100_filtered_asteroids = subset(large_pass, N100 <= 2500 | N100_i1xt <= 2500 | N100_rxt <= 2500 | N100_gt <= 2500)
+  N100_filtered_asteroids = subset(large_pass, N100 <= 2250 | N100_i1xt <= 2250 | N100_rxt <= 2250 | N100_gt <= 2250)
   
   cat("Removed ", length(large_pass$groupID) - length(N100_filtered_asteroids$groupID), " large errors\n")
   
