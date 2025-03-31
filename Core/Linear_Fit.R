@@ -126,11 +126,13 @@ for(i in 1:length(asteroids$segID)){
   y_vals = obj_points[,2]
   x_vals = obj_points[,1]
   
-  brightness_vals = switch(colour, 
-                           "g" = cutim_g$imDat[obj_points]/ max(cutim_g$imDat[obj_points]),
-                           "r" = cutim_r$imDat[obj_points]/ max(cutim_r$imDat[obj_points]),
-                           "i" = cutim_i$imDat[obj_points]/ max(cutim_i$imDat[obj_points]))
+  brightness_vals = switch(colour,
+                           "g" = cutim_g$imDat[obj_points],
+                           "r" = cutim_r$imDat[obj_points],
+                           "i" = cutim_i$imDat[obj_points])
+  brightness_vals[is.na(brightness_vals)] <- 0
   brightness_vals[brightness_vals<0] <- 0
+  brightness_vals = brightness_vals/max(brightness_vals)
   
   # weights_g <- cutim_g$imDat[segimcut$image]/ max(cutim_g$imDat)
   # weights_r <- cutim_r$imDat[segimcut$image]/ max(cutim_r$imDat)
