@@ -13,7 +13,7 @@ PSV_maker <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
                     "i" = 1200) #seconds
 
     #Date of Observation (J2000.0)
-    obs = subset(obs_times, subset = grepl(paste0(loc,"_",colour), obs_times$frame) == TRUE & grepl("i2", obs_times$frame) ==FALSE)
+    obs = subset(obs_times, subset = grepl(paste0("_",loc,"_",colour), obs_times$frame) == TRUE & grepl("i2", obs_times$frame) ==FALSE)
     obs_start = as.POSIXct(obs$obs1, tz = "UTC")
     obs_mid = as.POSIXct(obs$obs3, tz = "UTC")
     obs_end = as.POSIXct(obs$obs5, tz = "UTC") + (exposure/5)
@@ -38,12 +38,12 @@ PSV_maker <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
     Dec_end = formatC(Dec_vals[[length(Dec_vals)]], width=11, digits=2, format="f", flag="- ")
 
     mag = formatC(as.numeric(magnitude), digits=2, format="f")          
-    colour = formatC(colour, format="s", width=4, flag="- ")
+    col = formatC(colour, format="s", width=4, flag="- ")
 
     col_vals = c("trkSub ","mode","stn ","obsTime                ","ra         ","dec        ","mag  ","band","remarks")
-    start = c(temp_start," CCD","X11 ",iso_start,RA_start,Dec_start,mag,colour,paste0("surveyID:",ID))
-    mid = c(temp_mid," CCD","X11 ",iso_mid,RA_mid,Dec_mid,mag,colour,paste0("surveyID:",ID))
-    end = c(temp_end," CCD","X11 ",iso_end,RA_end,Dec_end,mag,colour,paste0("surveyID:",ID))
+    start = c(temp_start," CCD","X11 ",iso_start,RA_start,Dec_start,mag,col,paste0("surveyID:",ID))
+    mid = c(temp_mid," CCD","X11 ",iso_mid,RA_mid,Dec_mid,mag,col,paste0("surveyID:",ID))
+    end = c(temp_end," CCD","X11 ",iso_end,RA_end,Dec_end,mag,col,paste0("surveyID:",ID))
     psv_output= as.data.table(rbind(start,mid,end))
     colnames(psv_output) <- col_vals
     write.table(psv_output, paste0("./",loc,"/Linear_Fits/MPC_Format/",loc,"_",orig_ID,".psv"), sep = "|", row.names=FALSE, quote=FALSE)

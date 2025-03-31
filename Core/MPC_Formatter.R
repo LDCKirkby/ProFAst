@@ -18,7 +18,7 @@ formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
                     "i" = 1200) #seconds
   
   #Date of Observation (J2000.0)
-  obs = subset(obs_times, subset = grepl(paste0(loc,"_",colour), obs_times$frame) == TRUE & grepl("i2", obs_times$frame) ==FALSE)
+  obs = subset(obs_times, subset = grepl(paste0("_",loc,"_",colour), obs_times$frame) == TRUE & grepl("i2", obs_times$frame) ==FALSE)
   obs_start = as.POSIXct(obs$obs1, tz = "UTC")
   obs_mid = as.POSIXct(obs$obs3, tz = "UTC")
   obs_end = as.POSIXct(obs$obs5, tz = "UTC") + (exposure/5)
