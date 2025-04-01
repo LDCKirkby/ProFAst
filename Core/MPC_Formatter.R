@@ -26,9 +26,9 @@ formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
   hex_string <- as.hexmode(as.numeric(ID))
   hex_string <- sprintf("%04s", hex_string)
   hex_string <- substr(hex_string, 1, 4)
-  temp_start = paste0(" K", substr(format(obs_start, "%Y"), 3, 4),hex_string)
-  temp_mid = paste0(" K", substr(format(obs_mid, "%Y"), 3, 4),hex_string)
-  temp_end = paste0(" K", substr(format(obs_end, "%Y"), 3, 4),hex_string)
+  temp_start = paste0("K", substr(format(obs_start, "%Y"), 3, 4),hex_string)
+  temp_mid = paste0("K", substr(format(obs_mid, "%Y"), 3, 4),hex_string)
+  temp_end = paste0("K", substr(format(obs_end, "%Y"), 3, 4),hex_string)
 
   #ID = formatC(ID, width = 7, flag = "0", format = "d")
 
