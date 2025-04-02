@@ -149,7 +149,7 @@ for(i in 1:length(asteroids$segID)){
   RA_vals = c()
   Dec_vals = c()
   for(j in 1:length(x_pred)){
-    RA_Dec = Rwcs_p2s(x_pred[[j]], y_pred[[j]], keyvalues=g_image$keyvalues, EQUINOX = 2000L, RADESYS = "ICRS")
+    RA_Dec = Rwcs_p2s(x_pred[[j]], y_pred[[j]], keyvalues=cutim_g$keyvalues, EQUINOX = 2000L, RADESYS = "ICRS")
     RA_vals <- append(RA_vals, RA_Dec[[1]][1])
     Dec_vals <- append(Dec_vals, RA_Dec[[2]][1])
   }
