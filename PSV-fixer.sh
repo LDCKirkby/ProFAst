@@ -6,5 +6,6 @@ find . -name "*.psv" | while read file; do
     filename=${name[4]}
     IFS='_' read -ra ID <<< "$filename"
     PSV=${ID[2]}
+    echo $RA_DEC,$PSV
     Rscript ProFAst/Non/PSV-fixer.R $RA_DEC $PSV
 done
