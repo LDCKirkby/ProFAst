@@ -1,10 +1,11 @@
 library(Rwcs)
 library(stringr)
+library(data.table)
 
 args = commandArgs(trailingOnly = TRUE)
 loc = as.character(args[[1]])
 ID = as.character(args[[2]])
-ID = str_split(ID, '\.')[[1]][2]
+ID = str_split(ID, '\\.')[[1]][1]
 
 PSV = read.table(file = paste0("./",loc,"/Linear_Fits/MPC_Format/",loc,"_",ID,".psv"), header=TRUE, sep="|")
 MPC_80 = read.table(file = paste0("./",loc,"/Linear_Fits/MPC_Format/",loc,"_",ID,".mpc"), header=FALSE, sep="", fill=TRUE)
@@ -47,4 +48,4 @@ mid = c(temp_mid," CCD","X11 ",iso_mid,RA_mid,PSV$dec[2],mag,col,PSV$remarks[2])
 end = c(temp_end," CCD","X11 ",iso_end,RA_end,PSV$dec[3],mag,col,PSV$remarks[3])
 psv_output= as.data.table(rbind(start,mid,end))
 colnames(psv_output) <- col_vals
-write.table(psv_output, paste0("./",loc,"/Linear_Fits/MPC_Format/",loc,"_",orig_ID,".psv.new"), sep = "|", row.names=FALSE, quote=FALSE)
+write.table(psv_output, paste0("./",loc,"/Linear_Fits/MPC_Format/",loc,"_",ID,".psv"), sep = "|", row.names=FALSE, quote=FALSE)
