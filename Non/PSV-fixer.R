@@ -13,7 +13,7 @@ MPC_80 = read.table(file = paste0("./",loc,"/Linear_Fits/MPC_Format/",loc,"_",ID
 
 if(str_detect(MPC_80[1,5], "\\+")==TRUE){
 MPC_hrs = c(str_split(MPC_80[1,5], "\\+")[[1]][2], str_split(MPC_80[2,6], "\\+")[[1]][2], str_split(MPC_80[3,6], "\\+")[[1]][2])
-}elseif(as.numeric(declination) <= 0){
+}else if(as.numeric(declination) <= 0){
 MPC_hrs = c(paste0("-",str_split(MPC_80[1,5], "-")[[1]][2]), paste0("-",str_split(MPC_80[2,6], "-")[[1]][2]), paste0("-",str_split(MPC_80[3,6], "-")[[1]][2]))
 }else{
 MPC_hrs = c(paste0("-",str_split(MPC_80[1,5], "-")[[1]][2]), paste0("-",str_split(MPC_80[2,6], "-")[[1]][2]), paste0("-",str_split(MPC_80[3,6], "-")[[1]][2]))
