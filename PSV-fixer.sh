@@ -8,5 +8,5 @@ find . -name "*.psv" | while read file; do
     IFS='_' read -ra ID <<< ${psv[0]}
     PSV=${ID[2]}
     echo $RA_DEC $PSV
-    Rscript ProFAst/Core/PSV-fixer.R $RA_DEC $PSV
+    Rscript ProFAst/Non/PSV-fixer.R $RA_DEC $PSV
 done
