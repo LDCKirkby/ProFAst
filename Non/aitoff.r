@@ -51,7 +51,7 @@ LSST_rad <- 3.5/2.0
 declimit=20.0
 #
 cat("****************Loading data****************\n")
-all_points = read.csv("./all_asteroids.csv", header = TRUE)
+all_points = read.csv("./no_dupes_all_asteroids.csv", header = TRUE)
 # colnames(known_asteroids) = c("RA_Dec_ID")
 # asteroid_and_fields = data.frame()
 # for(asteroid in known_asteroids$RA_Dec_ID){
