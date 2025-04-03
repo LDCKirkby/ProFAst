@@ -62,12 +62,12 @@ right_mid = Rwcs_p2s(wrong_mid, keyvalues=cutim_g$keyvalues, EQUINOX = 2000L, RA
 right_end = Rwcs_p2s(wrong_end, keyvalues=cutim_g$keyvalues, EQUINOX = 2000L, RADESYS = "ICRS")
 
 #Format RA & Dec to correct PSV format
-RA_start = formatC(right_start[1], width=11, digits=6, format="f", flag="-")
-RA_mid = formatC(right_mid[1], width=11, digits=6, format="f", flag="-")
-RA_end = formatC(right_end[1], width=11, digits=6, format="f", flag="-")
-Dec_start = formatC(right_start[2], width=11, digits=6, format="f", flag="-")
-Dec_mid = formatC(right_mid[2], width=11, digits=6, format="f", flag="-")
-Dec_end = formatC(right_end[2], width=11, digits=6, format="f", flag="-")
+RA_start = formatC(right_start[1], width=11, digits=7, format="f")
+RA_mid = formatC(right_mid[1], width=11, digits=7, format="f")
+RA_end = formatC(right_end[1], width=11, digits=7, format="f")
+Dec_start = formatC(right_start[2], width=11, digits=7, format="f", flag=" ")
+Dec_mid = formatC(right_mid[2], width=11, digits=7, format="f", flag=" ")
+Dec_end = formatC(right_end[2], width=11, digits=7, format="f", flag=" ")
 
 col_vals = c("trkSub ","mode","stn ","obsTime                ","ra         ","dec        ","mag  ","band","remarks")
 iso_start = PSV$obsTime[1]
