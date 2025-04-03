@@ -30,12 +30,12 @@ PSV_maker <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
     temp_mid = paste0("K", substr(format(obs_mid, "%Y"), 3, 4),hex_string)
     temp_end = paste0("K", substr(format(obs_end, "%Y"), 3, 4),hex_string)
 
-    RA_start = formatC(RA_vals[[1]], width=11, format="f", flag="-")
-    Dec_start = formatC(Dec_vals[[1]], width=11, format="f", flag="- ")
-    RA_mid = formatC(RA_vals[[as.integer(length(RA_vals)/2)]], width=11, format="f", flag="-")
-    Dec_mid = formatC(Dec_vals[[as.integer(length(Dec_vals)/2)]], width=11, format="f", flag="- ")
-    RA_end = formatC(RA_vals[[length(RA_vals)]], width=11, format="f", flag="-")
-    Dec_end = formatC(Dec_vals[[length(Dec_vals)]], width=11, format="f", flag="- ")
+    RA_start = formatC(RA_vals[[1]], width=11, digits=7, format="f")
+    Dec_start = formatC(Dec_vals[[1]], width=11, digits=7, format="f", flag=" ")
+    RA_mid = formatC(RA_vals[[as.integer(length(RA_vals)/2)]], width=11, digits=7, format="f")
+    Dec_mid = formatC(Dec_vals[[as.integer(length(Dec_vals)/2)]], width=11, digits=7, format="f", flag=" ")
+    RA_end = formatC(RA_vals[[length(RA_vals)]], width=11, digits=7, format="f")
+    Dec_end = formatC(Dec_vals[[length(Dec_vals)]], width=11, digits=7, format="f", flag=" ")
 
     mag = formatC(as.numeric(magnitude), digits=2, format="f")          
     col = formatC(colour, format="s", width=4, flag="- ")
