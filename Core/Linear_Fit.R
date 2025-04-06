@@ -85,16 +85,14 @@ r_header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/p
 i_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"),header=TRUE,ext=1)
 i_header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"))
 cat("*****************  Warping r&i frames ***************** \n")
-r_image=propaneWarp(r_image_input,keyvalues_out=g_image$keyvalues)
-i_image=propaneWarp(i_image_input,keyvalues_out=g_image$keyvalues)
+# r_image=propaneWarp(r_image_input,keyvalues_out=g_image$keyvalues)
+# i_image=propaneWarp(i_image_input,keyvalues_out=g_image$keyvalues)
 
 for(i in 1:length(asteroids$segID)){
   target = asteroids[i,]
   ID = target$segID
   groupID = target$groupID
   colour = target$Colour
-  hdr = switch(colour, "g" = g_header$hdr, "r" = r_image$hdr, "i" = i_image$hdr)
-  keyvals = switch(colour, "g" = g_image$keyvalues, "r" = r_image$keyvalues, "i" = i_image$keyvalues)
 
   cat("*****************  Fitting Asteroid ", ID, " *****************\n")
   
@@ -108,14 +106,16 @@ for(i in 1:length(asteroids$segID)){
   viking<-(0.339^2)*(10^(0.4*(30-mulim)))
   
   cutim_g=g_image[astpos,box=box]
-  cutim_r=r_image[astpos,box=box]
-  cutim_i=i_image[astpos,box=box]
+  cutim_r = propaneWarp(r_image_input,keyvalues_out=cutim_g$keyvalues)
+  cutim_i = propaneWarp(i_image_input,keyvalues_out=cutim_g$keyvalues)
+  # cutim_r=r_image[astpos,box=box]
+  # cutim_i=i_image[astpos,box=box]
   
   segimcut=magcutout(image = segim, loc=as.numeric(astpos), box=box, loc.type="image")
   groupcut=magcutout(image = groupim, loc=as.numeric(astpos), box=box, loc.type="image")
 
   # obj_points <- which(segimcut$image==ID, arr.ind = TRUE)
-  obj_points <- which(groupcut$image==groupID, arr.ind = TRUE)
+  obj_points <- which(groupcut$image==groupID, arr.ind = TRUE)  
   if(length(obj_points) == 0){
     obj_points <- which(segimcut$image==ID, arr.ind = TRUE)
   }
