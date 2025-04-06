@@ -64,7 +64,7 @@ formatter <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
   line2 = paste0("     ",temp_mid," KC",ymd_mid  , RA_mid  , Dec_mid  ,"         ",mag,colour,"      X11")
   line3 = paste0("     ",temp_end," KC",ymd_end  , RA_end  , Dec_end  ,"         ",mag,colour,"      X11")
   output <- c(line, line2, line3)  
-  cat("Writing formatted data to ",loc,"/Linear_Fits/MPC_Format/",loc,"_",orig_ID,".mpc")
+  cat("Writing formatted data to ",loc,"/Linear_Fits/MPC_Format/",loc,"_",orig_ID,".mpc\n")
   write.table(output, paste0("./",loc,"/Linear_Fits/MPC_Format/",loc,"_",orig_ID,".mpc"), sep = " ", row.names = FALSE, col.names = FALSE, quote = FALSE)
 
   temp_IDs = list(temp_start, temp_mid, temp_end)
