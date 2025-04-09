@@ -40,10 +40,10 @@ PSV_maker <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
     mag = formatC(as.numeric(magnitude), digits=2, format="f")          
     col = formatC(colour, format="s", width=4, flag="- ")
 
-    col_vals = c("trkSub ","mode","stn ","obsTime                ","ra         ","dec        ","mag  ","band","remarks")
-    start = c(temp_start," CCD","X11 ",iso_start,RA_start,Dec_start,mag,col,paste0("surveyID:",ID))
-    mid = c(temp_mid," CCD","X11 ",iso_mid,RA_mid,Dec_mid,mag,col,paste0("surveyID:",ID))
-    end = c(temp_end," CCD","X11 ",iso_end,RA_end,Dec_end,mag,col,paste0("surveyID:",ID))
+    col_vals = c("trkSub ","mode","stn ","obsTime                ","ra         ","dec        ","astCat","mag  ","band","remarks")
+start = c(temp_start," CCD","X11 ",iso_start,RA_start,Dec_start,"   UNK",mag,col,paste0("surveyID:",ID))
+    mid = c(temp_mid," CCD","X11 ",iso_mid,RA_mid,Dec_mid,"   UNK",mag,col,paste0("surveyID:",ID))
+    end = c(temp_end," CCD","X11 ",iso_end,RA_end,Dec_end,"   UNK",mag,col,paste0("surveyID:",ID))
     psv_output= as.data.table(rbind(start,mid,end))
     colnames(psv_output) <- col_vals
     write.table(psv_output, paste0("./",loc,"/Linear_Fits/MPC_Format/",loc,"_",orig_ID,".psv"), sep = "|", row.names=FALSE, quote=FALSE)
