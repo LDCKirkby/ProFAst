@@ -26,7 +26,7 @@ PSV_maker <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
     hex_string <- as.hexmode(as.numeric(ID))
     hex_string <- sprintf("%04s", hex_string)      
     hex_string <- substr(hex_string, 1, 4)
-    temp_start = paste0("K", substr(format(obs_start, "%Y"), 3, 4),hex_string)
+    temp_start = paste0("K", substr(format(obs_start, "%Y"), 3, 4),hex_string)  
     temp_mid = paste0("K", substr(format(obs_mid, "%Y"), 3, 4),hex_string)
     temp_end = paste0("K", substr(format(obs_end, "%Y"), 3, 4),hex_string)
 
@@ -40,8 +40,8 @@ PSV_maker <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
     mag = formatC(as.numeric(magnitude), digits=2, format="f")          
     col = formatC(colour, format="s", width=4, flag="- ")
 
-    col_vals = c("trkSub ","mode","stn ","obsTime                ","ra         ","dec        ","astCat","mag  ","band","remarks")
-start = c(temp_start," CCD","X11 ",iso_start,RA_start,Dec_start,"   UNK",mag,col,paste0("surveyID:",ID))
+    col_vals = c("trkSub  ","mode","stn ","obsTime                ","ra         ","dec        ","astCat","mag  ","band","remarks")
+    start = c(temp_start," CCD","X11 ",iso_start,RA_start,Dec_start,"   UNK",mag,col,paste0("surveyID:",ID))
     mid = c(temp_mid," CCD","X11 ",iso_mid,RA_mid,Dec_mid,"   UNK",mag,col,paste0("surveyID:",ID))
     end = c(temp_end," CCD","X11 ",iso_end,RA_end,Dec_end,"   UNK",mag,col,paste0("surveyID:",ID))
     psv_output= as.data.table(rbind(start,mid,end))

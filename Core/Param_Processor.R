@@ -1,31 +1,29 @@
 library(rjson)
 library(data.table)
+library(ggplot2)
 
 find_orb_params <- function(survey_ID, dt){
     params <- rjson::fromJSON(file = paste0("./Orbital_Params/",survey_ID,"/elem_",survey_ID,".json"))
     elements =  params$objects[[1]]$elements
     
-    new_row = data.frame(
-        survey_ID = survey_ID,
-        JPL_D = NULL,
-        a = elements$a,
-        P = elements$P,
-        M = elements$M,
-        n = elements$n,
-        e = elements$e,
-        q = elements$q,
-        Q = elements$Q,
-        i = elements$i,
-        a_sigma = elements$`a sigma`,
-        P_sigma = elements$`P sigma`,
-        M_sigma = elements$`M sigma`,
-        n_sigma = elements$`n sigma`,
-        e_sigma = elements$`e sigma`,
-        q_sigma = elements$`q sigma`,
-        Q_sigma = elements$`Q sigma`,
-        i_sigma = elements$`i sigma`
-    )
+    new_row = as.data.frame(t(rep(NA,19)))
+    names = c("survey_ID","JPL_D","a","P","M","n","e","peri","Q","i",
+    "a_sigma","P_sigma","M_sigma","n_sigma","e_sigma","peri_sigma","Q_sigma","i_sigma","r_calc")
+    colnames(new_row) = names
+    new_row$survey_ID = survey_ID
+    new_row$JPL_D = NA
 
+    elem_names = c("survey_ID","JPL_D","a","P","M","n","e","q","Q","i",
+    "a sigma","P sigma","M sigma","n sigma","e sigma","q sigma","Q sigma","i sigma")
+
+    for(i in 3:18){
+        if(is.null(elements[[elem_names[i]]])){
+            next
+        }else{
+            new_row[names[i]] = elements[[elem_names[i]]]
+        }
+    }
+    new_row$r_calc = sqrt(new_row$peri * new_row$Q)
     dt <- rbind(dt, new_row)
     return(dt)
 }
@@ -91,6 +89,22 @@ loc = as.character(args[[1]])
 survey = as.character(args[[2]])
 JPL = as.character(args[[3]])
 
-df <- data.frame()
-df <- find_orb_params(survey, df)
-df <- JPL_params(JPL, df) 
+asteroid_IDS <- list.dirs(path="./Orbital_Params/",recursive=FALSE,full.names=FALSE)
+asteroid_params <- data.frame()
+for(asteroid in asteroid_IDS){
+    asteroid_params <- find_orb_params(asteroid, asteroid_params)
+}
+
+graph_values = c("a","P","M","n","e","peri","Q","i",
+    "a_sigma","P_sigma","M_sigma","n_sigma","e_sigma","peri_sigma","Q_sigma","i_sigma","r_calc")
+colours = rainbow(18)
+i=1
+for(value in graph_values){
+    cat(value,"\n")
+    plot <- ggplot(data=asteroid_params, aes(x=.data[[paste0(value)]])) + geom_histogram(bins = 200,fill = colours[i]) + xlab(paste0(value)) +
+    ggtitle(paste0("Calculated ",value," Distributions")) + scale_x_continuous(limits = quantile(asteroid_params[[paste0(value)]], c(0.0005,0.9995), na.rm=TRUE))# + scale_y_continuous(trans='log10')
+    ggsave(filename = paste0("./",value,"_plot.png"), plot)
+    i = i+1
+}               
+#df <- JPL_params(JPL, df) 
+subset()
