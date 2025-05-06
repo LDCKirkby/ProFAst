@@ -84,6 +84,7 @@ Group_Cutter <- function(loc, computer) {
     #Pulls out data for target asteroid
     target = asteroids[i,]
     ID = target$segID
+    segID = target$segID
     groupID = target$groupID
     Colour = target$Colour
     cat("Imaging object w/ groupID:", groupID, ", segID:", segID, ", Colour:", Colour, "\n")
