@@ -116,8 +116,8 @@ Group_Cutter <- function(loc, computer) {
                 xlab="Right Ascension (deg)",ylab="Declination (deg)", main = paste0("Asteroid ", ID), coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp = FALSE, hersh = FALSE, family="Arial")
     
     cat("Adding segment outlines\n")
-    magimage(anti_groupcut,col=c(NA,rep("peru",max(im_dat$groupcut))),magmap = FALSE,add=TRUE,sparse=1,lwd=0.5)
-    magimage(anti_segimcut,col=c(NA,rep("moccasin",max(im_dat$segimcut))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.25)
+    magimage(anti_groupcut,col=c(NA,rep("peru",max(anti_groupcut))),magmap = FALSE,add=TRUE,sparse=1,lwd=0.5)
+    magimage(anti_segimcut,col=c(NA,rep("moccasin",max(anti_segimcut))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.25)
 
     magimage(edged_groupcut,col=c(NA,rep(group_col, max(edged_groupcut))),magmap=FALSE,add=TRUE,sparse=1,lwd=1)
     magimage(edged_segimcut,col=c(NA,rep(seg_col, max(edged_segimcut))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.5)
