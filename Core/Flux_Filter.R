@@ -39,7 +39,7 @@ if("objectcati.csv" %in% list.files(path = paste0("./",loc,"/")) == FALSE){
   gc()
 }
   
-cat_groups = read.csv(paste0("./",loc,"/objectcati.csv"))
+cat_groups = read.csv(paste0("./",loc,"/allcati.csv"))
 cat("*********\n")
 cat(length(cat_groups$X), " Objects Detected\n")
 cat("*********\n\n")

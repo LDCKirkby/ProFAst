@@ -30,7 +30,7 @@ Edger <- function(segimcut, ID, invert=FALSE){
 }
 
 Group_Cutter <- function(loc, computer) {
-  wid <- 100.0
+  wid <- 200.0
   box<-c(2*wid,2*wid)
   mulim<-22.0
   kids<-(0.339^2)*(10^(0.4*(0-mulim)))

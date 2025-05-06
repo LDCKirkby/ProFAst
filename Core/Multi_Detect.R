@@ -102,7 +102,7 @@ cat_groupinfo=cbind(segID=unlist(multi_data$pro_detect$group$groupsegID$segID),g
 
 cat_objects=cbind(cat_objects,cat_groupinfo[match(cat_objects$segID, cat_groupinfo[,"segID"]),2:3])
 
-cat_groups <- as.data.table(cbind(multi_data$pro_detect$group$groupsegID$Ngroup,multi_data$pro_detect$groupstats$groupID,multi_data$cat_grp))
+cat_groups <- as.data.table(cbind(multi_data$pro_detect$group$groupsegID$Ngroup,multi_data$pro_detect$groupstats$groupID,multi_data$pro_prodetect$groupstats$Npix, multi_data$cat_grp))
 
 names(cat_groups)[1] <- "Ngroup"
 names(cat_groups)[2] <- "groupID"

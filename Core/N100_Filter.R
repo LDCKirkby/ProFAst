@@ -5,7 +5,8 @@ N100_Filter <- function(loc){
   cat("*********\n\n")
   
   filtered_asteroids = read.csv(paste0("./", loc,"/",loc,"_Filtered_Asteroids.csv"))
-
+  #Npix is the entire size of the group segment. Should use that but I only just found it
+  #Idk if i can be bothered adding it tbh
   #N100 filter, filter done in all bands for completeness, even though they are they are all the same value
   cat("*********\n")
   cat("Performing small N100 filter\n")
