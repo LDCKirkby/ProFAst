@@ -105,7 +105,6 @@ Group_Cutter <- function(loc, computer) {
     anti_segimcut <- Edger(segimcut, ID, invert=TRUE)
     anti_groupcut <- Edger(groupcut, groupID, invert=TRUE)
 
-    cat("Printing ",ast_dat$Colour,ast_dat$segID," postage stamp\n")
     png(filename=paste0("./",loc,"/Group_Cutouts/",loc,"_",Colour,segID,".png"))
     
     par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
