@@ -122,7 +122,7 @@ Group_Cutter <- function(loc, computer) {
     magimage(edged_groupcut,col=c(NA,rep(group_col, max(edged_groupcut))),magmap=FALSE,add=TRUE,sparse=1,lwd=1)
     magimage(edged_segimcut,col=c(NA,rep(seg_col, max(edged_segimcut))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.5)
 
-    text(1,2*wid-50, col=groupcol, label=paste0("segID=",segID,"\nColour=",Colour), cex=2.0, pos=4, family="Arial")
+    text(1,2*wid-50, col=group_col, label=paste0("segID=",segID,"\nColour=",Colour), cex=2.0, pos=4, family="Arial")
     dev.off()
 
   }
