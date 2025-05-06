@@ -1,21 +1,13 @@
 Axrat_Filter <- function(loc){
 
-possible_asteroids = read.csv(paste0("./",loc,"/Possible_Asteroids.csv"), header = TRUE, fill = TRUE)
-possible_asteroids = as.data.table(possible_asteroids)
-
+possible_asteroids = read.csv(paste0("./",loc,"/",loc,"_Possible_Asteroids.csv"), fill = TRUE)
 cat("*********\n")
 cat("Beginning axial filtering\n")
 cat("*********\n\n")
 
 #Axrat filter
 filtered_asteroids = subset(possible_asteroids, axrat_gt <= 0.35 | axrat_rxt <= 0.35 | axrat_i1xt <= 0.35)
-
-
-top_tail = subset(filtered_asteroids, select = c(Colour, X.1))
-
-filtered_asteroids = distinct(subset(filtered_asteroids, select = -c(X.1, Colour)))
-
-filtered_asteroids = cbind(subset(filtered_asteroids, select = c(groupID)), "Colour" = top_tail[top_tail$X.1 %in% filtered_asteroids$X ==TRUE,]$Colour, subset(filtered_asteroids, select = c(Ngroup)), subset(filtered_asteroids, select = -c(groupID, Ngroup)))
+filtered_asteroids = filtered_asteroids[,c(2,251,1,3:250,252)]
 filtered_asteroids = setorder(filtered_asteroids, "groupID")
 
 cat("*********\n")
@@ -26,9 +18,9 @@ cat("*********\n")
 cat("Writing to ", paste0("./", loc,"/",loc,"Filtered_Asteroids.csv"),"\n")
 cat("*********\n\n")
 
-write.csv(filtered_asteroids, file = paste0("./",loc,"/",loc,"_Filtered_Asteroids.csv"))
+write.csv(filtered_asteroids, file = paste0("./",loc,"/",loc,"_Filtered_Asteroids.csv"), row.names=FALSE)
 
-rm(possible_asteroids, top_tail, filtered_asteroids) 
+rm(possible_asteroids, filtered_asteroids) 
 gc()
 
 

@@ -26,14 +26,14 @@ if("objectcati.csv" %in% list.files(path = paste0("./",loc,"/")) == FALSE){
   datafile0=as.data.table(cbind(cat_objects,cat_groups[group_matches,]))
   
   cat("Creating objectcati.csv\n")
-  write.csv(cat_objects,file=paste0("./",loc,"/objectcati.csv"))
+  write.csv(cat_objects,file=paste0("./",loc,"/objectcati.csv"), row.names=FALSE)
   
   cat("Creating groupcati.csv\n")
-  write.csv(cat_groups,file=paste0("./",loc,"/groupcati.csv"))
+  write.csv(cat_groups,file=paste0("./",loc,"/groupcati.csv"), row.names=FALSE)
   
   cat("Creating allcati.csv\n")
   cat("*********\n\n")
-  write.csv(datafile0,file=paste0("./",loc,"/allcati.csv"))
+  write.csv(datafile0,file=paste0("./",loc,"/allcati.csv"), row.names=FALSE)
   
   rm(multi_data, cat_objects, cat_groupinfo, cat_groups, group_matches, datafile0)
   gc()
@@ -47,12 +47,16 @@ cat("*********\n\n")
 #Remove whole rows of NA's
 cat_groups = cat_groups[rowSums(is.na(cat_groups)) != ncol(cat_groups),]
 
+cat_groups$flux_gt = abs(cat_groups$flux_gt)
+cat_groups$flux_rxt = abs(cat_groups$flux_rxt)
+cat_groups$flux_i1xt = abs(cat_groups$flux_i1xt)
+
 #Extracting potential asteroids, based on their flux ratio
 cat("*********\n")
 cat("Beginning asteroid search\n")
-green_objects = cbind(subset(cat_groups, subset = cat_groups$flux_gt/(cat_groups$flux_rxt + cat_groups$flux_i1xt) >= 0.01), "Colour" = "g")
-red_objects = cbind(subset(cat_groups, subset = cat_groups$flux_rxt/(cat_groups$flux_gt + cat_groups$flux_i1xt) >= 0.01), "Colour" = "r")
-blue_objects = cbind(subset(cat_groups, subset = cat_groups$flux_i1xt/(cat_groups$flux_gt + cat_groups$flux_rxt) >= 0.01), "Colour" = "i")
+green_objects = cbind("Colour" = "g", subset(cat_groups, subset = cat_groups$flux_gt/(cat_groups$flux_rxt + cat_groups$flux_i1xt) >= 1))
+red_objects = cbind("Colour" = "r", subset(cat_groups, subset = cat_groups$flux_rxt/(cat_groups$flux_gt + cat_groups$flux_i1xt) >= 1))
+blue_objects = cbind("Colour" = "i", subset(cat_groups, subset = cat_groups$flux_i1xt/(cat_groups$flux_gt + cat_groups$flux_rxt) >= 1))
 
 #Old Method, less concise than g/r+i, r/g+i, i/g+r but unsure how other will turn out
 # green_objects = cbind(subset(cat_groups, subset = cat_groups$flux_gt/cat_groups$flux_rxt>=8 | cat_groups$flux_gt/cat_groups$flux_i1xt>=8), "Colour" = "g")
@@ -76,7 +80,7 @@ print(length(possible_asteroids$groupID))
 cat("Writing to ", paste0("./", loc,"/Possible_Asteroids.csv"),"\n")
 cat("*********\n\n")
 
-write.csv(possible_asteroids, file = paste0("./",loc,"/Possible_Asteroids.csv"))
+write.csv(possible_asteroids, file = paste0("./",loc,"/",loc,"_Possible_Asteroids.csv"), row.names=FALSE)
 
 rm(blue_objects, green_objects, red_objects, possible_asteroids, cat_groups)
 gc()

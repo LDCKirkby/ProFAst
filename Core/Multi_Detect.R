@@ -80,15 +80,15 @@ segim_orig = multi_data$pro_detect$segim_orig
 #Saves all segmentation mask images in a list (segimlist)
 #Not needed & will likely be removed
 cat("Saving slimmed segimlist\n")
-write.csv(segimlist, paste0(savelocation,"segimlist.csv"))
+write.csv(segimlist, paste0(savelocation,"segimlist.csv"), row.names=FALSE)
 
 #Save segmentation maps (dilated and converged)
 cat("Saving slimmed segim\n")
-write.csv(segim, paste0(savelocation,"/segim.csv"))
+write.csv(segim, paste0(savelocation,"/segim.csv"), row.names=FALSE)
 
 #Save colour segmentation maps (pre dilation)
 cat("Saving slimmed segim_orig\n")
-write.csv(segim_orig, paste0(savelocation,"/segim_orig.csv"))
+write.csv(segim_orig, paste0(savelocation,"/segim_orig.csv"), row.names=FALSE)
 
 rm(segim)
 rm(segim_orig)
@@ -111,9 +111,9 @@ group_matches=match(cat_objects$segID,cat_groups$groupID,nomatch=NA)
 
 datafile0=as.data.table(cbind(cat_objects,cat_groups[group_matches,]))
 
-write.csv(cat_objects,file=paste0(savelocation,"objectcati.csv"))
-write.csv(cat_groups,file=paste0(savelocation,"groupcati.csv"))
-write.csv(datafile0,file=paste0(savelocation,"allcati.csv"))
+write.csv(cat_objects,file=paste0(savelocation,"objectcati.csv"), row.names=FALSE)
+write.csv(cat_groups,file=paste0(savelocation,"groupcati.csv"), row.names=FALSE)
+write.csv(datafile0,file=paste0(savelocation,"allcati.csv"), row.names=FALSE)
 
 
 #par(mfrow=c(1,1),mar=c(3,3,2,2))
