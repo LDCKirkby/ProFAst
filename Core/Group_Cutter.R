@@ -87,7 +87,7 @@ Group_Cutter <- function(loc, computer) {
     segID = target$segID
     groupID = target$groupID
     Colour = target$Colour
-    cat("Imaging object w/ groupID:", groupID, ", segID:", segID, ", Colour:", Colour, "\n")
+    #cat("Imaging object w/ groupID:", groupID, ", segID:", segID, ", Colour:", Colour, "\n")
     cat("**************************\n")
     astradec = target[c("RAcen", "Deccen")]
     astpos=as.integer(Rwcs_s2p(RA=astradec$RAcen, Dec=astradec$Deccen, keyvalues=g_image$keyvalues, EQUINOX = 2000L, RADESYS = "ICRS"))
