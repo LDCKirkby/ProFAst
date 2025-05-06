@@ -33,13 +33,6 @@ args = commandArgs(trailingOnly = TRUE)
 RA_DEC = gsub("[\r\n]", "", as.character(args[[1]]))
 
 computer = as.character(args[[2]])
-if(tolower(computer) == "sabine") {
-  font_add("Arial", "~/Library/Fonts/Arial.ttf")
-}else if (tolower(computer) == "simon") {
-  font_add("Arial", "~/Library/Fonts/Arial.ttf")
-}else {
-  font_add("Arial", "~/Library/Fonts/Arial.ttf")
-}
 
 dir = getwd()
   cat("*************\n","Beginning Detection on:",RA_DEC,"\n","*************\n")

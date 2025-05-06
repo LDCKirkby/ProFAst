@@ -69,9 +69,9 @@ Dec = as.numeric(strsplit(loc, "_")[[1]][[2]])
 
 #Useful to apply edge buffer since some frames are being artificially grown
 cat("Applying edge buffer\n")
-red_objects = rbind(red_objects[red_objects$RAcen >= (RA - 0.5 + 0.01) & red_objects$RAcen <= (RA + 0.5 - 0.01) & red_objects$Deccen >= (Dec-0.5 + 0.01) & red_objects$Deccen <= (Dec + 0.5 - 0.01),])
-blue_objects = rbind(blue_objects[blue_objects$RAcen >= (RA - 0.5 + 0.01) & blue_objects$RAcen <= (RA + 0.5 - 0.01) & blue_objects$Deccen >= (Dec-0.5 + 0.01) & blue_objects$Deccen <= (Dec + 0.5 - 0.01),])
-green_objects = rbind(green_objects[green_objects$RAcen >= (RA - 0.5 + 0.01) & green_objects$RAcen <= (RA + 0.5 - 0.01) & green_objects$Deccen >= (Dec-0.5 + 0.01) & green_objects$Deccen <= (Dec + 0.5 - 0.01),])
+red_objects = rbind(red_objects[red_objects$RAcen >= (RA - 0.5 + 0.001) & red_objects$RAcen <= (RA + 0.5 - 0.001) & red_objects$Deccen >= (Dec-0.5 + 0.001) & red_objects$Deccen <= (Dec + 0.5 - 0.001),])
+blue_objects = rbind(blue_objects[blue_objects$RAcen >= (RA - 0.5 + 0.001) & blue_objects$RAcen <= (RA + 0.5 - 0.001) & blue_objects$Deccen >= (Dec-0.5 + 0.001) & blue_objects$Deccen <= (Dec + 0.5 - 0.001),])
+green_objects = rbind(green_objects[green_objects$RAcen >= (RA - 0.5 + 0.001) & green_objects$RAcen <= (RA + 0.5 - 0.001) & green_objects$Deccen >= (Dec-0.5 + 0.001) & green_objects$Deccen <= (Dec + 0.5 - 0.001),])
 
 #Bind final lists of objects together
 possible_asteroids <- rbind(blue_objects,green_objects,red_objects)
@@ -84,22 +84,4 @@ write.csv(possible_asteroids, file = paste0("./",loc,"/",loc,"_Possible_Asteroid
 
 rm(blue_objects, green_objects, red_objects, possible_asteroids, cat_groups)
 gc()
-
-#Uncomment to make plots of asteroid colour distribution before and after filtering
-# # fg = ggplot(data = cat_groups, mapping = aes(x=flux_gt)) + geom_bar(stat = "bin", fill = "lightgreen")+ geom_vline(xintercept = 15, colour = "red", linewidth = 1) + xlim(-20, 20) + xlab("g") + ggtitle("g Band Flux")
-# # fi = ggplot(data = cat_groups, mapping = aes(x=flux_i1xt)) + geom_bar(stat = "bin", fill = "steelblue")+ geom_vline(xintercept = 15, colour = "red", linewidth = 1) + xlim(-20, 20) + xlab("i") + ggtitle("i Band Flux")
-# # fr = ggplot(data = cat_groups, mapping = aes(x=flux_rxt)) + geom_bar(stat = "bin", fill = "firebrick")+ geom_vline(xintercept = 15, colour = "red", linewidth = 1) + xlim(-20, 20) + xlab("r") + ggtitle("r Band Flux")
-# # 
-# # ggsave(filename = paste0("./",loc,"/flux_gt.png"), fg)
-# # ggsave(filename = paste0("./",loc,"/flux_i1xt.png"), fi)
-# # ggsave(filename = paste0("./",loc,"/flux_rxt.png"), fr)
-# 
-# 
-# # g_as = ggplot(data = possible_asteroids, mapping = aes(x=flux_gt)) + geom_bar(stat = "bin", fill = "lightgreen")+ geom_vline(xintercept = 15, colour = "red", linewidth = 1) + xlim(-20, 20) + xlab("g") + ggtitle("Possible Asteroids g Band Flux")
-# # i_as = ggplot(data = possible_asteroids, mapping = aes(x=flux_i1xt)) + geom_bar(stat = "bin", fill = "steelblue")+ geom_vline(xintercept = 15, colour = "red", linewidth = 1) + xlim(-20, 20) + xlab("i") + ggtitle("Possible Asteroids i Band Flux")
-# # r_as = ggplot(data = possible_asteroids, mapping = aes(x=flux_rxt)) + geom_bar(stat = "bin", fill = "firebrick")+ geom_vline(xintercept = 15, colour = "red", linewidth = 1) + xlim(-20, 20) + xlab("r") + ggtitle("Possible Asteroids r Band Flux")
-# 
-# # ggsave(filename = paste0("./",loc,"/ast_flux_gt.png"), g_as)
-# # ggsave(filename = paste0("./",loc,"/ast_flux_i1xt.png"), i_as)
-# # ggsave(filename = paste0("./",loc,"/ast_flux_rxt.png"), r_as)
 }
