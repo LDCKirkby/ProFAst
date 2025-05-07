@@ -94,8 +94,12 @@ rm(segim)
 rm(segim_orig)
 rm(segimlist)
 
-# Extract segment info, colour, total, deblend, aperture, and groups measurements
+#NEEDED TO EXTRACT GROUP MASK DATA
+#THAT DATA IS FOUND IN multi_data$pro_detect$group$groupsegID (FOR NPIX)
+#GROUP PHOTOMETRY DATA IS FOUND IN multi_data$pro_detect$groupstats (FOR RAcen, Deccen, etc.)
+group_data = as.data.table(cbind(multi_data$pro_detect$group$groupsegID,multi_data$pro_detect$groupstats, multi_data$cat_grp))
 
+# Extract segment info, colour, total, deblend, aperture, and groups measurements
 cat_objects <- as.data.table(cbind(multi_data$pro_detect$segstats,multi_data$cat_tot))
 
 cat_groupinfo=cbind(segID=unlist(multi_data$pro_detect$group$groupsegID$segID),groupID=rep(multi_data$pro_detect$group$groupsegID$groupID,times=multi_data$pro_detect$group$groupsegID$Ngroup), Ngroup=rep(multi_data$pro_detect$group$groupsegID$Ngroup, times=multi_data$pro_detect$group$groupsegID$Ngroup))

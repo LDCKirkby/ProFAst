@@ -61,7 +61,7 @@ blue_objects = cbind("Colour" = "i", subset(cat_groups, subset = cat_groups$flux
 #Old Method, less concise than g/r+i, r/g+i, i/g+r but unsure how other will turn out
 # green_objects = cbind(subset(cat_groups, subset = cat_groups$flux_gt/cat_groups$flux_rxt>=8 | cat_groups$flux_gt/cat_groups$flux_i1xt>=8), "Colour" = "g")
 # red_objects = cbind(subset(cat_groups, subset = cat_groups$flux_rxt/cat_groups$flux_gt>=8 | cat_groups$flux_rxt/cat_groups$flux_i1xt>=8), "Colour" = "r")
-# blue_objects = cbind(subset(cat_groups, subset = cat_groups$flux_i1xt/cat_groups$flux_gt>=8 | cat_groups$flux_i1xt/cat_groups$flux_gt>=8), "Colour" = "i")
+# blue_objects = cbind(subset(cat_groups, subset = cat_groups$flux_i1xt/cat_groups$flux_gt>=8 | cat_groups$flux_i1xt/cat_groups$flux_rxt>=8), "Colour" = "i")
 
 #Applies edge buffer to red and blue, since they've been extended artificially
 RA = as.numeric(strsplit(loc, "_")[[1]][[1]])
