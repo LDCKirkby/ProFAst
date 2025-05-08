@@ -35,23 +35,23 @@ RA_DEC = gsub("[\r\n]", "", as.character(args[[1]]))
 computer = as.character(args[[2]])
 
 dir = getwd()
-  cat("*************\n","Beginning Detection on:",RA_DEC,"\n","*************\n")
-  frames <- Pre_Proc(RA_DEC, computer)
+cat("*************\n","Beginning Detection on:",RA_DEC,"\n","*************\n")
+frames <- Pre_Proc(RA_DEC, computer)
 
-  Multi_Detect(RA_DEC, frames)
+Multi_Detect(RA_DEC, frames)
 
-  Flux_Filter(RA_DEC)
+Flux_Filter(RA_DEC)
 
-  Axrat_Filter(RA_DEC)
-  
-  N100_Filter(RA_DEC)
+Axrat_Filter(RA_DEC)
 
-  Group_Cutter(RA_DEC, computer)
-  
-  warnings()
+N100_Filter(RA_DEC)
 
-  #Uncomment to remove any unwanted files
-  #file.remove(paste0("./",RA_DEC,"/stacked.rds"))
-  #file.remove(paste0("./",RA_DEC,"/allcati.csv"))
-  #file.remove(paste0("./",RA_DEC,"/groupcati.csv"))
-  #file.remove(paste0("./",RA_DEC,"/objectcati.csv"))
+Group_Cutter(RA_DEC, computer)
+
+warnings()
+
+#Uncomment to remove any unwanted files
+#file.remove(paste0("./",RA_DEC,"/stacked.rds"))
+#file.remove(paste0("./",RA_DEC,"/allcati.csv"))
+#file.remove(paste0("./",RA_DEC,"/groupcati.csv"))
+#file.remove(paste0("./",RA_DEC,"/objectcati.csv"))

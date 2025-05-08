@@ -153,4 +153,29 @@ plot <- plot + geom_vline(data=kirkwood, aes(xintercept=xintercepts, color=names
 ggsave(filename = paste0("./Elements/a_JPL_v_Calculated_plot.png"), plot)
 
 
+# For reading in lots of csv's at once
+# all_sources=data.frame()
+# for(file in csv_files){
+#   print(file)
+#   temp = read.csv(file)
+#   grouped = as.data.frame(cbind(temp$N100, temp$groupID, temp$segID, temp$mag, temp$mag_gt, temp$mag_rxt, temp$mag_i1xt, temp$RAcen, temp$Deccen, temp$Colour))
+#   all_sources = as.data.frame(rbind(all_sources, grouped))
+# }
+# colnames(all_sources) = c("N100","groupID","segID","mag","mag_gt","mag_rxt","mag_i1xt","RAcen","Deccen","Colour")
 
+# cat_groups = read.csv(file)
+# for(i in 1:length(cat_groups$segID)){
+#   print(i)
+#   g_ratio = cat_groups$flux_gt[i]/(cat_groups$flux_rxt[i] + cat_groups$flux_i1xt[i])
+#   r_ratio = cat_groups$flux_rxt[i]/(cat_groups$flux_gt[i] + cat_groups$flux_i1xt[i])
+#   i_ratio = cat_groups$flux_i1xt[i]/(cat_groups$flux_gt[i] + cat_groups$flux_rxt[i])
+#   biggest = max(c(g_ratio, r_ratio, i_ratio))
+#   if(biggest == g_ratio){
+#     cat_groups$Colour[i] = 'g'
+#   }else if(biggest == r_ratio){
+#     cat_groups$Colour[i] = 'r'
+#   }else if(biggest == i_ratio){
+#     cat_groups$Colour[i] ='i'
+#   }
+# }
+# write.csv(cat_groups, file, row.names=FALSE)
