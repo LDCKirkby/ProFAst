@@ -91,7 +91,7 @@ cat("Filtered to ", length(filtered_asteroids$axrat_gt), "potential asteroids\n"
 cat("*********\n\n")
 
 cat("*********\n")
-cat("Writing to ", paste0("./", loc,"/",loc,"Filtered_Asteroids.csv"),"\n")
+cat("Writing to ", paste0("./", loc,"/",loc,"_Filtered_Asteroids.csv"),"\n")
 cat("*********\n\n")
 
 write.csv(filtered_asteroids, file = paste0("./",loc,"/",loc,"_Filtered_Asteroids.csv"), row.names=FALSE)
