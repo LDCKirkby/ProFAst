@@ -109,6 +109,9 @@ Group_Cutter <- function(loc, computer) {
     
     par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
     locut = c(median(cutim_r$imDat,na.rm=TRUE),median(cutim_g$imDat,na.rm=TRUE),median(cutim_i$imDat,na.rm=TRUE))
+    if(max(locut) > kids){
+      locut = c(kids,kids, kids)
+    }
     group_col = switch(Colour, "g" = "seagreen2", "r" = "firebrick1", "i" = "skyblue")
     seg_col = switch(Colour, "g" = "green", "r" = "red", "i" = "blue")
 
