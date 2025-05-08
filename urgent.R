@@ -32,8 +32,6 @@ RA_DEC = gsub("[\r\n]", "", as.character(args[[1]]))
 
 computer = "simon"
 
-Flux_Filter(RA_DEC)
-
 Axrat_Filter(RA_DEC)
 
 N100_Filter(RA_DEC)
