@@ -32,7 +32,7 @@ RA_DEC = gsub("[\r\n]", "", as.character(args[[1]]))
 loc = RA_DEC
 computer = "simon"
 
-files = list.files(path=RA_DEC, pattern="Possible_Asteroids.csv")
+files = list.files(path=paste0(RA_DEC,"/"), pattern="Possible_Asteroids.csv")
 if(length(files) == 0){
 cat_groups = read.csv(paste0(RA_DEC,"/",RA_DEC,"_Filtered_Asteroids.csv"))
 
@@ -76,7 +76,7 @@ gc()
 Axrat_Filter(RA_DEC)
 
 }else{
-possible_asteroids = read.csv(paste0("./",loc,"/_Possible_Asteroids.csv"), fill = TRUE)
+possible_asteroids = read.csv(paste0("./",loc,"/Possible_Asteroids.csv"), fill = TRUE)
 cat("*********\n")
 cat("Beginning axial filtering\n")
 cat("*********\n\n")
