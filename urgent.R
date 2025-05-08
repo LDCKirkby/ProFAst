@@ -83,7 +83,6 @@ cat("*********\n\n")
 
 #Axrat filter
 filtered_asteroids = subset(possible_asteroids, axrat_gt <= 0.35 | axrat_rxt <= 0.35 | axrat_i1xt <= 0.35)
-filtered_asteroids = filtered_asteroids[,c(2,251,1,3:250,252)]
 filtered_asteroids = setorder(filtered_asteroids, "groupID")
 
 cat("*********\n")
