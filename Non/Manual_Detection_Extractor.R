@@ -27,5 +27,5 @@ filtered_data[filtered_data$segID %in% i_IDS,]$Colour = "i"
 
 verified_asteroids = subset(filtered_data, filtered_data$segID %in% asteroid_IDS | filtered_data$segID %in% g_IDS |
                             filtered_data$segID %in% r_IDS | filtered_data$segID %in% i_IDS)
-write.csv(verified_asteroids, file=paste0(RA_Dec,"/",RA_Dec,"_FINAL.csv"))
+write.csv(verified_asteroids, file=paste0(RA_Dec,"/",RA_Dec,"_Verified.csv"))
 
