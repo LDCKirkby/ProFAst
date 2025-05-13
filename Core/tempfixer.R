@@ -24,3 +24,24 @@ plot <- ggplot()
         scale_y_continuous(sec.axis = sec_axis( ~ . / max(density1$y) * max(density1$y), name = "Density (Normalized)")) +
         labs(title = "Stacked Histograms with Normalized y scale", x = "Inclination") +
         scale_x_continuous(limits=c(0,90))
+
+FINAL_ASTEROIDS = data.frame()
+for(file in verified_files){
+    fields = read.csv(file)
+    if(length(fields$segID) ==0){
+        next
+    }
+    if("X" %in% colnames(fields)){
+        fields = subset(fields,select=-X)
+    }
+    if("X.1" %in% colnames(fields)){
+        fields = subset(fields,select=-X.1)
+    }
+    if("X.2" %in% colnames(fields)){
+        fields = subset(fields,select=-X.2)
+    }
+    if("X.3" %in% colnames(fields)){
+        fields = subset(fields,select=-X.3)
+    }
+    FINAL_ASTEROIDS = as.data.table(rbind(FINAL_ASTEROIDS,fields, fill=TRUE))
+}
