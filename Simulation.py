@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import matplotlib.cm as cm
 import matplotlib
-import rebound
 import pandas as pn
 import os
 import distinctipy
@@ -29,7 +28,7 @@ for file in os.listdir(directory):
     orbits.append(orbit)
 
 # Set up the figure and subplots
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 10))
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12,6))
 fig.suptitle("Calculated Orbits of Linked Asteroid Detections")
 ax1.set_aspect('equal')
 ax1.set_xlabel("x")
@@ -95,7 +94,7 @@ def update(frame):
 
 
 ani = animation.FuncAnimation(fig=fig, func=update, frames=len(orbits[1].JD), interval=20, blit=True)
-plt.tight_layout()
+plt.tight_layout(pad = 0.85)
 #plt.show()
 writer = animation.FFMpegWriter(
      fps=24, metadata=dict(artist='Me'), bitrate=1800)
