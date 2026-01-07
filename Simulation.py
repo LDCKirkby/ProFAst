@@ -28,7 +28,7 @@ for file in os.listdir(directory):
     orbits.append(orbit)
 
 # Set up the figure and subplots
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12,6))
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(6,12))
 fig.suptitle("Calculated Orbits of Linked Asteroid Detections")
 ax1.set_aspect('equal')
 ax1.set_xlabel("x")

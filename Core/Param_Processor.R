@@ -241,24 +241,24 @@ ggsave(filename = paste0("./Elements/a_JPL_v_Calculated_plot.png"), plot)
 #   }
 # }
 # write.csv(cat_groups, file, row.names=FALSE)
-plot_g = ggplot(data=g_matched) +
-         geom_histogram(aes(x=M), color="green", fill="seagreen2",alpha=0.5, bins=80) + theme_classic() + 
+plot_g = ggplot(data=filtered_asteroids) +
+         geom_histogram(aes(x=N100), color="green", fill="seagreen2",alpha=0.5, bins=100) + theme_classic() + 
          theme(axis.text=element_text(size=14),axis.title=element_text(size=14,face="bold"))+
-         xlab("Mean Anomaly (g)")+ scale_x_continuous(limits=c(0,360))
-plot_r = ggplot(data=r_matched) +
-         geom_histogram(aes(x=M),color="red",fill="red",alpha=0.5,bins=80)+ theme_classic()+
+         xlab("g Band N100")+ scale_x_continuous(limits=c(0,3000)) + geom_vline(aes(xintercept=100)) + geom_vline(aes(xintercept=2500))
+plot_r = ggplot(data=filtered_asteroids) +
+         geom_histogram(aes(x=N100),color="red",fill="red",alpha=0.5,bins=100)+ theme_classic()+
          theme(axis.text=element_text(size=14),axis.title=element_text(size=14,face="bold"))+
-         xlab("Mean Anomaly (r)")+ scale_x_continuous(limits=c(0,360))
-plot_i = ggplot(data=i_matched) +
-         geom_histogram(aes(x=M),color="blue",fill="blue",alpha=0.5,bins=80)+ theme_classic()+
+         xlab("r Band N100")+ scale_x_continuous(limits=c(0,3000)) + geom_vline(aes(xintercept=100))+ geom_vline(aes(xintercept=2500))
+plot_i = ggplot(data=filtered_asteroids) +
+         geom_histogram(aes(x=N100),color="blue",fill="blue",alpha=0.5,bins=100)+ theme_classic()+
          theme(axis.text=element_text(size=14),axis.title=element_text(size=14,face="bold"))+
-         xlab("Mean Anomaly (i)")+ scale_x_continuous(limits=c(0,360))
+         xlab("i Band N100")+ scale_x_continuous(limits=c(0,3000)) + geom_vline(aes(xintercept=100))+ geom_vline(aes(xintercept=2500))
 comb = ggarrange(plot_g + theme(axis.ticks.y=element_blank()), 
                  plot_r+theme(axis.line.y=element_blank(),axis.text.y = element_blank(),axis.ticks.y = element_blank(),axis.title.y = element_blank()),
                  plot_i+theme(axis.line.y=element_blank(),axis.text.y = element_blank(),axis.ticks.y = element_blank(),axis.title.y = element_blank()),
                  nrow=1)
-comb = annotate_figure(comb, top = text_grob("All Asteroids Mean Anomaly per Detection Band", face = "bold", size = 20))
-ggsave("combined_M.png",comb,height=5,width=15, bg="white")
+comb = annotate_figure(comb, top = text_grob("N100 for All Sources (180.0,-0.5)", face = "bold", size = 20))
+ggsave("../N100.png",comb,height=5,width=15, bg="white")
 
 plot = ggplot(data=final) + geom_density_ridges(aes(x=Deccen,y=Colour,fill=Colour), stat="binline", bins=80, alpha=0.7)+
        xlab("Magnitude") + ggtitle("Observed Magnitude for All Asteroids Per Band") +

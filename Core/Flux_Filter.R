@@ -1,12 +1,12 @@
 Flux_Filter <- function(loc){
 
 #Checks to see if objectcati.csv exists, if not, checks to see if stacked.rds exists.
-#If neither exist it cancells
+#If neither exist it cancels
 if("objectcati.csv" %in% list.files(path = paste0("./",loc,"/")) == FALSE){
   cat("*********\n")
   cat("Objectcati.csv not found\n")
   if("stacked.rds" %in% list.files(path = paste0("./",loc,"/")) == FALSE){
-    cat("stacked.rds not found either. Please ensure neccessary files exist or run detection again\n")
+    cat("stacked.rds not found either. Please ensure necessary files exist or run detection again\n")
     break
   }
   multi_data = readRDS(paste0("./",loc,"/stacked.rds"))
@@ -47,9 +47,13 @@ cat("*********\n\n")
 #Remove whole rows of NA's
 cat_groups = cat_groups[rowSums(is.na(cat_groups)) != ncol(cat_groups),]
 
-cat_groups$flux_gt = abs(cat_groups$flux_gt)
-cat_groups$flux_rxt = abs(cat_groups$flux_rxt)
-cat_groups$flux_i1xt = abs(cat_groups$flux_i1xt)
+#Remove potential error fluxes that can be small negative numbers
+cat_groups$flux_gt[cat_groups$flux_gt < 0] <- 0
+cat_groups$flux_rxt[cat_groups$flux_rxt < 0] <- 0
+cat_groups$flux_i1xt[cat_groups$flux_i1xt < 0] <- 0
+#cat_groups$flux_gt = abs(cat_groups$flux_gt)
+#cat_groups$flux_rxt = abs(cat_groups$flux_rxt)
+#cat_groups$flux_i1xt = abs(cat_groups$flux_i1xt)
 
 #Extracting potential asteroids, based on their flux ratio
 cat("*********\n")
@@ -57,11 +61,6 @@ cat("Beginning asteroid search\n")
 green_objects = cbind("Colour" = "g", subset(cat_groups, subset = cat_groups$flux_gt/(cat_groups$flux_rxt + cat_groups$flux_i1xt) >= 1))
 red_objects = cbind("Colour" = "r", subset(cat_groups, subset = cat_groups$flux_rxt/(cat_groups$flux_gt + cat_groups$flux_i1xt) >= 1))
 blue_objects = cbind("Colour" = "i", subset(cat_groups, subset = cat_groups$flux_i1xt/(cat_groups$flux_gt + cat_groups$flux_rxt) >= 1))
-
-#Old Method, less concise than g/r+i, r/g+i, i/g+r but unsure how other will turn out
-# green_objects = cbind(subset(cat_groups, subset = cat_groups$flux_gt/cat_groups$flux_rxt>=8 | cat_groups$flux_gt/cat_groups$flux_i1xt>=8), "Colour" = "g")
-# red_objects = cbind(subset(cat_groups, subset = cat_groups$flux_rxt/cat_groups$flux_gt>=8 | cat_groups$flux_rxt/cat_groups$flux_i1xt>=8), "Colour" = "r")
-# blue_objects = cbind(subset(cat_groups, subset = cat_groups$flux_i1xt/cat_groups$flux_gt>=8 | cat_groups$flux_i1xt/cat_groups$flux_rxt>=8), "Colour" = "i")
 
 #Applies edge buffer to red and blue, since they've been extended artificially
 RA = as.numeric(strsplit(loc, "_")[[1]][[1]])
@@ -75,11 +74,11 @@ green_objects = rbind(green_objects[green_objects$RAcen >= (RA - 0.5 + 0.001) & 
 
 #Bind final lists of objects together
 possible_asteroids <- rbind(blue_objects,green_objects,red_objects)
-print(length(possible_asteroids$groupID))
-
+cat(length(possible_asteroids$groupID), " potential asteroids in data\n")
 cat("Writing to ", paste0("./", loc,"/Possible_Asteroids.csv"),"\n")
 cat("*********\n\n")
 
+#Write data to file
 write.csv(possible_asteroids, file = paste0("./",loc,"/",loc,"_Possible_Asteroids.csv"), row.names=FALSE)
 
 rm(blue_objects, green_objects, red_objects, possible_asteroids, cat_groups)
