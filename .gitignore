@@ -2,3 +2,8 @@
 .vscode/settings.json
 Orbit_Plotter.R
 mytoken.txt
+.Rproj.user
+.RData
+.httr-oauth
+.DS_Store
+.quarto

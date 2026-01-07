@@ -1,27 +1,26 @@
-library(peakRAM,quietly = TRUE)
-library(xtable, quietly = TRUE)
-library(dst,quietly=TRUE)
-library(celestial,quietly = TRUE)
-library(devtools,quietly = TRUE)
-library(Cairo,quietly = TRUE)
-library(Rfits,quietly = TRUE)
-library(Rwcs,quietly = TRUE)
-library(ProFound,quietly = TRUE)
-library(magicaxis,quietly = TRUE)
-library(data.table,quietly = TRUE)
-library(plotrix,quietly = TRUE)
-require(foreign,quietly = TRUE)
-require(MASS,quietly = TRUE)
-library(ProPane, quietly = TRUE)
-library(ggplot2, quietly = TRUE)
-library(dplyr, quietly = TRUE)
-library(gsubfn, quietly = TRUE)
-library(fs, quietly = TRUE)
-library(showtext, quietly = TRUE)
-library(png)
-library(Matrix)
-source("./ProFAst/Core/MPC_Formatter.R")
-source("./ProFAst/Core/MPC_PSV.R")
+# library(xtable, quietly = TRUE)
+# library(dst,quietly=TRUE)
+# library(celestial,quietly = TRUE)
+# library(devtools,quietly = TRUE)
+# library(Cairo,quietly = TRUE)
+# library(Rfits,quietly = TRUE)
+# library(Rwcs,quietly = TRUE)
+# library(ProFound,quietly = TRUE)
+# library(magicaxis,quietly = TRUE)
+# library(data.table,quietly = TRUE)
+# library(plotrix,quietly = TRUE)
+# require(foreign,quietly = TRUE)
+# require(MASS,quietly = TRUE)
+# library(ProPane, quietly = TRUE)
+# library(ggplot2, quietly = TRUE)
+# library(dplyr, quietly = TRUE)
+# library(gsubfn, quietly = TRUE)
+# library(fs, quietly = TRUE)
+# library(showtext, quietly = TRUE)
+# library(png)
+# library(Matrix)
+# source("./ProFAst/Core/MPC_Formatter.R")
+# source("./ProFAst/Core/MPC_PSV.R")
 
 Edger <- function(segimcut, ID){
   image = segimcut$image
@@ -50,40 +49,38 @@ Edger <- function(segimcut, ID){
   return(image)
 }
 
-args = commandArgs(trailingOnly = TRUE)
-loc = as.character(args[[1]])
-
-asteroids = read.csv(paste0("./",loc,"/",loc,"_no_dupes.csv"))
+Ast_fit <-function(RA_DEC){
+asteroids = read.csv(paste0("./",RA_DEC,"/",RA_DEC,"_no_dupes.csv"))
 stopifnot(length(asteroids$segID) >= 1)
 
 #Checks to see if linear fit has already been done on the field
-if(dir.exists(file.path(paste0("./",loc,"/"),paste0("Linear_Fits"))) == TRUE){
+if(dir.exists(file.path(paste0("./",RA_DEC,"/"),paste0("Linear_Fits"))) == TRUE){
   #If it has, checks to see it completed fully, fitting all asteroids
-  done = list.files(file.path(paste0("./",loc,"/"),paste0("Linear_Fits/MPC_Format")), pattern = ".psv", all.files = FALSE, recursive = TRUE, full.names = TRUE)
+  done = list.files(file.path(paste0("./",RA_DEC,"/"),paste0("Linear_Fits/MPC_Format")), pattern = ".psv", all.files = FALSE, recursive = TRUE, full.names = TRUE)
   cat(length(done), "files already exist, ", length(asteroids$segID), " asteroids exist for the field.\n")
   #Exits if all have been done previously
   if(length(done) == length(asteroids$segID)){
-      stopifnot(dir.exists(file.path(paste0("./",loc,"/"),paste0("Linear_Fits"))) == FALSE)
+      stopifnot(dir.exists(file.path(paste0("./",RA_DEC,"/"),paste0("Linear_Fits"))) == FALSE)
   }
 }
 
-dir_create("./",loc,"/Linear_Fits")
-dir_create("./",loc,"/Linear_Fits/MPC_Format")
-dir_create("./",loc,"/Linear_Fits/Fit_Images")
+dir_create("./",RA_DEC,"/Linear_Fits")
+dir_create("./",RA_DEC,"/Linear_Fits/MPC_Format")
+dir_create("./",RA_DEC,"/Linear_Fits/Fit_Images")
 
 cat("***************** Reading in segmentation map data *****************\n")
-segim <- as.matrix(read.csv(paste0("./",loc,"/segim.csv")))
+segim <- as.matrix(read.csv(paste0("./",RA_DEC,"/segim.csv")))
 cat("*****************  Generating groupim ***************** \n")
 groupim = profoundSegimGroup(segim = segim)
 groupim = groupim$groupim
 
 cat("*****************  Loading images as pointers ***************** \n")
-g_image = Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
-g_header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"))
-r_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"),header=TRUE,ext=1)
-r_header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",loc,"_r_DMAG.fits"))
-i_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"),header=TRUE,ext=1)
-i_header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",loc,"_i1_DMAG.fits"))
+g_image = Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",RA_DEC,"_g_DMAG.fits"),header=TRUE,ext=1)
+g_header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",RA_DEC,"_g_DMAG.fits"))
+r_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",RA_DEC,"_r_DMAG.fits"),header=TRUE,ext=1)
+r_header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",RA_DEC,"_r_DMAG.fits"))
+i_image_input= Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",RA_DEC,"_i1_DMAG.fits"),header=TRUE,ext=1)
+i_header = Rfits_read_header(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",RA_DEC,"_i1_DMAG.fits"))
 cat("*****************  Warping r&i frames ***************** \n")
 # r_image=propaneWarp(r_image_input,keyvalues_out=g_image$keyvalues)
 # i_image=propaneWarp(i_image_input,keyvalues_out=g_image$keyvalues)
@@ -111,8 +108,8 @@ for(i in 1:length(asteroids$segID)){
   # cutim_r=r_image[astpos,box=box]
   # cutim_i=i_image[astpos,box=box]
   
-  segimcut=magcutout(image = segim, loc=as.numeric(astpos), box=box, loc.type="image")
-  groupcut=magcutout(image = groupim, loc=as.numeric(astpos), box=box, loc.type="image")
+  segimcut=magcutout(image = segim, RA_DEC=as.numeric(astpos), box=box, loc.type="image")
+  groupcut=magcutout(image = groupim, RA_DEC=as.numeric(astpos), box=box, loc.type="image")
 
   # obj_points <- which(segimcut$image==ID, arr.ind = TRUE)
   obj_points <- which(groupcut$image==groupID, arr.ind = TRUE)  
@@ -154,10 +151,10 @@ for(i in 1:length(asteroids$segID)){
     Dec_vals <- append(Dec_vals, RA_Dec[[2]][1])
   }
 
-  new_IDs = formatter(loc, ID, colour, target$mag, RA_vals, Dec_vals)
-  PSV_maker(loc, ID, colour, target$mag, RA_vals, Dec_vals)
+  new_IDs = formatter(RA_DEC, ID, colour, target$mag, RA_vals, Dec_vals)
+  PSV_maker(RA_DEC, ID, colour, target$mag, RA_vals, Dec_vals)
 
-  png(filename=paste0("./",loc,"/Linear_Fits/Fit_Images/",loc,"_",colour,target$segID,"_linear_fit.png"))
+  png(filename=paste0("./",RA_DEC,"/Linear_Fits/Fit_Images/",RA_DEC,"_",colour,target$segID,"_linear_fit.png"))
   par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
   
   locut = c(median(cutim_r$imDat,na.rm=TRUE),median(cutim_g$imDat,na.rm=TRUE),median(cutim_i$imDat,na.rm=TRUE))
@@ -176,7 +173,7 @@ for(i in 1:length(asteroids$segID)){
   
   dev.off()
   
-  png(filename=paste0("./",loc,"/Linear_Fits/Fit_Images/",loc,"_",colour,target$segID,"_fit.png"))
+  png(filename=paste0("./",RA_DEC,"/Linear_Fits/Fit_Images/",RA_DEC,"_",colour,target$segID,"_fit.png"))
   par(mfrow=c(1,1),mar=c(3,3,2,2), family="Arial")
   
   magplot(x_vals, y_vals, z=brightness_vals, cex = 2, xlab = "X", ylab = "Y", main = paste0("Linear Fit to asteroid ", new_IDs[1], " with weights colourised"), position = 'bottomright', range=c(0,1))
@@ -186,3 +183,4 @@ for(i in 1:length(asteroids$segID)){
 }
 
 warnings()
+}

@@ -1,3 +1,5 @@
+Temp_fixer <- function(){
+
 suffixes = c("a","b","c","d","e")
 for(i in 1:length(dupes$trkSub)){
     old_ID = dupes$trkSub[i]
@@ -44,4 +46,6 @@ for(file in verified_files){
         fields = subset(fields,select=-X.3)
     }
     FINAL_ASTEROIDS = as.data.table(rbind(FINAL_ASTEROIDS,fields, fill=TRUE))
+}
+
 }

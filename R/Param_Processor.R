@@ -1,14 +1,3 @@
-library(rjson)
-library(data.table)
-library(ggplot2)
-library(stringr)
-library(fmsb)
-library(tidyverse)
-library(viridis)
-library(ggridges)
-library(paletteer)
-library(Metrics)
-
 create_beautiful_radarchart <- function(data, color = "#00AFBB", 
                                         vlabels = colnames(data), vlcex = 1,
                                         caxislabels = NULL, title = NULL, cex.main = 3,...){
@@ -84,14 +73,7 @@ JPL_params <- function(JPL_ID, dt){
     return(dt)
 }
 
-calculate_rmse_object <- function(estimations, truth) {
-  sqrt(rowMeans((estimations - truth)^2))
-}
-
-calculate_rmse_parameter <- function(estimations, truth_mean, truth_sd){
-  sqrt(colMeans(((estimations - truth_mean)/truth_sd)^2))
-}
-
+Ast_Radar_Grapher <- function(){
 asteroid_IDS <- list.dirs(path="./Orbital_Params/",recursive=FALSE,full.names=FALSE)
 asteroid_params <- data.frame()
 for(asteroid in asteroid_IDS){
@@ -213,8 +195,8 @@ plot <- plot + geom_vline(data=kirkwood, aes(xintercept=xintercepts, color=names
             axis.title=element_text(size=14,face="bold"))
 ggsave(filename = paste0("./Elements/a_JPL_v_Calculated_plot.png"), plot)
 
-1.780, 2.065, 3.972, 4.296
-"1.780 AU", "2.065 AU", "3.972 AU", "4.296 AU"
+# 1.780, 2.065, 3.972, 4.296
+# "1.780 AU", "2.065 AU", "3.972 AU", "4.296 AU"
 # For reading in lots of csv's at once
 # all_sources=data.frame()
 # for(file in csv_files){
@@ -264,3 +246,4 @@ plot = ggplot(data=final) + geom_density_ridges(aes(x=Deccen,y=Colour,fill=Colou
        xlab("Magnitude") + ggtitle("Observed Magnitude for All Asteroids Per Band") +
        theme_classic() + theme(legend.title=element_text(size=10),legend.text=element_text(size=8),legend.position="bottom", axis.text=element_text(size=12),axis.title=element_text(size=14,face="bold")) +
        scale_fill_manual(name="Band",breaks=c("g","r","i"),values=c("g"="green","r"="red","i"="blue"))
+}

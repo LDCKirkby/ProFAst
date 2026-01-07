@@ -1,54 +1,22 @@
-#############
-# LIBRARIES #
-#############
-# library(celestial)
-# library(devtools)
-# library(Cairo)
-# library(ProFound)
-# library(magicaxis)
-# library(data.table)
-# library(foreign)
-# library(MASS)
-# library(dst)
-# library(Rwcs)
-# library(ProPane)
-# library(Rfits)
+Multi_Detect <- function(RA_DEC, frames, skycut = 0.6, pixcut = 15, smooth = TRUE, sigma = 2, reltol=-10, tolerance =1, ext=7){
 
-
-#######################
-# Run ProFound Script #
-#######################
-#Important variables for detection
-# skycut = 0.6
-# pixcut = 15
-# smooth = TRUE
-# sigma = 2
-# reltol=-10
-# tolerance =1
-# ext=7
-#######################
-
-
-Multi_Detect <- function(loc, frames){
-
-#Set working directory and detection parameters
-savelocation = paste0("./",loc,"/")
+savelocation = paste0("./",RA_DEC,"/")
 
 cat("***********\n")
 cat("Beginning detection\n")
 cat("***********\n")
 
-multi_data=profoundMultiBand( #I prefer this layout for complex calls since then you can write notes to remind ourselves why we have certain settings.
+multi_data=profoundMultiBand(
   inputlist = frames,
-  skycut=0.6,
-  pixcut=15, #Avoids too many detections in very noisy regions etc
-  ext=7,
-  tolerance=1,
-  reltol=-10,
-  smooth = TRUE,
-  cliptol=100, #Recombines bright stars effectively
-  detectbands=c("g","rx","i1x"), # will build a detection band by adding g+r+i
-  multibands=c("g","rx","i1x"), #Required since detectbands must be a subset on multibands, even if we are not doing multiband photometry
+  skycut=skycut,
+  pixcut=pixcut,
+  ext=ext,
+  tolerance=tolerance,
+  reltol=reltol,
+  smooth = smooth,
+  cliptol=100,
+  detectbands=c("g","rx","i1x"),
+  multibands=c("g","rx","i1x"),
   keepsegims=TRUE,
   magzero=c(0,0,0),
   dotot=TRUE,
@@ -61,7 +29,7 @@ multi_data=profoundMultiBand( #I prefer this layout for complex calls since then
   stats=FALSE,
   groupstats=TRUE,
   mask=0,
-  sigma = 2,
+  sigma = sigma,
   fluxtype='Jansky',
 )
 
@@ -118,18 +86,4 @@ datafile0=as.data.table(cbind(cat_objects,cat_groups[group_matches,]))
 write.csv(cat_objects,file=paste0(savelocation,"objectcati.csv"), row.names=FALSE)
 write.csv(cat_groups,file=paste0(savelocation,"groupcati.csv"), row.names=FALSE)
 write.csv(datafile0,file=paste0(savelocation,"allcati.csv"), row.names=FALSE)
-
-
-#par(mfrow=c(1,1),mar=c(3,3,2,2))
-
-#CairoPDF(file=paste0(savelocation,"test.pdf"),width=24.0,height=24.0)
-#plot(multi_data$pro_detect)
-#dev.off()
-
-
-#Print out input args for verification
-# input_args = c(paste0("Pixcut:",pixcut),paste0("Skycut:",skycut),paste0("Smooth:",smooth),paste0("Sigma:",sigma),paste0("Tolerance:",tolerance), paste0("Relative Tolerance:", reltol),paste0("ext:",ext))
-# write.csv(input_args, file = paste0(savelocation,"/Input_Args.csv"))
-
-
 }

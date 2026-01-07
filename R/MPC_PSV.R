@@ -1,8 +1,3 @@
-library(magicaxis)
-library(celestial)
-library(lubridate)  
-library(common)
-
 PSV_maker <- function(loc, ID, colour, magnitude, RA_vals, Dec_vals){
     orig_ID = ID
     obs_times = read.delim("./obs_times_full.txt", header =FALSE, col.names = c("frame","obs1","obs2","obs3","obs4","obs5","obs6","obs7","obs8","obs9"),  sep = ",")

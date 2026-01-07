@@ -1,23 +1,17 @@
-library(Rwcs)
-library(Rfits)
-library(stringr)
-library(data.table)
-
-#Parse input arguments
-args = commandArgs(trailingOnly = TRUE)
-loc = as.character(args[[1]])
+PSV_fixer <- function(RA_DEC, ID){
+RA_DEC = as.character(args[[1]])
 ID = as.character(args[[2]])
 #Remove file extensions from ID
 ID = str_split(ID, '\\.')[[1]][1]
 #Extract declination to ensure sign is preserved
-declination = as.numeric(str_split(loc, "_")[[1]][2])
+declination = as.numeric(str_split(RA_DEC, "_")[[1]][2])
 
 #Load data in from PSV, MPC 80 Byte & detection csv
-PSV = read.table(file = paste0("./",loc,"/Linear_Fits/MPC_Format/",loc,"_",ID,".psv"), header=TRUE, sep="|")
-MPC_80 = read.table(file = paste0("./",loc,"/Linear_Fits/MPC_Format/",loc,"_",ID,".mpc"), header=FALSE, sep="", fill=TRUE)
-asteroids = read.csv(paste0("./",loc,"/",loc,"_no_dupes.csv"))
+PSV = read.table(file = paste0("./",RA_DEC,"/Linear_Fits/MPC_Format/",RA_DEC,"_",ID,".psv"), header=TRUE, sep="|")
+MPC_80 = read.table(file = paste0("./",RA_DEC,"/Linear_Fits/MPC_Format/",RA_DEC,"_",ID,".mpc"), header=FALSE, sep="", fill=TRUE)
+asteroids = read.csv(paste0("./",RA_DEC,"/",RA_DEC,"_no_dupes.csv"))
 #Load g_image for accurate cutim_g adjustments
-g_image = Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",loc,"_g_DMAG.fits"),header=TRUE,ext=1)
+g_image = Rfits_point(paste0("/Volumes/WAVESSPD/waves/wavesdata/VST/dr5/preprocessed/KIDS_",RA_DEC,"_g_DMAG.fits"),header=TRUE,ext=1)
 
 #Create cutim for accurate RWCS
 target = asteroids[asteroids$segID == ID,]
@@ -86,4 +80,5 @@ mid = c(temp_mid," CCD","X11 ",iso_mid,RA_mid,Dec_mid,mag,col,PSV$remarks[2])
 end = c(temp_end," CCD","X11 ",iso_end,RA_end,Dec_end,mag,col,PSV$remarks[3])
 psv_output= as.data.table(rbind(start,mid,end))
 colnames(psv_output) <- col_vals
-write.table(psv_output, paste0("./",loc,"/Linear_Fits/MPC_Format/",loc,"_",ID,".psv"), sep = "|", row.names=FALSE, quote=FALSE)
+write.table(psv_output, paste0("./",RA_DEC,"/Linear_Fits/MPC_Format/",RA_DEC,"_",ID,".psv"), sep = "|", row.names=FALSE, quote=FALSE)
+}

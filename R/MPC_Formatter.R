@@ -1,8 +1,3 @@
-library(magicaxis)
-library(celestial)
-library(lubridate)
-library(common)
-
 #Creates outputs according to MPC 80 byte format
 #NNNNNTTTTTTT*KCYYYY M1 D1.d1d1d1HH M2 SS.d2dsD2 M3 SS.d3         OOOOOO      CCC
 #     K24Q00T  C2024 08 27.42670522 42 15.588-01 16 01.10               VEQ054F52
