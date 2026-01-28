@@ -32,7 +32,6 @@ ProFAst <- function(RA_DEC, image_directory,
                      N100_upper=2250,
                      savepassthru=FALSE){
 
-dir = getwd()
 cat("*************\n","Beginning Detection on:",RA_DEC,"\n","*************\n")
 frames <- Pre_Proc(RA_DEC, image_directory, savepassthru)
 
