@@ -1,4 +1,14 @@
-Multi_Detect <- function(RA_DEC, frames, skycut = 0.6, pixcut = 15, smooth = TRUE, sigma = 2, reltol=-10, tolerance =1, ext=7){
+#' MultiDetect
+#' @description${1:Main source extraction function. Uses profoundMultiBand with default input parameters set for improved asteroid detection. Default values have been trained based on VST KiDS data, it is recommended that you adjust slightly for your data to get the best results}
+#' @param${1:RA_DEC} ${2:Celestial Right Ascension and Declination of Input Frame separated by underscore (RA_Dec).}
+#' @param${1:frames} ${2:List containing 3 pixel matched images. Output of Pre_Proc.}
+#' @inheritParams ProFound::profoundMultiBand
+#' @param${1:savepassthru} ${Logical; should intermediate files be saved to directory? Can greatly increase size on disk but useful to see which objects are being filtered out.}
+#' 
+#' @return Data frame containing multi-band photometry data.
+#' @export
+#'
+MultiDetect <- function(RA_DEC, frames, skycut = 0.6, pixcut = 15, smooth = TRUE, sigma = 2, reltol=-10, tolerance =1, ext=7, savepassthru=FALSE){
 
 savelocation = paste0("./",RA_DEC,"/")
 
@@ -37,13 +47,35 @@ cat("***********\n")
 cat("Detection finished\n")
 cat("***********\n")
 
-# Save data structure and produce diagnostic plot
-dir.create(savelocation)
-saveRDS(multi_data,file=paste0(savelocation,"stacked.rds"))
-
 segimlist = multi_data$segimlist
 segim = multi_data$pro_detect$segim
 segim_orig = multi_data$pro_detect$segim_orig
+
+#NEEDED TO EXTRACT GROUP MASK DATA
+#THAT DATA IS FOUND IN multi_data$pro_detect$group$groupsegID (FOR NPIX)
+#GROUP PHOTOMETRY DATA IS FOUND IN multi_data$pro_detect$groupstats (FOR RAcen, Deccen, etc.)
+group_data = as.data.table(cbind(multi_data$pro_detect$group$groupsegID,multi_data$pro_detect$groupstats, multi_data$cat_grp))
+
+# Extract segment info, colour, total, deblend, aperture, and groups measurements
+objectcat <- as.data.table(cbind(multi_data$pro_detect$segstats,multi_data$cat_tot))
+
+cat_groupinfo=cbind(segID=unlist(multi_data$pro_detect$group$groupsegID$segID),groupID=rep(multi_data$pro_detect$group$groupsegID$groupID,times=multi_data$pro_detect$group$groupsegID$Ngroup), Ngroup=rep(multi_data$pro_detect$group$groupsegID$Ngroup, times=multi_data$pro_detect$group$groupsegID$Ngroup))
+
+objectcat=cbind(objectcat,cat_groupinfo[match(objectcat$segID, cat_groupinfo[,"segID"]),2:3])
+
+groupcat <- as.data.table(cbind(multi_data$pro_detect$group$groupsegID$Ngroup,multi_data$pro_detect$groupstats$groupID,multi_data$pro_prodetect$groupstats$Npix, multi_data$cat_grp))
+
+names(groupcat)[1] <- "Ngroup"
+names(groupcat)[2] <- "groupID"
+
+group_matches=match(objectcat$segID,groupcat$groupID,nomatch=NA)
+
+allcat=as.data.table(cbind(objectcat,groupcat[group_matches,]))
+
+if(savepassthru == TRUE){
+# Save data structure and produce diagnostic plot
+dir.create(savelocation)
+saveRDS(multi_data,file=paste0(savelocation,"stacked.rds"))
 
 #Saves all segmentation mask images in a list (segimlist)
 #Not needed & will likely be removed
@@ -58,32 +90,15 @@ write.csv(segim, paste0(savelocation,"/segim.csv"), row.names=FALSE)
 cat("Saving slimmed segim_orig\n")
 write.csv(segim_orig, paste0(savelocation,"/segim_orig.csv"), row.names=FALSE)
 
-rm(segim)
-rm(segim_orig)
-rm(segimlist)
+# rm(segim)
+# rm(segim_orig)
+# rm(segimlist)
 
-#NEEDED TO EXTRACT GROUP MASK DATA
-#THAT DATA IS FOUND IN multi_data$pro_detect$group$groupsegID (FOR NPIX)
-#GROUP PHOTOMETRY DATA IS FOUND IN multi_data$pro_detect$groupstats (FOR RAcen, Deccen, etc.)
-group_data = as.data.table(cbind(multi_data$pro_detect$group$groupsegID,multi_data$pro_detect$groupstats, multi_data$cat_grp))
 
-# Extract segment info, colour, total, deblend, aperture, and groups measurements
-cat_objects <- as.data.table(cbind(multi_data$pro_detect$segstats,multi_data$cat_tot))
+write.csv(objectcat,file=paste0(savelocation,"objectcat.csv"), row.names=FALSE)
+write.csv(groupcat,file=paste0(savelocation,"groupcat.csv"), row.names=FALSE)
+write.csv(allcat,file=paste0(savelocation,"allcat.csv"), row.names=FALSE)
+}
 
-cat_groupinfo=cbind(segID=unlist(multi_data$pro_detect$group$groupsegID$segID),groupID=rep(multi_data$pro_detect$group$groupsegID$groupID,times=multi_data$pro_detect$group$groupsegID$Ngroup), Ngroup=rep(multi_data$pro_detect$group$groupsegID$Ngroup, times=multi_data$pro_detect$group$groupsegID$Ngroup))
-
-cat_objects=cbind(cat_objects,cat_groupinfo[match(cat_objects$segID, cat_groupinfo[,"segID"]),2:3])
-
-cat_groups <- as.data.table(cbind(multi_data$pro_detect$group$groupsegID$Ngroup,multi_data$pro_detect$groupstats$groupID,multi_data$pro_prodetect$groupstats$Npix, multi_data$cat_grp))
-
-names(cat_groups)[1] <- "Ngroup"
-names(cat_groups)[2] <- "groupID"
-
-group_matches=match(cat_objects$segID,cat_groups$groupID,nomatch=NA)
-
-datafile0=as.data.table(cbind(cat_objects,cat_groups[group_matches,]))
-
-write.csv(cat_objects,file=paste0(savelocation,"objectcati.csv"), row.names=FALSE)
-write.csv(cat_groups,file=paste0(savelocation,"groupcati.csv"), row.names=FALSE)
-write.csv(datafile0,file=paste0(savelocation,"allcati.csv"), row.names=FALSE)
+return(c())
 }

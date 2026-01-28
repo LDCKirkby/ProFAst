@@ -1,3 +1,11 @@
+#' N100_filter
+#' @description${1:Filter sources in data frame based on N100 value (pixel size). .}
+#' @param${1:RA_DEC} ${2:Celestial Right Ascension and Declination of Input Frame separated by underscore (RA_Dec).}
+#' @param${1:N100_lower} ${2:Small pixel count cutoff. Objects with fewer pixels than the threshold are assumed to be errors and excluded.}
+#' @param${1:N100_upper} ${2:Large pixel count cutoff. Objects with more pixels than the threshold are assumed to be errors and excluded.}
+#'
+#' @export
+#'
 N100_Filter <- function(RA_DEC, N100_lower=150, N100_upper=2250){
   
   cat("*********\n")
