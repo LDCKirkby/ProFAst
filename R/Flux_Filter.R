@@ -1,3 +1,10 @@
+#' Axrat_filter
+#' @description${1:Filter sources in data frame based on axial ratio value. .}
+#' @param${1:RA_DEC} ${2:Celestial Right Ascension and Declination of Input Frame separated by underscore (RA_Dec).}
+#' @param${1:axrat_value} ${2:Filter Cutoff Value.}
+#'
+#' @export
+#'
 Flux_Filter <- function(RA_DEC, flux_value=1, edge_buffer=0.001){
 
 #Checks to see if objectcati.csv exists, if not, checks to see if stacked.rds exists.
