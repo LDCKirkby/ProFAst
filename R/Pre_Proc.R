@@ -1,7 +1,8 @@
 #' PreProc
-#' @description${1:Function that preprocesses desired multiband images. Used to resize all images to same size, returning pixel matched images.}
-#' @param${1:RA_DEC} ${2:Celestial Right Ascension and Declination of Input Frame separated by underscore (RA_Dec).}
-#' @param${1:image_directory} ${2:Location of input fits files.}
+#' @description${1:Function that does necessary preprocessing for \code{\link{Multi_Detect}}. Used to resize all images to same size, returning pixel matched images.}
+#' @param${1:RA_DEC} ${2:String; Celestial Right Ascension and Declination of Input Frame separated by underscore (RA_Dec).}
+#' @param${1:image_directory} ${2:String; absolute folder location from which to read fits files.}
+#' @param${1:savepassthru} ${2:Logical; should adjusted pixel matched images be saved to directory? Can greatly increase size on disk but useful if you want to import into other programs.}
 #'
 #' @return List containing 3 pixel matched images
 #' @export
