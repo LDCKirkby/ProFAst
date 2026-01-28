@@ -1,5 +1,8 @@
 # ProFAst (R package)
 
+## TODO:
+- [x] test
+
 <!-- badges: start -->
 ![R-CMD-check](https://github.com/LDCKirkby/ProFAst/workflows/R-CMD-check/badge.svg)
 <!-- badges: end -->
