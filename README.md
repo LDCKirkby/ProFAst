@@ -38,15 +38,15 @@
   - [ ] R-package header
   - [ ] Add temp file option, default to FALSE
 - [ ] Manual_Detection_Extractor.R
-  - [ ] R-package header
+  - [ ] Check if needed
 - [ ] MPC_Formatter.R
-  - [ ] R-package header
+  - [ ] Check if needed
 - [ ] Param_Processor.R
-  - [ ] R-package header
+  - [ ] Check if needed
 - [ ] PSV-Fixer.R
-  - [ ] R-package header
+  - [ ] Check if needed
 - [ ] tempfixer.R
-  - [ ] R-package header
+  - [ ] Check if needed
 <!-- badges: start -->
 ![R-CMD-check](https://github.com/LDCKirkby/ProFAst/workflows/R-CMD-check/badge.svg)
 <!-- badges: end -->
