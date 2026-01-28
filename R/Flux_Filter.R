@@ -5,7 +5,7 @@
 #'
 #' @export
 #'
-Flux_Filter <- function(RA_DEC, flux_value=1, edge_buffer=0.001){
+Flux_Filter <- function(RA_DEC, flux_value=1, edge_buffer=0.001, savepassthru=FALSE){
 
 #Checks to see if objectcati.csv exists, if not, checks to see if stacked.rds exists.
 #If neither exist it cancels

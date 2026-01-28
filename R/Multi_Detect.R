@@ -1,9 +1,6 @@
 #' MultiDetect
 #' @description${1:Main source extraction function. Uses profoundMultiBand with default input parameters set for improved asteroid detection. Default values have been trained based on VST KiDS data, it is recommended that you adjust slightly for your data to get the best results}
-#' @param${1:RA_DEC} ${2:Celestial Right Ascension and Declination of Input Frame separated by underscore (RA_Dec).}
-#' @param${1:frames} ${2:List containing 3 pixel matched images. Output of Pre_Proc.}
-#' @inheritParams ProFound::profoundMultiBand
-#' @param${1:savepassthru} ${Logical; should intermediate files be saved to directory? Can greatly increase size on disk but useful to see which objects are being filtered out.}
+#' @inheritParams ProFAst::ProFAst
 #' 
 #' @return Data frame containing multi-band photometry data.
 #' @export

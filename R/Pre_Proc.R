@@ -6,7 +6,7 @@
 #' @return List containing 3 pixel matched images
 #' @export
 #'
-Pre_Proc <- function(RA_DEC, image_directory){
+Pre_Proc <- function(RA_DEC, image_directory, savepassthru=FALSE){
 
   cat("Loading images from ",image_directory,"\n")
   g=Rfits_point(Sys.glob(file.path(image_directory,paste0("*",RA_DEC,"*g*.fits"))), header=TRUE, ext=1)

@@ -6,7 +6,7 @@
 #'
 #' @export
 #'
-N100_Filter <- function(RA_DEC, N100_lower=150, N100_upper=2250){
+N100_Filter <- function(RA_DEC, N100_lower=150, N100_upper=2250, savepassthru=FALSE){
   
   cat("*********\n")
   cat("Applying N100 filter\n")
