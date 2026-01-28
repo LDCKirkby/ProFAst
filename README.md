@@ -1,8 +1,52 @@
 # ProFAst (R package)
 
 ## TODO:
-- [x] test
-
+- [ ] ProFAst.R
+  - [ ] R-package header
+  - [ ] Add temp file option, default to FALSE
+  - [ ] Add proper return values for other functions
+- [ ] Pre_Proc.R
+  - [ ] R-package header
+  - [ ] Add temp file option, default to FALSE
+  - [ ] Add proper return values for other functions
+- [ ] Multi_Detect.R
+  - [ ] R-package header
+  - [ ] Add temp file option, default to FALSE
+  - [ ] Add proper return values for other functions
+- [ ] Axrat_Filter.R
+  - [ ] R-package header
+  - [ ] Add temp file option, default to FALSE
+  - [ ] Add proper return values for other functions
+- [ ] Flux_Filter.R
+  - [ ] R-package header
+  - [ ] Add temp file option, default to FALSE
+  - [ ] Add proper return values for other functions
+- [ ] N100_Filter.R
+  - [ ] R-package header
+  - [ ] Add temp file option, default to FALSE
+  - [ ] Add proper return values for other functions
+- [ ] Group_Cutter.R
+  - [ ] R-package header
+  - [ ] Add proper return values for other functions
+- [ ] Group_Remover.R
+  - [ ] R-package header
+- [ ] Linear_Fit.R
+  - [ ] R-package header
+  - [ ] Add temp file option, default to FALSE
+  - [ ] Add proper return values for other functions
+- [ ] MPC_PSV.R
+  - [ ] R-package header
+  - [ ] Add temp file option, default to FALSE
+- [ ] Manual_Detection_Extractor.R
+  - [ ] R-package header
+- [ ] MPC_Formatter.R
+  - [ ] R-package header
+- [ ] Param_Processor.R
+  - [ ] R-package header
+- [ ] PSV-Fixer.R
+  - [ ] R-package header
+- [ ] tempfixer.R
+  - [ ] R-package header
 <!-- badges: start -->
 ![R-CMD-check](https://github.com/LDCKirkby/ProFAst/workflows/R-CMD-check/badge.svg)
 <!-- badges: end -->
