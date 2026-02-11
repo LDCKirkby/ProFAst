@@ -2,28 +2,28 @@
 
 ## TODO:
 - [ ] ProFAst.R
-  - [ ] R-package header
-  - [ ] Add temp file option, default to FALSE
+  - [x] R-package header
+  - [x] Add temp file option, default to FALSE
   - [ ] Add proper return values for other functions
-- [ ] Pre_Proc.R
-  - [ ] R-package header
-  - [ ] Add temp file option, default to FALSE
-  - [ ] Add proper return values for other functions
+- [x] Pre_Proc.R
+  - [x] R-package header
+  - [x] Add temp file option, default to FALSE
+  - [x] Add proper return values for other functions
 - [ ] Multi_Detect.R
-  - [ ] R-package header
-  - [ ] Add temp file option, default to FALSE
+  - [x] R-package header
+  - [x] Add temp file option, default to FALSE
   - [ ] Add proper return values for other functions
 - [ ] Axrat_Filter.R
-  - [ ] R-package header
-  - [ ] Add temp file option, default to FALSE
+  - [x] R-package header
+  - [x] Add temp file option, default to FALSE
   - [ ] Add proper return values for other functions
 - [ ] Flux_Filter.R
-  - [ ] R-package header
-  - [ ] Add temp file option, default to FALSE
+  - [x] R-package header
+  - [x] Add temp file option, default to FALSE
   - [ ] Add proper return values for other functions
 - [ ] N100_Filter.R
-  - [ ] R-package header
-  - [ ] Add temp file option, default to FALSE
+  - [x] R-package header
+  - [x] Add temp file option, default to FALSE
   - [ ] Add proper return values for other functions
 - [ ] Group_Cutter.R
   - [ ] R-package header
