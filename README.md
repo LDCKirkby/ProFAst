@@ -131,8 +131,6 @@ remotes::install_github("asgr/Rfits") #ProFAst is built on packages that aren't 
 remotes::install_github("asgr/Rwcs")
 remotes::install_github("asgr/ProFound")
 remotes::install_github("asgr/ProPane") 
-install.packages(c('magicaxis', 'FITSio', 'data.table')) # Required packages
-install.packages(c('knitr', 'rmarkdown', 'EBImage', 'akima', 'imager', 'LaplacesDemon')) # Suggested packages
 remotes::install_github("LDCKirkby/ProFAst")
 ```
 
