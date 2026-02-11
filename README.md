@@ -112,7 +112,7 @@ Windows users might need to go through a couple of additional steps depending on
 Sys.which("make")
 ```
 
-### Getting ProFound
+### Getting ProFAst
 
 Source installation from GitHub should be easy:
 
@@ -126,9 +126,13 @@ library(ProFAst)
 The above should also install the required packages. If you have trouble with this you can try installing the required packages manually first and then retry the installation for **ProFAst**:
 
 ```R
+install.packages('remotes')
+remotes::install_github("asgr/ProPane") #ProFAst is built on packages that don't easily install from CRAN
+remotes::install_github("asgr/ProFound")
+remotes::install_github("asgr/Rfits")
+remotes::install_github("asgr/Rwcs")
 install.packages(c('magicaxis', 'FITSio', 'data.table')) # Required packages
 install.packages(c('knitr', 'rmarkdown', 'EBImage', 'akima', 'imager', 'LaplacesDemon')) # Suggested packages
-install.packages('remotes')
 remotes::install_github("LDCKirkby/ProFAst")
 ```
 
