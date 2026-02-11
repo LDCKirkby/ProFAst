@@ -2,28 +2,28 @@
 
 ## TODO:
 - [ ] ProFAst.R
-  - [ ] R-package header
-  - [ ] Add temp file option, default to FALSE
+  - [x] R-package header
+  - [x] Add temp file option, default to FALSE
   - [ ] Add proper return values for other functions
-- [ ] Pre_Proc.R
-  - [ ] R-package header
-  - [ ] Add temp file option, default to FALSE
-  - [ ] Add proper return values for other functions
+- [x] Pre_Proc.R
+  - [x] R-package header
+  - [x] Add temp file option, default to FALSE
+  - [x] Add proper return values for other functions
 - [ ] Multi_Detect.R
-  - [ ] R-package header
-  - [ ] Add temp file option, default to FALSE
+  - [x] R-package header
+  - [x] Add temp file option, default to FALSE
   - [ ] Add proper return values for other functions
 - [ ] Axrat_Filter.R
-  - [ ] R-package header
-  - [ ] Add temp file option, default to FALSE
+  - [x] R-package header
+  - [x] Add temp file option, default to FALSE
   - [ ] Add proper return values for other functions
 - [ ] Flux_Filter.R
-  - [ ] R-package header
-  - [ ] Add temp file option, default to FALSE
+  - [x] R-package header
+  - [x] Add temp file option, default to FALSE
   - [ ] Add proper return values for other functions
 - [ ] N100_Filter.R
-  - [ ] R-package header
-  - [ ] Add temp file option, default to FALSE
+  - [x] R-package header
+  - [x] Add temp file option, default to FALSE
   - [ ] Add proper return values for other functions
 - [ ] Group_Cutter.R
   - [ ] R-package header
@@ -112,7 +112,7 @@ Windows users might need to go through a couple of additional steps depending on
 Sys.which("make")
 ```
 
-### Getting ProFound
+### Getting ProFAst
 
 Source installation from GitHub should be easy:
 
@@ -126,9 +126,11 @@ library(ProFAst)
 The above should also install the required packages. If you have trouble with this you can try installing the required packages manually first and then retry the installation for **ProFAst**:
 
 ```R
-install.packages(c('magicaxis', 'FITSio', 'data.table')) # Required packages
-install.packages(c('knitr', 'rmarkdown', 'EBImage', 'akima', 'imager', 'LaplacesDemon')) # Suggested packages
 install.packages('remotes')
+remotes::install_github("asgr/Rfits") #ProFAst is built on packages that aren't available to install from CRAN
+remotes::install_github("asgr/Rwcs")
+remotes::install_github("asgr/ProFound")
+remotes::install_github("asgr/ProPane") 
 remotes::install_github("LDCKirkby/ProFAst")
 ```
 
