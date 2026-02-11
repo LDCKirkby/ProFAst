@@ -4,16 +4,18 @@
 \alias{Pre_Proc}
 \title{PreProc}
 \usage{
-Pre_Proc(RA_DEC, image_directory)
+Pre_Proc(RA_DEC, image_directory, savepassthru = FALSE)
 }
 \arguments{
-\item{${1:RA_DEC}}{${2:Celestial Right Ascension and Declination of Input Frame separated by underscore (RA_Dec).}}
+\item{RA_DEC}{String; Celestial Right Ascension and Declination of Input Frame separated by underscore (RA_Dec).}
 
-\item{${1:image_directory}}{${2:Location of input fits files.}}
+\item{image_directory}{String; absolute folder location from which to read fits files.}
+
+\item{savepassthru}{Logical; should adjusted pixel matched images be saved to directory? Can greatly increase size on disk but useful if you want to import into other programs.}
 }
 \value{
 List containing 3 pixel matched images
 }
 \description{
-${1:Function that preprocesses desired multiband images. Used to resize all images to same size, returning pixel matched images.}
+Function that does necessary preprocessing for \code{\link{ProFAst::MultiDetect}}. Used to resize all images to same size, returning pixel matched images.
 }

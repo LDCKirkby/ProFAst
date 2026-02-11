@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(ProFast)
+library(ProFAst)
 
-test_check("ProFast")
+test_check("ProFAst")

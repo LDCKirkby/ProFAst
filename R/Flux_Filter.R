@@ -1,8 +1,11 @@
-#' Axrat_filter
-#' @description${1:Filter sources in data frame based on axial ratio value. .}
-#' @param${1:RA_DEC} ${2:Celestial Right Ascension and Declination of Input Frame separated by underscore (RA_Dec).}
-#' @param${1:axrat_value} ${2:Filter Cutoff Value.}
+#' Flux_filter
+#' @description Filter sources in data frame based on axial ratio value.
+#' @param RA_DEC Celestial Right Ascension and Declination of Input Frame separated by underscore (RA_Dec).
+#' @param flux_value Numeric scalar; Flux filter cutoff value. Determined by dividing query filter flux by sum of fluxes in other bands , i.e. (g/r+i). Sources with an flux ratio lower than the value are assumed to not be asteroids and are removed.
+#' @param edge_buffer Numeric scalar; Edge boundary value within which positive hits are ignored. Useful if images are artificially extended as is done in \code{\link{PreProc}}.
+#' @param savepassthru Logical; should intermediate files be saved to directory? Can greatly increase size on disk but useful to see which objects are being filtered out.
 #'
+#' @return Data frame containing all flux filtered sources.
 #' @export
 #'
 Flux_Filter <- function(RA_DEC, flux_value=1, edge_buffer=0.001, savepassthru=FALSE){
@@ -17,20 +20,20 @@ if("objectcati.csv" %in% list.files(path = paste0("./",RA_DEC,"/")) == FALSE){
     break
   }
   multi_data = readRDS(paste0("./",RA_DEC,"/stacked.rds"))
-  cat_objects <- as.data.table(cbind(multi_data$pro_detect$segstats,multi_data$cat_tot))
+  cat_objects <- data.table::as.data.table(cbind(multi_data$pro_detect$segstats,multi_data$cat_tot))
   
   cat_groupinfo=cbind(segID=unlist(multi_data$pro_detect$group$groupsegID$segID),groupID=rep(multi_data$pro_detect$group$groupsegID$groupID,times=multi_data$pro_detect$group$groupsegID$Ngroup), Ngroup=rep(multi_data$pro_detect$group$groupsegID$Ngroup, times=multi_data$pro_detect$group$groupsegID$Ngroup))
   
   cat_objects=cbind(cat_objects,cat_groupinfo[match(cat_objects$segID, cat_groupinfo[,"segID"]),2:3])
   
-  cat_groups <- as.data.table(cbind(multi_data$pro_detect$group$groupsegID$Ngroup,multi_data$pro_detect$groupstats$groupID,multi_data$cat_grp))
+  cat_groups <- data.table::as.data.table(cbind(multi_data$pro_detect$group$groupsegID$Ngroup,multi_data$pro_detect$groupstats$groupID,multi_data$cat_grp))
   
   names(cat_groups)[1] <- "Ngroup"
   names(cat_groups)[2] <- "groupID"
   
   group_matches=match(cat_objects$segID,cat_groups$groupID,nomatch=NA)
   
-  datafile0=as.data.table(cbind(cat_objects,cat_groups[group_matches,]))
+  datafile0=data.table::as.data.table(cbind(cat_objects,cat_groups[group_matches,]))
   
   cat("Creating objectcati.csv\n")
   write.csv(cat_objects,file=paste0("./",RA_DEC,"/objectcati.csv"), row.names=FALSE)

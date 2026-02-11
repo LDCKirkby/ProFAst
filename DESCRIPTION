@@ -1,4 +1,4 @@
-Package: ProFast
+Package: ProFAst
 Title: ProFAst, An Asteroid Detection Package For R
 Version: 0.0.0.9000
 Authors@R: 
@@ -8,35 +8,26 @@ License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
-Suggests: 
-    testthat (>= 3.0.0)
-Config/testthat/edition: 3
 Imports: 
     Cairo,
     celestial,
-    common,
     data.table,
     devtools,
     dplyr,
     dst,
-    fs,
     ggplot2,
-    ggridges,
-    gsubfn,
-    lubridate,
     magicaxis,
     MASS,
-    Matrix,
-    Metrics,
-    paletteer,
-    plotrix,
-    png,
     ProFound,
     ProPane,
     Rfits,
-    rjson,
     Rwcs,
-    showtext,
-    stringr,
-    viridis,
     xtable
+Suggests:
+    common,
+    fs,
+    lubridate,
+    Matrix,
+    png,
+    stringr,
+    testthat
