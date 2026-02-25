@@ -1,4 +1,4 @@
-Edger <- function(segimcut, ID, invert=FALSE){
+Edger <- function(segimcut, ID, invert){
   image = segimcut$image
   
   xrun=1:(dim(image)[1]-1)
@@ -99,8 +99,8 @@ Group_Cutter <- function(loc, computer) {
     segimcut=magicaxis::magcutout(image = segim, loc=as.numeric(astpos), box=box, loc.type="image")
     groupcut=magicaxis::magcutout(image = groupim, loc=as.numeric(astpos), box=box, loc.type="image")
 
-    edged_segimcut <- Edger(segimcut, ID)
-    edged_groupcut <- Edger(groupcut, groupID)
+    edged_segimcut <- Edger(segimcut, ID, invert=FALSE)
+    edged_groupcut <- Edger(groupcut, groupID, invert=FALSE)
 
     anti_segimcut <- Edger(segimcut, ID, invert=TRUE)
     anti_groupcut <- Edger(groupcut, groupID, invert=TRUE)
