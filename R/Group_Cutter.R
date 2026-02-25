@@ -23,7 +23,7 @@ Edger <- function(segimcut, ID, invert){
   
   if(invert==TRUE){
     image[image%in%ID]=0
-  }else{
+  }else if(invert==FALSE){
     image[image%notin%ID]=0
   }
   return(image)
