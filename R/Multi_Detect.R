@@ -1,7 +1,7 @@
 #' MultiDetect
 #' @description Main source extraction function. Uses profoundMultiBand with default input parameters set for improved asteroid detection. Default values have been trained based on VST KiDS data, it is recommended that you adjust slightly for your data to get the best results
 #' @param RA_DEC Celestial Right Ascension and Declination of Input Frame separated by underscore (RA_Dec).
-#' @param frames Vector; Vector containing three pixel-matched astronomical images. Expected order within list is (g,r,i). Output of \code{\link{ProFAst::Pre_Proc}}.
+#' @param frames List; List containing three pixel-matched astronomical images. Expected order within list is (g,r,i). Output of \code{\link{ProFAst::Pre_Proc}}.
 #' @param savepassthru Logical; should intermediate files be saved to directory? Can greatly increase size on disk but useful to see which objects are being filtered out.
 #' @param skycut Numeric scalar; the lowest threshold to make on the image in units of the skyRMS. Passed to \code{\link{ProFound::profoundMultiBand}}
 #' @param pixcut Integer scalar; the number of pixels required to identify an object. Passed to \code{\link{ProFound::profoundMultiBand}}
@@ -56,11 +56,12 @@ cat("***********\n")
 segimlist = multi_data$segimlist
 segim = multi_data$pro_detect$segim
 segim_orig = multi_data$pro_detect$segim_orig
+groupim = multi_data$pro_detect$group$groupim
 
 #NEEDED TO EXTRACT GROUP MASK DATA
 #THAT DATA IS FOUND IN multi_data$pro_detect$group$groupsegID (FOR NPIX)
 #GROUP PHOTOMETRY DATA IS FOUND IN multi_data$pro_detect$groupstats (FOR RAcen, Deccen, etc.)
-group_data = data.table::as.data.table(cbind(multi_data$pro_detect$group$groupsegID,multi_data$pro_detect$groupstats, multi_data$cat_grp))
+#group_data = data.table::as.data.table(cbind(multi_data$pro_detect$group$groupsegID,multi_data$pro_detect$groupstats, multi_data$cat_grp))
 
 # Extract segment info, colour, total, deblend, aperture, and groups measurements
 objectcat <- data.table::as.data.table(cbind(multi_data$pro_detect$segstats,multi_data$cat_tot))
@@ -81,7 +82,7 @@ allcat=data.table::as.data.table(cbind(objectcat,groupcat[group_matches,]))
 if(savepassthru == TRUE){
 # Save data structure and produce diagnostic plot
 dir.create(savelocation)
-saveRDS(multi_data,file=paste0(savelocation,"stacked.rds"))
+#saveRDS(multi_data,file=paste0(savelocation,"stacked.rds"))
 
 #Saves all segmentation mask images in a list (segimlist)
 #Not needed & will likely be removed
@@ -96,6 +97,8 @@ utils::write.csv(segim, paste0(savelocation,"segim.csv"), row.names=FALSE)
 cat("Saving slimmed segim_orig\n")
 utils::write.csv(segim_orig, paste0(savelocation,"segim_orig.csv"), row.names=FALSE)
 
+cat("Saving groupim\n")
+utils::write.csv(groupim, paste0(savelocation,"groupim.csv"), row.names=FALSE)
 # rm(segim)
 # rm(segim_orig)
 # rm(segimlist)
@@ -104,5 +107,5 @@ utils::write.csv(groupcat,file=paste0(savelocation,"groupcat.csv"), row.names=FA
 utils::write.csv(allcat,file=paste0(savelocation,"allcat.csv"), row.names=FALSE)
 }
 
-return(c())
+return(list(allcat=allcat, segim=segim, groupim=groupim))
 }

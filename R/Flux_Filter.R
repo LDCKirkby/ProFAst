@@ -4,73 +4,33 @@
 #' @param flux_value Numeric scalar; Flux filter cutoff value. Determined by dividing query filter flux by sum of fluxes in other bands , i.e. (g/r+i). Sources with an flux ratio lower than the value are assumed to not be asteroids and are removed.
 #' @param edge_buffer Numeric scalar; Edge boundary value within which positive hits are ignored. Useful if images are artificially extended as is done in \code{\link{PreProc}}.
 #' @param savepassthru Logical; should intermediate files be saved to directory? Can greatly increase size on disk but useful to see which objects are being filtered out.
-#'
+#' @param ast_data List; R List containing data output from ProFAst::MultiDetect(). If not supplied will look for appropriate file in working directory.
+#' 
 #' @return Data frame containing all flux filtered sources.
 #' @export
 #'
-Flux_Filter <- function(RA_DEC, flux_value=1, edge_buffer=0.001, savepassthru=FALSE){
-
-#Checks to see if objectcati.csv exists, if not, checks to see if stacked.rds exists.
-#If neither exist it cancels
-if("objectcati.csv" %in% list.files(path = paste0("./",RA_DEC,"/")) == FALSE){
-  cat("*********\n")
-  cat("Objectcati.csv not found\n")
-  if("stacked.rds" %in% list.files(path = paste0("./",RA_DEC,"/")) == FALSE){
-    cat("stacked.rds not found either. Please ensure necessary files exist or run detection again\n")
-    break
-  }
-  multi_data = readRDS(paste0("./",RA_DEC,"/stacked.rds"))
-  cat_objects <- data.table::as.data.table(cbind(multi_data$pro_detect$segstats,multi_data$cat_tot))
-  
-  cat_groupinfo=cbind(segID=unlist(multi_data$pro_detect$group$groupsegID$segID),groupID=rep(multi_data$pro_detect$group$groupsegID$groupID,times=multi_data$pro_detect$group$groupsegID$Ngroup), Ngroup=rep(multi_data$pro_detect$group$groupsegID$Ngroup, times=multi_data$pro_detect$group$groupsegID$Ngroup))
-  
-  cat_objects=cbind(cat_objects,cat_groupinfo[match(cat_objects$segID, cat_groupinfo[,"segID"]),2:3])
-  
-  cat_groups <- data.table::as.data.table(cbind(multi_data$pro_detect$group$groupsegID$Ngroup,multi_data$pro_detect$groupstats$groupID,multi_data$cat_grp))
-  
-  names(cat_groups)[1] <- "Ngroup"
-  names(cat_groups)[2] <- "groupID"
-  
-  group_matches=match(cat_objects$segID,cat_groups$groupID,nomatch=NA)
-  
-  datafile0=data.table::as.data.table(cbind(cat_objects,cat_groups[group_matches,]))
-  
-  cat("Creating objectcati.csv\n")
-  utils::write.csv(cat_objects,file=paste0("./",RA_DEC,"/objectcati.csv"), row.names=FALSE)
-  
-  cat("Creating groupcati.csv\n")
-  utils::write.csv(cat_groups,file=paste0("./",RA_DEC,"/groupcati.csv"), row.names=FALSE)
-  
-  cat("Creating allcati.csv\n")
-  cat("*********\n\n")
-  utils::write.csv(datafile0,file=paste0("./",RA_DEC,"/allcati.csv"), row.names=FALSE)
-  
-  rm(multi_data, cat_objects, cat_groupinfo, cat_groups, group_matches, datafile0)
-  gc()
+Flux_Filter <- function(RA_DEC, flux_value=1, edge_buffer=0.001, savepassthru=FALSE, ast_data=NULL){
+if(is.null(ast_data)){
+  ast_data = utils::read.csv(paste0("./",RA_DEC,"/allcat.csv"))
 }
-  
-cat_groups = utils::read.csv(paste0("./",RA_DEC,"/allcati.csv"))
 cat("*********\n")
-cat(length(cat_groups$X), " Objects Detected\n")
+cat(length(ast_data$X), " Objects Detected\n")
 cat("*********\n\n")
 
 #Remove whole rows of NA's
-cat_groups = cat_groups[rowSums(is.na(cat_groups)) != ncol(cat_groups),]
+ast_data = ast_data[rowSums(is.na(ast_data)) != ncol(ast_data),]
 
 #Remove potential error fluxes that can be small negative numbers
-cat_groups$flux_gt[cat_groups$flux_gt < 0] <- 0
-cat_groups$flux_rxt[cat_groups$flux_rxt < 0] <- 0
-cat_groups$flux_i1xt[cat_groups$flux_i1xt < 0] <- 0
-#cat_groups$flux_gt = abs(cat_groups$flux_gt)
-#cat_groups$flux_rxt = abs(cat_groups$flux_rxt)
-#cat_groups$flux_i1xt = abs(cat_groups$flux_i1xt)
+ast_data$flux_gt[ast_data$flux_gt < 0] <- 0
+ast_data$flux_rxt[ast_data$flux_rxt < 0] <- 0
+ast_data$flux_i1xt[ast_data$flux_i1xt < 0] <- 0
 
 #Extracting potential asteroids, based on their flux ratio
 cat("*********\n")
 cat("Beginning asteroid search\n")
-green_objects = cbind("Colour" = "g", subset(cat_groups, subset = cat_groups$flux_gt/(cat_groups$flux_rxt + cat_groups$flux_i1xt) >= flux_value))
-red_objects = cbind("Colour" = "r", subset(cat_groups, subset = cat_groups$flux_rxt/(cat_groups$flux_gt + cat_groups$flux_i1xt) >= flux_value))
-blue_objects = cbind("Colour" = "i", subset(cat_groups, subset = cat_groups$flux_i1xt/(cat_groups$flux_gt + cat_groups$flux_rxt) >= flux_value))
+green_objects = cbind("Colour" = "g", subset(ast_data, subset = ast_data$flux_gt/(ast_data$flux_rxt + ast_data$flux_i1xt) >= flux_value))
+red_objects = cbind("Colour" = "r", subset(ast_data, subset = ast_data$flux_rxt/(ast_data$flux_gt + ast_data$flux_i1xt) >= flux_value))
+blue_objects = cbind("Colour" = "i", subset(ast_data, subset = ast_data$flux_i1xt/(ast_data$flux_gt + ast_data$flux_rxt) >= flux_value))
 
 #Applies edge buffer to red and blue, since they've been extended artificially
 RA = as.numeric(strsplit(RA_DEC, "_")[[1]][[1]])
@@ -85,12 +45,13 @@ green_objects = rbind(green_objects[green_objects$RAcen >= (RA - 0.5 + edge_buff
 #Bind final lists of objects together
 possible_asteroids <- rbind(blue_objects,green_objects,red_objects)
 cat(length(possible_asteroids$groupID), " potential asteroids in data\n")
-cat("Writing to ", paste0("./", RA_DEC,"/Possible_Asteroids.csv"),"\n")
+cat("Writing to ", paste0("./", RA_DEC,"/_Flux_Filtered_Objects.csv"),"\n")
 cat("*********\n\n")
 
+if(savepassthru==TRUE){
 #Write data to file
-utils::write.csv(possible_asteroids, file = paste0("./",RA_DEC,"/",RA_DEC,"_Possible_Asteroids.csv"), row.names=FALSE)
+utils::write.csv(possible_asteroids, file = paste0("./",RA_DEC,"/",RA_DEC,"_Flux_Filtered_Objects.csv"), row.names=FALSE)
+}
 
-rm(blue_objects, green_objects, red_objects, possible_asteroids, cat_groups)
-gc()
+return(possible_asteroids)
 }

@@ -3,13 +3,15 @@
 #' @param RA_DEC String; Celestial Right Ascension and Declination of Input Frame separated by underscore (RA_Dec).
 #' @param axrat_value Numeric scalar; Filter Cutoff Value. Sources with an axial ratio lower than the value are assumed to not be asteroids and are removed.
 #' @param savepassthru Logical; should intermediate files be saved to directory? Can greatly increase size on disk but useful to see which objects are being filtered out.
+#' @param filtered_data List; Flux filtered astronometric data. If not supplied will look for appropriate file in working directory.
 #' 
 #' @return Data frame containing all axrat filtered sources.
 #' @export
 #'
-Axrat_Filter <- function(RA_DEC, axrat_value=0.35, savepassthru=FALSE){
-
-possible_asteroids = utils::read.csv(paste0("./",RA_DEC,"/",RA_DEC,"_Possible_Asteroids.csv"), fill = TRUE)
+Axrat_Filter <- function(RA_DEC, axrat_value=0.35, savepassthru=FALSE, filtered_data=NULL){
+if(is.null(filtered_data)){
+possible_asteroids = utils::read.csv(paste0("./",RA_DEC,"/",RA_DEC,"_Flux_Filtered_Objects.csv"), fill = TRUE)
+}
 cat("*********\n")
 cat("Beginning axial filtering\n")
 cat("*********\n\n")
@@ -22,12 +24,12 @@ cat("*********\n")
 cat("Filtered to ", length(filtered_asteroids$axrat_gt), "potential asteroids\n")
 cat("*********\n\n")
 
+if(savepassthru==TRUE){
 cat("*********\n")
-cat("Writing to ", paste0("./", RA_DEC,"/",RA_DEC,"Filtered_Asteroids.csv"),"\n")
+cat("Writing to ", paste0("./", RA_DEC,"/",RA_DEC,"_Axrat_Filtered_Objects.csv"),"\n")
 cat("*********\n\n")
+utils::write.csv(filtered_asteroids, file = paste0("./",RA_DEC,"/",RA_DEC,"_Axrat_Filtered_Objects.csv"), row.names=FALSE)
+}
 
-utils::write.csv(filtered_asteroids, file = paste0("./",RA_DEC,"/",RA_DEC,"_Filtered_Asteroids.csv"), row.names=FALSE)
-
-rm(possible_asteroids, filtered_asteroids) 
-gc()
+return(filtered_asteroids)
 }

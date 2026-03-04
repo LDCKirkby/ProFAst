@@ -44,15 +44,15 @@ ProFAst <- function(RA_DEC, image_directory=".",
 cat("*************\n","Beginning Detection on:",RA_DEC,"\n","*************\n")
 frames <- Pre_Proc(RA_DEC, image_directory, savepassthru)
 
-data <- MultiDetect(RA_DEC, frames, skycut, pixcut, smooth, sigma, reltol, tolerance, ext, savepassthru)
+multi_data <- MultiDetect(RA_DEC, frames, skycut, pixcut, smooth, sigma, reltol, tolerance, ext, savepassthru)
 
-flux_filtered <- Flux_Filter(RA_DEC, flux_value, edge_buffer, savepassthru)
+flux_filtered <- Flux_Filter(RA_DEC, flux_value, edge_buffer, savepassthru, multi_data$allcat)
 
-axrat_filtered <- Axrat_Filter(RA_DEC, axrat_value, savepassthru)
+axrat_filtered <- Axrat_Filter(RA_DEC, axrat_value, savepassthru, flux_filtered)
 
-N100_filtered <- N100_Filter(RA_DEC, N100_lower, N100_upper, savepassthru)
+final_filtered <- N100_Filter(RA_DEC, N100_lower, N100_upper, axrat_filtered)
 
-Group_Cutter(RA_DEC, image_directory)
+Group_Cutter(RA_DEC, image_directory, final_filtered, frames, multi_data$segim, multi_data$groupim)
 
 warnings()
 }
