@@ -76,7 +76,7 @@ names(groupcat)[2] <- "groupID"
 
 group_matches=match(objectcat$segID,groupcat$groupID,nomatch=NA)
 
-allcat=as.data.table(cbind(objectcat,groupcat[group_matches,]))
+allcat=data.table::as.data.table(cbind(objectcat,groupcat[group_matches,]))
 
 if(savepassthru == TRUE){
 # Save data structure and produce diagnostic plot
@@ -86,22 +86,22 @@ saveRDS(multi_data,file=paste0(savelocation,"stacked.rds"))
 #Saves all segmentation mask images in a list (segimlist)
 #Not needed & will likely be removed
 cat("Saving slimmed segimlist\n")
-write.csv(segimlist, paste0(savelocation,"segimlist.csv"), row.names=FALSE)
+utils::write.csv(segimlist, paste0(savelocation,"segimlist.csv"), row.names=FALSE)
 
 #Save segmentation maps (dilated and converged)
 cat("Saving slimmed segim\n")
-write.csv(segim, paste0(savelocation,"segim.csv"), row.names=FALSE)
+utils::write.csv(segim, paste0(savelocation,"segim.csv"), row.names=FALSE)
 
 #Save colour segmentation maps (pre dilation)
 cat("Saving slimmed segim_orig\n")
-write.csv(segim_orig, paste0(savelocation,"segim_orig.csv"), row.names=FALSE)
+utils::write.csv(segim_orig, paste0(savelocation,"segim_orig.csv"), row.names=FALSE)
 
 # rm(segim)
 # rm(segim_orig)
 # rm(segimlist)
-write.csv(objectcat,file=paste0(savelocation,"objectcat.csv"), row.names=FALSE)
-write.csv(groupcat,file=paste0(savelocation,"groupcat.csv"), row.names=FALSE)
-write.csv(allcat,file=paste0(savelocation,"allcat.csv"), row.names=FALSE)
+utils::write.csv(objectcat,file=paste0(savelocation,"objectcat.csv"), row.names=FALSE)
+utils::write.csv(groupcat,file=paste0(savelocation,"groupcat.csv"), row.names=FALSE)
+utils::write.csv(allcat,file=paste0(savelocation,"allcat.csv"), row.names=FALSE)
 }
 
 return(c())

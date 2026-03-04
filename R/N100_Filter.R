@@ -14,7 +14,7 @@ N100_Filter <- function(RA_DEC, N100_lower=150, N100_upper=2250, savepassthru=FA
   cat("Applying N100 filter\n")
   cat("*********\n\n")
   
-  filtered_asteroids = read.csv(paste0("./", RA_DEC,"/",RA_DEC,"_Filtered_Asteroids.csv"))
+  filtered_asteroids = utils::read.csv(paste0("./", RA_DEC,"/",RA_DEC,"_Filtered_Asteroids.csv"))
   #Npix is the entire size of the group segment. Should use that but I only just found it
   #Idk if i can be bothered adding it tbh
   #N100 filter, filter done in all bands for completeness, even though they are they are all the same value
@@ -31,7 +31,7 @@ N100_Filter <- function(RA_DEC, N100_lower=150, N100_upper=2250, savepassthru=FA
   
   cat("Final number of ", length(N100_filtered_asteroids$groupID), " possible asteroids\n")
   
-  write.csv(N100_filtered_asteroids, file = paste0("./",RA_DEC,"/",RA_DEC,"_N100_Filtered_Asteroids.csv"), row.names=FALSE)
+  utils::write.csv(N100_filtered_asteroids, file = paste0("./",RA_DEC,"/",RA_DEC,"_N100_Filtered_Asteroids.csv"), row.names=FALSE)
   cat("Writing to " ,paste0("./", RA_DEC,"/",RA_DEC,"_N100_Filtered_Asteroids.csv"),"\n")
   cat("*********\n\n")
   

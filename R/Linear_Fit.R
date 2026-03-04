@@ -50,7 +50,7 @@ Edger <- function(segimcut, ID){
 }
 
 Ast_fit <-function(RA_DEC){
-asteroids = read.csv(paste0("./",RA_DEC,"/",RA_DEC,"_no_dupes.csv"))
+asteroids = utils::read.csv(paste0("./",RA_DEC,"/",RA_DEC,"_no_dupes.csv"))
 stopifnot(length(asteroids$segID) >= 1)
 
 #Checks to see if linear fit has already been done on the field
@@ -69,7 +69,7 @@ dir_create("./",RA_DEC,"/Linear_Fits/MPC_Format")
 dir_create("./",RA_DEC,"/Linear_Fits/Fit_Images")
 
 cat("***************** Reading in segmentation map data *****************\n")
-segim <- as.matrix(read.csv(paste0("./",RA_DEC,"/segim.csv")))
+segim <- as.matrix(utils::read.csv(paste0("./",RA_DEC,"/segim.csv")))
 cat("*****************  Generating groupim ***************** \n")
 groupim = profoundSegimGroup(segim = segim)
 groupim = groupim$groupim

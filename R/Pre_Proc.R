@@ -10,17 +10,17 @@
 Pre_Proc <- function(RA_DEC, image_directory, savepassthru=FALSE){
 
   cat("Loading images from ",image_directory,"\n")
-  g=Rfits_point(Sys.glob(file.path(image_directory,paste0("*",RA_DEC,"*g*.fits"))), header=TRUE, ext=1)
-  r=Rfits_point(Sys.glob(file.path(image_directory,paste0("*",RA_DEC,"*r*.fits"))), header=TRUE, ext=1)
-  i1=Rfits_point(Sys.glob(file.path(image_directory,paste0("*",RA_DEC,"*i1*.fits"))), header=TRUE, ext=1)
+  g=Rfits::Rfits_point(Sys.glob(file.path(image_directory,paste0("*",RA_DEC,"*g*.fits"))), header=TRUE, ext=1)
+  r=Rfits::Rfits_point(Sys.glob(file.path(image_directory,paste0("*",RA_DEC,"*r*.fits"))), header=TRUE, ext=1)
+  i1=Rfits::Rfits_point(Sys.glob(file.path(image_directory,paste0("*",RA_DEC,"*i1*.fits"))), header=TRUE, ext=1)
   
   cat("Resizing images\n")
-  rx=propaneWarp(r,keyvalues_out=g$keyvalues)
-  i1x=propaneWarp(i1,keyvalues_out=g$keyvalues)
+  rx=ProPane::propaneWarp(r,keyvalues_out=g$keyvalues)
+  i1x=ProPane::propaneWarp(i1,keyvalues_out=g$keyvalues)
 
   if(savepassthru == TRUE){
-    Rfits_write(rx, paste0(image_directory,"/rx.fits"), ext=1)
-    Rfits_write(i1x, paste0(image_directory,"/i1x.fits"), ext=1)
+    Rfits::Rfits_write(rx, paste0(image_directory,"/rx.fits"), ext=1)
+    Rfits::Rfits_write(i1x, paste0(image_directory,"/i1x.fits"), ext=1)
   }
   remove(r)
   remove(i1)

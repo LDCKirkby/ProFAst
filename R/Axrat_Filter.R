@@ -9,7 +9,7 @@
 #'
 Axrat_Filter <- function(RA_DEC, axrat_value=0.35, savepassthru=FALSE){
 
-possible_asteroids = read.csv(paste0("./",RA_DEC,"/",RA_DEC,"_Possible_Asteroids.csv"), fill = TRUE)
+possible_asteroids = utils::read.csv(paste0("./",RA_DEC,"/",RA_DEC,"_Possible_Asteroids.csv"), fill = TRUE)
 cat("*********\n")
 cat("Beginning axial filtering\n")
 cat("*********\n\n")
@@ -26,7 +26,7 @@ cat("*********\n")
 cat("Writing to ", paste0("./", RA_DEC,"/",RA_DEC,"Filtered_Asteroids.csv"),"\n")
 cat("*********\n\n")
 
-write.csv(filtered_asteroids, file = paste0("./",RA_DEC,"/",RA_DEC,"_Filtered_Asteroids.csv"), row.names=FALSE)
+utils::write.csv(filtered_asteroids, file = paste0("./",RA_DEC,"/",RA_DEC,"_Filtered_Asteroids.csv"), row.names=FALSE)
 
 rm(possible_asteroids, filtered_asteroids) 
 gc()

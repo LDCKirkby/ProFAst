@@ -36,20 +36,20 @@ if("objectcati.csv" %in% list.files(path = paste0("./",RA_DEC,"/")) == FALSE){
   datafile0=data.table::as.data.table(cbind(cat_objects,cat_groups[group_matches,]))
   
   cat("Creating objectcati.csv\n")
-  write.csv(cat_objects,file=paste0("./",RA_DEC,"/objectcati.csv"), row.names=FALSE)
+  utils::write.csv(cat_objects,file=paste0("./",RA_DEC,"/objectcati.csv"), row.names=FALSE)
   
   cat("Creating groupcati.csv\n")
-  write.csv(cat_groups,file=paste0("./",RA_DEC,"/groupcati.csv"), row.names=FALSE)
+  utils::write.csv(cat_groups,file=paste0("./",RA_DEC,"/groupcati.csv"), row.names=FALSE)
   
   cat("Creating allcati.csv\n")
   cat("*********\n\n")
-  write.csv(datafile0,file=paste0("./",RA_DEC,"/allcati.csv"), row.names=FALSE)
+  utils::write.csv(datafile0,file=paste0("./",RA_DEC,"/allcati.csv"), row.names=FALSE)
   
   rm(multi_data, cat_objects, cat_groupinfo, cat_groups, group_matches, datafile0)
   gc()
 }
   
-cat_groups = read.csv(paste0("./",RA_DEC,"/allcati.csv"))
+cat_groups = utils::read.csv(paste0("./",RA_DEC,"/allcati.csv"))
 cat("*********\n")
 cat(length(cat_groups$X), " Objects Detected\n")
 cat("*********\n\n")
@@ -89,7 +89,7 @@ cat("Writing to ", paste0("./", RA_DEC,"/Possible_Asteroids.csv"),"\n")
 cat("*********\n\n")
 
 #Write data to file
-write.csv(possible_asteroids, file = paste0("./",RA_DEC,"/",RA_DEC,"_Possible_Asteroids.csv"), row.names=FALSE)
+utils::write.csv(possible_asteroids, file = paste0("./",RA_DEC,"/",RA_DEC,"_Possible_Asteroids.csv"), row.names=FALSE)
 
 rm(blue_objects, green_objects, red_objects, possible_asteroids, cat_groups)
 gc()

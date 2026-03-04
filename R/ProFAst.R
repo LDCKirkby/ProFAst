@@ -16,6 +16,11 @@
 #' @param N100_lower Numeric scalar; N100 filter lower cutoff value. Sources with a N100 pixel count lower than the value are assumed too small to be asteroids and are removed. See \code{\link{ProFound}} documentation on how N100 value is calculated.
 #' @param N100_upper Numeric scalar; N100 filter upper cutoff calue. Sources with a N100 pixel count greater than the value are assumed too large to be asteroids and are removed. See \code{\link{ProFound}} documentation on how N100 value is calculated.
 #'
+#' @import ProFound
+#' @import ProPane
+#' @import Rfits
+#' @import Rwcs
+#' @import magicaxis
 #' @export
 ProFAst <- function(RA_DEC, image_directory,
                      skycut = 0.6,

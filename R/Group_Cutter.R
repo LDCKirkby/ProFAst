@@ -1,4 +1,4 @@
-Edger <- function(segimcut, ID, invert){
+Edger <- function(segimcut, ID, inverted){
   image = segimcut$image
   
   xrun=1:(dim(image)[1]-1)
@@ -21,9 +21,9 @@ Edger <- function(segimcut, ID, invert){
   image[image_edge==4]=0
   image[is.na(image)] <- 0
   
-  if(invert==TRUE){
+  if(inverted==TRUE){
     image[image%in%ID]=0
-  }else if(invert==FALSE){
+  }else if(inverted==FALSE){
     image[image%notin%ID]=0
   }
   return(image)
@@ -37,7 +37,7 @@ Group_Cutter <- function(loc, computer) {
   viking<-(0.339^2)*(10^(0.4*(30-mulim)))
 
   #Load in asteroid data
-  asteroids = read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv"))
+  asteroids = utils::read.csv(paste0("./",loc,"/",loc,"_N100_Filtered_Asteroids.csv"))
   #Add edge variables
   group_edge_points = c("group_tl_RA", "group_tl_Dec", "group_tr_RA", "group_tr_Dec", "group_bl_RA", "group_bl_Dec", "group_br_RA", "group_br_Dec", "group_top_RA", "group_top_Dec", "group_bot_RA", "group_bot_Dec")
   segment_edge_points = c("segment_tl_RA", "segment_tl_Dec", "segment_tr_RA", "segment_tr_Dec", "segment_bl_RA", "segment_bl_Dec", "segment_br_RA", "segment_br_Dec", "segment_top_RA", "segment_top_Dec", "segment_bot_RA", "segment_bot_Dec")
@@ -48,7 +48,7 @@ Group_Cutter <- function(loc, computer) {
   asteroids[,edge_points] <- NA
 
   cat("Reading in segmentation map data\n")
-  segim <- as.matrix(read.csv(paste0("./",loc,"/segim.csv")))
+  segim <- as.matrix(utils::read.csv(paste0("./",loc,"/segim.csv")))
   cat("Generating groupim\n")
   groupim = ProFound::profoundSegimGroup(segim = segim)
   groupim = groupim$groupim
