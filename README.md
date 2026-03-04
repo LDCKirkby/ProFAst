@@ -1,33 +1,33 @@
 # ProFAst (R package)
 
 ## TODO:
-- [ ] ProFAst.R
+- [x] ProFAst.R
   - [x] R-package header
   - [x] Add temp file option, default to FALSE
-  - [ ] Add proper return values for other functions
+  - [x] Add proper return values for other functions
 - [x] Pre_Proc.R
   - [x] R-package header
   - [x] Add temp file option, default to FALSE
   - [x] Add proper return values for other functions
-- [ ] Multi_Detect.R
+- [x] Multi_Detect.R
   - [x] R-package header
   - [x] Add temp file option, default to FALSE
-  - [ ] Add proper return values for other functions
-- [ ] Axrat_Filter.R
+  - [x] Add proper return values for other functions
+- [x] Axrat_Filter.R
   - [x] R-package header
   - [x] Add temp file option, default to FALSE
-  - [ ] Add proper return values for other functions
-- [ ] Flux_Filter.R
+  - [x] Add proper return values for other functions
+- [x] Flux_Filter.R
   - [x] R-package header
   - [x] Add temp file option, default to FALSE
-  - [ ] Add proper return values for other functions
-- [ ] N100_Filter.R
+  - [x] Add proper return values for other functions
+- [x] N100_Filter.R
   - [x] R-package header
   - [x] Add temp file option, default to FALSE
-  - [ ] Add proper return values for other functions
-- [ ] Group_Cutter.R
-  - [ ] R-package header
-  - [ ] Add proper return values for other functions
+  - [x] Add proper return values for other functions
+- [x] Group_Cutter.R
+  - [x] R-package header
+  - [x] Add proper return values for other functions
 - [ ] Group_Remover.R
   - [ ] R-package header
 - [ ] Linear_Fit.R
