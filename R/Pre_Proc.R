@@ -25,8 +25,8 @@ Pre_Proc <- function(RA_DEC, image_directory, savepassthru=FALSE){
   cat("Resizing done.\n")
 
   if(savepassthru == TRUE){
-    Rfits::Rfits_write(rx, paste0(image_directory,"/rx.fits"), ext=1)
-    Rfits::Rfits_write(i1x, paste0(image_directory,"/i1x.fits"), ext=1)
+    Rfits::Rfits_write(rx, paste0(image_directory,"/rx.fits"))
+    Rfits::Rfits_write(i1x, paste0(image_directory,"/i1x.fits"))
   }
   remove(r)
   remove(i1)
