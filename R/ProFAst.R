@@ -21,6 +21,10 @@
 #' @import Rfits
 #' @import Rwcs
 #' @import magicaxis
+#' @import imager
+#' @import Cairo
+#' @import MASS
+#' @import data.table
 #' @export
 ProFAst <- function(RA_DEC, image_directory,
                      skycut = 0.6,
