@@ -1,7 +1,7 @@
 #' ProFAst
 #' @description Full execution of detection and filter runs. Extra input paramters are passed through to other function calls to adjust detection or filter processes.
 #' @param RA_DEC Celestial Right Ascension and Declination of Input Frame separated by underscore (RA_Dec).
-#' @param image_directory Location of input fits files.
+#' @param image_directory Location of input fits files. Default behaviour is to check working directory for suitable fits images.
 #' @param savepassthru Logical; should intermediate files be saved to directory? Can greatly increase size on disk but useful to see which objects are being filtered out.
 #' @param skycut Numeric scalar; the lowest threshold to make on the image in units of the skyRMS. Passed to \code{\link{ProFound::profoundMultiBand}}
 #' @param pixcut Integer scalar; the number of pixels required to identify an object. Passed to \code{\link{ProFound::profoundMultiBand}}
@@ -26,7 +26,7 @@
 #' @import MASS
 #' @import data.table
 #' @export
-ProFAst <- function(RA_DEC, image_directory,
+ProFAst <- function(RA_DEC, image_directory=".",
                      skycut = 0.6,
                      pixcut = 15, 
                      smooth = TRUE, 

@@ -9,7 +9,11 @@
 #'
 Pre_Proc <- function(RA_DEC, image_directory, savepassthru=FALSE){
 
+  if(image_directory=="."){
+    cat("Loading images from working directory.\n")
+  }else{
   cat("Loading images from ",image_directory,"\n")
+  }
   g=Rfits::Rfits_point(Sys.glob(file.path(image_directory,paste0("*",RA_DEC,"*g*.fits"))), header=TRUE, ext=1)
   r=Rfits::Rfits_point(Sys.glob(file.path(image_directory,paste0("*",RA_DEC,"*r*.fits"))), header=TRUE, ext=1)
   i1=Rfits::Rfits_point(Sys.glob(file.path(image_directory,paste0("*",RA_DEC,"*i1*.fits"))), header=TRUE, ext=1)
