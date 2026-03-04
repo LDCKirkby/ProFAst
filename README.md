@@ -53,7 +53,7 @@
 
 ## Synopsis
 
-ProFAst is an astronomy tool based on the **ProFound** package suite developed by Aaron Robotham (https://github.com/asgr). Designed to detect asteroids across multi-band astronomical images through key parameters that help distinguish an asteroid from other stationary points.
+ProFAst is an astronomy tool based on the **ProTools** package suite developed by Aaron Robotham (https://github.com/asgr). Designed to detect asteroids across multi-band astronomical images through key parameters that help distinguish an asteroid from other stationary points.
 ## Installation
 
 ### Getting R
