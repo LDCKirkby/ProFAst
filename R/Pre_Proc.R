@@ -18,9 +18,11 @@ Pre_Proc <- function(RA_DEC, image_directory, savepassthru=FALSE){
   r=Rfits::Rfits_point(Sys.glob(file.path(image_directory,paste0("*",RA_DEC,"*r*.fits"))), header=TRUE, ext=1)
   i1=Rfits::Rfits_point(Sys.glob(file.path(image_directory,paste0("*",RA_DEC,"*i1*.fits"))), header=TRUE, ext=1)
   
-  cat("Resizing images\n")
+  cat("Resizing images (1/2)\n")
   rx=ProPane::propaneWarp(r,keyvalues_out=g$keyvalues)
+  cat("Resizing images (2/2)\n")
   i1x=ProPane::propaneWarp(i1,keyvalues_out=g$keyvalues)
+  cat("Resizing done.\n")
 
   if(savepassthru == TRUE){
     Rfits::Rfits_write(rx, paste0(image_directory,"/rx.fits"), ext=1)
