@@ -20,7 +20,7 @@ MultiDetect(
 \arguments{
 \item{RA_DEC}{Celestial Right Ascension and Declination of Input Frame separated by underscore (RA_Dec).}
 
-\item{frames}{Vector; Vector containing three pixel-matched astronomical images. Expected order within list is (g,r,i). Output of \code{\link{ProFAst::Pre_Proc}}.}
+\item{frames}{List; List containing three pixel-matched astronomical images. Expected order within list is (g,r,i). Output of \code{\link{ProFAst::Pre_Proc}}.}
 
 \item{skycut}{Numeric scalar; the lowest threshold to make on the image in units of the skyRMS. Passed to \code{\link{ProFound::profoundMultiBand}}}
 

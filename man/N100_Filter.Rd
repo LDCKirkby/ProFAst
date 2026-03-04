@@ -4,7 +4,7 @@
 \alias{N100_Filter}
 \title{N100_filter}
 \usage{
-N100_Filter(RA_DEC, N100_lower = 150, N100_upper = 2250, savepassthru = FALSE)
+N100_Filter(RA_DEC, N100_lower = 150, N100_upper = 2250, filtered_data = NULL)
 }
 \arguments{
 \item{RA_DEC}{Celestial Right Ascension and Declination of Input Frame separated by underscore (RA_Dec).}
@@ -13,7 +13,7 @@ N100_Filter(RA_DEC, N100_lower = 150, N100_upper = 2250, savepassthru = FALSE)
 
 \item{N100_upper}{Large pixel count cutoff. Objects with more pixels than the threshold are assumed to be errors and excluded.}
 
-\item{savepassthru}{Logical; should intermediate files be saved to directory? Can greatly increase size on disk but useful to see which objects are being filtered out.}
+\item{filtered_data}{List; Filtered astronometric data. If not supplied will look for appropriate file in working directory.}
 }
 \value{
 Data frame containing all N100 filtered sources.

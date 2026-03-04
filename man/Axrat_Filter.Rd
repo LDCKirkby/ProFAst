@@ -4,7 +4,12 @@
 \alias{Axrat_Filter}
 \title{Axrat_filter}
 \usage{
-Axrat_Filter(RA_DEC, axrat_value = 0.35, savepassthru = FALSE)
+Axrat_Filter(
+  RA_DEC,
+  axrat_value = 0.35,
+  savepassthru = FALSE,
+  filtered_data = NULL
+)
 }
 \arguments{
 \item{RA_DEC}{String; Celestial Right Ascension and Declination of Input Frame separated by underscore (RA_Dec).}
@@ -12,6 +17,8 @@ Axrat_Filter(RA_DEC, axrat_value = 0.35, savepassthru = FALSE)
 \item{axrat_value}{Numeric scalar; Filter Cutoff Value. Sources with an axial ratio lower than the value are assumed to not be asteroids and are removed.}
 
 \item{savepassthru}{Logical; should intermediate files be saved to directory? Can greatly increase size on disk but useful to see which objects are being filtered out.}
+
+\item{filtered_data}{List; Flux filtered astronometric data. If not supplied will look for appropriate file in working directory.}
 }
 \value{
 Data frame containing all axrat filtered sources.

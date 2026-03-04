@@ -2,6 +2,7 @@
 
 export(Axrat_Filter)
 export(Flux_Filter)
+export(Group_Cutter)
 export(MultiDetect)
 export(N100_Filter)
 export(Pre_Proc)

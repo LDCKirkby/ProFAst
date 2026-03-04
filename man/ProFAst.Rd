@@ -6,7 +6,7 @@
 \usage{
 ProFAst(
   RA_DEC,
-  image_directory,
+  image_directory = ".",
   skycut = 0.6,
   pixcut = 15,
   smooth = TRUE,
@@ -25,7 +25,7 @@ ProFAst(
 \arguments{
 \item{RA_DEC}{Celestial Right Ascension and Declination of Input Frame separated by underscore (RA_Dec).}
 
-\item{image_directory}{Location of input fits files.}
+\item{image_directory}{Location of input fits files. Default behaviour is to check working directory for suitable fits images.}
 
 \item{skycut}{Numeric scalar; the lowest threshold to make on the image in units of the skyRMS. Passed to \code{\link{ProFound::profoundMultiBand}}}
 

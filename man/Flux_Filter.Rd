@@ -4,7 +4,13 @@
 \alias{Flux_Filter}
 \title{Flux_filter}
 \usage{
-Flux_Filter(RA_DEC, flux_value = 1, edge_buffer = 0.001, savepassthru = FALSE)
+Flux_Filter(
+  RA_DEC,
+  flux_value = 1,
+  edge_buffer = 0.001,
+  savepassthru = FALSE,
+  ast_data = NULL
+)
 }
 \arguments{
 \item{RA_DEC}{Celestial Right Ascension and Declination of Input Frame separated by underscore (RA_Dec).}
@@ -14,6 +20,8 @@ Flux_Filter(RA_DEC, flux_value = 1, edge_buffer = 0.001, savepassthru = FALSE)
 \item{edge_buffer}{Numeric scalar; Edge boundary value within which positive hits are ignored. Useful if images are artificially extended as is done in \code{\link{PreProc}}.}
 
 \item{savepassthru}{Logical; should intermediate files be saved to directory? Can greatly increase size on disk but useful to see which objects are being filtered out.}
+
+\item{ast_data}{List; R List containing data output from ProFAst::MultiDetect(). If not supplied will look for appropriate file in working directory.}
 }
 \value{
 Data frame containing all flux filtered sources.

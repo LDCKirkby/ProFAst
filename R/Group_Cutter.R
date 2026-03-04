@@ -44,7 +44,6 @@ edger <- function(segimcut, ID, inverted){
 #' @import Rfits
 #' @import Rwcs
 #' @import magicaxis
-#' @import imager
 #' @import Cairo
 #' @import MASS
 #' @import data.table
