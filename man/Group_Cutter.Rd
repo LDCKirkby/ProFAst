@@ -22,7 +22,7 @@ Group_Cutter(
 
 \item{asteroids}{Numeric Data Frame; Optional. Data frame containing astronomical bodies to produce cutouts of. If not supplied will look for appropriate file in working directory.}
 
-\item{frames}{List; Optional. List containing three pixel-matched astronomical images. Expected order within list is (g,r,i), returned by \code{\link{ProFAst::Pre_Proc}}. If not supplied will look for appropriate file in working directory and perform pixel matching. Can greatly increase execution time if images are sufficiently large.}
+\item{frames}{List; Optional. List containing three pixel-matched astronomical images. Expected order within list is (g,r,i), returned by \code{\link[ProFAst]{Pre_Proc}}. If not supplied will look for appropriate file in working directory and perform pixel matching. Can greatly increase execution time if images are sufficiently large.}
 
 \item{segim}{Integer Matrix; Optional. Matrix containing object segmentation masks for an image. If not supplied will look for appropriate file in working directory.}
 

@@ -29,19 +29,19 @@ ProFAst(
 
 \item{image_directory}{Location of input fits files. Default behaviour is to check working directory for suitable fits images.}
 
-\item{skycut}{Numeric scalar; the lowest threshold to make on the image in units of the skyRMS. Passed to \code{\link{ProFound::profoundMultiBand}}}
+\item{skycut}{Numeric scalar; the lowest threshold to make on the image in units of the skyRMS. Passed to \code{\link[ProFound]{profoundMultiBand}}}
 
-\item{pixcut}{Integer scalar; the number of pixels required to identify an object. Passed to \code{\link{ProFound::profoundMultiBand}}}
+\item{pixcut}{Integer scalar; the number of pixels required to identify an object. Passed to \code{\link[ProFound]{profoundMultiBand}}}
 
-\item{smooth}{Logical; should smoothing be done on the target image? Passed to \code{\link{ProFound::profoundMultiBand}}}
+\item{smooth}{Logical; should smoothing be done on the target image? Passed to \code{\link[ProFound]{profoundMultiBand}}}
 
-\item{sigma}{Numeric scalar; standard deviation of the blur used when smooth=TRUE. Passed to \code{\link{ProFound::profoundMultiBand}}}
+\item{sigma}{Numeric scalar; standard deviation of the blur used when smooth=TRUE. Passed to \code{\link[ProFound]{profoundMultiBand}}}
 
-\item{reltol}{Numeric scalar; only relevant for watershed='ProFound'. A modifier to the tolerance, modifying it by the ratio of the segment peak flux divided by the saddle point flux to the power reltol. The default means the reltol has no effect since this modifier becomes 1. A larger value of reltol means segments are more aggressively merged together. Can be (and often should be in practice) negative. The effect of using reltol and setting to negative is that the central brighter parts of galaxies are kept together in a single segment, and deblending is more common on the outskirts (where it should have less effect on the overall flux). The principle is that we need to be very confident a bright source needs to be split near its peak flux, but can be more aggressive in the outskirts. Passed to \code{\link{ProFound::profoundMultiBand}}}
+\item{reltol}{Numeric scalar; only relevant for watershed='ProFound'. A modifier to the tolerance, modifying it by the ratio of the segment peak flux divided by the saddle point flux to the power reltol. The default means the reltol has no effect since this modifier becomes 1. A larger value of reltol means segments are more aggressively merged together. Can be (and often should be in practice) negative. The effect of using reltol and setting to negative is that the central brighter parts of galaxies are kept together in a single segment, and deblending is more common on the outskirts (where it should have less effect on the overall flux). The principle is that we need to be very confident a bright source needs to be split near its peak flux, but can be more aggressive in the outskirts. Passed to \code{\link[ProFound]{profoundMultiBand}}}
 
-\item{tolerance}{Numeric scalar; the minimum height of the object in the units of skyRMS between its highest point (seed) and the point where it contacts another object (checked for every contact pixel). If the height is smaller than the tolerance, the object will be combined with one of its neighbours, which is the highest. The range 1-5 offers decent results usually. Passed to \code{\link{ProFound::profoundMultiBand}}}
+\item{tolerance}{Numeric scalar; the minimum height of the object in the units of skyRMS between its highest point (seed) and the point where it contacts another object (checked for every contact pixel). If the height is smaller than the tolerance, the object will be combined with one of its neighbours, which is the highest. The range 1-5 offers decent results usually. Passed to \code{\link[ProFound]{profoundMultiBand}}}
 
-\item{ext}{Numeric scalar; radius of the neighbourhood in pixels for the detection of neighbouring objects. Higher value smooths out small objects. Passed to \code{\link{ProFound::profoundMultiBand}}.}
+\item{ext}{Numeric scalar; radius of the neighbourhood in pixels for the detection of neighbouring objects. Higher value smooths out small objects. Passed to \code{\link[ProFound]{profoundMultiBand}}.}
 
 \item{flux_value}{Numeric scalar; Flux filter cutoff value. Determined by dividing query filter flux by sum of fluxes in other bands , i.e. (g/r+i). Sources with an flux ratio lower than the value are assumed to not be asteroids and are removed.}
 

@@ -27,5 +27,5 @@ Pre_Proc(
 List containing 3 pixel matched images
 }
 \description{
-Function that does necessary preprocessing for \code{\link{ProFAst::MultiDetect}}. Used to resize all images to same size, returning pixel matched images.
+Function that does necessary preprocessing for \code{\link[ProFAst]{MultiDetect}}. Used to resize all images to same size, returning pixel matched images.
 }
