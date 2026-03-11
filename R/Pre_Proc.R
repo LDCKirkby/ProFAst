@@ -1,5 +1,5 @@
 #' PreProc
-#' @description Function that does necessary preprocessing for \code{\link{ProFAst::MultiDetect}}. Used to resize all images to same size, returning pixel matched images.
+#' @description Function that does necessary preprocessing for \code{\link[ProFAst]{MultiDetect}}. Used to resize all images to same size, returning pixel matched images.
 #' @param RA_DEC String; Celestial Right Ascension and Declination of Input Frame separated by underscore (RA_Dec).
 #' @param image_directory String; absolute folder location from which to read fits files.
 #' @param savepassthru Logical; should adjusted pixel matched images be saved to directory? Can greatly increase size on disk but useful if you want to import into other programs.

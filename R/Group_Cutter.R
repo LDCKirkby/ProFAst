@@ -35,7 +35,7 @@ edger <- function(segimcut, ID, inverted){
 #' @param RA_DEC String; Celestial Right Ascension and Declination of Input Frame separated by underscore (RA_Dec).
 #' @param image_directory String; Location of input fits files. Default behaviour is to check working directory for suitable fits images.
 #' @param asteroids Numeric Data Frame; Optional. Data frame containing astronomical bodies to produce cutouts of. If not supplied will look for appropriate file in working directory.
-#' @param frames List; Optional. List containing three pixel-matched astronomical images. Expected order within list is (g,r,i), returned by \code{\link{ProFAst::Pre_Proc}}. If not supplied will look for appropriate file in working directory and perform pixel matching. Can greatly increase execution time if images are sufficiently large.
+#' @param frames List; Optional. List containing three pixel-matched astronomical images. Expected order within list is (g,r,i), returned by \code{\link[ProFAst]{Pre_Proc}}. If not supplied will look for appropriate file in working directory and perform pixel matching. Can greatly increase execution time if images are sufficiently large.
 #' @param segim Integer Matrix; Optional. Matrix containing object segmentation masks for an image. If not supplied will look for appropriate file in working directory. 
 #' @param groupim Integer Matrix; Optional. Matrix containing group segmentation masks for an image. If not supplied will look for appropriate file in working directory. 
 #' @param imagenumber Numeric scalar; Number of input images to analyse. ProFAst will default to 3 input fields.
