@@ -9,7 +9,8 @@ Flux_Filter(
   flux_value = 1,
   edge_buffer = 0.001,
   savepassthru = FALSE,
-  ast_data = NULL
+  ast_data = NULL,
+  colours = c("g", "r", "i")
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ Flux_Filter(
 \item{savepassthru}{Logical; should intermediate files be saved to directory? Can greatly increase size on disk but useful to see which objects are being filtered out.}
 
 \item{ast_data}{List; R List containing data output from ProFAst::MultiDetect(). If not supplied will look for appropriate file in working directory.}
+
+\item{colours}{Character vector; List containing detection bands for input fields. ProFAst will default to looking for g,r & i bands unless told otherwise.}
 }
 \value{
 Data frame containing all flux filtered sources.

@@ -8,7 +8,8 @@ Axrat_Filter(
   RA_DEC,
   axrat_value = 0.35,
   savepassthru = FALSE,
-  filtered_data = NULL
+  filtered_data = NULL,
+  colours = c("g", "r", "i")
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ Axrat_Filter(
 \item{savepassthru}{Logical; should intermediate files be saved to directory? Can greatly increase size on disk but useful to see which objects are being filtered out.}
 
 \item{filtered_data}{List; Flux filtered astronometric data. If not supplied will look for appropriate file in working directory.}
+
+\item{colours}{Character vector; List containing detection bands for input fields. ProFAst will default to looking for g,r & i bands unless told otherwise.}
 }
 \value{
 Data frame containing all axrat filtered sources.

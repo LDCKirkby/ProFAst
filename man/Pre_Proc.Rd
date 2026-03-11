@@ -4,7 +4,13 @@
 \alias{Pre_Proc}
 \title{PreProc}
 \usage{
-Pre_Proc(RA_DEC, image_directory, savepassthru = FALSE)
+Pre_Proc(
+  RA_DEC,
+  image_directory,
+  savepassthru = FALSE,
+  imagenumber = 3,
+  colours = c("g", "r", "i")
+)
 }
 \arguments{
 \item{RA_DEC}{String; Celestial Right Ascension and Declination of Input Frame separated by underscore (RA_Dec).}
@@ -12,6 +18,10 @@ Pre_Proc(RA_DEC, image_directory, savepassthru = FALSE)
 \item{image_directory}{String; absolute folder location from which to read fits files.}
 
 \item{savepassthru}{Logical; should adjusted pixel matched images be saved to directory? Can greatly increase size on disk but useful if you want to import into other programs.}
+
+\item{imagenumber}{Numeric scalar; Number of input images to analyse. ProFAst will default to 3 input fields.}
+
+\item{colours}{Character vector; List containing detection bands for input fields. ProFAst will default to looking for g,r & i bands unless told otherwise.}
 }
 \value{
 List containing 3 pixel matched images

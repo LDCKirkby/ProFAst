@@ -14,7 +14,9 @@ MultiDetect(
   reltol = -10,
   tolerance = 1,
   ext = 7,
-  savepassthru = FALSE
+  savepassthru = FALSE,
+  imagenumber = 3,
+  colours = c("g", "r", "i")
 )
 }
 \arguments{
@@ -37,6 +39,10 @@ MultiDetect(
 \item{ext}{Numeric scalar; radius of the neighbourhood in pixels for the detection of neighbouring objects. Higher value smooths out small objects. Passed to \code{\link{ProFound::profoundMultiBand}}.}
 
 \item{savepassthru}{Logical; should intermediate files be saved to directory? Can greatly increase size on disk but useful to see which objects are being filtered out.}
+
+\item{imagenumber}{Numeric scalar; Number of input images to analyse. ProFAst will default to 3 input fields.}
+
+\item{colours}{Character vector; List containing detection bands for input fields. ProFAst will default to looking for g,r & i bands unless told otherwise.}
 }
 \value{
 Data frame containing multi-band photometry data.

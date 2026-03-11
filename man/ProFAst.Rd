@@ -19,7 +19,9 @@ ProFAst(
   axrat_value = 0.35,
   N100_lower = 150,
   N100_upper = 2250,
-  savepassthru = FALSE
+  savepassthru = FALSE,
+  imagenumber = 3,
+  colours = c("g", "r", "i")
 )
 }
 \arguments{
@@ -52,6 +54,10 @@ ProFAst(
 \item{N100_upper}{Numeric scalar; N100 filter upper cutoff calue. Sources with a N100 pixel count greater than the value are assumed too large to be asteroids and are removed. See \code{\link{ProFound}} documentation on how N100 value is calculated.}
 
 \item{savepassthru}{Logical; should intermediate files be saved to directory? Can greatly increase size on disk but useful to see which objects are being filtered out.}
+
+\item{imagenumber}{Numeric scalar; Number of input images to analyse. ProFAst will default to 3 input fields.}
+
+\item{colours}{Character vector; List containing detection bands for input fields. ProFAst will default to looking for g,r & i bands unless told otherwise.}
 }
 \description{
 Full execution of detection and filter runs. Extra input paramters are passed through to other function calls to adjust detection or filter processes.

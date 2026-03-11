@@ -4,7 +4,13 @@
 \alias{N100_Filter}
 \title{N100_filter}
 \usage{
-N100_Filter(RA_DEC, N100_lower = 150, N100_upper = 2250, filtered_data = NULL)
+N100_Filter(
+  RA_DEC,
+  N100_lower = 150,
+  N100_upper = 2250,
+  filtered_data = NULL,
+  colours = c("g", "r", "i")
+)
 }
 \arguments{
 \item{RA_DEC}{Celestial Right Ascension and Declination of Input Frame separated by underscore (RA_Dec).}
@@ -14,6 +20,8 @@ N100_Filter(RA_DEC, N100_lower = 150, N100_upper = 2250, filtered_data = NULL)
 \item{N100_upper}{Large pixel count cutoff. Objects with more pixels than the threshold are assumed to be errors and excluded.}
 
 \item{filtered_data}{List; Filtered astronometric data. If not supplied will look for appropriate file in working directory.}
+
+\item{colours}{Character vector; List containing detection bands for input fields. ProFAst will default to looking for g,r & i bands unless told otherwise.}
 }
 \value{
 Data frame containing all N100 filtered sources.

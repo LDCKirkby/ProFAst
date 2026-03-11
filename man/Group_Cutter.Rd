@@ -10,7 +10,9 @@ Group_Cutter(
   asteroids = NULL,
   frames = NULL,
   segim = NULL,
-  groupim = NULL
+  groupim = NULL,
+  imagenumber = 3,
+  colours = c("g", "r", "i")
 )
 }
 \arguments{
@@ -25,6 +27,10 @@ Group_Cutter(
 \item{segim}{Integer Matrix; Optional. Matrix containing object segmentation masks for an image. If not supplied will look for appropriate file in working directory.}
 
 \item{groupim}{Integer Matrix; Optional. Matrix containing group segmentation masks for an image. If not supplied will look for appropriate file in working directory.}
+
+\item{imagenumber}{Numeric scalar; Number of input images to analyse. ProFAst will default to 3 input fields.}
+
+\item{colours}{Character vector; List containing detection bands for input fields. ProFAst will default to looking for g,r & i bands unless told otherwise.}
 }
 \description{
 Postage stamp maker. Produces cutouts of fits images, with segmentation mask data overlaid.
