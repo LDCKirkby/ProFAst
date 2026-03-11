@@ -45,7 +45,7 @@ ProFAst(
 
 \item{flux_value}{Numeric scalar; Flux filter cutoff value. Determined by dividing query filter flux by sum of fluxes in other bands , i.e. (g/r+i). Sources with an flux ratio lower than the value are assumed to not be asteroids and are removed.}
 
-\item{edge_buffer}{Numeric scalar; Edge boundary value within which positive hits are ignored. Useful if images are artificially extended as is done in \code{\link{PreProc}}.}
+\item{edge_buffer}{Numeric scalar; Edge boundary value within which positive hits are ignored. Useful if images are artificially extended as is done in \code{\link[ProFAst]{Pre_Proc}}.}
 
 \item{axrat_value}{Numeric scalar; Axial ratio filter cutoff value. Sources with an axial ratio lower than the value are assumed to not be asteroids and are removed. See \code{\link{ProFound}} documentation on how axrat value is determined.}
 

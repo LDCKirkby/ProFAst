@@ -18,7 +18,7 @@ Flux_Filter(
 
 \item{flux_value}{Numeric scalar; Flux filter cutoff value. Determined by dividing query filter flux by sum of fluxes in other bands , i.e. (g/r+i). Sources with an flux ratio lower than the value are assumed to not be asteroids and are removed.}
 
-\item{edge_buffer}{Numeric scalar; Edge boundary value within which positive hits are ignored. Useful if images are artificially extended as is done in \code{\link{PreProc}}.}
+\item{edge_buffer}{Numeric scalar; Edge boundary value within which positive hits are ignored. Useful if images are artificially extended as is done in \code{\link[ProFAst]{Pre_Proc}}.}
 
 \item{savepassthru}{Logical; should intermediate files be saved to directory? Can greatly increase size on disk but useful to see which objects are being filtered out.}
 
