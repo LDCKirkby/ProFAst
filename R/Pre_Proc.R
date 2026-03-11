@@ -18,7 +18,6 @@ Pre_Proc <- function(RA_DEC, image_directory, savepassthru=FALSE, imagenumber=3,
   }
   shapedimages=c()
   for(img in 1:imagenumber){
-    cat("Pointing to image ",img,"\n")
     imcount = colours[[img]]
     tempimage = Rfits::Rfits_point(Sys.glob(file.path(image_directory,paste0("*",RA_DEC,"*",imcount,"*.fits"))), header=TRUE, ext=1)
     assign(paste0(imcount), tempimage)
@@ -34,7 +33,6 @@ Pre_Proc <- function(RA_DEC, image_directory, savepassthru=FALSE, imagenumber=3,
       Rfits::Rfits_write(get(paste0(colours[[img]],"x")),paste0(image_directory,"/",colours[[img]],"x.fits"))
     }
     shapedimages[[img]] = get(paste0(colours[[img]],"x"))
-    remove(get(paste0(colours[[img]])))
   }
   # cat("Resizing images (1/2)\n")
   # im2x=ProPane::propaneWarp(im2,keyvalues_out=im1$keyvalues)

@@ -47,11 +47,11 @@ ProFAst(
 
 \item{edge_buffer}{Numeric scalar; Edge boundary value within which positive hits are ignored. Useful if images are artificially extended as is done in \code{\link[ProFAst]{Pre_Proc}}.}
 
-\item{axrat_value}{Numeric scalar; Axial ratio filter cutoff value. Sources with an axial ratio lower than the value are assumed to not be asteroids and are removed. See \code{\link{ProFound}} documentation on how axrat value is determined.}
+\item{axrat_value}{Numeric scalar; Axial ratio filter cutoff value. Sources with an axial ratio lower than the value are assumed to not be asteroids and are removed. See \code{\link[ProFound]} documentation on how axrat value is determined.}
 
-\item{N100_lower}{Numeric scalar; N100 filter lower cutoff value. Sources with a N100 pixel count lower than the value are assumed too small to be asteroids and are removed. See \code{\link{ProFound}} documentation on how N100 value is calculated.}
+\item{N100_lower}{Numeric scalar; N100 filter lower cutoff value. Sources with a N100 pixel count lower than the value are assumed too small to be asteroids and are removed. See \code{\link[ProFound]} documentation on how N100 value is calculated.}
 
-\item{N100_upper}{Numeric scalar; N100 filter upper cutoff calue. Sources with a N100 pixel count greater than the value are assumed too large to be asteroids and are removed. See \code{\link{ProFound}} documentation on how N100 value is calculated.}
+\item{N100_upper}{Numeric scalar; N100 filter upper cutoff calue. Sources with a N100 pixel count greater than the value are assumed too large to be asteroids and are removed. See \code{\link[ProFound]} documentation on how N100 value is calculated.}
 
 \item{savepassthru}{Logical; should intermediate files be saved to directory? Can greatly increase size on disk but useful to see which objects are being filtered out.}
 
