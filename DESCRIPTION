@@ -22,7 +22,8 @@ Imports:
     ProPane,
     Rfits,
     Rwcs,
-    xtable
+    xtable,
+    imager
 Suggests:
     common,
     fs,
