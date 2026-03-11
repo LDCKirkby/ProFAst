@@ -9,14 +9,14 @@
 #' @return List containing 3 pixel matched images
 #' @export
 #'
-Pre_Proc <- function(RA_DEC, image_directory, savepassthru=FALSE, imagenumber=3, colours=list("g","r","i")){
+Pre_Proc <- function(RA_DEC, image_directory, savepassthru=FALSE, imagenumber=3, colours=c("g","r","i")){
 
   if(image_directory=="."){
     cat("Loading images from working directory.\n")
   }else{
   cat("Loading images from ",image_directory,"\n")
   }
-  shapedimages=list()
+  shapedimages=c()
   for(i in 1:imagenumber){
     imcount = colours[[i]]
     tempimage = Rfits::Rfits_point(Sys.glob(file.path(image_directory,paste0("*",RA_DEC,"*",imcount,"*.fits"))), header=TRUE, ext=1)
