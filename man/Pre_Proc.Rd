@@ -9,7 +9,7 @@ Pre_Proc(
   image_directory,
   savepassthru = FALSE,
   imagenumber = 3,
-  colours = c("g", "r", "i")
+  colours = list("g", "r", "i")
 )
 }
 \arguments{
