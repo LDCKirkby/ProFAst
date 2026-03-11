@@ -17,24 +17,24 @@ Pre_Proc <- function(RA_DEC, image_directory, savepassthru=FALSE, imagenumber=3,
   cat("Loading images from ",image_directory,"\n")
   }
   shapedimages=c()
-  for(i in 1:imagenumber){
-    cat("Pointing to image ",i,"\n")
-    imcount = colours[[i]]
+  for(img in 1:imagenumber){
+    cat("Pointing to image ",img,"\n")
+    imcount = colours[[img]]
     tempimage = Rfits::Rfits_point(Sys.glob(file.path(image_directory,paste0("*",RA_DEC,"*",imcount,"*.fits"))), header=TRUE, ext=1)
     assign(paste0(imcount), tempimage)
-    append(shapedimages,get(paste0(colours[[i]])))
+    append(shapedimages,get(paste0(colours[[img]])))
   }
   # im1=Rfits::Rfits_point(Sys.glob(file.path(image_directory,paste0("*",RA_DEC,"*",colours[[1]],"*.fits"))), header=TRUE, ext=1)
   # im2=Rfits::Rfits_point(Sys.glob(file.path(image_directory,paste0("*",RA_DEC,"*",colours[[2]],"*.fits"))), header=TRUE, ext=1)
   # im3=Rfits::Rfits_point(Sys.glob(file.path(image_directory,paste0("*",RA_DEC,"*",colours[[3]],"*.fits"))), header=TRUE, ext=1)
-  for(i in 2:imagenumber){
-    cat("Resizing images (",i-1,"/",imagenumber-1,")\n")
-    assign(paste0(colours[[i]],"x"), ProPane::propaneWarp(get(paste0(colours[[i]])),keyvalues_out=get(paste0(colours[[1]]))$keyvalues))
+  for(img in 2:imagenumber){
+    cat("Resizing images (",img-1,"/",imagenumber-1,")\n")
+    assign(paste0(colours[[img]],"x"), ProPane::propaneWarp(get(paste0(colours[[img]])),keyvalues_out=get(paste0(colours[[1]]))$keyvalues))
     if(savepassthru==TRUE){
-      Rfits::Rfits_write(get(paste0(colours[[i]],"x")),paste0(image_directory,"/",colours[[i]],"x.fits"))
+      Rfits::Rfits_write(get(paste0(colours[[img]],"x")),paste0(image_directory,"/",colours[[img]],"x.fits"))
     }
-    shapedimages[[i]] = get(paste0(colours[[i]],"x"))
-    remove(get(paste0(colours[[i]])))
+    shapedimages[[img]] = get(paste0(colours[[img]],"x"))
+    remove(get(paste0(colours[[img]])))
   }
   # cat("Resizing images (1/2)\n")
   # im2x=ProPane::propaneWarp(im2,keyvalues_out=im1$keyvalues)
