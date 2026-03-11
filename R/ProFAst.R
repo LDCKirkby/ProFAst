@@ -12,9 +12,9 @@
 #' @param ext Numeric scalar; radius of the neighbourhood in pixels for the detection of neighbouring objects. Higher value smooths out small objects. Passed to \code{\link[ProFound]{profoundMultiBand}}.
 #' @param flux_value Numeric scalar; Flux filter cutoff value. Determined by dividing query filter flux by sum of fluxes in other bands , i.e. (g/r+i). Sources with an flux ratio lower than the value are assumed to not be asteroids and are removed.
 #' @param edge_buffer Numeric scalar; Edge boundary value within which positive hits are ignored. Useful if images are artificially extended as is done in \code{\link[ProFAst]{Pre_Proc}}.
-#' @param axrat_value Numeric scalar; Axial ratio filter cutoff value. Sources with an axial ratio lower than the value are assumed to not be asteroids and are removed. See \code{\link{ProFound}} documentation on how axrat value is determined.
-#' @param N100_lower Numeric scalar; N100 filter lower cutoff value. Sources with a N100 pixel count lower than the value are assumed too small to be asteroids and are removed. See \code{\link{ProFound}} documentation on how N100 value is calculated.
-#' @param N100_upper Numeric scalar; N100 filter upper cutoff calue. Sources with a N100 pixel count greater than the value are assumed too large to be asteroids and are removed. See \code{\link{ProFound}} documentation on how N100 value is calculated.
+#' @param axrat_value Numeric scalar; Axial ratio filter cutoff value. Sources with an axial ratio lower than the value are assumed to not be asteroids and are removed. See \code{\link[ProFound]} documentation on how axrat value is determined.
+#' @param N100_lower Numeric scalar; N100 filter lower cutoff value. Sources with a N100 pixel count lower than the value are assumed too small to be asteroids and are removed. See \code{\link[ProFound]} documentation on how N100 value is calculated.
+#' @param N100_upper Numeric scalar; N100 filter upper cutoff calue. Sources with a N100 pixel count greater than the value are assumed too large to be asteroids and are removed. See \code{\link[ProFound]} documentation on how N100 value is calculated.
 #' @param imagenumber Numeric scalar; Number of input images to analyse. ProFAst will default to 3 input fields.
 #' @param colours Character vector; List containing detection bands for input fields. ProFAst will default to looking for g,r & i bands unless told otherwise.
 #' 

@@ -16,17 +16,16 @@ Pre_Proc <- function(RA_DEC, image_directory, savepassthru=FALSE, imagenumber=3,
   }else{
   cat("Loading images from ",image_directory,"\n")
   }
-
+  shapedimages=list()
   for(i in 1:imagenumber){
     imcount = colours[[i]]
     tempimage = Rfits::Rfits_point(Sys.glob(file.path(image_directory,paste0("*",RA_DEC,"*",imcount,"*.fits"))), header=TRUE, ext=1)
     assign(paste0(imcount), tempimage)
+    append(shapedimages,get(paste0(colours[[i]])))
   }
   # im1=Rfits::Rfits_point(Sys.glob(file.path(image_directory,paste0("*",RA_DEC,"*",colours[[1]],"*.fits"))), header=TRUE, ext=1)
   # im2=Rfits::Rfits_point(Sys.glob(file.path(image_directory,paste0("*",RA_DEC,"*",colours[[2]],"*.fits"))), header=TRUE, ext=1)
   # im3=Rfits::Rfits_point(Sys.glob(file.path(image_directory,paste0("*",RA_DEC,"*",colours[[3]],"*.fits"))), header=TRUE, ext=1)
-  shapedimages=list(get(paste0(colours[[1]])))
-  print(shapedimages)
   for(i in 2:imagenumber){
     cat("Resizing images (",i-1,"/",imagenumber-1,")\n")
     cat("Removing old image:", paste0(colours[[i]]))
