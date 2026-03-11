@@ -28,12 +28,11 @@ Pre_Proc <- function(RA_DEC, image_directory, savepassthru=FALSE, imagenumber=3,
   # im3=Rfits::Rfits_point(Sys.glob(file.path(image_directory,paste0("*",RA_DEC,"*",colours[[3]],"*.fits"))), header=TRUE, ext=1)
   for(i in 2:imagenumber){
     cat("Resizing images (",i-1,"/",imagenumber-1,")\n")
-    cat("Removing old image:", paste0(colours[[i]]))
     assign(paste0(colours[[i]],"x"), ProPane::propaneWarp(get(paste0(colours[[i]])),keyvalues_out=get(paste0(colours[[1]]))$keyvalues))
     if(savepassthru==TRUE){
       Rfits::Rfits_write(get(paste0(colours[[i]],"x")),paste0(image_directory,"/",colours[[i]],"x.fits"))
     }
-    append(shapedimages, get(paste0(colours[[i]],"x")))
+    shapedimages[[i]] = get(paste0(colours[[i]],"x"))
     remove(get(paste0(colours[[i]])))
   }
   # cat("Resizing images (1/2)\n")
@@ -49,5 +48,6 @@ Pre_Proc <- function(RA_DEC, image_directory, savepassthru=FALSE, imagenumber=3,
   # }
   # remove(im2)
   # remove(im3)
+  gc()
   return(shapedimages)
 }
