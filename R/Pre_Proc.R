@@ -19,7 +19,7 @@ Pre_Proc <- function(RA_DEC, image_directory, savepassthru=FALSE, imagenumber=3,
 
   for(i in 1:imagenumber){
     imcount = colours[[i]]
-    tempimage = Rfits::Rfits_point(Sys.glob(file.path(paste0(image_directory,"*",RA_DEC,"*",imcount,"*.fits"))), header=TRUE, ext=1)
+    tempimage = Rfits::Rfits_point(Sys.glob(file.path(image_directory,paste0("*",RA_DEC,"*",imcount,"*.fits"))), header=TRUE, ext=1)
     assign(paste0(imcount), tempimage)
   }
   # im1=Rfits::Rfits_point(Sys.glob(file.path(image_directory,paste0("*",RA_DEC,"*",colours[[1]],"*.fits"))), header=TRUE, ext=1)
