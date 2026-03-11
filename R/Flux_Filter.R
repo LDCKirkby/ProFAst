@@ -5,11 +5,12 @@
 #' @param edge_buffer Numeric scalar; Edge boundary value within which positive hits are ignored. Useful if images are artificially extended as is done in \code{\link{PreProc}}.
 #' @param savepassthru Logical; should intermediate files be saved to directory? Can greatly increase size on disk but useful to see which objects are being filtered out.
 #' @param ast_data List; R List containing data output from ProFAst::MultiDetect(). If not supplied will look for appropriate file in working directory.
+#' @param colours Character vector; List containing detection bands for input fields. ProFAst will default to looking for g,r & i bands unless told otherwise.
 #' 
 #' @return Data frame containing all flux filtered sources.
 #' @export
 #'
-Flux_Filter <- function(RA_DEC, flux_value=1, edge_buffer=0.001, savepassthru=FALSE, ast_data=NULL){
+Flux_Filter <- function(RA_DEC, flux_value=1, edge_buffer=0.001, savepassthru=FALSE, ast_data=NULL, colours=c("g","r","i")){
 if(is.null(ast_data)){
   ast_data = utils::read.csv(paste0("./",RA_DEC,"/allcat.csv"))
 }

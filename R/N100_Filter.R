@@ -4,11 +4,12 @@
 #' @param N100_lower Small pixel count cutoff. Objects with fewer pixels than the threshold are assumed to be errors and excluded.
 #' @param N100_upper Large pixel count cutoff. Objects with more pixels than the threshold are assumed to be errors and excluded.
 #' @param filtered_data List; Filtered astronometric data. If not supplied will look for appropriate file in working directory.
+#' @param colours Character vector; List containing detection bands for input fields. ProFAst will default to looking for g,r & i bands unless told otherwise.
 #' 
 #' @return Data frame containing all N100 filtered sources.
 #' @export
 #'
-N100_Filter <- function(RA_DEC, N100_lower=150, N100_upper=2250, filtered_data=NULL){
+N100_Filter <- function(RA_DEC, N100_lower=150, N100_upper=2250, filtered_data=NULL, colours=c("g","r","i")){
   if(is.null(filtered_data)){
     filtered_data = utils::read.csv(paste0("./", RA_DEC,"/",RA_DEC,"_Axrat_Filtered_Objects.csv"))
   }

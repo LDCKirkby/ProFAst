@@ -38,6 +38,8 @@ edger <- function(segimcut, ID, inverted){
 #' @param frames List; Optional. List containing three pixel-matched astronomical images. Expected order within list is (g,r,i), returned by \code{\link{ProFAst::Pre_Proc}}. If not supplied will look for appropriate file in working directory and perform pixel matching. Can greatly increase execution time if images are sufficiently large.
 #' @param segim Integer Matrix; Optional. Matrix containing object segmentation masks for an image. If not supplied will look for appropriate file in working directory. 
 #' @param groupim Integer Matrix; Optional. Matrix containing group segmentation masks for an image. If not supplied will look for appropriate file in working directory. 
+#' @param imagenumber Numeric scalar; Number of input images to analyse. ProFAst will default to 3 input fields.
+#' @param colours Character vector; List containing detection bands for input fields. ProFAst will default to looking for g,r & i bands unless told otherwise.
 #' 
 #' @import ProFound
 #' @import ProPane
@@ -48,7 +50,7 @@ edger <- function(segimcut, ID, inverted){
 #' @import MASS
 #' @import data.table
 #' @export
-Group_Cutter <- function(RA_DEC, image_directory, asteroids=NULL, frames=NULL, segim=NULL, groupim=NULL) {
+Group_Cutter <- function(RA_DEC, image_directory, asteroids=NULL, frames=NULL, segim=NULL, groupim=NULL, imagenumber=3, colours=c("g","r","i")) {
   if(is.null(asteroids)){
     asteroids = utils::read.csv(paste0("./",RA_DEC,"/",RA_DEC,"_Auto_Filtered_Asteroids.csv"))
   }

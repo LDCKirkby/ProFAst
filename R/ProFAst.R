@@ -15,7 +15,9 @@
 #' @param axrat_value Numeric scalar; Axial ratio filter cutoff value. Sources with an axial ratio lower than the value are assumed to not be asteroids and are removed. See \code{\link{ProFound}} documentation on how axrat value is determined.
 #' @param N100_lower Numeric scalar; N100 filter lower cutoff value. Sources with a N100 pixel count lower than the value are assumed too small to be asteroids and are removed. See \code{\link{ProFound}} documentation on how N100 value is calculated.
 #' @param N100_upper Numeric scalar; N100 filter upper cutoff calue. Sources with a N100 pixel count greater than the value are assumed too large to be asteroids and are removed. See \code{\link{ProFound}} documentation on how N100 value is calculated.
-#'
+#' @param imagenumber Numeric scalar; Number of input images to analyse. ProFAst will default to 3 input fields.
+#' @param colours Character vector; List containing detection bands for input fields. ProFAst will default to looking for g,r & i bands unless told otherwise.
+#' 
 #' @import ProFound
 #' @import ProPane
 #' @import Rfits
@@ -39,20 +41,25 @@ ProFAst <- function(RA_DEC, image_directory=".",
                      axrat_value=0.35, 
                      N100_lower=150, 
                      N100_upper=2250,
-                     savepassthru=FALSE){
+                     savepassthru=FALSE,
+                     imagenumber=3,
+                     colours=c("g","r","i")){
+if(!is.character(RA_DEC)){stop("RA_DEC not of type character.\n")}
+if(!is.character(image_directory)){stop("image_directory not of type character.\n")}
+if(length(colours) != imagenumber){stop("ERROR: Colour label length does not match expected image count. Please check and try again.\n")}
 
 cat("*************\n","Beginning Detection on:",RA_DEC,"\n","*************\n")
-frames <- Pre_Proc(RA_DEC, image_directory, savepassthru)
+frames <- Pre_Proc(RA_DEC, image_directory, savepassthru, imagenumber, colours)
 
-multi_data <- MultiDetect(RA_DEC, frames, skycut, pixcut, smooth, sigma, reltol, tolerance, ext, savepassthru)
+multi_data <- MultiDetect(RA_DEC, frames, skycut, pixcut, smooth, sigma, reltol, tolerance, ext, savepassthru, , imagenumber, colours)
 
-flux_filtered <- Flux_Filter(RA_DEC, flux_value, edge_buffer, savepassthru, multi_data$allcat)
+flux_filtered <- Flux_Filter(RA_DEC, flux_value, edge_buffer, savepassthru, multi_data$allcat, colours)
 
-axrat_filtered <- Axrat_Filter(RA_DEC, axrat_value, savepassthru, flux_filtered)
+axrat_filtered <- Axrat_Filter(RA_DEC, axrat_value, savepassthru, flux_filtered, colours)
 
-final_filtered <- N100_Filter(RA_DEC, N100_lower, N100_upper, axrat_filtered)
+final_filtered <- N100_Filter(RA_DEC, N100_lower, N100_upper, axrat_filtered, colours)
 
-Group_Cutter(RA_DEC, image_directory, final_filtered, frames, multi_data$segim, multi_data$groupim)
+Group_Cutter(RA_DEC, image_directory, final_filtered, frames, multi_data$segim, multi_data$groupim, imagenumber, colours)
 
 warnings()
 }

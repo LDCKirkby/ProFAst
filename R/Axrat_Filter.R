@@ -4,11 +4,12 @@
 #' @param axrat_value Numeric scalar; Filter Cutoff Value. Sources with an axial ratio lower than the value are assumed to not be asteroids and are removed.
 #' @param savepassthru Logical; should intermediate files be saved to directory? Can greatly increase size on disk but useful to see which objects are being filtered out.
 #' @param filtered_data List; Flux filtered astronometric data. If not supplied will look for appropriate file in working directory.
+#' @param colours Character vector; List containing detection bands for input fields. ProFAst will default to looking for g,r & i bands unless told otherwise.
 #' 
 #' @return Data frame containing all axrat filtered sources.
 #' @export
 #'
-Axrat_Filter <- function(RA_DEC, axrat_value=0.35, savepassthru=FALSE, filtered_data=NULL){
+Axrat_Filter <- function(RA_DEC, axrat_value=0.35, savepassthru=FALSE, filtered_data=NULL, colours=c("g","r","i")){
 if(is.null(filtered_data)){
 possible_asteroids = utils::read.csv(paste0("./",RA_DEC,"/",RA_DEC,"_Flux_Filtered_Objects.csv"), fill = TRUE)
 }

@@ -10,11 +10,14 @@
 #' @param reltol Numeric scalar; only relevant for watershed='ProFound'. A modifier to the tolerance, modifying it by the ratio of the segment peak flux divided by the saddle point flux to the power reltol. The default means the reltol has no effect since this modifier becomes 1. A larger value of reltol means segments are more aggressively merged together. Can be (and often should be in practice) negative. The effect of using reltol and setting to negative is that the central brighter parts of galaxies are kept together in a single segment, and deblending is more common on the outskirts (where it should have less effect on the overall flux). The principle is that we need to be very confident a bright source needs to be split near its peak flux, but can be more aggressive in the outskirts. Passed to \code{\link{ProFound::profoundMultiBand}}
 #' @param tolerance Numeric scalar; the minimum height of the object in the units of skyRMS between its highest point (seed) and the point where it contacts another object (checked for every contact pixel). If the height is smaller than the tolerance, the object will be combined with one of its neighbours, which is the highest. The range 1-5 offers decent results usually. Passed to \code{\link{ProFound::profoundMultiBand}}
 #' @param ext Numeric scalar; radius of the neighbourhood in pixels for the detection of neighbouring objects. Higher value smooths out small objects. Passed to \code{\link{ProFound::profoundMultiBand}}.
+#' @param imagenumber Numeric scalar; Number of input images to analyse. ProFAst will default to 3 input fields.
+#' @param colours Character vector; List containing detection bands for input fields. ProFAst will default to looking for g,r & i bands unless told otherwise.
+#' 
 #' @return Data frame containing multi-band photometry data.
 #' 
 #' @export
 #'
-MultiDetect <- function(RA_DEC, frames, skycut = 0.6, pixcut = 15, smooth = TRUE, sigma = 2, reltol=-10, tolerance =1, ext=7, savepassthru=FALSE){
+MultiDetect <- function(RA_DEC, frames, skycut = 0.6, pixcut = 15, smooth = TRUE, sigma = 2, reltol=-10, tolerance =1, ext=7, savepassthru=FALSE, imagenumber=3, colours=c("g","r","i")){
 
 savelocation = paste0("./",RA_DEC,"/")
 
