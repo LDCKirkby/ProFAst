@@ -18,6 +18,7 @@ Pre_Proc <- function(RA_DEC, image_directory, savepassthru=FALSE, imagenumber=3,
   }
   shapedimages=c()
   for(i in 1:imagenumber){
+    cat("Pointing to image ",i,"\n")
     imcount = colours[[i]]
     tempimage = Rfits::Rfits_point(Sys.glob(file.path(image_directory,paste0("*",RA_DEC,"*",imcount,"*.fits"))), header=TRUE, ext=1)
     assign(paste0(imcount), tempimage)
