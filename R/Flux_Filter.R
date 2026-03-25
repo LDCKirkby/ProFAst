@@ -22,16 +22,24 @@ cat("*********\n\n")
 ast_data = ast_data[rowSums(is.na(ast_data)) != ncol(ast_data),]
 
 #Remove potential error fluxes that can be small negative numbers
-ast_data$flux_gt[ast_data$flux_gt < 0] <- 0
-ast_data$flux_rxt[ast_data$flux_rxt < 0] <- 0
-ast_data$flux_i1xt[ast_data$flux_i1xt < 0] <- 0
+for(band in colours){
+  ast_data[paste0("flux_",band,"t")][ast_data[paste0("flux_",band,"t")] < 0] <- 0
+}
 
 #Extracting potential asteroids, based on their flux ratio
 cat("*********\n")
 cat("Beginning asteroid search\n")
-green_objects = cbind("Colour" = "g", subset(ast_data, subset = ast_data$flux_gt/(ast_data$flux_rxt + ast_data$flux_i1xt) >= flux_value))
-red_objects = cbind("Colour" = "r", subset(ast_data, subset = ast_data$flux_rxt/(ast_data$flux_gt + ast_data$flux_i1xt) >= flux_value))
-blue_objects = cbind("Colour" = "i", subset(ast_data, subset = ast_data$flux_i1xt/(ast_data$flux_gt + ast_data$flux_rxt) >= flux_value))
+for(x in 1:length(colours)){
+  main_colour = colours[x]
+  other_colours = colours[-x]
+  numer=ast_data[paste0("flux_",main_colour,"t")]
+  denom=numeric(length(numer))
+  for(y in 1:length(other_colours)){
+    numer_part=other_colours[y]
+    denom = denom + ast_data[paste0("flux_",numer_part,"t")]
+  }
+  assign(paste0(main_colour,"_objects"), cbind("Colour" = main_colour, subset(ast_data, subset = numer/denom >= flux_value)))
+}
 
 #Applies edge buffer to red and blue, since they've been extended artificially
 RA = as.numeric(strsplit(RA_DEC, "_")[[1]][[1]])
@@ -39,12 +47,18 @@ Dec = as.numeric(strsplit(RA_DEC, "_")[[1]][[2]])
 
 #Useful to apply edge buffer since some frames are being artificially grown
 cat("Applying edge buffer\n")
-red_objects = rbind(red_objects[red_objects$RAcen >= (RA - 0.5 + edge_buffer) & red_objects$RAcen <= (RA + 0.5 - edge_buffer) & red_objects$Deccen >= (Dec-0.5 + edge_buffer) & red_objects$Deccen <= (Dec + 0.5 - edge_buffer),])
-blue_objects = rbind(blue_objects[blue_objects$RAcen >= (RA - 0.5 + edge_buffer) & blue_objects$RAcen <= (RA + 0.5 - edge_buffer) & blue_objects$Deccen >= (Dec-0.5 + edge_buffer) & blue_objects$Deccen <= (Dec + 0.5 - edge_buffer),])
-green_objects = rbind(green_objects[green_objects$RAcen >= (RA - 0.5 + edge_buffer) & green_objects$RAcen <= (RA + 0.5 - edge_buffer) & green_objects$Deccen >= (Dec-0.5 + edge_buffer) & green_objects$Deccen <= (Dec + 0.5 - edge_buffer),])
+for(band in colours){
+  band_list = get(paste0(band,"_objects"))
+  band_list = rbind(band_list[band_list$RAcen >= (RA - 0.5 + edge_buffer) & band_list$RAcen <= (RA + 0.5 - edge_buffer) & band_list$Deccen >= (Dec-0.5+edge_buffer) & band_list$Deccen <= (Dec+0.5-edge_buffer),])
+  assign(paste0(band,"_objects"), band_list)
+  assign(paste0(band,"_objects"), rbind(get(paste0(band,"_objects"))))
+}
 
 #Bind final lists of objects together
-possible_asteroids <- rbind(blue_objects,green_objects,red_objects)
+possible_asteroids = c()
+for(band in colours){
+  possible_asteroids <- rbind(possible_asteroids, get(paste0(band,"_objects")))
+}
 cat(length(possible_asteroids$groupID), " potential asteroids in data\n")
 cat("Writing to ", paste0("./", RA_DEC,"/_Flux_Filtered_Objects.csv"),"\n")
 cat("*********\n\n")
@@ -54,5 +68,6 @@ if(savepassthru==TRUE){
 utils::write.csv(possible_asteroids, file = paste0("./",RA_DEC,"/",RA_DEC,"_Flux_Filtered_Objects.csv"), row.names=FALSE)
 }
 
+gc()
 return(possible_asteroids)
 }

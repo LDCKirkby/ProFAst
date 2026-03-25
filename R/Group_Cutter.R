@@ -145,11 +145,11 @@ Group_Cutter <- function(RA_DEC, image_directory, asteroids=NULL, frames=NULL, s
                 xlab="Right Ascension (deg)",ylab="Declination (deg)", main = paste0("Asteroid ", ID), coord.type="deg",locut=locut, hicut=c(kids,kids,kids) ,type="num", dowarp = FALSE, hersh = FALSE, family="Arial")
 
     cat("Adding segment outlines\n")
-    magixaxis::magimage(anti_groupcut,col=c(NA,rep("peru",max(anti_groupcut))),magmap = FALSE,add=TRUE,sparse=1,lwd=0.5)
-    magixaxis::magimage(anti_segimcut,col=c(NA,rep("moccasin",max(anti_segimcut))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.25)
+    magicaxis::magimage(anti_groupcut,col=c(NA,rep("peru",max(anti_groupcut))),magmap = FALSE,add=TRUE,sparse=1,lwd=0.5)
+    magicaxis::magimage(anti_segimcut,col=c(NA,rep("moccasin",max(anti_segimcut))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.25)
 
-    magixaxis::magimage(edged_groupcut,col=c(NA,rep(group_col, max(edged_groupcut))),magmap=FALSE,add=TRUE,sparse=1,lwd=1)
-    magixaxis::magimage(edged_segimcut,col=c(NA,rep(seg_col, max(edged_segimcut))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.5)
+    magicaxis::magimage(edged_groupcut,col=c(NA,rep(group_col, max(edged_groupcut))),magmap=FALSE,add=TRUE,sparse=1,lwd=1)
+    magicaxis::magimage(edged_segimcut,col=c(NA,rep(seg_col, max(edged_segimcut))),magmap=FALSE,add=TRUE,sparse=1,lwd=0.5)
 
     graphics::text(1,2*wid-50, col=group_col, label=paste0("segID=",ID,"\nColour=",Colour), cex=2.0, pos=4, family="Arial")
     dev.off()

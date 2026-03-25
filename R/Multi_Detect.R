@@ -34,8 +34,8 @@ multi_data=ProFound::profoundMultiBand(
   reltol=reltol,
   smooth = smooth,
   cliptol=100,
-  detectbands=c("g","rx","i1x"),
-  multibands=c("g","rx","i1x"),
+  detectbands=colours,
+  multibands=colours,
   keepsegims=TRUE,
   magzero=c(0,0,0),
   dotot=TRUE,
@@ -83,14 +83,9 @@ group_matches=match(objectcat$segID,groupcat$groupID,nomatch=NA)
 allcat=data.table::as.data.table(cbind(objectcat,groupcat[group_matches,]))
 
 if(savepassthru == TRUE){
-# Save data structure and produce diagnostic plot
+# Save data structures
 dir.create(savelocation)
-#saveRDS(multi_data,file=paste0(savelocation,"stacked.rds"))
-
-#Saves all segmentation mask images in a list (segimlist)
-#Not needed & will likely be removed
-cat("Saving slimmed segimlist\n")
-utils::write.csv(segimlist, paste0(savelocation,"segimlist.csv"), row.names=FALSE)
+# readRDS::saveRDS(multi_data,file=paste0(savelocation,"stacked.rds"))
 
 #Save segmentation maps (dilated and converged)
 cat("Saving slimmed segim\n")
@@ -102,9 +97,6 @@ utils::write.csv(segim_orig, paste0(savelocation,"segim_orig.csv"), row.names=FA
 
 cat("Saving groupim\n")
 utils::write.csv(groupim, paste0(savelocation,"groupim.csv"), row.names=FALSE)
-# rm(segim)
-# rm(segim_orig)
-# rm(segimlist)
 utils::write.csv(objectcat,file=paste0(savelocation,"objectcat.csv"), row.names=FALSE)
 utils::write.csv(groupcat,file=paste0(savelocation,"groupcat.csv"), row.names=FALSE)
 utils::write.csv(allcat,file=paste0(savelocation,"allcat.csv"), row.names=FALSE)

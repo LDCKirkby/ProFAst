@@ -18,6 +18,12 @@ cat("Beginning axial filtering\n")
 cat("*********\n\n")
 
 #Axrat filter
+filtered_asteroids = c()
+for(band in colours){
+    band_filtered = subset(possible_asteroids, subset = possible_asteroids[paste0("axrat_",band,"t")] <= axrat_value)
+    filtered_asteroids = rbind(filtered_asteroids, band_filtered)
+}
+filtered_asteroids = filtered_asteroids[!duplicated(filtered_asteroids),]
 filtered_asteroids = subset(possible_asteroids, axrat_gt <= axrat_value | axrat_rxt <= axrat_value | axrat_i1xt <= axrat_value)
 filtered_asteroids = data.table::setorder(filtered_asteroids, "groupID")
 
