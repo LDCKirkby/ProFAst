@@ -102,6 +102,26 @@ Group_Cutter <- function(RA_DEC, image_directory, asteroids=NULL, frames=NULL, s
     cutim_r = ProPane::propaneWarp(r_image,keyvalues_out=cutim_g$keyvalues)
     cutim_i = ProPane::propaneWarp(i_image,keyvalues_out=cutim_g$keyvalues)
 
+    cutframes = list(cutim_g, cutim_r, cutim_i)
+
+    second_round = profoundMultiBand(inputlist = cutframes,
+    detectbands=c("g","r","i"),
+    multibands=c("g","r","i"),
+    cliptol=100,
+    keepsegims=TRUE,
+    magzero=c(0,0,0),
+    dotot=TRUE,
+    docol=TRUE,
+    dogrp=TRUE,
+    verbose=TRUE,
+    boxiters=4,
+    grid=c(50,50,50),
+    roughpedestal=TRUE,
+    stats=TRUE,
+    groupstats=TRUE,
+    mask=0,
+    fluxtype='Jansky')
+
     segimcut=magicaxis::magcutout(image = segim, loc=as.numeric(astpos), box=box, loc.type="image")
     groupcut=magicaxis::magcutout(image = groupim, loc=as.numeric(astpos), box=box, loc.type="image")
 
