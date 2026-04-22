@@ -1,29 +1,5 @@
 # ProFAst (R package)
 
-## TODO:
-- [ ] Group_Remover.R
-  - [ ] R-package header
-- [ ] Linear_Fit.R
-  - [ ] R-package header
-  - [ ] Add temp file option, default to FALSE
-  - [ ] Add proper return values for other functions
-- [ ] MPC_PSV.R
-  - [ ] R-package header
-  - [ ] Add temp file option, default to FALSE
-- [ ] Manual_Detection_Extractor.R
-  - [ ] Check if needed
-- [ ] MPC_Formatter.R
-  - [ ] Check if needed
-- [ ] Param_Processor.R
-  - [ ] Check if needed
-- [ ] PSV-Fixer.R
-  - [ ] Check if needed
-- [ ] tempfixer.R
-  - [ ] Check if needed
-<!-- badges: start -->
-![R-CMD-check](https://github.com/LDCKirkby/ProFAst/workflows/R-CMD-check/badge.svg)
-<!-- badges: end -->
-
 ## Synopsis
 
 ProFAst is an astronomy tool based on the **ProTools** package suite developed by Aaron Robotham (https://github.com/asgr). Designed to detect asteroids across multi-band astronomical images through key parameters that help distinguish an asteroid from other stationary points.
