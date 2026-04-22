@@ -102,25 +102,9 @@ Group_Cutter <- function(RA_DEC, image_directory, asteroids=NULL, frames=NULL, s
     cutim_r = ProPane::propaneWarp(r_image,keyvalues_out=cutim_g$keyvalues)
     cutim_i = ProPane::propaneWarp(i_image,keyvalues_out=cutim_g$keyvalues)
 
-    cutframes = list(cutim_g, cutim_r, cutim_i)
-
-    second_round = profoundMultiBand(inputlist = cutframes,
-    detectbands=c("g","r","i"),
-    multibands=c("g","r","i"),
-    cliptol=100,
-    keepsegims=TRUE,
-    magzero=c(0,0,0),
-    dotot=TRUE,
-    docol=TRUE,
-    dogrp=TRUE,
-    verbose=TRUE,
-    boxiters=4,
-    grid=c(50,50,50),
-    roughpedestal=TRUE,
-    stats=TRUE,
-    groupstats=TRUE,
-    mask=0,
-    fluxtype='Jansky')
+    Rfits::Rfits_write(cutim_g, filename=paste0("./",RA_DEC,"/",segID,"cutim_g.fits"),)
+    Rfits::Rfits_write(cutim_r, filename=paste0("./",RA_DEC,"/",segID,"cutim_r.fits"))
+    Rfits::Rfits_write(cutim_i, filename=paste0("./",RA_DEC,"/",segID,"cutim_i.fits"))
 
     segimcut=magicaxis::magcutout(image = segim, loc=as.numeric(astpos), box=box, loc.type="image")
     groupcut=magicaxis::magcutout(image = groupim, loc=as.numeric(astpos), box=box, loc.type="image")

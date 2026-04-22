@@ -12,6 +12,7 @@
 #'
 Flux_Filter <- function(RA_DEC, flux_value=1, edge_buffer=0.001, savepassthru=FALSE, ast_data=NULL, colours=c("g","r","i")){
 if(is.null(ast_data)){
+  cat("Reading in data from",paste0("./",RA_DEC,"/allcat.csv"))
   ast_data = utils::read.csv(paste0("./",RA_DEC,"/allcat.csv"))
 }
 cat("*********\n")
@@ -60,12 +61,13 @@ for(band in colours){
   possible_asteroids <- rbind(possible_asteroids, get(paste0(band,"_objects")))
 }
 cat(length(possible_asteroids$groupID), " potential asteroids in data\n")
-cat("Writing to ", paste0("./", RA_DEC,"/_Flux_Filtered_Objects.csv"),"\n")
-cat("*********\n\n")
+
 
 if(savepassthru==TRUE){
 #Write data to file
-utils::write.csv(possible_asteroids, file = paste0("./",RA_DEC,"/",RA_DEC,"_Flux_Filtered_Objects.csv"), row.names=FALSE)
+  cat("Writing to ", paste0("./", RA_DEC,"/",RA_DEC,"_Flux_Filtered_Objects.csv"),"\n")
+  cat("*********\n\n")
+  utils::write.csv(possible_asteroids, file = paste0("./",RA_DEC,"/",RA_DEC,"_Flux_Filtered_Objects.csv"), row.names=FALSE)
 }
 
 gc()

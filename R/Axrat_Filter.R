@@ -11,7 +11,8 @@
 #'
 Axrat_Filter <- function(RA_DEC, axrat_value=0.35, savepassthru=FALSE, filtered_data=NULL, colours=c("g","r","i")){
 if(is.null(filtered_data)){
-possible_asteroids = utils::read.csv(paste0("./",RA_DEC,"/",RA_DEC,"_Flux_Filtered_Objects.csv"), fill = TRUE)
+    cat("Reading in data from ",paste0("./",RA_DEC,"/",RA_DEC,"_Flux_Filtered_Objects.csv"))
+    possible_asteroids = utils::read.csv(paste0("./",RA_DEC,"/",RA_DEC,"_Flux_Filtered_Objects.csv"), fill = TRUE)
 }
 cat("*********\n")
 cat("Beginning axial filtering\n")

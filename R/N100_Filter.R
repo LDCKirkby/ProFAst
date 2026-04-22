@@ -11,6 +11,7 @@
 #'
 N100_Filter <- function(RA_DEC, N100_lower=150, N100_upper=2250, filtered_data=NULL, colours=c("g","r","i")){
   if(is.null(filtered_data)){
+    cat("Reading in data from ",paste0("./", RA_DEC,"/",RA_DEC,"_Axrat_Filtered_Objects.csv"))
     filtered_data = utils::read.csv(paste0("./", RA_DEC,"/",RA_DEC,"_Axrat_Filtered_Objects.csv"))
   }
   cat("*********\n")
