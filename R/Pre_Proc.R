@@ -30,7 +30,7 @@ Pre_Proc <- function(RA_DEC, image_directory, savepassthru=FALSE, imagenumber=3,
     cat("Resizing images (",img-1,"/",imagenumber-1,")\n")
     assign(paste0(colours[[img]],"x"), ProPane::propaneWarp(get(paste0(colours[[img]])),keyvalues_out=get(paste0(colours[[1]]))$keyvalues))
     if(savepassthru==TRUE){
-      Rfits::Rfits_write(get(paste0(colours[[img]],"x")),paste0(image_directory,"/",RA_DEC,"_",colours[[img]],"x.fits"))
+      Rfits::Rfits_write_image(get(paste0(colours[[img]],"x")),paste0(image_directory,"/",RA_DEC,"_",colours[[img]],"x.fits"), ext=1, keyvalues=get(paste0(colours[[img]],"x"))$keyvalues)
     }
     shapedimages[[img]] = get(paste0(colours[[img]],"x"))
   }
